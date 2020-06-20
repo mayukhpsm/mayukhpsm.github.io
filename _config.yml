@@ -1,7 +1,7 @@
 # --- Basic options --- #
 
 # Name of website
-title: My website
+title: Mayukh Mukhopahyay
 
 # Short description of your site
 description: Big Data Janitor and Blockchain Author
@@ -12,10 +12,10 @@ author: Mayukh Mukhopadhyay
 # --- List of links in the navigation bar --- #
 
 navbar-links:
-  About Me: "aboutme"
-  Resources:
-    - Beautiful Jekyll: #"https://beautifuljekyll.com"
-    - Learn markdown: #"https://www.markdowntutorial.com/"
+  #About Me: "aboutme"
+ # Resources:
+  #  - Beautiful Jekyll: #"https://beautifuljekyll.com"
+   # - Learn markdown: #"https://www.markdowntutorial.com/"
   Author's home: "https://mayukhpsm.github.io/online-cv"
 
 # --- Logo --- #
