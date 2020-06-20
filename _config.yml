@@ -4,7 +4,7 @@
 title: Mayukh Mukhopadhyay
 
 # Short description of your site
-description: Big Data Janitor and Blockchain Author
+description: Mayukh Blog Page
 
 # Your name to show in the footer
 author: Mayukh Mukhopadhyay
@@ -22,7 +22,7 @@ navbar-links:
 
 # Image to show in the navigation bar - works best with a square image
 # Remove this parameter if you don't want an image in the navbar
-avatar: "/assets/img/avatar-icon.png"
+avatar: "/assets/img/android-chrome-512x512.png"
 
 # By default, the image is cut into a circle. You can disable this behaviour by setting 'round-avatar: false'
 round-avatar: true
