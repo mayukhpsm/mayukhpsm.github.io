@@ -3,7 +3,7 @@ layout: post
 title: Data Storytelling
 subtitle: The Ultimate Weapon of Unicorn Data Scientists
 cover-img: /assets/img/path.jpg
-tags: [books, test]
+tags: [analytics, storytelling, narratives, kaggle]
 ---
 
 For thousands of years, storytelling has been an integral part of our humanity. Even in our digital age, stories continue to appeal to us just as much as they did to our ancient ancestors. Stories play a vibrant role in our daily lives—from the entertainment we consume to the experiences we share with others to what we conjure up in our dreams.
