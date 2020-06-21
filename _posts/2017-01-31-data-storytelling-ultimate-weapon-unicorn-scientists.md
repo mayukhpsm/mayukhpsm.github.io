@@ -58,6 +58,7 @@ He had the truth—but was it enough?
 
 
 **References:**
+
 *1. These Are The Skills You Need To Become A $240,000+ Unicorn Data Scientist, Gil Press, Forbes, Oct 3, 2015
 *2. How Stories Deceive, By Maria Konnikova December 29, 2015, The New Yorker
 *3. A History Lesson On The Dangers Of Letting Data Speak For Itself,Brent Dykes,Forbes, Feb 9, 2016
