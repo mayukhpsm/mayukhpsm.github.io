@@ -46,15 +46,15 @@ Semmelweis couldn’t scientifically prove why his handwashing policy worked—t
 
 He had the truth—but was it enough?
 
-***Key takeaway:
+***Key takeaways:***
 
-*a) If we possess insights that are critical to our business success, we have a duty to communicate them clearly in a timely manner. Semmelweis waited too long and allowed others to inadvertently cloud his message.
+*a) If we possess insights that are critical to our business success, we have a duty to communicate them clearly in a timely manner. Semmelweis waited too long and allowed others to inadvertently cloud his message.*
 
-*b) Knowing our audience and striving to understand their existing attitudes and beliefs. Not everyone is going to accept our data, especially if it is disruptive to commonly held practices or beliefs. Instead, we may want to focus on identifying open-minded allies who can help build internal support and consensus for our ideas.
+*b) Knowing our audience and striving to understand their existing attitudes and beliefs. Not everyone is going to accept our data, especially if it is disruptive to commonly held practices or beliefs. Instead, we may want to focus on identifying open-minded allies who can help build internal support and consensus for our ideas.*
 
-*c) Relying on just logic and reason to make our points. Decisions are more often made by emotion, and an effective narrative can touch our audience in ways the numbers alone never will.
+*c) Relying on just logic and reason to make our points. Decisions are more often made by emotion, and an effective narrative can touch our audience in ways the numbers alone never will.*
 
-*d) Data can often be communicated more powerfully with data visualizations than just tabular data. Charts should reinforce our key points and make it easier for our audience to follow our data story.
+*d) Data can often be communicated more powerfully with data visualizations than just tabular data. Charts should reinforce our key points and make it easier for our audience to follow our data story.*
 
 
 **References:**
