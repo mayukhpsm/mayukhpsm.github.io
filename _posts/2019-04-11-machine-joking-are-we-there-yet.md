@@ -6,7 +6,7 @@ cover-img: /assets/img/path.jpg
 tags: [machine learning, standup comedy, humour, ai]
 ---
 
-*Article originally published at [Towards Data Science](https://towardsdatascience.com/machine-joking-are-we-there-yet-1d3db78b6d61){:target="_blank"}*
+*Article originally published in [Towards Data Science](https://towardsdatascience.com/machine-joking-are-we-there-yet-1d3db78b6d61){:target="_blank"}*
 
 *What fits in a shoebox, cracks complex problems, and can run for hours on the energy of a masala dosa?*
 ***Human brain.***
