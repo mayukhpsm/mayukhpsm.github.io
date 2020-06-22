@@ -2,7 +2,7 @@
 layout: post
 title: Is the customer always right?
 subtitle: Consumer Behaviour in 21st Century
-cover-img: /assets/img/path.jpg
+cover-img: /assets/img/highway_animation.gif
 tags: [customer, empathy, algorithm, harari]
 ---
 
