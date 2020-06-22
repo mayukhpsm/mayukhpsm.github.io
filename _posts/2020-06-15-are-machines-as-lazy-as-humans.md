@@ -2,7 +2,7 @@
 layout: post
 title: Are machines as lazy as humans?
 subtitle: Chatbot chronicles
-cover-img: /assets/img/path.jpg
+cover-img: /assets/img/taxi_drive_by_animation.gif
 tags: [Facebook, chatbot, nlp, linguistics]
 ---
 
