@@ -2,7 +2,7 @@
 layout: post
 title: SoftBank Group
 subtitle: A Global Juggernaut or Japanese Jenga
-cover-img: /assets/img/path.jpg
+cover-img: /assets/img/metro_animation.gif
 tags: [Keiretsu, Softbank Group, Jenga, Vision Fund]
 ---
 
