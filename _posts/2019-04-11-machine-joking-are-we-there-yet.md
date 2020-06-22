@@ -2,7 +2,7 @@
 layout: post
 title: Machine Joking
 subtitle: Are we there yet?
-cover-img: /assets/img/path.jpg
+cover-img: /assets/img/bus_animation.gif
 tags: [machine learning, standup comedy, humour, ai]
 ---
 
