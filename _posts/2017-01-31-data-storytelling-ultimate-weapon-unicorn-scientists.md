@@ -2,7 +2,7 @@
 layout: post
 title: Data Storytelling
 subtitle: The Ultimate Weapon of Unicorn Data Scientists
-cover-img: /assets/img/path.jpg
+cover-img: /assets/img/bike_animation.gif
 tags: [analytics, storytelling, narratives, kaggle]
 ---
 
