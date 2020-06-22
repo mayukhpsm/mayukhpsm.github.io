@@ -37,4 +37,4 @@ So, to rephrase the question:
 
 *2. 21 Lessons for the 21st Century,Yuval Noah Harari,Aug 2018*
 
-Article originally published at [VGSoM IITKGP Executive MBA Digital Interaction Platform](https://www.linkedin.com/pulse/customer-always-right-vgsom-iitkgp-executive-mba/){:target="_blank"}
+*Article originally published at [VGSoM IITKGP Executive MBA Digital Interaction Platform](https://www.linkedin.com/pulse/customer-always-right-vgsom-iitkgp-executive-mba/){:target="_blank"}*
