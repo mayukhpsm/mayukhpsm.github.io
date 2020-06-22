@@ -12,7 +12,7 @@ author: Mayukh Mukhopadhyay
 # --- List of links in the navigation bar --- #
 
 navbar-links:
-  Contact Me: "/_includes/msg_me.html"
+  #Contact Me: "/_includes/msg_me.html"
  # Resources:
   #  - Beautiful Jekyll: #"https://beautifuljekyll.com"
    # - Learn markdown: #"https://www.markdowntutorial.com/"
