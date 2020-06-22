@@ -2,7 +2,7 @@
 layout: post
 title: 21 Metadata Platforms and Reports for the 21st Century Pandemic.
 subtitle: Combating infodemic using credible data.
-cover-img: /assets/img/path.jpg
+cover-img: /assets/img/pandemic.gif
 tags: [COVID-19, Pandemic, Metadata, Report]
 ---
 
