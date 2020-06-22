@@ -2,7 +2,7 @@
 layout: post
 title: An yogic perspective of Intelligence
 subtitle: Exploring the dimensions of human mind
-cover-img: /assets/img/path.jpg
+cover-img: /assets/img/coffee_animation.gif
 tags: [inner engineering, enlightenment]
 ---
 
