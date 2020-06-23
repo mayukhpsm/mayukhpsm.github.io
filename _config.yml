@@ -12,12 +12,12 @@ author: Mayukh Mukhopadhyay
 # --- List of links in the navigation bar --- #
 
 navbar-links:
-  #Contact Me: "/_includes/msg_me.html"
+  ACM ID: "https://drive.google.com/file/d/1g0wZKNh1HHEJNgA5iaB3L6G6gdfdPAsf/view?usp=sharing"
  # Resources:
   #  - Beautiful Jekyll: #"https://beautifuljekyll.com"
    # - Learn markdown: #"https://www.markdowntutorial.com/"
   #Author's home: "https://mayukhpsm.github.io/online-cv"
-  My Web Résumé: "https://mayukhpsm.github.io/online-cv"
+  Web Résumé: "https://mayukhpsm.github.io/online-cv"
 
 # --- Logo --- #
 
