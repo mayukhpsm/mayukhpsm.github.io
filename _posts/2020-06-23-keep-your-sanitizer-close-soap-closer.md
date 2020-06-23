@@ -18,7 +18,9 @@ Semmelweis’s data met three key criteria — it was truthful, valuable and act
 
 Eventually, in the mid-1860s, Louis Pasteur discovered the germ theory of disease. Yet the ironic truth was the doctors did have more than 18 months of statistical data showing Ignaz's handwashing approach worked and that such practices could have saved many more lives of expectant mothers.
 
-In the wake of COVID-19 pandemic, we are experiencing a deja-vu from Ignaz's time. The world health communities have declared the **3 S of COVID-19** prevention -  ****a. Sanitizer usage b. Soap handwash c. Social Distancing***
+In the wake of COVID-19 pandemic, we are experiencing a deja-vu from Ignaz's time. The world health communities have declared the **3 S of COVID-19** prevention -  
+
+***a. Sanitizer usage b. Soap handwash c. Social Distancing***
 
 Although this list was just alphabetically ordered, the global citizen seems to have taken this quite literally as more importance is being placed on use of Sanitzers rather than our humble Soap, as per the consumer buying pattern and shortage of sanitizers. Now, the science community is in loss of words while explaining that it is the Soap that is more effective, not the fancy spraying sanitizers.
 
