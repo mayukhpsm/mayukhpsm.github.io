@@ -30,7 +30,7 @@ round-avatar: true
 
 # If you want to have an image logo in the top-left corner instead of the title text,
 # then specify the following parameter
- title-img: https://github.com/mayukhpsm/mayukhpsm.github.io/blob/master/assets/img/logo17.PNG
+ title-img: "https://github.com/mayukhpsm/mayukhpsm.github.io/blob/master/assets/img/logo17.png"
 
 
 # --- Footer options --- #
