@@ -34,9 +34,9 @@ The fatty membrane of the virus is basically getting detached from our skin and 
 
 So, what are you waiting for? Go ahead, and wash your hands. Go Soap-ing, Stay safe!!
 
-**References:**
+***References:***
 
-*1. A History Lesson On The Dangers Of Letting Data Speak For Itself, Brent Dykes, Forbes, Feb 9, 2016**
+*1. A History Lesson On The Dangers Of Letting Data Speak For Itself, Brent Dykes, Forbes, Feb 9, 2016*
 
 *2. WHO directives on COVID-19 Preventive measures*
 
