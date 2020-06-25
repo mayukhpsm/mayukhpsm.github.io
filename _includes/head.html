@@ -32,7 +32,7 @@
 
   {% if layout.common-css %}
     {% for css in layout.common-css %}
-      <link rel="stylesheet" href="/assets/css/academicons.min.css"/>
+      <!-- <link rel="stylesheet" href="/assets/css/academicons.min.css"/> -->
       <link rel="stylesheet" href="{{ css | relative_url }}">
     {% endfor %}
   {% endif %}
@@ -45,7 +45,7 @@
 
   {% if page.css %}
     {% for css in page.css %}
-      <link rel="stylesheet" href="/assets/css/academicons.min.css"/>
+      <!-- <link rel="stylesheet" href="/assets/css/academicons.min.css"/> -->
       <link rel="stylesheet" href="{{ css | relative_url }}">
     {% endfor %}
   {% endif %}
