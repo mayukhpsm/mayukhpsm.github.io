@@ -48,7 +48,7 @@ social-network-links:
   email: "mayukh.psm@gmail.com"
   #facebook: #deanattali
   github: mayukhdifferent
-  twitter: mayukhdifferent
+  #twitter: mayukhdifferent
   rss: false
 #  reddit: yourname
   linkedin: mayukhpsm
@@ -66,6 +66,7 @@ social-network-links:
 #  calendly: yourname
 #  mastodon: instance.url/@username
   quora: Mayukh-Mukhopadhyay-5
+  medium: mayukhdifferent
 
 # --- General options --- #
 
