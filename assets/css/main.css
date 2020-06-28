@@ -919,7 +919,7 @@ pre {
 
 /* Magnifying hover glass */
 
-
+<style>
 * {box-sizing: border-box;}
 .img-magnifier-container {
   position:relative;
@@ -938,4 +938,4 @@ pre {
 .img-magnifier-glass {
   display:none;
 }
-
+</style>
