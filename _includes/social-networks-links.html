@@ -263,18 +263,6 @@
     </a>
   </li>
 {%- endif -%}
-  
-{%- if site.social-network-links.gscholar -%}
-  <li class="list-inline-item">
-    <a target="_blank" href="https://scholar.google.co.in/citations?user={{ site.social-network-links.gscholar }}" title="Google Scholar">
-      <span class="ai-stack ai-lg" aria-hidden="true">
-        <i class="ais ai-circle ai-stack-2x"></i>
-        <i class="aib ai-google-scholar-square ai-stack-1x ai-inverse"></i>
-      </span>
-      <span class="sr-only">GScholar</span>
-    </a>
-  </li>
-{%- endif -%}
 
 {%- if site.social-network-links.skype -%}
   <li class="list-inline-item">
@@ -285,6 +273,18 @@
       </span>
       <span class="sr-only">Skype Chat</span>
     </a>
+  </li>
+{%- endif -%}
+
+{%- if site.social-network-links.whatsapp -%}
+  <li class="list-inline-item">
+    <a target="_blank" href="https://wa.me/{{ site.social-network-links.whatsapp }}" title="whatsapp">
+      <span class="fa-stack fa-lg" aria-hidden="true">
+        <i class="fas fa-circle fa-stack-2x"></i>
+        <i class="fab fa-whatsapp fa-stack-1x fa-inverse"></i>
+      </span>
+      <span class="sr-only">whatsapp</span>
+   </a>
   </li>
 {%- endif -%}
 
