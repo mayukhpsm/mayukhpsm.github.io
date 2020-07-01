@@ -924,7 +924,7 @@ pre {
     width: 0;
   }
   20%, 80% {
-    width: 9.0em;
+    width: 9.5em;
   }
 }
 
@@ -943,7 +943,7 @@ pre {
   animation: typewriter;
   display: inline-block;
   position: relative;
-  animation-duration: 10s;
+  animation-duration: 15s;
   animation-timing-function: steps(44, end);
   animation-iteration-count: infinite;
 }
