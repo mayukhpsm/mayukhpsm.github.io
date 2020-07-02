@@ -5,6 +5,7 @@ subtitle: Marketing Analytics Case Study
 cover-img: /assets/img/giraf_animation.gif
 tags: [Marketing Analytics, MS Solver, Budget Allocation Model, HCQ, Brand Management]
 ---
+**Co authored by [Kaushik Ghosh](https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=4021364){:target="_blank"}**
 
 With an increasing case of COVID-19 deaths in USA, FDA's emergency use authorisation (EUA) issued permission to physicians the option to prescribe the drug hydroxychloroquine (HCQ), which President Donald Trump has recommended. "I think it was resorted to more out of a sense of desperation", said Joseph Masci, an infectious disease specialist and director of global health at Elmhurst Hospital in Queens, a borough of New York City, which is at the centre of the epidemic in the USA. "It is just an indication of how sudden and massive this outbreak has been." 
 
@@ -22,3 +23,5 @@ To increase its credibility among general US physicians, in midst of COVID-19 ou
 *How can BCPL minimize the cost of obtaining the wanted number of exposures?*
 
 **Case Study with data files originally published and freely available in [Elsevier SSRN Electronic Journal](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3638184){:target="_blank"} DOI: 10.2139/ssrn.3638184**
+
+
