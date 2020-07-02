@@ -943,8 +943,8 @@ pre {
   animation: typewriter;
   display: inline-block;
   position: relative;
-  animation-duration: 15s;
-  animation-timing-function: steps(44, end);
+  animation-duration: 10s;
+  animation-timing-function: steps(29, end);
   animation-iteration-count: infinite;
 }
 
