@@ -23,6 +23,3 @@ To increase its credibility among general US physicians, in midst of COVID-19 ou
 
 **Case Study with data files originally published and freely available in [Elsevier SSRN Electronic Journal](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3638184){:target="_blank"} DOI: 10.2139/ssrn.3638184. Co-Authored by [Kaushik Ghosh](https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=4021364){:target="_blank"}.**
 
-**The Case Study has been catalogued by [Chicago Booth: Marketing Research Paper Series](https://papers.ssrn.com/sol3/JELJOUR_Results.cfm?form_name=journalBrowse&journal_id=925830){:target="_blank"}.**
-
-![my web resume](https://raw.githubusercontent.com/mayukhpsm/mayukhpsm.github.io/master/assets/img/chicago_booth_mkt.PNG)
