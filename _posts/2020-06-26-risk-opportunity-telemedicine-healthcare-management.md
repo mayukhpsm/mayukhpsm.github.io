@@ -11,4 +11,5 @@ As we move past COVID-19, telephone medicine and telemedicine is becoming integr
 **JEL Classification: I10, I11, I19**
 
 
-*Article originally published in [Elsevier SSRN Electronic Journal](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3635122){:target="_blank"} DOI: 10.2139/ssrn.3635122*
+*Article originally published in [Elsevier SSRN Electronic Journal](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3635122){:target="_blank"} DOI: 10.2139/ssrn.3635122 and catalogued by [The Florida State University](https://papers.ssrn.com/sol3/JELJOUR_Results.cfm?form_name=journalBrowse&journal_id=1599282&Network=no&lim=false){:target="_blank"}*
+![catalogued by florida state university](/assets/img/florida_elsevier_elibrary.png)
