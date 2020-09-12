@@ -21,5 +21,6 @@ To increase its credibility among general US physicians, in midst of COVID-19 ou
 
 *How can BCPL minimize the cost of obtaining the wanted number of exposures?*
 
-**Case Study with data files originally published and freely available in [Elsevier SSRN Electronic Journal](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3638184){:target="_blank"} DOI: 10.2139/ssrn.3638184. Co-Authored by [Kaushik Ghosh](https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=4021364){:target="_blank"}.**
+**Case Study published by Marketing Science eJournal Vol. 13 No. 31 and freely available in [Elsevier SSRN](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3638184){:target="_blank"} DOI: 10.2139/ssrn.3638184. Co-Authored by [Kaushik Ghosh](https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=4021364){:target="_blank"}.**
 
+![](/assets/img/marketingscience_ejournal.PNG)
