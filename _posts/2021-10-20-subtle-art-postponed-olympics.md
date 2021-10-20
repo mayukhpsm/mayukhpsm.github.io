@@ -12,6 +12,6 @@ Tokyo 2020 became the first postponed game in the Olympics history. In this arti
 
 The authors declare no conflict of interest. This case is strictly for academic use and should not be used in commercial terms. 
 
-**Full Article is distributed by Finance Planning Fundamentals eJournal Volume 3 No. 27 (Sponsored by CFP Board) and freely available at [Elsevier SSRN](http://dx.doi.org/10.2139/ssrn.3909587){:target="_blank"} DOI: 10.2139/ssrn.3909587.**
+**Full Article is distributed by Finance Planning Fundamentals eJournal Volume 3 No. 27 (Sponsored by CFP Board) and freely available at DOI: [10.2139/ssrn.3909587](http://dx.doi.org/10.2139/ssrn.3909587){:target="_blank"}.**
 
 ![](/assets/img/SSRN3909587_postponedOlympics.jpg)
