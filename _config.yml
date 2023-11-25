@@ -3,7 +3,7 @@
 # Name of website
 title: Mayukh Mukhopadhyay
 #title-img: https://raw.githubusercontent.com/mayukhpsm/mayukhpsm.github.io/master/assets/img/logo12-removebg-preview.png  #acm_logo_mm_2020.png
-title-img: https://raw.githubusercontent.com/mayukhpsm/mayukhpsm.github.io/master/assets/img/acm_psm_mm.png
+#title-img: https://raw.githubusercontent.com/mayukhpsm/mayukhpsm.github.io/master/assets/img/acm_psm_mm.png
 
 # Short description of your site
 description: My rantings on narrative and number.
@@ -16,12 +16,13 @@ author: Mayukh Mukhopadhyay
 navbar-links:
  #ACM: "https://drive.google.com/file/d/1ZMTtp1wAqa3ReNmY2Q73AhDpcZkPdxnP/view?usp=sharing"
  Research Profile:
-     - ACM Member: "https://drive.google.com/file/d/1g0wZKNh1HHEJNgA5iaB3L6G6gdfdPAsf/view"
+     - Clarivate WoS: "https://www.webofscience.com/wos/author/record/2965548"
      - Elsevier SSRN: "https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=4021262"
      - Google Scholar:  "https://scholar.google.co.in/citations?user=0fX4LNgAAAAJ&hl=en"
-     #- Mendeley: "https://www.mendeley.com/profiles/mayukh-mukhopadhyay2/publications/"
+     - ORCID: "https://orcid.org/0000-0001-7733-7160"
      - Research Gate: "https://www.researchgate.net/profile/Mayukh_Mukhopadhyay2"
-     - Web of Science: "https://publons.com/researcher/3535616/mayukh-mukhopadhyay/publications/"
+     - Scopus: "https://www.scopus.com/authid/detail.uri?authorId=57225169829"
+
      
   #Author's home: "https://mayukhpsm.github.io/online-cv"
  Web Résumé: "https://mayukhpsm.github.io/online-cv"
@@ -50,7 +51,7 @@ social-network-links:
   email: "mayukh.psm@gmail.com"
   #facebook: #deanattali
   github: mayukhdifferent
-  #twitter: mayukhdifferent
+  twitter: mayukhdifferent
   rss: false
 #  reddit: yourname
   linkedin: mayukhpsm
@@ -84,7 +85,7 @@ share-links-active:
 
 # How to display the link to your website in the footer
 # Remove this if you don't want a link in the footer
-#url-pretty: "MyWebsite.com"
+url-pretty: "mayukhmukhopadhyay.com"
 
 # Create a "tags" index page and make tags on each post clickable
 link-tags: true
