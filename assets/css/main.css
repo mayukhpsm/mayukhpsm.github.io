@@ -944,7 +944,7 @@ pre {
   display: inline-block;
   position: relative;
   animation-duration: 10s;
-  animation-timing-function: steps(29, end);
+  animation-timing-function: steps(58, end);
   animation-iteration-count: infinite;
 }
 
