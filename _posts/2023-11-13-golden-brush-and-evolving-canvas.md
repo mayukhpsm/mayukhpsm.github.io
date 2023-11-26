@@ -16,6 +16,6 @@ tags: [NFTs, Digital Art, Visual Communication, Generative AI, Personal Branding
 
 The authors declare no conflict of interest. This case is strictly for academic use and should not be used in commercial terms. 
 
-**Full Article is published by Journal of Information Technology Teaching Cases (Scopus Q2, ABS 1, Sage Publication) and available at DOI: [10.1177/20438869231215085](https://doi.org/10.1177/20438869231215085){:target="_blank"}.**
+**Full Article is published by Journal of Information Technology Teaching Cases (Scopus Q2, ABS 1, Sage Publication) and available at DOI:[10.1177/20438869231215085](https://doi.org/10.1177/20438869231215085){:target="_blank"}.**
 
-![](/assets/img/case_snap.jpg)
+![](/assets/img/case_snap.png)
