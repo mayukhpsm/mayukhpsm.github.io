@@ -924,7 +924,7 @@ pre {
     width: 0;
   }
   20%, 80% {
-    width: 9.5em;
+    width: 18.5em;
   }
 }
 
@@ -944,7 +944,7 @@ pre {
   display: inline-block;
   position: relative;
   animation-duration: 10s;
-  animation-timing-function: steps(58, end);
+  animation-timing-function: steps(29, end);
   animation-iteration-count: infinite;
 }
 
