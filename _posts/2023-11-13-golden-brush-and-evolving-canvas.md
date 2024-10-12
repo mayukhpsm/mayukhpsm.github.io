@@ -5,8 +5,6 @@ subtitle: Navigating the digital art and Non-fungible tokens
 cover-img: /assets/img/book.gif
 tags: [NFTs, Digital Art, Visual Communication, Generative AI, Personal Branding, Fintech]
 ---
-**Podcast of the Case Study** 
-![You Tube](https://www.youtube.com/watch?v=E4MuZARHYFg)
 
 **Purpose:** This case study explores the evolving landscape of digital art and non-fungible tokens (NFTs) through the journey of Niklas Elmehed, a renowned freelance artist responsible for the Nobel Laureate portraits. It delves into the challenges and opportunities presented by NFTs, touching upon topics such as data privacy, generative AI, and the changing nature of visual communication. 
 
@@ -20,4 +18,4 @@ The authors declare no conflict of interest. This case is strictly for academic 
 
 **Full Article is published by Journal of Information Technology Teaching Cases (Scopus Q2, ABS 1, Sage Publication) and available at DOI:[10.1177/20438869231215085](https://doi.org/10.1177/20438869231215085){:target="_blank"}.**
 
-![](/assets/img/case_snap.png)
+[![Podcast of the Case Study](/assets/img/case_snap.png)](https://www.youtube.com/watch?v=E4MuZARHYFg)
