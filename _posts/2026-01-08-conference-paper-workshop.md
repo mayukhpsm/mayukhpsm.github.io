@@ -1,7 +1,7 @@
 ---
 layout: post
-title: Golden brush and evolving canvas
-subtitle: Research Portfolio in a Nutshell. This is a work in progress document.
+title: Research Portfolio in a Nutshell
+subtitle: This is a work in progress document.
 cover-img: /assets/img/book.gif
 tags: [Workshops, Conferences, Papers]
 ---
