@@ -37,7 +37,7 @@ tags: [Workshops, Conferences, Papers]
 * B2B Subscription Commerce in the Digital Ecosystem - Journal of Contemporary Business Research, Sage Publications.  
 * A Concept Note on Symbolic Convergence Theory - IUP Journal of Soft Skills, 17(3), 5-16.  
 
-**4 Workshops:** 
+**3 Workshops:** 
 * VSSER-2025  
 * Mckinsey Forward 2025  
 * AMR Bridge Reviewer 2025   
