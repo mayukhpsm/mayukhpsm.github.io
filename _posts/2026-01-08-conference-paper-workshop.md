@@ -1,16 +1,14 @@
 ---
 layout: post
 title: Research Portfolio
-subtitle: 16 Conferences, 11 Papers, 4 Workshops, 150+ Verified Peer-Reviews  
+subtitle: 16 Conferences, 11 Papers, 3 Workshops
 cover-img: /assets/img/book.gif
 tags: [Workshops, Conferences, Papers]
 ---
 
 **16 Conferences:** 
-* ICM 2023 International Conference of Marketing hosted by IIM Bodhgaya and University of Gothenburg Sweden.
-##
-* CERE 2023 hosted by IIM Indore (Top 3 prize winner)
-##
+* ICM 2023 International Conference of Marketing hosted by IIM Bodhgaya and University of Gothenburg Sweden.  
+* CERE 2023 hosted by IIM Indore (Top 3 prize winner)  
 * ISDSI Global 2023 - International Conference hosted by IIM Ranchi  
 * ICMI 2023 International Marketing Conference Co-Hosted by IIM Kashipur and Syracuse University  
 * 9th PAN IIM World Conference - Paper on Venture Capitalist Investor behavior in the Health tech sector  
@@ -42,6 +40,5 @@ tags: [Workshops, Conferences, Papers]
 **4 Workshops:** 
 * VSSER-2025  
 * Mckinsey Forward 2025  
-* AMR Bridge Reviewer 2025  
-* 4TH NEURO-SYMBOLIC AI SUMMER SCHOOL 2025  
+* AMR Bridge Reviewer 2025   
 
