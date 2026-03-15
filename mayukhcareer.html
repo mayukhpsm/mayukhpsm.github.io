@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Mayukh Career Run</title>
+<style>
+body{margin:0;overflow:hidden;background:#000;font-family:sans-serif;}
+#splash{position:fixed;inset:0;background:linear-gradient(180deg,#112 0%,#000820 100%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  color:#fff;text-align:center;padding:20px;z-index:500;}
+#splash h1{color:#FFD700;font-size:clamp(1.8em,5vw,2.8em);letter-spacing:3px;
+  text-shadow:0 0 16px #f80;margin-bottom:8px;}
+.sub{color:#aac8ff;font-size:.88em;margin:3px 0;}
+.keys{color:#667799;font-size:.78em;line-height:2.2;margin:16px 0 22px;}
+#sbtn{background:linear-gradient(135deg,#c50,#fa0);border:none;color:#fff;
+  font-size:1.1em;font-weight:bold;padding:12px 44px;border-radius:8px;cursor:pointer;}
+#loadtxt{color:#445;font-size:.75em;margin-top:14px;}
+
+#hud{position:fixed;top:10px;left:50%;transform:translateX(-50%);
+  color:#FFD700;background:rgba(0,0,0,.65);padding:5px 22px;
+  border-radius:20px;font-size:13px;display:none;z-index:50;pointer-events:none;}
+#hint{position:fixed;bottom:50px;left:50%;transform:translateX(-50%);
+  background:#220;color:#FFD700;border:2px solid #FFD700;
+  padding:5px 16px;border-radius:10px;font-size:13px;
+  display:none;z-index:50;pointer-events:none;animation:bl .8s infinite alternate;}
+@keyframes bl{from{opacity:1}to{opacity:.2}}
+#pbar{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);
+  width:200px;height:6px;background:rgba(255,255,255,.15);border-radius:3px;z-index:50;}
+#pfill{height:100%;background:#FFD700;border-radius:3px;width:0%;}
+#ctrl{position:fixed;bottom:8px;left:50%;transform:translateX(-50%);
+  color:rgba(255,255,255,.5);font-size:11px;z-index:50;pointer-events:none;}
+#rstbtn{position:fixed;top:10px;left:12px;background:#900;color:#fff;
+  border:none;padding:5px 12px;border-radius:10px;cursor:pointer;
+  font-size:12px;display:none;z-index:50;}
+#musicbtn{position:fixed;bottom:10px;right:14px;background:rgba(0,0,0,.7);
+  border:1px solid #FFD700;color:#FFD700;font-size:12px;padding:5px 12px;
+  border-radius:12px;cursor:pointer;display:none;z-index:50;}
+
+#welcome{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);
+  text-align:center;display:none;z-index:60;pointer-events:none;
+  animation:wba 5s ease-in-out forwards;}
+@keyframes wba{
+  0%{opacity:0;transform:translate(-50%,-58%) scale(.85);}
+  15%{opacity:1;transform:translate(-50%,-50%) scale(1.04);}
+  75%{opacity:1;transform:translate(-50%,-50%) scale(1);}
+  100%{opacity:0;transform:translate(-50%,-44%) scale(.95);}
+}
+#welcome .wl1{display:block;font-size:clamp(1.3em,3.5vw,2.1em);color:#FFD700;
+  font-weight:900;letter-spacing:2px;text-shadow:0 0 18px #f80,0 2px 0 #600;
+  background:rgba(0,0,0,.7);padding:12px 28px;border:3px solid #FFD700;
+  border-radius:10px;margin-bottom:8px;}
+#welcome .wl2{display:block;font-size:clamp(.85em,2vw,1.1em);color:#aac8ff;
+  background:rgba(0,0,0,.6);padding:7px 20px;border-radius:8px;}
+
+#endscreen{position:fixed;inset:0;
+  background:linear-gradient(180deg,#112244 0%,#000820 100%);
+  z-index:9000;display:none;flex-direction:column;
+  align-items:center;justify-content:center;
+  color:#fff;text-align:center;padding:30px;}
+#endscreen h1{color:#FFD700;font-size:clamp(1.8em,5vw,2.8em);
+  letter-spacing:2px;text-shadow:0 0 20px #f80;margin-bottom:8px;}
+.ethanks{color:#aac8ff;font-size:.92em;margin:5px 0;}
+.escore{color:#FFD700;font-size:.88em;margin:16px 0 6px;
+  border:1px solid #FFD700;border-radius:8px;padding:12px 24px;
+  background:rgba(255,200,0,.07);line-height:1.8;}
+.elink{display:inline-block;margin:14px 0 18px;
+  background:linear-gradient(135deg,#0055BF,#0099FF);
+  color:#fff;font-weight:bold;font-size:1em;padding:13px 30px;
+  border-radius:8px;text-decoration:none;letter-spacing:1px;
+  box-shadow:0 4px 0 #003;}
+.elink:hover{filter:brightness(1.15);}
+.ebtn{padding:12px 36px;border:none;border-radius:8px;font-size:1em;
+  font-weight:bold;cursor:pointer;letter-spacing:1px;
+  background:linear-gradient(135deg,#c50,#fa0);color:#fff;
+  box-shadow:0 4px 0 #700;margin-top:4px;}
+
+#panel{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:min(500px,88vw);background:#120a00;border:2px solid #FFD700;
+  border-radius:10px;padding:22px 24px;color:#fff8d0;
+  max-height:76vh;overflow-y:auto;display:none;z-index:9500;}
+#panel h2{color:#FFD700;margin-bottom:10px;}
+#panel p,#panel li{font-size:.86em;line-height:1.8;color:#ddc88a;}
+#panel ul{margin-left:16px;}
+.tag{border:1px solid #FFD700;color:#FFD700;border-radius:4px;
+  padding:1px 6px;font-size:.73em;margin:2px;display:inline-block;}
+#pcls{float:right;background:none;border:1px solid #FFD700;
+  color:#FFD700;cursor:pointer;border-radius:4px;padding:2px 8px;}
+
+#touch-controls{position:fixed;bottom:0;left:0;width:100%;
+  display:none;z-index:55;pointer-events:none;
+  padding:0 0 10px 0;}
+.tc-row{display:flex;justify-content:space-between;align-items:flex-end;
+  padding:0 12px;}
+.tc-btn{pointer-events:all;background:rgba(0,0,0,0.55);
+  border:2px solid rgba(255,215,0,0.7);color:#FFD700;
+  border-radius:14px;font-size:1.5em;font-weight:bold;
+  user-select:none;-webkit-user-select:none;
+  touch-action:manipulation;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;}
+.tc-btn:active{background:rgba(255,215,0,0.25);}
+#tc-left  {width:64px;height:64px;}
+#tc-right {width:64px;height:64px;}
+#tc-jump  {width:72px;height:72px;font-size:1.8em;}
+#tc-up    {width:58px;height:58px;}
+#tc-down  {width:58px;height:58px;}
+.tc-mid{display:flex;flex-direction:column;align-items:center;gap:6px;}
+</style>
+</head>
+<body>
+
+<div id="splash">
+  <h1>MAYUKH'S CAREER RUN</h1>
+  <p class="sub">LEGO Edition &nbsp;|&nbsp; IIM Indore PhD &nbsp;|&nbsp; TCS / BT Group</p>
+  <p class="sub" style="color:#88aaff">Sunny LEGO world — bridges, mountains &amp; career milestones!</p>
+  <div class="keys">
+    <b>A / D</b> &nbsp;change lane &nbsp;|&nbsp; <b>W or SPACE</b> &nbsp;jump<br>
+    <b>UP arrow (hold)</b> &nbsp;accelerate &nbsp;|&nbsp; <b>DOWN arrow (hold)</b> &nbsp;brake<br>
+    <b>ENTER / E</b> &nbsp;read plaque &nbsp;|&nbsp; <b>R</b> &nbsp;restart
+  </div>
+  <button id="sbtn" onclick="startGame()">PLAY</button>
+  <p id="loadtxt">Loading Three.js...</p>
+</div>
+
+<div id="hud">dist:<span id="dm">0</span>m &nbsp; spd:<span id="sv">1.0</span>x &nbsp; next:<span id="ns">-</span></div>
+<div id="hint" onclick="if(nearIdx>=0)openPanel(nearIdx);" style="cursor:pointer;">ENTER / E to read</div>
+<div id="pbar"><div id="pfill"></div></div>
+<div id="ctrl">A/D lane | W/SPACE jump | UP accel | DOWN brake | R restart</div>
+<button id="rstbtn" onclick="doRestart()">Restart</button>
+<button id="musicbtn" onclick="toggleMusic()">Music: ON</button>
+
+<div id="welcome">
+  <span class="wl1">Welcome! Thanks for coming to my Career Trip!</span>
+  <span class="wl2">Run through 8 milestones — jump, dodge and read the plaques!</span>
+</div>
+
+<div id="endscreen">
+  <div style="font-size:2.8em;margin-bottom:10px">&#127940;&#127942;&#127940;</div>
+  <h1>JOURNEY COMPLETE!</h1>
+  <p class="ethanks">Thank you for exploring Mayukh's Career!</p>
+  <p class="ethanks" style="color:#88aaff">Executive PhD · IIM Indore &nbsp;|&nbsp; Data Consultant · TCS / BT Group</p>
+  <div class="escore">
+    Distance: <b><span id="end-dist">0</span> m</b> &nbsp;|&nbsp; Score: <b><span id="end-score">0</span> pts</b><br>
+    <span style="color:#aac8ff;font-size:.88em">All 8 Career Milestones Explored &#10003;</span>
+  </div>
+  <p style="color:#cceeff;font-size:.92em;margin:8px 0 4px">Want to know more about Mayukh?</p>
+  <a class="elink" href="https://mayukhpsm.github.io/aboutme.html" target="_blank">
+    Visit mayukhpsm.github.io
+  </a>
+  <br>
+  <button class="ebtn" onclick="doPlayAgain()">Play Again</button>
+  <p style="color:#334;font-size:.74em;margin-top:16px;font-style:italic">
+    "From telecom data pipelines to nostalgia research — a career of continuous reinvention."
+  </p>
+</div>
+
+<div id="panel">
+  <button id="pcls" onclick="closePanel()">Close</button>
+  <h2 id="pt"></h2>
+  <div id="pb"></div>
+</div>
+
+<script>
+var s=document.createElement('script');
+s.src='https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
+s.onload=function(){
+  document.getElementById('loadtxt').textContent='Ready — click PLAY!';
+  document.getElementById('loadtxt').style.color='#0f0';
+};
+s.onerror=function(){
+  var s2=document.createElement('script');
+  s2.src='https://unpkg.com/three@0.128.0/build/three.min.js';
+  s2.onload=function(){ document.getElementById('loadtxt').textContent='Ready — click PLAY!'; document.getElementById('loadtxt').style.color='#0f0'; };
+  document.head.appendChild(s2);
+};
+document.head.appendChild(s);
+</script>
+
+<script>
+var CV=[
+  {t:'Profile Summary',z:90,h:'<p><b>Mayukh Mukhopadhyay</b> - Data Consultant 14.5+ yrs (TCS/BT Group) and Executive PhD Candidate in Marketing, IIM Indore (AACSB-AMBA-EQUIS).</p><p style="margin-top:8px">M.Engg Jadavpur Univ. MBA IIT Kharagpur. Author Ethereum Smart Contract Development (Packt UK). Podcast host. PSM.</p><div style="margin-top:8px"><span class="tag">IIM Indore</span><span class="tag">IIT KGP</span><span class="tag">TCS</span><span class="tag">BT Group</span></div>'},
+  {t:'Education',z:230,h:'<ul><li><b>2022-now</b> - PhD Marketing, IIM Indore.</li><li><b>2018-21</b> - MBA VGSoM IIT Kharagpur.</li><li><b>2014-16</b> - M.Engg Software Engg, Jadavpur Univ.</li><li><b>2005-09</b> - B.Tech ECE, WBUT.</li></ul>'},
+  {t:'Work Experience',z:370,h:'<p><b>Solutions Architect</b> - BT Group plc (via TCS, 2010-now)</p><ul><li>Revenue Assurance, EU-GDPR, Google Cloud - BT Enterprise.</li><li>Hadoop Data Lake - BT Consumer.</li><li>Lead-to-Cash reporting - BT Innovate.</li></ul><p style="margin-top:8px"><b>Data Consultant</b> - TCS. LDA Topic Modeling, CXO dashboards.</p>'},
+  {t:'Publications',z:510,h:'<ul><li>Nostalgia marketing SLR. J.Marketing Communications T&F (ABDC B) 2024.</li><li>Golden Brush and NFTs. JITTC Sage UK (ABS 1) 2023.</li><li>Be My AI. JITTC Sage UK (ABS 1) 2023.</li><li><b>Book:</b> Ethereum Smart Contract Dev, Packt UK.</li></ul>'},
+  {t:'Conferences',z:650,h:'<ul><li><b>Jun 2024</b> - INFORMS ISMS Marketing Science 2024.</li><li><b>Jan 2024</b> - 9th PAN IIM World Mgmt Conf.</li><li><b>Dec 2023</b> - ICM 2023, Syracuse and IIM Kashipur.</li><li><b>Jun 2023</b> - CERE 2023 IIM Indore. <b>Best Paper Top-3/139.</b></li><li><b>Apr 2023</b> - ICM 2023, Gothenburg and IIM Bodhgaya.</li></ul>'},
+  {t:'Awards',z:790,h:'<ul><li><b>2024</b> - MISQ-Insider Behavioral Cybersecurity Interviews.</li><li><b>2024</b> - 50 WoS peer-reviews, 2x Excellent Reviewer.</li><li><b>2023</b> - Best Paper CERE 2023 (Top-3/139).</li><li><b>2022</b> - Empanelled Independent Director, MCA India.</li><li><b>2021</b> - Guest Lectures, AntWak (Google Accelerator).</li></ul>'},
+  {t:'Skills',z:930,h:'<p><b>Programming:</b><span class="tag">Python</span><span class="tag">JavaScript</span><span class="tag">Java</span><span class="tag">SQL</span><span class="tag">LaTeX</span></p><p style="margin-top:8px"><b>Analytics:</b><span class="tag">VOSviewer</span><span class="tag">SPSS</span><span class="tag">NVivo</span><span class="tag">lavaan</span></p><p style="margin-top:8px"><b>Cloud:</b><span class="tag">Google Cloud</span><span class="tag">Azure</span><span class="tag">Oracle Gen-AI</span></p>'},
+  {t:'Contact',z:1060,h:'<ul><li>Email: ef22mayukhm@iimidr.ac.in</li><li>Phone: +91 8697558564</li><li>Web: mayukhpsm.github.io</li><li>Scholar: 0fX4LNgAAAAJ</li><li>Podcast: Revise and Resubmit</li></ul><p style="margin-top:10px;color:#FFD700;font-style:italic">From telecom pipelines to nostalgia research - continuous reinvention.</p>'}
+];
+
+var LANES=[-3.5,0,3.5];
+var BASE=0.10,MAXS=0.28,ACC=0.004,DEC=0.006;
+var GV=-0.026,JV=0.38,TLEN=1150;
+var LC={r:0xCC0000,y:0xFFD700,b:0x0055BF,g:0x237841,o:0xFF6600,
+        w:0xF2F3F2,gr:0x6C6E68,t:0xE4CD9E,p:0x81007B,
+        c:0x009AC7,l:0x99CC00,sk:0x87CEEB,br:0x5C3317,
+        bb:0x0088CC,bg:0x00AA44};
+
+var scene,cam,rend,clk;
+var runner,rp={};
+var wGrp,plaques=[],obst=[];
+var lane=1,rx=0,ry=0,vy=0,isJump=false;
+var spd=BASE,wz=0,bt=0;
+var nearIdx=-1,lastNearIdx=-1,panelOpen=false,running=false;
+var K={};
+var MATS={};
+
+function M(c){if(!MATS[c])MATS[c]=new THREE.MeshLambertMaterial({color:c});return MATS[c];}
+function B(w,h,d,c){return new THREE.Mesh(new THREE.BoxGeometry(w,h,d),M(c));}
+
+function startGame(){
+  if(typeof THREE==='undefined'){alert('Still loading — please wait a second and try again.');return;}
+  document.getElementById('splash').style.display='none';
+  document.getElementById('hud').style.display='block';
+  document.getElementById('rstbtn').style.display='block';
+  document.getElementById('musicbtn').style.display='block';
+
+  scene=new THREE.Scene();
+  scene.background=new THREE.Color(0xb8d8f0);
+  scene.fog=new THREE.Fog(0xb8d8f0,85,230);
+  cam=new THREE.PerspectiveCamera(65,innerWidth/innerHeight,0.1,260);
+  cam.position.set(0,5,11);
+  rend=new THREE.WebGLRenderer({antialias:false});
+  rend.setSize(innerWidth,innerHeight);
+  rend.setPixelRatio(1);
+  rend.shadowMap.enabled=false;
+  rend.domElement.style.position='fixed';
+  rend.domElement.style.top='0';
+  rend.domElement.style.left='0';
+  rend.domElement.style.zIndex='1';
+  document.body.appendChild(rend.domElement);
+
+  scene.add(new THREE.AmbientLight(0xffeedd,0.55));
+  var sun=new THREE.DirectionalLight(0xffeebb,0.75);
+  sun.position.set(30,60,20);scene.add(sun);
+
+  buildWorld();buildRunner();setupInput();setupTouch();setupTouch();
+  showWelcome();startMusic();
+  clk=new THREE.Clock();
+  running=true;
+  tick();
+}
+
+function doRestart(){
+  lane=1;rx=0;ry=0;vy=0;isJump=false;
+  spd=BASE;wz=0;bt=0;nearIdx=-1;panelOpen=false;
+  document.getElementById('panel').style.display='none';
+  document.getElementById('hint').style.display='none';
+  document.getElementById('pfill').style.width='0%';
+  if(wGrp)scene.remove(wGrp);
+  plaques=[];obst=[];
+  buildWorld();
+  runner.position.set(LANES[1],0,2);
+  clk=new THREE.Clock();
+}
+
+function doPlayAgain(){
+  document.getElementById('endscreen').style.display='none';
+  document.getElementById('hud').style.display='block';
+  document.getElementById('pbar').style.display='block';
+  document.getElementById('ctrl').style.display='block';
+  document.getElementById('rstbtn').style.display='block';
+  document.getElementById('musicbtn').style.display='block';
+  // Restart music
+  musicOn=true;
+  document.getElementById('musicbtn').textContent='Music: ON';
+  if(actx){actx.resume().then(function(){mGen++;schedMel(mGen);});}
+  doRestart();
+  running=true;
+  clk=new THREE.Clock();
+  tick();
+}
+
+function showEnd(dist){
+  running=false;
+  // Stop music cleanly
+  mGen++;
+  musicOn=false;
+  if(actx) actx.suspend();
+  document.getElementById('end-dist').textContent=dist;
+  document.getElementById('end-score').textContent=dist*10;
+  document.getElementById('hud').style.display='none';
+  document.getElementById('hint').style.display='none';
+  document.getElementById('pbar').style.display='none';
+  document.getElementById('ctrl').style.display='none';
+  document.getElementById('rstbtn').style.display='none';
+  document.getElementById('musicbtn').style.display='none';
+  document.getElementById('endscreen').style.display='flex';
+}
+
+function buildWorld(){
+  wGrp=new THREE.Group();scene.add(wGrp);
+  var gr=B(80,.28,TLEN+80,LC.g);gr.position.set(0,-.14,-(TLEN/2));wGrp.add(gr);
+  var pt=B(9.5,.3,TLEN+80,LC.t);pt.position.set(0,.01,-(TLEN/2));wGrp.add(pt);
+  [-1.9,1.9].forEach(function(lx){var d=B(.1,.05,TLEN,LC.o);d.position.set(lx,.33,-(TLEN/2));wGrp.add(d);});
+  var mc=[[-55,-120,12,LC.b],[-30,-70,10,LC.c],[60,-190,14,LC.b],[34,-96,11,LC.p],
+          [-68,-330,13,LC.c],[74,-278,15,LC.b],[-50,-490,12,LC.p],[57,-430,13,LC.c],
+          [-64,-660,14,LC.b],[71,-620,11,LC.p],[-47,-860,12,LC.c],[61,-830,14,LC.b]];
+  mc.forEach(function(m){
+    var mx=m[0],mz=m[1],ms=m[2],mc2=m[3];
+    for(var i=0;i<4;i++){var mb=B(ms*(1-i/4*.62)*2,ms*.2,ms*(1-i/4*.62)*2,mc2);mb.position.set(mx,i*ms*.2+ms*.1-1,mz);wGrp.add(mb);}
+    var pk=B(ms*.5,ms*.24,ms*.5,LC.w);pk.position.set(mx,4*ms*.2+ms*.12-1,mz);wGrp.add(pk);
+  });
+  var tcs=[LC.g,LC.bg,LC.l,0x115511];
+  for(var ti=0;ti<130;ti++){
+    var tz=-14-Math.random()*TLEN,tx=(Math.random()<.5?-1:1)*(6.5+Math.random()*12);
+    var tg=new THREE.Group(),th=1.2+Math.random()*1.4;
+    var tr=B(.6,th,.6,LC.br);tr.position.y=th/2;tg.add(tr);
+    var lf=B(1.8+Math.random()*.5,1.5,1.8+Math.random()*.5,tcs[ti%tcs.length]);lf.position.y=th+.75;tg.add(lf);
+    tg.position.set(tx,0,tz);wGrp.add(tg);
+  }
+  for(var ci=0;ci<16;ci++){
+    var cg=new THREE.Group(),clz=-20-Math.random()*TLEN;
+    var cb1=B(3,1.1,1.4,LC.w);var cb2=B(2,.9,1.3,LC.w);cb2.position.set(1.8,.3,0);
+    var cb3=B(2,.9,1.3,LC.w);cb3.position.set(-1.7,.25,0);
+    cg.add(cb1);cg.add(cb2);cg.add(cb3);
+    cg.position.set((Math.random()-.5)*90,14+Math.random()*10,clz);wGrp.add(cg);
+  }
+  [[-295,LC.r],[-590,LC.o],[-870,LC.bb]].forEach(function(bc){
+    var bg2=new THREE.Group(),bz=bc[0],bcol=bc[1];
+    var dk=B(10.5,.4,10,bcol);dk.position.y=.2;bg2.add(dk);
+    var rl1=B(.3,1.8,.3,LC.y);rl1.position.set(-5,1.1,0);bg2.add(rl1);
+    var rl2=B(.3,1.8,.3,LC.y);rl2.position.set(5,1.1,0);bg2.add(rl2);
+    var rt1=B(.3,.3,10.5,LC.y);rt1.position.set(-5,2.1,0);bg2.add(rt1);
+    var rt2=B(.3,.3,10.5,LC.y);rt2.position.set(5,2.1,0);bg2.add(rt2);
+    [-3.5,0,3.5].forEach(function(px){var pl=B(.7,4,.7,LC.gr);pl.position.set(px,-2,0);bg2.add(pl);});
+    var rv=B(10.5,.14,12,LC.c);rv.position.set(0,-.18,0);bg2.add(rv);
+    bg2.position.set(0,0,bz);wGrp.add(bg2);
+  });
+  var sb=B(10,.6,10,LC.y);sb.position.set(50,65,-185);wGrp.add(sb);
+  var pcols=[LC.r,LC.b,LC.g,LC.o,LC.p,LC.c,LC.l,LC.bb];
+  CV.forEach(function(cv2,pi){
+    var side=pi%2===0?-1:1,ppx=side*4.5,ppz=-cv2.z;
+    var pg=new THREE.Group();
+    var ppost=B(.6,5,.6,pcols[pi%pcols.length]);ppost.position.y=2.5;pg.add(ppost);
+    var pbd=B(4.2,2.1,.2,LC.y);pbd.position.set(0,5.1,0);pg.add(pbd);
+    var cv3=document.createElement('canvas');cv3.width=512;cv3.height=200;
+    var ctx=cv3.getContext('2d');
+    ctx.fillStyle='#FFD700';ctx.fillRect(0,0,512,200);
+    ctx.strokeStyle='#1B2A34';ctx.lineWidth=7;ctx.strokeRect(4,4,504,192);
+    ctx.fillStyle='rgba(0,0,0,.1)';
+    [60,160,260,360,460].forEach(function(sx){ctx.beginPath();ctx.arc(sx,24,9,0,Math.PI*2);ctx.fill();ctx.beginPath();ctx.arc(sx,176,9,0,Math.PI*2);ctx.fill();});
+    ctx.fillStyle='#1B2A34';ctx.font='bold 30px Arial';ctx.textAlign='center';ctx.fillText(cv2.t,256,78);
+    ctx.fillStyle='rgba(0,0,0,.45)';ctx.font='17px Arial';ctx.fillText('[ENTER or E] to read',256,132);
+    var tex=new THREE.CanvasTexture(cv3);
+    var pface=new THREE.Mesh(new THREE.PlaneGeometry(4,1.9),new THREE.MeshBasicMaterial({map:tex,transparent:true,side:THREE.DoubleSide}));
+    pface.position.set(0,5.1,.12);pg.add(pface);
+    var fe=new THREE.EdgesGeometry(new THREE.BoxGeometry(4.3,2.2,.22));
+    var frame=new THREE.LineSegments(fe,new THREE.LineBasicMaterial({color:0xFFD700}));
+    frame.position.set(0,5.1,0);pg.add(frame);
+    pg.position.set(ppx,0,ppz);pg.userData={idx:pi,frame:frame};
+    wGrp.add(pg);plaques.push(pg);
+  });
+  var oc=[LC.r,LC.o,LC.bb,LC.p,LC.l];var on=0;
+  for(var oi=0;oi<16;oi++){
+    var oz=-50-oi*55,skip=false;
+    for(var ci2=0;ci2<CV.length;ci2++)if(Math.abs(-CV[ci2].z-oz)<33)skip=true;
+    if([-295,-590,-870].some(function(bz){return Math.abs(bz-oz)<26;}))skip=true;
+    if(skip)continue;
+    var oli=Math.floor(Math.random()*3),oh=.8;
+    var ob=B(.9,oh,.9,oc[on%oc.length]);ob.position.set(LANES[oli],oh/2,oz);
+    wGrp.add(ob);obst.push({mesh:ob,li:oli,h:oh});on++;
+  }
+}
+
+function buildRunner(){
+  runner=new THREE.Group();
+  var body=B(.55,.78,.35,LC.r);body.position.y=1.0;runner.add(body);rp.body=body;
+  var head=B(.5,.5,.5,LC.y);head.position.y=1.65;runner.add(head);rp.head=head;
+  var ll=B(.22,.55,.22,LC.b);ll.position.set(-.17,.35,0);runner.add(ll);rp.ll=ll;
+  var rl=B(.22,.55,.22,LC.b);rl.position.set(.17,.35,0);runner.add(rl);rp.rl=rl;
+  var la=B(.2,.5,.2,LC.r);la.position.set(-.43,.92,0);runner.add(la);rp.la=la;
+  var ra=B(.2,.5,.2,LC.r);ra.position.set(.43,.92,0);runner.add(ra);rp.ra=ra;
+  runner.position.set(LANES[1],0,2);scene.add(runner);
+}
+
+function setupInput(){
+  window.addEventListener('keydown',function(e){
+    K[e.code]=true;
+    if(panelOpen){if(e.code==='Escape'||e.code==='Enter'||e.code==='KeyE')closePanel();return;}
+    if(e.code==='KeyA'||e.code==='ArrowLeft')lane=Math.max(0,lane-1);
+    if(e.code==='KeyD'||e.code==='ArrowRight')lane=Math.min(2,lane+1);
+    if(e.code==='KeyW'||e.code==='Space'){e.preventDefault();if(!isJump){vy=JV;isJump=true;}}
+    if(e.code==='Enter'||e.code==='KeyE'){if(nearIdx>=0)openPanel(nearIdx);}
+    if(e.code==='KeyR')doRestart();
+  });
+  window.addEventListener('keyup',function(e){K[e.code]=false;});
+}
+
+function tick(){
+  if(!running)return;
+  requestAnimationFrame(tick);
+  var dt=Math.min(clk.getDelta(),.05);
+  if(panelOpen){rend.render(scene,cam);return;}
+  bt+=dt;
+  if(K['ArrowUp'])spd=Math.min(MAXS,spd+ACC);
+  else if(K['ArrowDown'])spd=Math.max(0,spd-DEC);
+  else spd+=(BASE-spd)*.025;
+  wz+=spd;
+  wGrp.position.z=wz;
+  if(isJump){vy+=GV;ry+=vy;if(ry<=0){ry=0;vy=0;isJump=false;}}
+  rx+=(LANES[lane]-rx)*.14;
+  runner.position.x=rx;runner.position.y=ry;
+  var bob=isJump?0:Math.sin(bt*10*(spd/BASE||.4))*.04;
+  rp.body.position.y=1.0+bob;rp.head.position.y=1.65+bob;
+  if(!isJump){var sw=Math.sin(bt*10*(spd/BASE||.4))*.5;rp.ll.rotation.x=sw;rp.rl.rotation.x=-sw;rp.la.rotation.x=-sw*.7;rp.ra.rotation.x=sw*.7;}
+  obst.forEach(function(o){var owz=o.mesh.position.z+wz;if(Math.abs(owz-runner.position.z)<.8&&Math.abs(o.mesh.position.x-rx)<.6&&ry<o.h){vy=JV*.6;isJump=true;}});
+  nearIdx=-1;var nd=10,now=Date.now()*.005;
+  plaques.forEach(function(pg,i){
+    var dz=Math.abs((pg.position.z+wz)-runner.position.z),dx=Math.abs(pg.position.x-rx);
+    if(dz<8&&dx<6&&dz<nd){nd=dz;nearIdx=i;}
+    var gl=dz<8?(0.5+0.5*Math.sin(now)):0;
+    pg.userData.frame.material.color.setRGB(1,.8+gl*.2,gl*.1);
+  });
+  var hint=document.getElementById('hint');
+  var tcRead=document.getElementById('tc-read');
+  if(nearIdx>=0){
+    lastNearIdx=nearIdx;
+    hint.style.display='block';
+    hint.textContent=CV[nearIdx].t+' - ENTER/E';
+    if(tcRead) tcRead.style.display='block';
+  } else {
+    hint.style.display='none';
+    if(tcRead) tcRead.style.display='none';
+  }
+  cam.position.x+=(rx*.28-cam.position.x)*.09;
+  cam.position.y=5+ry*.35;
+  cam.lookAt(rx*.2,1.4+ry*.25,runner.position.z-13);
+  var d=Math.floor(wz/10);
+  document.getElementById('dm').textContent=d;
+  document.getElementById('sv').textContent=(spd/BASE).toFixed(1);
+  document.getElementById('pfill').style.width=Math.min(100,(wz/TLEN)*100)+'%';
+  var ni=0;for(var ni2=0;ni2<CV.length;ni2++){if(-CV[ni2].z+wz>-10){ni=ni2;break;}}
+  document.getElementById('ns').textContent=CV[ni].t;
+  if(wz>=TLEN){showEnd(d);return;}
+  rend.render(scene,cam);
+}
+
+function openPanel(i){
+  if(i<0||i>=CV.length) return;
+  document.getElementById('pt').textContent=CV[i].t;
+  document.getElementById('pb').innerHTML=CV[i].h;
+  var panel=document.getElementById('panel');
+  panel.style.display='block';
+  panel.style.zIndex='9500';
+  panelOpen=true;
+  // hide touch controls while reading
+  var tcRead=document.getElementById('tc-read');
+  if(tcRead) tcRead.style.display='none';
+}
+function closePanel(){
+  document.getElementById('panel').style.display='none';
+  panelOpen=false;
+}
+
+// ── WELCOME BANNER ──
+function showWelcome(){
+  var w=document.getElementById('welcome');
+  w.style.display='block';
+  setTimeout(function(){w.style.display='none';},5200);
+}
+
+// ── RETRO MUSIC ──
+var actx=null,musicOn=true,mGen=0;
+var MEL=[[523,.15],[523,.15],[659,.15],[784,.3],[698,.15],[659,.15],[523,.3],[392,.15],[440,.15],[523,.3],[0,.15],[523,.15],[523,.15],[659,.15],[784,.3],[880,.15],[784,.15],[659,.6],[0,.15],[784,.15],[784,.15],[880,.15],[1047,.3],[988,.15],[880,.15],[784,.3],[659,.15],[698,.15],[784,.3],[0,.15],[523,.15],[659,.15],[784,.15],[880,.3],[784,.15],[659,.15],[523,.6],[0,.3]];
+var BAS=[[131,.3],[165,.3],[196,.3],[0,.3],[131,.3],[147,.3],[165,.3],[0,.3],[196,.3],[220,.3],[247,.3],[0,.3],[131,.3],[165,.3],[131,.6],[0,.3]];
+function startMusic(){
+  try{actx=new(window.AudioContext||window.webkitAudioContext)();mGen++;schedMel(mGen);}catch(e){}
+}
+function schedMel(gen){
+  if(!actx||!musicOn||gen!==mGen)return;
+  var t=actx.currentTime+.05,ll=0;
+  MEL.forEach(function(n){if(n[0]>0)pNote(n[0],t,n[1]*.85,'square',.07);t+=n[1];ll+=n[1];});
+  var bt2=actx.currentTime+.05;
+  for(var r=0;r<3;r++)BAS.forEach(function(n){if(n[0]>0)pNote(n[0],bt2,n[1]*.78,'sawtooth',.04);bt2+=n[1];});
+  var pt=actx.currentTime+.05;
+  for(var pi=0;pi<Math.floor(ll/.3);pi++){if(pi%4===0)pDrum(pt,.055);if(pi%4===2)pSnare(pt,.03);pt+=.3;}
+  var myGen=gen;
+  setTimeout(function(){
+    if(musicOn&&actx&&myGen===mGen){schedMel(mGen);}
+  },(ll-.25)*1000);
+}
+function pNote(freq,t,dur,type,vol){
+  if(!actx)return;
+  var o=actx.createOscillator(),g=actx.createGain();
+  o.type=type;o.frequency.setValueAtTime(freq,t);
+  g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(.001,t+dur);
+  o.connect(g);g.connect(actx.destination);o.start(t);o.stop(t+dur+.05);
+}
+function pDrum(t,vol){if(!actx)return;var sr=actx.sampleRate,buf=actx.createBuffer(1,sr*.1,sr),d=buf.getChannelData(0);for(var i=0;i<d.length;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/d.length,3);var s=actx.createBufferSource(),g=actx.createGain();s.buffer=buf;g.gain.setValueAtTime(vol,t);s.connect(g);g.connect(actx.destination);s.start(t);}
+function pSnare(t,vol){if(!actx)return;var sr=actx.sampleRate,buf=actx.createBuffer(1,sr*.08,sr),d=buf.getChannelData(0);for(var i=0;i<d.length;i++)d[i]=(Math.random()*2-1)*.5*Math.pow(1-i/d.length,2);var s=actx.createBufferSource(),g=actx.createGain();s.buffer=buf;g.gain.setValueAtTime(vol,t);s.connect(g);g.connect(actx.destination);s.start(t);}
+function toggleMusic(){
+  musicOn=!musicOn;
+  document.getElementById('musicbtn').textContent=musicOn?'Music: ON':'Music: OFF';
+  if(!musicOn&&actx){
+    mGen++; // invalidate all pending schedMel callbacks
+    actx.suspend();
+  } else if(musicOn&&actx){
+    actx.resume().then(function(){
+      mGen++;
+      schedMel(mGen);
+    });
+  }
+}
+
+function setupTouch(){
+  if('ontouchstart' in window || navigator.maxTouchPoints>0){
+    document.getElementById('touch-controls').style.display='block';
+    var ctrl=document.getElementById('ctrl');
+    if(ctrl) ctrl.style.display='none';
+  }
+  function hold(id,startFn,stopFn){
+    var el=document.getElementById(id);
+    if(!el)return;
+    el.addEventListener('touchstart',function(e){e.preventDefault();startFn();},{passive:false});
+    el.addEventListener('touchend',function(e){e.preventDefault();stopFn();},{passive:false});
+    el.addEventListener('touchcancel',function(e){e.preventDefault();stopFn();},{passive:false});
+    el.addEventListener('mousedown',function(e){e.preventDefault();startFn();});
+    el.addEventListener('mouseup',function(e){e.preventDefault();stopFn();});
+    el.addEventListener('mouseleave',function(){stopFn();});
+  }
+  // Lane buttons with swipe-block flag
+  var btnTapped=false;
+  function tapLane(id, fn){
+    var el=document.getElementById(id);
+    if(!el) return;
+    el.addEventListener('touchstart',function(e){
+      e.preventDefault(); e.stopPropagation();
+      btnTapped=true; fn();
+      setTimeout(function(){btnTapped=false;},300);
+    },{passive:false});
+    el.addEventListener('mousedown',function(e){
+      e.preventDefault(); fn();
+    },{passive:false});
+  }
+  tapLane('tc-left',  function(){ lane=Math.max(0,lane-1); });
+  tapLane('tc-right', function(){ lane=Math.min(2,lane+1); });
+  tapLane('tc-mid',   function(){ lane=1; });
+  hold('tc-jump',function(){if(!isJump){vy=JV;isJump=true;}},function(){});
+  hold('tc-up',function(){K['ArrowUp']=true;},function(){K['ArrowUp']=false;});
+  hold('tc-down',function(){K['ArrowDown']=true;},function(){K['ArrowDown']=false;});
+  var sx=0,sy=0;
+  document.addEventListener('touchstart',function(e){
+    if(e.target.classList.contains('tc-btn'))return;
+    sx=e.touches[0].clientX; sy=e.touches[0].clientY;
+  },{passive:true});
+  document.addEventListener('touchend',function(e){
+    if(e.target.classList.contains('tc-btn'))return;
+    if(btnTapped)return;
+    var dx=e.changedTouches[0].clientX-sx;
+    var dy=e.changedTouches[0].clientY-sy;
+    if(Math.abs(dx)>Math.abs(dy)){
+      if(dx>40)lane=Math.min(2,lane+1);
+      else if(dx<-40)lane=Math.max(0,lane-1);
+    } else {
+      if(dy<-40&&!isJump){vy=JV;isJump=true;}
+    }
+  },{passive:true});
+
+  // READ button
+  var rdBtn=document.getElementById('tc-read');
+  if(rdBtn){
+    rdBtn.addEventListener('touchstart',function(e){
+      e.preventDefault();
+      e.stopPropagation();
+      var idx=nearIdx>=0?nearIdx:lastNearIdx;
+      if(idx>=0){ openPanel(idx); }
+    },{passive:false});
+    rdBtn.addEventListener('touchend',function(e){
+      e.preventDefault();
+      e.stopPropagation();
+    },{passive:false});
+    rdBtn.addEventListener('click',function(e){
+      e.stopPropagation();
+      var idx=nearIdx>=0?nearIdx:lastNearIdx;
+      if(idx>=0){ openPanel(idx); }
+    });
+  }
+
+  // Close panel by tapping outside on mobile
+  document.getElementById('panel').addEventListener('touchstart',function(e){
+    e.stopPropagation();
+  },{passive:true});
+  document.addEventListener('touchstart',function(e){
+    if(panelOpen && !document.getElementById('panel').contains(e.target)){
+      closePanel();
+    }
+  },{passive:true});
+}
+
+</script>
+
+<div id="touch-controls">
+  <div class="tc-row">
+    <!-- Left cluster: lane left -->
+    <button class="tc-btn" id="tc-left" style="width:64px;height:64px;font-size:1.6em;">&#8592;</button>
+    <!-- Middle cluster: accel/brake + jump -->
+    <div class="tc-mid">
+      <button class="tc-btn" id="tc-up"   style="width:58px;height:54px;font-size:1.1em;">&#9650; GO</button>
+      <button class="tc-btn" id="tc-mid"  style="width:58px;height:54px;font-size:.85em;background:rgba(255,215,0,0.2);">&#9679; MID</button>
+      <button class="tc-btn" id="tc-down" style="width:58px;height:54px;font-size:1.1em;">&#9660; BRK</button>
+    </div>
+    <!-- Jump -->
+    <button class="tc-btn" id="tc-jump" style="width:68px;height:68px;font-size:1.8em;">&#8679;</button>
+    <!-- Right cluster: lane right -->
+    <button class="tc-btn" id="tc-right" style="width:64px;height:64px;font-size:1.6em;">&#8594;</button>
+  </div>
+  <div style="display:flex;justify-content:center;margin-top:8px;">
+    <button class="tc-btn" id="tc-read"
+      style="width:auto;padding:10px 28px;font-size:1em;letter-spacing:1px;
+      display:none;background:rgba(255,215,0,0.18);border-color:#FFD700;color:#FFD700;">
+      &#128214; READ PLAQUE
+    </button>
+  </div>
+</div>
+
+</body>
+</html>
