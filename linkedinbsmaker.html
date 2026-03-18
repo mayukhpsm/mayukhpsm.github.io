@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>LinkeDIN &amp; Tonic: Corporate BS Post Distillery</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+  <style>
+    :root{--lin-blue:#0a66c2;--lin-dark:#0b1120;--accent:#7c3aed;--card-radius:20px}
+    *,*::before,*::after{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{background:linear-gradient(135deg,#e8f0fe 0%,#f3f7ff 50%,#ede9fe 100%);min-height:100vh;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+    .logo-box{background:var(--lin-blue);color:#fff;font-weight:900;font-size:.9rem;padding:3px 7px;border-radius:4px}
+    .logo-suffix{font-size:.85rem;font-weight:600;color:#374151;margin-left:6px}
+    .pill-badge{background:#ede9fe;color:var(--accent);font-size:.68rem;font-weight:700;padding:2px 9px;border-radius:999px;letter-spacing:.08em;text-transform:uppercase}
+    .hero{padding:44px 16px 24px;text-align:center}
+    .hero h1{font-size:clamp(1.5rem,4vw,2.4rem);font-weight:800;color:#111827;line-height:1.2}
+    .hero h1 span{color:var(--lin-blue)}
+    .hero p{color:#4b5563;max-width:520px;margin:10px auto 0;font-size:.95rem}
+    .main-card{background:#fff;border-radius:var(--card-radius);box-shadow:0 24px 64px rgba(15,23,42,.14);overflow:hidden}
+    .left-panel{padding:32px 28px}
+    .right-panel{background:var(--lin-dark);padding:32px 28px;display:flex;flex-direction:column}
+    @media(min-width:768px){.left-panel{border-right:1px solid #f1f5f9}}
+    @media(max-width:767px){.right-panel{border-top:2px solid #1e2d45}.left-panel,.right-panel{padding:22px 18px}}
+    .panel-head{font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#6b7280;margin-bottom:18px;display:flex;align-items:center;gap:6px}
+    .panel-head.light{color:#9ca3af}
+    .form-label{font-weight:600;font-size:.875rem;color:#1f2937}
+    .form-control,.form-select{font-size:.9rem;border-color:#e5e7eb;border-radius:10px;transition:border-color .2s,box-shadow .2s}
+    .form-control:focus,.form-select:focus{border-color:var(--lin-blue);box-shadow:0 0 0 3px rgba(10,102,194,.12)}
+    .form-text{font-size:.75rem;color:#9ca3af}
+    .ex-label{font-size:.72rem;font-weight:600;color:#6b7280;margin-bottom:6px}
+    .chip{display:inline-block;background:#f1f5f9;color:#374151;border-radius:999px;padding:4px 11px;font-size:.75rem;cursor:pointer;transition:background .15s;margin:0 5px 6px 0;border:1px solid #e2e8f0}
+    .chip:hover{background:#e0e7ff;color:var(--lin-blue)}
+    .btn-generate{background:var(--lin-blue);color:#fff;font-weight:700;border:none;border-radius:999px;padding:10px 26px;font-size:.9rem;transition:background .2s,transform .1s;cursor:pointer}
+    .btn-generate:hover{background:#084ea1;transform:translateY(-1px)}
+    .btn-generate:active{transform:scale(.97)}
+    .btn-lucky{border-radius:999px;font-size:.8rem;padding:8px 16px}
+    .tag-row{margin-bottom:12px;display:flex;flex-wrap:wrap;gap:6px}
+    .htag{background:#1e2d45;color:#93c5fd;font-size:.7rem;padding:3px 10px;border-radius:999px;font-weight:600}
+    .output-wrapper{background:#131c2e;border-radius:14px;padding:18px 16px 16px;flex:1;position:relative;min-height:260px}
+    #outputText{color:#e5e7eb;font-size:.875rem;line-height:1.8;white-space:pre-wrap}
+    .placeholder-msg{color:#4b5563;font-size:.85rem;font-style:italic;padding-top:8px}
+    .action-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:12px}
+    .copy-btn{background:#1e2d45;color:#93c5fd;border:none;border-radius:8px;font-size:.78rem;padding:6px 13px;display:flex;align-items:center;gap:5px;transition:background .15s;cursor:pointer}
+    .copy-btn:hover{background:#273d5e;color:#bfdbfe}
+    .share-label{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#4b5563;width:100%;margin-top:4px}
+    .share-btn{display:inline-flex;align-items:center;gap:5px;border-radius:8px;font-size:.75rem;font-weight:600;padding:6px 12px;border:none;cursor:pointer;text-decoration:none;transition:opacity .15s,transform .1s}
+    .share-btn:hover{opacity:.85;transform:translateY(-1px)}
+    .share-twitter{background:#000;color:#fff}
+    .share-bluesky{background:#0085ff;color:#fff}
+    .share-linkedin{background:#0a66c2;color:#fff}
+    .share-facebook{background:#1877f2;color:#fff}
+    .share-instagram{background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);color:#fff}
+    .bs-meter-label{font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#4b5563;margin-top:14px}
+    .bs-meter-track{height:8px;background:#1e2d45;border-radius:999px;margin-top:6px;overflow:hidden}
+    .bs-meter-fill{height:100%;background:linear-gradient(90deg,#6366f1,#ec4899);border-radius:999px;width:0%;transition:width .8s cubic-bezier(.4,0,.2,1)}
+    .bs-score-text{font-size:.72rem;color:#6b7280;margin-top:4px;min-height:16px}
+    .history-section{margin-top:18px}
+    .history-label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#4b5563;margin-bottom:8px}
+    .history-list{list-style:none;padding:0;margin:0;max-height:160px;overflow-y:auto}
+    .history-list::-webkit-scrollbar{width:4px}
+    .history-list::-webkit-scrollbar-thumb{background:#2d3e56;border-radius:4px}
+    .history-item{background:#131c2e;border-radius:10px;padding:9px 12px;margin-bottom:7px;cursor:pointer;border:1px solid #1e2d45;transition:border-color .15s}
+    .history-item:hover{border-color:#6366f1}
+    .hi-preview{color:#9ca3af;font-size:.77rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .hi-meta{font-size:.67rem;color:#4b5563;margin-top:2px}
+    footer{text-align:center;font-size:.73rem;color:#9ca3af;padding:24px 16px 20px}
+    .toast-shelf{position:fixed;bottom:24px;right:24px;z-index:9999}
+    .toast{border-radius:12px;font-size:.85rem}
+  </style>
+</head>
+<body>
+
+<nav class="navbar bg-white border-bottom px-3 px-md-5 sticky-top" style="min-height:54px">
+  <a class="navbar-brand d-flex align-items-center gap-2" href="#">
+    <span class="logo-box">in</span>
+    <span class="logo-suffix">LinkeDIN &amp; Tonic</span>
+  </a>
+  <div class="d-flex align-items-center gap-2 gap-md-3">
+    <span class="pill-badge">Corporate BS Distillery</span>
+    <span class="d-none d-md-inline" style="font-size:.78rem;color:#6b7280">Fermented in 100% Synergy</span>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="pill-badge mb-3">&#10024; Now 300% more jargonified</div>
+  <h1>Turn boring life into <span>LinkedIn gold.</span></h1>
+  <p>Did you eat lunch? Brush your teeth? Survive a meeting?<br/>We distil your mundane existence into beautifully weaponised corporate prose.</p>
+</div>
+
+<div class="container pb-4" style="max-width:1040px">
+  <div class="main-card">
+    <div class="row g-0">
+
+      <div class="col-md-6">
+        <div class="left-panel">
+          <div class="panel-head"><i class="bi bi-pencil-square"></i>Step 1 &mdash; Your very normal day</div>
+          <div class="mb-3">
+            <label class="form-label" for="userInput">What did you actually do?</label>
+            <textarea class="form-control" id="userInput" rows="5"
+              placeholder="Just type it plainly. Examples:&#10;&#10;- I took a nap&#10;- Brushed my teeth&#10;- Sent a few emails&#10;- Attended a boring Zoom call&#10;- Ate lunch alone&#10;&#10;The more mundane, the better."></textarea>
+            <div class="form-text">No formatting needed. We handle the corporate poetry.</div>
+          </div>
+          <div class="mb-1 ex-label">&#128161; Click an example to try:</div>
+          <div class="mb-4">
+            <span class="chip">I took a nap</span>
+            <span class="chip">I brushed my teeth</span>
+            <span class="chip">I ate lunch alone</span>
+            <span class="chip">I sent a few emails</span>
+            <span class="chip">I attended a 3-hour Zoom call</span>
+            <span class="chip">I got rejected</span>
+            <span class="chip">I made a to-do list</span>
+            <span class="chip">I took a dump</span>
+          </div>
+          <div class="mb-4">
+            <label class="form-label" for="tone">Distillery tone</label>
+            <select class="form-select" id="tone">
+              <option value="classic" selected>&#x1F943; Classic Humble-Brag</option>
+              <option value="ultra">&#x1F680; Ultra-Synergistic C-Suite</option>
+              <option value="founder">&#x1F525; Founder Grind + Gratitude</option>
+              <option value="thought">&#x1F9E0; Deep Thought Leadership</option>
+              <option value="spiritual">&#x1F64F; Corporate Spirituality</option>
+            </select>
+          </div>
+          <div class="d-flex flex-wrap gap-2 align-items-center">
+            <button class="btn-generate" id="generateBtn"><i class="bi bi-magic me-1"></i>Distil the BS</button>
+            <button class="btn btn-outline-secondary btn-lucky" id="shuffleBtn"><i class="bi bi-shuffle me-1"></i>I feel lucky</button>
+          </div>
+          <p class="mt-3 mb-0" style="font-size:.75rem;color:#9ca3af">
+            &#9888;&#65039; Side effects: uncontrollable use of &ldquo;leverage&rdquo;, &ldquo;synergise&rdquo;, and &ldquo;optimise&rdquo; in everyday conversation.
+          </p>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="right-panel">
+          <div class="panel-head light"><i class="bi bi-linkedin"></i>Your weaponised corporate poetry</div>
+          <div class="tag-row" id="tagRow">
+            <span class="htag">#leadership</span>
+            <span class="htag">#optimization</span>
+            <span class="htag">#grateful</span>
+            <span class="htag">#synergy</span>
+          </div>
+          <div class="output-wrapper">
+            <div id="outputPlaceholder" class="placeholder-msg">
+              Hit &ldquo;Distil the BS&rdquo; to transform your humble reality into a masterpiece of corporate poetry. &#x1F943;
+            </div>
+            <div id="outputText"></div>
+          </div>
+          <div class="action-row">
+            <button class="copy-btn" id="copyBtn"><i class="bi bi-clipboard"></i>Copy post</button>
+          </div>
+          <div class="action-row" id="shareRow" style="display:none">
+            <span class="share-label"><i class="bi bi-share me-1"></i>Share directly</span>
+            <a class="share-btn share-twitter"   id="shareTwitter"   href="#" target="_blank" rel="noopener"><svg width="12" height="12" viewBox="0 0 24 24" fill="white"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.747l7.73-8.835L1.254 2.25H8.08l4.259 5.63 5.905-5.63zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>X&nbsp;/&nbsp;Twitter</a>
+            <a class="share-btn share-bluesky"   id="shareBluesky"   href="#" target="_blank" rel="noopener"><i class="bi bi-cloud-fill"></i>Bluesky</a>
+            <a class="share-btn share-linkedin"  id="shareLinkedin"  href="#" target="_blank" rel="noopener"><i class="bi bi-linkedin"></i>LinkedIn</a>
+            <a class="share-btn share-facebook"  id="shareFacebook"  href="#" target="_blank" rel="noopener"><i class="bi bi-facebook"></i>Facebook</a>
+            <a class="share-btn share-instagram" id="shareInstagram" href="#" target="_blank" rel="noopener"><i class="bi bi-instagram"></i>Instagram</a>
+          </div>
+          <div class="bs-meter-label">&#x1F9EA; BS Concentration Level</div>
+          <div class="bs-meter-track"><div class="bs-meter-fill" id="bsMeterFill"></div></div>
+          <div class="bs-score-text" id="bsScoreText"></div>
+          <div class="history-section">
+            <div class="history-label"><i class="bi bi-clock-history me-1"></i>Previous distillations</div>
+            <ul class="history-list" id="historyList">
+              <li style="color:#4b5563;font-size:.78rem;font-style:italic;padding:4px 0">No distillations yet. Your feed is still sober.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p class="mb-1"><strong>LinkeDIN &amp; Tonic: Corporate BS Post Distillery</strong></p>
+  <p class="mb-1">Built for academic amusement. Do not actually post this unless your manager already speaks fluent Corporate BS.<br/>(If they do, you have bigger problems.)</p>
+  <p class="mb-0">&copy; 2026 Mayukh Mukhopadhyay. All rights reserved.</p>
+</footer>
+
+<div class="toast-shelf">
+  <div id="toastEl" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+      <div class="toast-body" id="toastMsg"><i class="bi bi-check-circle me-2"></i>Copied to clipboard!</div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// ─── VERB MAP ───────────────────────────────────────────────────────────────
+// Each entry: [regex that matches the RAW user phrase, corporate replacement]
+// NOTE: regex written to work on raw input that MAY or MAY NOT include "I"
+// We apply this BEFORE stripping "I", so patterns include optional "i "
+const verbMap = [
+  // sleep / nap
+  [/(i\s+)?(took\s+a\s+(massive\s+)?nap|had\s+a\s+(quick\s+)?nap|napped|slept\s+in)/gi,
+   "completed a high-efficiency cognitive recharge cycle"],
+
+  // bathroom
+  [/(i\s+)?(took\s+a\s+(massive\s+|big\s+)?dump|went\s+to\s+the\s+(bathroom|restroom|loo|toilet)|used\s+the\s+(toilet|restroom|bathroom))/gi,
+   "completed a high-volume output optimisation session — streamlining internal processes and making room for the next big challenge"],
+
+  // brushed teeth
+  [/(i\s+)?(brushed\s+(my\s+)?teeth)/gi,
+   "executed a proactive oral hygiene optimisation protocol"],
+
+  // lunch
+  [/(i\s+)?(ate\s+(my\s+)?lunch|had\s+(my\s+)?lunch|grabbed\s+lunch)/gi,
+   "facilitated a strategic mid-day nutritional stakeholder alignment session"],
+
+  // breakfast
+  [/(i\s+)?(ate\s+(my\s+)?breakfast|had\s+(my\s+)?breakfast)/gi,
+   "kick-started my metabolic transformation pipeline with a high-impact nutritional intake"],
+
+  // dinner
+  [/(i\s+)?(had\s+(my\s+)?dinner|ate\s+(my\s+)?dinner)/gi,
+   "concluded the operational day with a reflective caloric synthesis and recovery debrief"],
+
+  // coffee
+  [/(i\s+)?(drank\s+(some\s+)?coffee|had\s+(a\s+)?(coffee|cup\s+of\s+coffee)|grabbed\s+(a\s+)?coffee)/gi,
+   "optimised my cognitive throughput via a precision-calibrated caffeine deployment"],
+
+  // gym / exercise
+  [/(i\s+)?(went\s+to\s+the\s+gym|worked\s+out|exercised|did\s+(a\s+)?workout)/gi,
+   "executed a high-intensity physical capability enhancement initiative"],
+
+  // emails
+  [/(i\s+)?(sent\s+(some|a\s+few|several|many)?\s*emails?)/gi,
+   "actioned high-priority cross-functional communication deliverables"],
+
+  // zoom / teams call
+  [/(i\s+)?(attended\s+(a\s+)?(boring\s+|long\s+|3-hour\s+|three-hour\s+)?(zoom|teams|virtual|online|video)?\s*(call|meeting|sync))/gi,
+   "participated in a multi-stakeholder synchronous collaboration touchpoint"],
+
+  // meeting
+  [/(i\s+)?(attended\s+(a\s+)?(boring\s+|long\s+|3-hour\s+|three-hour\s+)?meeting|sat\s+(through|in)\s+(a\s+)?(boring\s+)?meeting)/gi,
+   "co-facilitated a dynamic cross-functional ideation and alignment symposium"],
+
+  // to-do list
+  [/(i\s+)?(made\s+(a\s+)?(to-do|todo)\s+list|wrote\s+(a\s+)?(to-do|todo)\s+list)/gi,
+   "architected a priority-sequenced task optimisation framework for maximum throughput"],
+
+  // rejected
+  [/(i\s+)?(got\s+rejected|faced\s+rejection|was\s+rejected|received\s+a\s+rejection)/gi,
+   "encountered a strategic pivot opportunity masterfully disguised as temporary misalignment"],
+
+  // cleaned desk
+  [/(i\s+)?(cleaned\s+(my\s+)?desk|tidied\s+(my\s+)?desk|organised\s+(my\s+)?desk)/gi,
+   "reengineered my physical workspace infrastructure to maximise flow-state productivity"],
+
+  // watched netflix
+  [/(i\s+)?(watched\s+netflix|binge.?watched|watched\s+(a\s+)?show|watched\s+(a\s+)?series)/gi,
+   "engaged in an immersive long-form narrative consumption sprint for strategic ideation purposes"],
+
+  // scrolled social media
+  [/(i\s+)?(scrolled\s+(twitter|linkedin|instagram|social\s+media|my\s+feed|tiktok|facebook))/gi,
+   "conducted real-time market sentiment analysis via a social intelligence monitoring loop"],
+
+  // did nothing / procrastinated
+  [/(i\s+)?(did\s+nothing|procrastinated|lazed\s+around|wasted\s+time|killed\s+time)/gi,
+   "cultivated deliberate white space for strategic incubation and non-linear ideation"],
+
+  // quit job
+  [/(i\s+)?(quit\s+(my\s+)?job|resigned(\s+from\s+(my\s+)?job)?)/gi,
+   "strategically sunset my legacy engagement and unlocked the next chapter of my value creation journey"],
+
+  // got promoted
+  [/(i\s+)?(got\s+(a\s+)?promot(ed|ion)|was\s+promoted)/gi,
+   "successfully executed a leadership runway expansion and assumed an elevated strategic mandate"],
+
+  // failed / mistake
+  [/(i\s+)?(failed|messed\s+up|made\s+a\s+mistake|screwed\s+up)/gi,
+   "generated a high-fidelity learning artefact through real-world hypothesis validation"],
+
+  // presentation
+  [/(i\s+)?(gave\s+(a\s+)?presentation|presented(\s+something)?|did\s+(a\s+)?presentation)/gi,
+   "orchestrated an immersive stakeholder narrative experience with measurable resonance impact"],
+
+  // slide deck
+  [/(i\s+)?(finished\s+(a\s+)?(slide\s+deck|slides|presentation)|completed\s+(a\s+)?(slide\s+deck|slides))/gi,
+   "delivered a precision-crafted visual storytelling framework fully aligned to strategic objectives"],
+
+  // walk
+  [/(i\s+)?(went\s+for\s+(a\s+)?walk|took\s+(a\s+)?walk)/gi,
+   "leveraged ambulatory locomotion as a catalyst for divergent thinking and ideation"],
+
+  // talked to boss
+  [/(i\s+)?(talked\s+to\s+(my\s+)?(boss|manager)|met\s+(with\s+)?(my\s+)?(boss|manager))/gi,
+   "engaged in a bilateral leadership alignment session with my senior strategic sponsor"],
+
+  // read a book
+  [/(i\s+)?(read\s+(a\s+)?book)/gi,
+   "deepened my intellectual capital through immersive knowledge asset acquisition"],
+
+  // learned something
+  [/(i\s+)?(learned\s+something(\s+new)?)/gi,
+   "expanded my cognitive bandwidth through a deliberate upskilling micro-sprint"],
+];
+
+const intros = [
+  "I wasn't going to post this. But radical transparency demands otherwise.",
+  "Imposter syndrome told me to stay quiet. I chose to show up anyway.",
+  "This feels uncomfortable to share. Posting it for accountability.",
+  "Not all growth looks glamorous. Some of it looks exactly like this.",
+  "Three years ago I wouldn't have had the courage to be this vulnerable. Here we go.",
+  "I debated posting this for 48 hours. The community deserved to know.",
+  "The most transformative moments often look unremarkable from the outside.",
+  "A mentor once told me: document the journey, not just the destination.",
+];
+
+const frames = {
+  classic: [
+    "What looks like a small action is, in reality, a compounding investment in my long-term performance architecture.",
+    "We overestimate dramatic breakthroughs and catastrophically underestimate the power of optimised micro-routines.",
+    "The highest-leverage leaders I know obsess over process efficiency at the granular level — and today was a reminder why.",
+    "In a world chasing viral moments, I am doubling down on boring, unglamorous execution. This is that.",
+  ],
+  ultra: [
+    "When you operationalise excellence at the systemic level, even the most routine touchpoints become vectors for value creation.",
+    "At enterprise scale, these micro-optimisations ladder up into culture, capability, and durable competitive advantage for all stakeholders in the ecosystem.",
+    "The intersection of operational rigour and human-centred leadership is precisely where transformational outcomes are manufactured.",
+    "This is what results-oriented execution looks like before it gets packaged into a case study.",
+  ],
+  founder: [
+    "Nobody talks about the unglamorous substrate that the entire startup flywheel is actually built on. This is it.",
+    "Every unicorn you admire was bootstrapped on a foundation of boring, optimised, repeatable daily execution. Full stop.",
+    "The build phase isn't the pitch deck. It's this. Over and over, compounded daily.",
+    "Grit is just optimised consistency wearing a hoodie.",
+  ],
+  thought: [
+    "This raises a second-order question that most organisations systematically refuse to ask: what are we optimising for, and why?",
+    "The real competitive moat in the next decade won't be technology. It will be the quality of human attention and the discipline of intentional action.",
+    "When we architect systems that reward reflection over performative busyness, this is what the output looks like.",
+    "Zooming out: if you cannot optimise the small, you have no business claiming you can optimise the large.",
+  ],
+  spiritual: [
+    "The universe does not distinguish between grand gestures and quiet optimisations. Both are sacred data points in your growth trajectory.",
+    "Alignment is not a destination. It is a discipline. And today, I chose discipline.",
+    "When your intentions are calibrated to your highest values, even the most ordinary actions become extraordinary acts of service.",
+    "I am grateful that I get to show up, optimise, and iterate — every. single. day.",
+  ],
+};
+
+const insights = [
+  "You cannot optimise what you refuse to acknowledge. So I am acknowledging this publicly.",
+  "The gap between high performers and everyone else is not talent — it is the relentless optimisation of the ordinary.",
+  "Execution is a muscle. And today, I went to the gym.",
+  "Sustainable excellence is not about working harder. It is about engineering better systems — starting with yourself.",
+  "The highest ROI investment you will ever make is in your own operational infrastructure.",
+  "Accountability is not a feeling. It is a calendar event. And I showed up.",
+  "Discipline is the bridge between your strategic intent and your actual results.",
+  "The compounding effect of a 1% daily optimisation is not a metaphor. It is mathematics.",
+];
+
+const gratitudes = [
+  "my incredible network, whose collective energy makes every optimisation cycle feel purposeful",
+  "the mentors who taught me to see leverage where others see logistics",
+  "this community, which holds me accountable to my highest-performance self",
+  "the collaborators who challenge me to optimise not just my output, but my impact",
+  "everyone who has invested even a fraction of their bandwidth into my growth trajectory",
+];
+
+const closers = [
+  "What small thing are YOU optimising today? Drop it below. I read every single response.",
+  "Tag someone who needs a reminder that the ordinary, done with intention, is extraordinary.",
+  "Repost if this unlocked something for you. Your network may need this today.",
+  "Follow for more unfiltered dispatches from the intersection of performance, purpose, and process.",
+  "If this resonated, hit that reaction button. It tells the algorithm that real beats polished.",
+  "What would you add? Build on this in the comments. Let's co-create something useful.",
+];
+
+const bsNotes = {
+  classic:   ["Silky smooth. Notes of resilience and manufactured serendipity.", "Well-aged in barrels of strategic ambiguity. A classic vintage."],
+  ultra:     ["Maximum potency. May cause involuntary use of the word 'ecosystem'.", "Warning: not for the faint-hearted. Pairs well with a KPI dashboard."],
+  founder:   ["Raw, unfiltered, caffeinated. Distilled at 2 AM in a co-working space.", "Bold finish. Best paired with a cold brew and an unsigned term sheet."],
+  thought:   ["Dense on the palate. Single-malt intellectual complexity.", "Pairs beautifully with a Moleskine and a Substack with 4 subscribers."],
+  spiritual: ["Blessed by the universe and algorithmically amplified.", "Infused with cosmic intention and a precise 15% vagueness ratio."],
+};
+
+const hashtags = {
+  classic:   ["#leadership","#growthmindset","#optimization","#grateful","#execution","#professionalgrowth","#compounding"],
+  ultra:     ["#synergy","#transformation","#futureofwork","#stakeholdervalue","#operationalexcellence","#scaleup"],
+  founder:   ["#startup","#founderlife","#buildinpublic","#grit","#resilience","#entrepreneurship"],
+  thought:   ["#thoughtleadership","#criticalthinking","#secondorderthinking","#humancentered","#organizationalbehavior"],
+  spiritual: ["#gratitude","#intentionalliving","#abundance","#mindfulleadership","#alignment","#purposedriven"],
+};
+
+const luckyActions = [
+  "I took a nap after lunch",
+  "I brushed my teeth this morning",
+  "I sent a few emails",
+  "I attended a 3-hour Zoom call",
+  "I ate lunch alone",
+  "I made a to-do list",
+  "I scrolled LinkedIn for 45 minutes",
+  "I got rejected and opened my laptop anyway",
+  "I cleaned my desk",
+  "I took a dump",
+];
+
+const randFrom = a => a[Math.floor(Math.random() * a.length)];
+const shuffle  = a => [...a].sort(() => Math.random() - 0.5);
+
+// ─── CORE PIPELINE ───────────────────────────────────────────────────────────
+// Step 1: Apply verb map to the RAW input (keeps "I" in place for regex matching)
+// Step 2: Strip leading "today", "today i", or bare "i" from the result
+// Step 3: Build the post with "Today I <jargonised>" prefix
+
+function applyVerbMap(raw) {
+  let s = raw.trim();
+  let matched = false;
+  for (const [pattern, replacement] of verbMap) {
+    const before = s;
+    s = s.replace(pattern, replacement);
+    if (s !== before) { matched = true; break; } // apply first match only
+  }
+  return { text: s, matched };
+}
+
+function stripLeadingSubject(s) {
+  // Remove "today, " / "today " then leading "i "
+  s = s.replace(/^today[,]?\s+/i, "");
+  s = s.replace(/^i\s+/i, "");
+  return s.charAt(0).toLowerCase() + s.slice(1);
+}
+
+let generatedPost = "";
+let history = [];
+
+document.querySelectorAll(".chip").forEach(c => {
+  c.addEventListener("click", () => { document.getElementById("userInput").value = c.textContent; });
+});
+
+function generatePost(forceRandom = false) {
+  let raw = document.getElementById("userInput").value.trim();
+  const tone = document.getElementById("tone").value;
+
+  if (forceRandom) raw = raw || randFrom(luckyActions);
+
+  if (!raw) {
+    const ta = document.getElementById("userInput");
+    ta.classList.add("is-invalid");
+    ta.focus();
+    setTimeout(() => ta.classList.remove("is-invalid"), 2000);
+    return;
+  }
+
+  // Apply verb map FIRST (on full raw input including any leading "I")
+  const { text: mapped, matched } = applyVerbMap(raw);
+
+  // Then strip leading subject pronoun / "today i" prefix
+  const cleaned = stripLeadingSubject(mapped);
+
+  // If nothing was matched by verb map, fall back to a generic jargon wrap
+  const jargonised = matched
+    ? cleaned
+    : "successfully operationalised a " + cleaned + " initiative — delivering measurable impact across all key performance dimensions";
+
+  const intro    = randFrom(intros);
+  const frame    = randFrom(frames[tone] || frames.classic);
+  const insight  = randFrom(insights);
+  const gratitude= randFrom(gratitudes);
+  const closer   = randFrom(closers);
+  const tags     = shuffle(hashtags[tone] || hashtags.classic).slice(0, 5).join(" ");
+
+  generatedPost = [
+    intro,
+    "",
+    "Today I " + jargonised + ".",
+    "",
+    frame,
+    "",
+    insight,
+    "",
+    "Beyond the metrics and the milestones, I remain deeply grateful for " + gratitude + ".",
+    "",
+    closer,
+    "",
+    tags,
+  ].join("\n");
+
+  document.getElementById("outputPlaceholder").style.display = "none";
+  document.getElementById("outputText").textContent = generatedPost;
+
+  const toneHashtags = shuffle(hashtags[tone] || hashtags.classic).slice(0, 4);
+  document.getElementById("tagRow").innerHTML = toneHashtags.map(t => `<span class="htag">${t}</span>`).join("");
+
+  const bsLevel = 72 + Math.floor(Math.random() * 27);
+  document.getElementById("bsMeterFill").style.width = bsLevel + "%";
+  const note = randFrom(bsNotes[tone] || bsNotes.classic);
+  document.getElementById("bsScoreText").textContent = bsLevel + "% BS \u2014 " + note;
+
+  updateShareLinks(generatedPost);
+  document.getElementById("shareRow").style.display = "";
+
+  history.unshift({
+    preview: "Today I " + jargonised.slice(0, 60) + "\u2026",
+    tone, post: generatedPost,
+    ts: new Date().toLocaleTimeString()
+  });
+  if (history.length > 6) history.pop();
+  renderHistory();
+}
+
+function updateShareLinks(post) {
+  const short = encodeURIComponent(post.slice(0, 280));
+  const page  = encodeURIComponent("https://mayukhpsm.github.io/linkedIN-and-tonic/");
+  document.getElementById("shareTwitter").href  = "https://twitter.com/intent/tweet?text=" + short;
+  document.getElementById("shareBluesky").href  = "https://bsky.app/intent/compose?text=" + short;
+  document.getElementById("shareLinkedin").href = "https://www.linkedin.com/sharing/share-offsite/?url=" + page;
+  document.getElementById("shareFacebook").href = "https://www.facebook.com/sharer/sharer.php?u=" + page;
+  const igBtn = document.getElementById("shareInstagram");
+  igBtn.onclick = function(e) {
+    e.preventDefault();
+    navigator.clipboard.writeText(post).then(() => {
+      document.getElementById("toastMsg").innerHTML = '<i class="bi bi-instagram me-2"></i>Post copied! Paste it in your Instagram caption.';
+      new bootstrap.Toast(document.getElementById("toastEl"), { delay: 3500 }).show();
+      setTimeout(() => {
+        window.open("https://www.instagram.com/", "_blank");
+        document.getElementById("toastMsg").innerHTML = '<i class="bi bi-check-circle me-2"></i>Copied to clipboard!';
+      }, 400);
+    });
+    return false;
+  };
+}
+
+document.getElementById("copyBtn").addEventListener("click", () => {
+  const text = document.getElementById("outputText").textContent.trim();
+  if (!text) return;
+  navigator.clipboard.writeText(text).then(() => {
+    new bootstrap.Toast(document.getElementById("toastEl"), { delay: 2000 }).show();
+    const btn = document.getElementById("copyBtn");
+    btn.innerHTML = '<i class="bi bi-check2"></i> Copied!';
+    setTimeout(() => btn.innerHTML = '<i class="bi bi-clipboard"></i> Copy post', 2000);
+  });
+});
+
+function renderHistory() {
+  const list = document.getElementById("historyList");
+  list.innerHTML = history.map((h, i) => `
+    <li class="history-item" data-i="${i}">
+      <div class="hi-preview">${h.preview}</div>
+      <div class="hi-meta">${h.tone} &middot; ${h.ts}</div>
+    </li>`).join("");
+  list.querySelectorAll(".history-item").forEach(el => {
+    el.addEventListener("click", () => {
+      const h = history[+el.dataset.i];
+      document.getElementById("outputPlaceholder").style.display = "none";
+      document.getElementById("outputText").textContent = h.post;
+      generatedPost = h.post;
+      updateShareLinks(h.post);
+      document.getElementById("shareRow").style.display = "";
+    });
+  });
+}
+
+document.getElementById("generateBtn").addEventListener("click", () => generatePost(false));
+document.getElementById("shuffleBtn").addEventListener("click", () => generatePost(true));
+</script>
+</body>
+</html>
