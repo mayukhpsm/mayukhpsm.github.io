@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>LinkeDIN &amp; Tonic: Corporate BS Post Distillery</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+  <style>
+    :root {
+      --lin-blue: #0a66c2;
+      --lin-dark: #0b1120;
+      --accent:   #7c3aed;
+      --card-radius: 20px;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: linear-gradient(135deg, #e8f0fe 0%, #f3f7ff 50%, #ede9fe 100%);
+      min-height: 100vh;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    /* NAVBAR */
+    .navbar { min-height: 54px; }
+    .logo-box {
+      background: var(--lin-blue); color: #fff;
+      font-weight: 900; font-size: 0.9rem;
+      padding: 3px 7px; border-radius: 4px;
+    }
+    .logo-suffix { font-size: 0.85rem; font-weight: 600; color: #374151; margin-left: 6px; }
+    .pill-badge {
+      background: #ede9fe; color: var(--accent);
+      font-size: 0.68rem; font-weight: 700;
+      padding: 2px 9px; border-radius: 999px;
+      letter-spacing: 0.08em; text-transform: uppercase;
+    }
+
+    /* HERO */
+    .hero { padding: 44px 16px 24px; text-align: center; }
+    .hero h1 {
+      font-size: clamp(1.5rem, 4vw, 2.4rem);
+      font-weight: 800; color: #111827; line-height: 1.2;
+    }
+    .hero h1 span { color: var(--lin-blue); }
+    .hero p { color: #4b5563; max-width: 520px; margin: 10px auto 0; font-size: 0.95rem; }
+
+    /* CARD */
+    .main-card {
+      background: #fff; border-radius: var(--card-radius);
+      box-shadow: 0 24px 64px rgba(15,23,42,0.14); overflow: hidden;
+    }
+
+    /* PANELS */
+    .left-panel  { padding: 32px 28px; }
+    .right-panel {
+      background: var(--lin-dark); padding: 32px 28px;
+      display: flex; flex-direction: column;
+    }
+    @media(min-width:768px) { .left-panel { border-right: 1px solid #f1f5f9; } }
+    @media(max-width:767px) { .right-panel { border-top: 2px solid #1e2d45; } .left-panel,.right-panel{padding:22px 18px;} }
+
+    .panel-head {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: #6b7280; margin-bottom: 18px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .panel-head.light { color: #9ca3af; }
+
+    /* FORM */
+    .form-label { font-weight: 600; font-size: 0.875rem; color: #1f2937; }
+    .form-control, .form-select {
+      font-size: 0.9rem; border-color: #e5e7eb; border-radius: 10px;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .form-control:focus, .form-select:focus {
+      border-color: var(--lin-blue);
+      box-shadow: 0 0 0 3px rgba(10,102,194,.12);
+    }
+    .form-text { font-size: 0.75rem; color: #9ca3af; }
+
+    /* CHIPS */
+    .ex-label { font-size: 0.72rem; font-weight: 600; color: #6b7280; margin-bottom: 6px; }
+    .chip {
+      display: inline-block; background: #f1f5f9; color: #374151;
+      border-radius: 999px; padding: 4px 11px; font-size: 0.75rem;
+      cursor: pointer; transition: background .15s; margin: 0 5px 6px 0;
+      border: 1px solid #e2e8f0;
+    }
+    .chip:hover { background: #e0e7ff; color: var(--lin-blue); }
+
+    /* BUTTONS */
+    .btn-generate {
+      background: var(--lin-blue); color: #fff; font-weight: 700;
+      border: none; border-radius: 999px; padding: 10px 26px; font-size: 0.9rem;
+      transition: background .2s, transform .1s;
+    }
+    .btn-generate:hover { background: #084ea1; transform: translateY(-1px); color:#fff; }
+    .btn-generate:active { transform: scale(.97); }
+    .btn-lucky { border-radius: 999px; font-size: 0.8rem; padding: 8px 16px; }
+
+    /* OUTPUT */
+    .tag-row { margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 6px; }
+    .htag {
+      background: #1e2d45; color: #93c5fd;
+      font-size: 0.7rem; padding: 3px 10px;
+      border-radius: 999px; font-weight: 600;
+    }
+    .output-wrapper {
+      background: #131c2e; border-radius: 14px;
+      padding: 18px 16px 16px; flex: 1; position: relative; min-height: 240px;
+    }
+    #outputText {
+      color: #e5e7eb; font-size: 0.875rem; line-height: 1.8; white-space: pre-wrap;
+    }
+    .placeholder-msg { color: #4b5563; font-size: 0.85rem; font-style: italic; padding-top: 8px; }
+
+    /* ACTION ROW */
+    .action-row {
+      display: flex; align-items: center; gap: 8px;
+      flex-wrap: wrap; margin-top: 12px;
+    }
+    .copy-btn {
+      background: #1e2d45; color: #93c5fd; border: none;
+      border-radius: 8px; font-size: 0.78rem; padding: 6px 13px;
+      display: flex; align-items: center; gap: 5px; transition: background .15s;
+      cursor: pointer;
+    }
+    .copy-btn:hover { background: #273d5e; color: #bfdbfe; }
+
+    /* SHARE BUTTONS */
+    .share-label {
+      font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; color: #4b5563; width: 100%; margin-top: 4px;
+    }
+    .share-btn {
+      display: inline-flex; align-items: center; gap: 5px;
+      border-radius: 8px; font-size: 0.75rem; font-weight: 600;
+      padding: 6px 12px; border: none; cursor: pointer;
+      transition: opacity .15s, transform .1s; text-decoration: none;
+    }
+    .share-btn:hover { opacity: 0.85; transform: translateY(-1px); }
+    .share-btn:active { transform: scale(.96); }
+    .share-twitter   { background: #000; color: #fff; }
+    .share-bluesky   { background: #0085ff; color: #fff; }
+    .share-linkedin  { background: #0a66c2; color: #fff; }
+    .share-facebook  { background: #1877f2; color: #fff; }
+    .share-instagram { background: linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888); color:#fff; }
+
+    /* BS METER */
+    .bs-meter-label {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: #4b5563; margin-top: 14px;
+    }
+    .bs-meter-track {
+      height: 8px; background: #1e2d45; border-radius: 999px; margin-top: 6px; overflow: hidden;
+    }
+    .bs-meter-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #6366f1, #ec4899);
+      border-radius: 999px; width: 0%; transition: width .8s cubic-bezier(.4,0,.2,1);
+    }
+    .bs-score-text { font-size: 0.72rem; color: #6b7280; margin-top: 4px; min-height: 16px; }
+
+    /* HISTORY */
+    .history-section { margin-top: 18px; }
+    .history-label {
+      font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; color: #4b5563; margin-bottom: 8px;
+    }
+    .history-list {
+      list-style: none; padding: 0; margin: 0;
+      max-height: 160px; overflow-y: auto;
+    }
+    .history-list::-webkit-scrollbar { width: 4px; }
+    .history-list::-webkit-scrollbar-thumb { background: #2d3e56; border-radius: 4px; }
+    .history-item {
+      background: #131c2e; border-radius: 10px; padding: 9px 12px;
+      margin-bottom: 7px; cursor: pointer; border: 1px solid #1e2d45;
+      transition: border-color .15s;
+    }
+    .history-item:hover { border-color: #6366f1; }
+    .history-item .hi-preview {
+      color: #9ca3af; font-size: 0.77rem;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .history-item .hi-meta { font-size: 0.67rem; color: #4b5563; margin-top: 2px; }
+
+    /* FOOTER */
+    footer { text-align: center; font-size: 0.73rem; color: #9ca3af; padding: 24px 16px 20px; }
+
+    /* TOAST */
+    .toast-shelf { position: fixed; bottom: 24px; right: 24px; z-index: 9999; }
+    .toast { border-radius: 12px; font-size: 0.85rem; }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar bg-white border-bottom px-3 px-md-5 sticky-top">
+  <a class="navbar-brand d-flex align-items-center gap-2" href="#">
+    <span class="logo-box">in</span>
+    <span class="logo-suffix">LinkeDIN &amp; Tonic</span>
+  </a>
+  <div class="d-flex align-items-center gap-2 gap-md-3">
+    <span class="pill-badge">Corporate BS Distillery</span>
+    <span class="d-none d-md-inline" style="font-size:0.78rem;color:#6b7280;">Fermented in 100% Synergy</span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="pill-badge mb-3">&#10024; Now with 40% more buzzwords</div>
+  <h1>Turn boring life into <span>LinkedIn gold.</span></h1>
+  <p>Did you eat lunch? Attend a meeting? Stay hydrated? Let us distil your mundane existence into beautifully jargon-soaked humble-brag posts.</p>
+</div>
+
+<!-- MAIN -->
+<div class="container pb-4" style="max-width:1040px;">
+  <div class="main-card">
+    <div class="row g-0">
+
+      <!-- LEFT -->
+      <div class="col-md-6">
+        <div class="left-panel">
+          <div class="panel-head"><i class="bi bi-pencil-square"></i> Step 1 — Describe your very normal day</div>
+
+          <div class="mb-3">
+            <label class="form-label" for="userInput">What did you do? (Just say it naturally)</label>
+            <textarea class="form-control" id="userInput" rows="5"
+              placeholder="Just type what happened. Examples:&#10;&#10;- Brushed my teeth this morning&#10;- Survived a 3-hour meeting&#10;- Had coffee with a colleague&#10;- Finished a slide deck&#10;- Got rejected from a job&#10;&#10;The more ordinary, the better &#128521;"></textarea>
+            <div class="form-text">No need to format it. We handle the corporate poetry.</div>
+          </div>
+
+          <div class="mb-1 ex-label">&#128161; Quick examples — click to fill:</div>
+          <div class="mb-4">
+            <span class="chip">Brushed my teeth</span>
+            <span class="chip">Survived a 3-hour meeting</span>
+            <span class="chip">Finished a slide deck at 2 AM</span>
+            <span class="chip">Got promoted, told no one</span>
+            <span class="chip">Had an awkward networking chat</span>
+            <span class="chip">Gave a 5-min office presentation</span>
+            <span class="chip">Got rejected but kept going</span>
+            <span class="chip">Finally sent that difficult email</span>
+          </div>
+
+          <div class="mb-4">
+            <label class="form-label" for="tone">Distillery tone</label>
+            <select class="form-select" id="tone">
+              <option value="classic" selected>&#x1F943; Classic Humble-Brag</option>
+              <option value="ultra">&#x1F680; Ultra-Synergistic C-Suite</option>
+              <option value="founder">&#x1F525; Founder Grind + Gratitude</option>
+              <option value="thought">&#x1F9E0; Deep Thought Leadership</option>
+              <option value="spiritual">&#x1F64F; Corporate Spirituality</option>
+            </select>
+          </div>
+
+          <div class="d-flex flex-wrap gap-2 align-items-center">
+            <button class="btn btn-generate" id="generateBtn">
+              <i class="bi bi-magic me-1"></i> Distil the BS
+            </button>
+            <button class="btn btn-outline-secondary btn-lucky" id="shuffleBtn">
+              <i class="bi bi-shuffle me-1"></i> I feel lucky
+            </button>
+          </div>
+
+          <p class="mt-3 mb-0" style="font-size:0.75rem;color:#9ca3af;">
+            &#9888;&#65039; Side effects: sudden urge to &ldquo;circle back&rdquo;, excessive use of &ldquo;synergy&rdquo;, and inexplicable mentions of 5 AM wake-up routines.
+          </p>
+        </div>
+      </div>
+
+      <!-- RIGHT -->
+      <div class="col-md-6">
+        <div class="right-panel">
+          <div class="panel-head light"><i class="bi bi-linkedin"></i> Step 2 — Your weaponised corporate poetry</div>
+
+          <div class="tag-row" id="tagRow">
+            <span class="htag">#leadership</span>
+            <span class="htag">#grateful</span>
+            <span class="htag">#growthmindset</span>
+            <span class="htag">#notahumblebrag</span>
+          </div>
+
+          <div class="output-wrapper">
+            <div id="outputPlaceholder" class="placeholder-msg">
+              Hit &ldquo;Distil the BS&rdquo; to transform your humble reality into a masterpiece of corporate poetry. &#x1F943;
+            </div>
+            <div id="outputText"></div>
+          </div>
+
+          <!-- COPY + SHARE -->
+          <div class="action-row">
+            <button class="copy-btn" id="copyBtn">
+              <i class="bi bi-clipboard"></i> Copy post
+            </button>
+          </div>
+          <div class="action-row" id="shareRow" style="display:none!important;">
+            <span class="share-label"><i class="bi bi-share me-1"></i> Share directly</span>
+            <a class="share-btn share-twitter" id="shareTwitter" href="#" target="_blank" rel="noopener">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="white"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.747l7.73-8.835L1.254 2.25H8.08l4.259 5.63 5.905-5.63zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+              X / Twitter
+            </a>
+            <a class="share-btn share-bluesky" id="shareBluesky" href="#" target="_blank" rel="noopener">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="white"><path d="M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566.944 1.561 1.266.902 1.565.139 1.908 0 3.08 0 3.768c0 .69.378 5.65.624 6.479.815 2.736 3.713 3.66 6.383 3.364.136-.02.275-.039.415-.056-.138.022-.276.04-.415.056-3.912.58-7.387 2.005-2.83 7.078 5.013 5.19 6.87-1.113 7.823-4.308.953 3.195 2.05 9.271 7.733 4.308 4.267-4.308 1.172-6.498-2.74-7.078a8.741 8.741 0 0 1-.415-.056c.14.017.279.036.415.056 2.67.297 5.568-.628 6.383-3.364.246-.828.624-5.79.624-6.478 0-.69-.139-1.861-.902-2.204-.659-.299-1.664-.62-4.3 1.24C16.046 4.748 13.087 8.687 12 10.8z"/></svg>
+              Bluesky
+            </a>
+            <a class="share-btn share-linkedin" id="shareLinkedin" href="#" target="_blank" rel="noopener">
+              <i class="bi bi-linkedin"></i> LinkedIn
+            </a>
+            <a class="share-btn share-facebook" id="shareFacebook" href="#" target="_blank" rel="noopener">
+              <i class="bi bi-facebook"></i> Facebook
+            </a>
+            <a class="share-btn share-instagram" id="shareInstagram" href="#" target="_blank" rel="noopener">
+              <i class="bi bi-instagram"></i> Instagram
+            </a>
+          </div>
+
+          <!-- BS METER -->
+          <div class="bs-meter-label">&#x1F9EA; BS Concentration Level</div>
+          <div class="bs-meter-track"><div class="bs-meter-fill" id="bsMeterFill"></div></div>
+          <div class="bs-score-text" id="bsScoreText"></div>
+
+          <!-- HISTORY -->
+          <div class="history-section">
+            <div class="history-label"><i class="bi bi-clock-history me-1"></i> Previous distillations</div>
+            <ul class="history-list" id="historyList">
+              <li style="color:#4b5563;font-size:0.78rem;font-style:italic;padding:4px 0;">
+                No distillations yet. Your feed is still sober.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p class="mb-1"><strong>LinkeDIN &amp; Tonic: Corporate BS Post Distillery</strong></p>
+  <p class="mb-1">Built for academic amusement. Please do not actually post this unless your manager speaks fluent Corporate BS.<br/>(If they do, you have bigger problems.)</p>
+  <p class="mb-0">&copy; 2026 Mayukh Mukhopadhyay. All rights reserved.</p>
+</footer>
+
+<!-- TOAST -->
+<div class="toast-shelf">
+  <div id="toastEl" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+      <div class="toast-body"><i class="bi bi-check-circle me-2"></i> Copied to clipboard!</div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+const data = {
+  intros: [
+    "I wasn't going to post this. But here we are.",
+    "Imposter syndrome told me to stay quiet. I chose differently.",
+    "Still processing this, but transparency matters more than comfort.",
+    "This one feels a little vulnerable to share. Sharing anyway.",
+    "No buzzwords. Just a small story from the trenches. (Okay, maybe a few buzzwords.)",
+    "Three years ago I wouldn't have had the courage to post this.",
+    "A mentor once told me: share the journey, not just the destination.",
+    "Humility check before I hit post: still not sure I deserve to share this. Posting anyway.",
+  ],
+  frames: [
+    "Sometimes it's the smallest actions that become the greatest inflection points.",
+    "Leadership is less about titles and more about daily micro-choices.",
+    "We overestimate big breaks and underestimate boring, unglamorous execution.",
+    "In a world obsessed with overnight success, I'm doubling down on compounding effort.",
+    "The most transformative seasons often look unremarkable from the outside.",
+    "Radical consistency in small things creates extraordinary outcomes at scale.",
+    "What looks like a small win to the outside world is, in fact, a massive internal shift.",
+  ],
+  jargon: [
+    "leaning into uncomfortable growth edges",
+    "orchestrating cross-functional learning loops",
+    "turning small bets into asymmetric upside",
+    "building momentum through intentional micro-wins",
+    "operationalising curiosity at scale",
+    "holding space for psychologically safe challenge",
+    "stacking tiny experiments into durable outcomes",
+    "unlocking non-linear value through disciplined iteration",
+    "de-risking uncertainty through narrative clarity",
+    "pivoting with purpose while staying mission-aligned",
+    "activating latent stakeholder potential",
+    "synthesising lived experience into strategic insight",
+  ],
+  learnings: [
+    "the real flex is doing the work when no one is watching",
+    "excellence lives in the drafts no one ever sees",
+    "small consistent actions compound into irreversible momentum",
+    "vulnerability is the highest form of professional courage",
+    "execution eats strategy for breakfast — every single morning",
+    "the bar for genuine human connection in business is still embarrassingly low",
+    "showing up, even imperfectly, is a radical act in a world addicted to perfection",
+  ],
+  gratitudes: [
+    "my incredible team who make the impossible feel inevitable",
+    "my mentors who believed in me before I believed in myself",
+    "this relentlessly supportive community",
+    "everyone who walks alongside me on this messy, non-linear journey",
+    "the people who ask hard questions and still show up for me",
+  ],
+  closers: [
+    "If this resonates, drop a &#x1F64C; below. Let's keep the conversation going.",
+    "What's one small action YOU are proud of this week? Comment below — I read every single one.",
+    "Tag someone who needs to hear this today. You know who they are.",
+    "Repost if this added value. Your network might need this.",
+    "Follow for more unfiltered thoughts on growth, leadership, and the messy middle.",
+    "What's your version of this story? I'd love to hear it.",
+  ],
+  toneLines: {
+    classic: [
+      "It's not about being the smartest in the room — it's about being the most relentlessly present.",
+      "Sometimes showing up is the strategy.",
+    ],
+    ultra: [
+      "At scale, these micro-moments ladder up into culture, capability, and durable value creation for every stakeholder in the ecosystem.",
+      "When we architect intentional culture at the intersection of purpose and performance, magic happens at the organisational level.",
+    ],
+    founder: [
+      "It's not glamorous. But unglamorous execution is exactly what keeps the vision alive.",
+      "Every unicorn you admire was once just a person saying yes to the next small step.",
+    ],
+    thought: [
+      "This raises deeper questions about how we design systems that reward reflection over performative busyness.",
+      "The real competitive moat in the next decade won't be technology — it will be the quality of human attention.",
+    ],
+    spiritual: [
+      "The universe has a way of aligning effort with opportunity when your intentions are pure.",
+      "Gratitude is not a feeling — it is a strategy. And today, I am choosing it deliberately.",
+    ],
+  },
+  hashtags: {
+    classic:   ["#leadership","#growthmindset","#grateful","#careerjourney","#keepgoing","#professionalgrowth"],
+    ultra:     ["#synergy","#transformation","#futureofwork","#enterpriseleadership","#valueCreation","#scalability"],
+    founder:   ["#startup","#founderlife","#buildinpublic","#resilience","#entrepreneurship","#grit"],
+    thought:   ["#thoughtleadership","#criticalthinking","#organizationalbehavior","#humancentered","#secondorderthinking"],
+    spiritual: ["#gratitude","#abundance","#intentionalliving","#mindfulleadership","#purposedriven","#alignment"],
+  },
+  bsNotes: {
+    classic:   ["Smooth finish with notes of resilience and humility.","Aged in oak barrels of strategic ambiguity."],
+    ultra:     ["Warning: may cause involuntary use of the word 'ecosystem'.","Maximum potency. Handle with two hands and a whiteboard."],
+    founder:   ["Raw, unfiltered, and caffeinated. Distilled at 2 AM in a co-working space.","Best paired with a cold brew and an unread term sheet."],
+    thought:   ["Single-malt intellectual complexity. Pairs well with a Moleskine.","Dense on the palate. May require a second read."],
+    spiritual: ["Blessed by the universe and algorithmically amplified.","Infused with pure cosmic intention and a pinch of vagueness."],
+  },
+  luckyActions: [
+    "brushed my teeth and arrived at work on time",
+    "survived a 3-hour status meeting without falling asleep",
+    "sent 47 emails and felt productive for exactly 8 minutes",
+    "gave a 5-minute presentation and only said 'um' 12 times",
+    "finished a slide deck that started 6 months ago",
+    "attended a networking event and made one awkward handshake",
+    "made a to-do list, crossed off one item, felt accomplished",
+    "got rejected from something but opened my laptop again anyway",
+  ],
+};
+
+const randFrom = arr => arr[Math.floor(Math.random() * arr.length)];
+const shuffle  = arr => [...arr].sort(() => Math.random() - 0.5);
+
+// clean user input — strip leading "i " / "today i " patterns
+function cleanAction(raw) {
+  let s = raw.trim();
+  // remove leading "today, " or "today "
+  s = s.replace(/^today[,]?\s+/i, "");
+  // remove leading "i " so we can re-attach cleanly
+  s = s.replace(/^i\s+/i, "");
+  return s.charAt(0).toLowerCase() + s.slice(1);
+}
+
+document.querySelectorAll(".chip").forEach(chip => {
+  chip.addEventListener("click", () => {
+    document.getElementById("userInput").value = chip.textContent;
+  });
+});
+
+let generatedPost = "";
+let history = [];
+
+function generatePost(forceRandom = false) {
+  let raw = document.getElementById("userInput").value.trim();
+  const tone = document.getElementById("tone").value;
+
+  if (forceRandom) {
+    raw = raw || randFrom(data.luckyActions);
+  }
+
+  if (!raw) {
+    const ta = document.getElementById("userInput");
+    ta.classList.add("is-invalid");
+    ta.focus();
+    setTimeout(() => ta.classList.remove("is-invalid"), 2000);
+    return;
+  }
+
+  const action   = cleanAction(raw);
+  const intro    = randFrom(data.intros);
+  const frame    = randFrom(data.frames);
+  const j1       = randFrom(data.jargon);
+  const j2       = randFrom(data.jargon.filter(j => j !== j1));
+  const learning = randFrom(data.learnings);
+  const gratitude= randFrom(data.gratitudes);
+  const closer   = randFrom(data.closers);
+  const toneLine = randFrom(data.toneLines[tone] || data.toneLines.classic);
+  const tags     = shuffle(data.hashtags[tone] || data.hashtags.classic).slice(0, 5).join(" ");
+
+  generatedPost = [
+    intro,
+    "",
+    "Today I " + action + ".",
+    "",
+    frame + " For me, this meant " + j1 + " — and simultaneously " + j2 + ".",
+    "",
+    toneLine,
+    "",
+    "The biggest takeaway? " + learning + ".",
+    "",
+    "Beyond the metrics and the milestones, I am endlessly grateful for " + gratitude + ".",
+    "",
+    closer,
+    "",
+    tags,
+  ].join("\n");
+
+  document.getElementById("outputPlaceholder").style.display = "none";
+  document.getElementById("outputText").textContent = generatedPost;
+
+  // hashtag pills
+  const toneHashtags = shuffle(data.hashtags[tone] || data.hashtags.classic).slice(0, 4);
+  document.getElementById("tagRow").innerHTML =
+    toneHashtags.map(t => `<span class="htag">${t}</span>`).join("");
+
+  // BS meter
+  const bsLevel = 60 + Math.floor(Math.random() * 39);
+  document.getElementById("bsMeterFill").style.width = bsLevel + "%";
+  const note = randFrom(data.bsNotes[tone] || data.bsNotes.classic);
+  document.getElementById("bsScoreText").textContent = `${bsLevel}% BS — ${note}`;
+
+  // share buttons
+  updateShareLinks(generatedPost);
+  document.getElementById("shareRow").style.removeProperty("display");
+
+  // history
+  history.unshift({ preview: "Today I " + action, tone, post: generatedPost, ts: new Date().toLocaleTimeString() });
+  if (history.length > 6) history.pop();
+  renderHistory();
+}
+
+function updateShareLinks(post) {
+  const encoded = encodeURIComponent(post.slice(0, 280));
+  const fullEnc = encodeURIComponent(post);
+  const pageUrl = encodeURIComponent("https://mayukhpsm.github.io");
+
+  document.getElementById("shareTwitter").href =
+    "https://twitter.com/intent/tweet?text=" + encoded;
+
+  document.getElementById("shareBluesky").href =
+    "https://bsky.app/intent/compose?text=" + encoded;
+
+  // LinkedIn share — opens share dialog with URL
+  document.getElementById("shareLinkedin").href =
+    "https://www.linkedin.com/sharing/share-offsite/?url=" + pageUrl +
+    "&summary=" + encodeURIComponent(post.slice(0, 700));
+
+  document.getElementById("shareFacebook").href =
+    "https://www.facebook.com/sharer/sharer.php?u=" + pageUrl +
+    "&quote=" + encodeURIComponent(post.slice(0, 500));
+
+  // Instagram has no web share API — copy + open profile instead
+  document.getElementById("shareInstagram").href = "https://www.instagram.com/";
+  document.getElementById("shareInstagram").addEventListener("click", instagramShare, { once: true });
+}
+
+function instagramShare(e) {
+  e.preventDefault();
+  navigator.clipboard.writeText(generatedPost).then(() => {
+    const toast = new bootstrap.Toast(document.getElementById("toastEl"), { delay: 3500 });
+    document.querySelector("#toastEl .toast-body").innerHTML =
+      '<i class="bi bi-instagram me-2"></i> Post copied! Paste it in your Instagram caption.';
+    toast.show();
+    setTimeout(() => window.open("https://www.instagram.com/", "_blank"), 400);
+    document.querySelector("#toastEl .toast-body").innerHTML =
+      '<i class="bi bi-check-circle me-2"></i> Copied to clipboard!';
+  });
+}
+
+document.getElementById("copyBtn").addEventListener("click", () => {
+  const text = document.getElementById("outputText").textContent.trim();
+  if (!text) return;
+  navigator.clipboard.writeText(text).then(() => {
+    const toast = new bootstrap.Toast(document.getElementById("toastEl"), { delay: 2000 });
+    toast.show();
+    const btn = document.getElementById("copyBtn");
+    btn.innerHTML = '<i class="bi bi-check2"></i> Copied!';
+    setTimeout(() => btn.innerHTML = '<i class="bi bi-clipboard"></i> Copy post', 2000);
+  });
+});
+
+function renderHistory() {
+  const list = document.getElementById("historyList");
+  list.innerHTML = history.map((h, i) => `
+    <li class="history-item" data-index="${i}">
+      <div class="hi-preview">${h.preview}</div>
+      <div class="hi-meta">${h.tone} &middot; ${h.ts}</div>
+    </li>
+  `).join("");
+  list.querySelectorAll(".history-item").forEach(el => {
+    el.addEventListener("click", () => {
+      const h = history[parseInt(el.dataset.index)];
+      document.getElementById("outputPlaceholder").style.display = "none";
+      document.getElementById("outputText").textContent = h.post;
+      generatedPost = h.post;
+      updateShareLinks(h.post);
+      document.getElementById("shareRow").style.removeProperty("display");
+    });
+  });
+}
+
+document.getElementById("generateBtn").addEventListener("click", () => generatePost(false));
+document.getElementById("shuffleBtn").addEventListener("click", () => generatePost(true));
+</script>
+</body>
+</html>
