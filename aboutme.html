@@ -1,880 +1,917 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Mayukh's Academic CV</title>
-  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
-  <style>
-    :root {
-      --primary: #1a2f4e;
-      --accent: #b5813c;
-      --light-bg: #f8f7f4;
-      --card-bg: #ffffff;
-      --border: #ddd8cf;
-      --text: #2c2c2c;
-      --muted: #6b6b6b;
-      --tag-bg: #eef2f7;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--light-bg);
-      color: var(--text);
-      line-height: 1.7;
-    }
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Mayukh M</title>
+<meta name="description" content="Mayukh Mukhopadhyay — Data Consultant at TCS & BT Group, Executive PhD Candidate at IIM Indore, Author, Peer Reviewer, and Podcast Host."/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+/* ── TOKENS ── */
+:root{
+  --cream-l:#faf8f3; --white-l:#ffffff; --ink-l:#1a1a18;
+  --mid-l:#4a4a45; --muted-l:#8a8a82; --rule-l:#e4e0d6;
+  --accent-l:#1d3557; --accent2-l:#c9a84c; --soft-l:#f0ede4;
 
-    /* ── HEADER ── */
-    header {
-      background: var(--primary);
-      color: #fff;
-      padding: 3rem 2rem 2.5rem;
-    }
-    .header-inner {
-      max-width: 960px;
-      margin: 0 auto;
-      display: flex;
-      gap: 2.5rem;
-      align-items: flex-start;
-    }
-    .avatar-placeholder {
-      width: 110px;
-      height: 110px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.15);
-      border: 3px solid var(--accent);
-      flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2.5rem;
-      color: var(--accent);
-    }
-    .header-text h1 {
-      font-family: 'EB Garamond', serif;
-      font-size: 2.1rem;
-      font-weight: 600;
-      letter-spacing: 0.02em;
-    }
-    .header-text .title-line {
-      font-size: 0.95rem;
-      color: #c8d6e8;
-      margin-top: 0.25rem;
-    }
-    .contact-links {
-      margin-top: 1rem;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.6rem;
-    }
-    .contact-links a {
-      color: #fff;
-      text-decoration: none;
-      background: rgba(255,255,255,0.1);
-      border: 1px solid rgba(255,255,255,0.25);
-      padding: 0.3rem 0.75rem;
-      border-radius: 20px;
-      font-size: 0.82rem;
-      transition: background 0.2s;
-    }
-    .contact-links a:hover { background: var(--accent); border-color: var(--accent); }
+  --cream-d:#0e0d0b; --white-d:#151410; --ink-d:#ede9df;
+  --mid-d:#b8b4a8; --muted-d:#6e6a60; --rule-d:#2a2820;
+  --accent-d:#7bafd4; --accent2-d:#d4a84c; --soft-d:#181614;
+}
+html[data-theme="light"]{
+  --cream:var(--cream-l);--white:var(--white-l);--ink:var(--ink-l);
+  --mid:var(--mid-l);--muted:var(--muted-l);--rule:var(--rule-l);
+  --accent:var(--accent-l);--accent2:var(--accent2-l);--soft:var(--soft-l);
+}
+html[data-theme="dark"]{
+  --cream:var(--cream-d);--white:var(--white-d);--ink:var(--ink-d);
+  --mid:var(--mid-d);--muted:var(--muted-d);--rule:var(--rule-d);
+  --accent:var(--accent-d);--accent2:var(--accent2-d);--soft:var(--soft-d);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',system-ui,sans-serif;
+  background:var(--cream);color:var(--ink);
+  font-size:15px;line-height:1.75;
+  transition:background .3s,color .3s;
+}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
 
-    /* ── NAV ── */
-    nav {
-      background: var(--primary);
-      border-top: 1px solid rgba(255,255,255,0.1);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-    nav ul {
-      max-width: 960px;
-      margin: 0 auto;
-      list-style: none;
-      display: flex;
-      flex-wrap: wrap;
-      padding: 0 1rem;
-    }
-    nav ul li a {
-      display: block;
-      color: #c8d6e8;
-      text-decoration: none;
-      padding: 0.75rem 0.9rem;
-      font-size: 0.82rem;
-      font-weight: 500;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      transition: color 0.2s;
-    }
-    nav ul li a:hover { color: var(--accent); }
+/* ── TYPOGRAPHY HELPERS ── */
+.serif{font-family:'Playfair Display',Georgia,serif}
+.label{
+  font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--muted);font-weight:500;
+}
+.rule{border:none;border-top:1px solid var(--rule);margin:0}
 
-    /* ── MAIN LAYOUT ── */
-    main {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 2.5rem 1.5rem 4rem;
-    }
+/* ── TOP NAV ── */
+.nav{
+  position:sticky;top:0;z-index:200;
+  background:var(--cream);
+  border-bottom:1px solid var(--rule);
+  padding:0 clamp(20px,6vw,80px);
+  height:58px;
+  display:flex;align-items:center;justify-content:space-between;
+  transition:background .3s,border-color .3s;
+}
+.nav-logo{
+  font-family:'Playfair Display',serif;
+  font-size:1.05rem;font-weight:600;
+  letter-spacing:-.01em;color:var(--ink);
+}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{
+  font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--mid);font-weight:500;
+  transition:color .2s;
+}
+.nav-links a:hover{color:var(--ink)}
+.nav-right{display:flex;align-items:center;gap:.8rem}
 
-    /* ── SECTION ── */
-    section { margin-bottom: 3.5rem; }
-    .section-heading {
-      font-family: 'EB Garamond', serif;
-      font-size: 1.55rem;
-      color: var(--primary);
-      border-bottom: 2px solid var(--accent);
-      padding-bottom: 0.4rem;
-      margin-bottom: 1.5rem;
-    }
+.btn-dl{
+  display:inline-flex;align-items:center;gap:.35rem;
+  padding:7px 18px;border-radius:2px;
+  background:var(--accent);color:#fff;
+  font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;font-weight:600;
+  border:none;cursor:pointer;
+  transition:opacity .2s,transform .15s;
+}
+.btn-dl:hover{opacity:.85;transform:translateY(-1px)}
 
-    /* ── PROFILE ── */
-    #profile p {
-      font-size: 0.97rem;
-      line-height: 1.8;
-      color: var(--text);
-    }
+.theme-toggle{
+  width:34px;height:34px;border-radius:50%;
+  background:transparent;border:1px solid var(--rule);
+  color:var(--mid);cursor:pointer;font-size:.9rem;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .2s,border-color .2s;
+}
+.theme-toggle:hover{background:var(--soft)}
 
-    /* ── EDUCATION / TIMELINE ── */
-    .timeline { list-style: none; }
-    .timeline li {
-      display: grid;
-      grid-template-columns: 100px 1fr;
-      gap: 1rem;
-      padding: 1rem 0;
-      border-bottom: 1px solid var(--border);
-    }
-    .timeline li:last-child { border-bottom: none; }
-    .tl-year {
-      font-weight: 600;
-      color: var(--accent);
-      font-size: 0.88rem;
-      padding-top: 0.1rem;
-    }
-    .tl-body .degree {
-      font-weight: 600;
-      color: var(--primary);
-      font-size: 0.97rem;
-    }
-    .tl-body .inst { font-size: 0.9rem; color: var(--muted); }
-    .tl-body .detail { font-size: 0.87rem; color: var(--muted); margin-top: 0.2rem; }
+/* ── HERO ── */
+.hero{
+  padding:clamp(60px,10vw,120px) clamp(20px,6vw,80px) clamp(50px,8vw,90px);
+  display:grid;
+  grid-template-columns:1fr clamp(200px,28vw,340px);
+  gap:4rem;align-items:end;
+  border-bottom:1px solid var(--rule);
+}
+.hero-eyebrow{margin-bottom:1.2rem}
+.hero-h1{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2.6rem,5.5vw,4.8rem);
+  font-weight:500;line-height:1.08;letter-spacing:-.03em;
+  color:var(--ink);margin-bottom:1.4rem;
+}
+.hero-sub{
+  font-size:1.02rem;color:var(--mid);max-width:560px;
+  line-height:1.8;margin-bottom:2rem;
+}
+.hero-tags{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:2.2rem}
+.hero-tag{
+  font-size:.75rem;letter-spacing:.05em;
+  border:1px solid var(--rule);
+  padding:4px 12px;border-radius:2px;
+  color:var(--mid);
+  transition:border-color .2s,color .2s;
+}
+.hero-tag:hover{border-color:var(--accent);color:var(--accent)}
+.hero-ctas{display:flex;flex-wrap:wrap;gap:.8rem;align-items:center}
+.btn-primary{
+  padding:11px 28px;background:var(--ink);color:var(--cream);
+  font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;
+  font-weight:600;border:1px solid var(--ink);cursor:pointer;
+  transition:background .2s,color .2s;border-radius:2px;
+  display:inline-flex;align-items:center;gap:.4rem;
+}
+.btn-primary:hover{background:var(--accent);border-color:var(--accent)}
+.btn-secondary{
+  padding:11px 28px;background:transparent;
+  font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;
+  font-weight:600;border:1px solid var(--rule);
+  color:var(--mid);cursor:pointer;border-radius:2px;
+  transition:border-color .2s,color .2s;
+  display:inline-flex;align-items:center;gap:.4rem;
+}
+.btn-secondary:hover{border-color:var(--accent);color:var(--accent)}
+.hero-right{align-self:flex-start;padding-top:1.5rem}
+.hero-stat-block{margin-bottom:2rem}
+.hero-stat{margin-bottom:.9rem}
+.hero-stat strong{display:block;font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:500;line-height:1.1;color:var(--ink)}
+.hero-stat span{font-size:.73rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.hero-note{font-size:.82rem;color:var(--muted);line-height:1.65;border-left:2px solid var(--accent2);padding-left:1rem;font-style:italic}
 
-    /* ── PUB CARDS ── */
-    .pub-group-title {
-      font-size: 0.82rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--accent);
-      margin: 1.5rem 0 0.75rem;
-    }
-    .pub-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-left: 4px solid var(--accent);
-      border-radius: 6px;
-      padding: 1rem 1.2rem;
-      margin-bottom: 1rem;
-    }
-    .pub-card .pub-title {
-      font-weight: 600;
-      color: var(--primary);
-      font-size: 0.96rem;
-    }
-    .pub-card .pub-meta {
-      font-size: 0.84rem;
-      color: var(--muted);
-      margin-top: 0.2rem;
-    }
-    .pub-tags { margin-top: 0.5rem; display: flex; flex-wrap: wrap; gap: 0.4rem; }
-    .tag {
-      background: var(--tag-bg);
-      color: var(--primary);
-      font-size: 0.75rem;
-      padding: 0.2rem 0.6rem;
-      border-radius: 12px;
-      font-weight: 500;
-    }
-    .tag.wip { background: #fff3e0; color: #b45309; }
-    /* ── MEDIA EMBED ZONE ── */
-    .embed-zone {
-      margin-top: 0.85rem;
-      padding-top: 0.75rem;
-      border-top: 1px dashed var(--border);
-    }
-    .embed-zone .embed-label {
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      margin-bottom: 0.5rem;
-    }
-    .embed-row { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: flex-start; }
-    .embed-placeholder {
-      background: #f0f4f8;
-      border: 1px dashed #a0b0c4;
-      border-radius: 6px;
-      padding: 0.6rem 1rem;
-      font-size: 0.8rem;
-      color: #7a90a8;
-      font-style: italic;
-    }
-    /* actual iframes */
-    .embed-row iframe {
-      border-radius: 6px;
-      border: none;
-    }
+/* ── SECTION SHELL ── */
+.section{padding:clamp(50px,7vw,90px) clamp(20px,6vw,80px)}
+.section-alt{background:var(--soft);transition:background .3s}
+.section-head{margin-bottom:2.8rem}
+.section-title{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.6rem,3vw,2.4rem);
+  font-weight:500;color:var(--ink);margin-bottom:.4rem;letter-spacing:-.02em;
+}
+.section-desc{color:var(--mid);font-size:.94rem;max-width:560px;line-height:1.8}
 
-    /* ── CONFERENCE TABLE ── */
-    .conf-list { list-style: none; }
-    .conf-list li {
-      display: grid;
-      grid-template-columns: 90px 1fr;
-      gap: 1rem;
-      padding: 0.75rem 0;
-      border-bottom: 1px solid var(--border);
-      font-size: 0.9rem;
-    }
-    .conf-list li:last-child { border-bottom: none; }
-    .conf-date { font-weight: 600; color: var(--accent); font-size: 0.85rem; }
-    .conf-body .conf-title { font-weight: 600; color: var(--primary); }
-    .conf-body .conf-venue { color: var(--muted); font-size: 0.85rem; }
-    .conf-body .conf-award { color: #b45309; font-size: 0.82rem; font-weight: 600; }
+/* ── ABOUT ── */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start}
+.about-body p{font-size:.97rem;color:var(--mid);margin-bottom:1.1rem;line-height:1.85}
+.about-aside{}
+.quote-block{
+  font-family:'Playfair Display',serif;
+  font-size:1.2rem;font-style:italic;line-height:1.65;
+  color:var(--ink);border-left:3px solid var(--accent2);
+  padding-left:1.4rem;margin-bottom:2rem;
+}
+.info-pair{margin-bottom:1rem}
+.info-pair .k{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:.2rem}
+.info-pair .v{font-size:.9rem;color:var(--ink)}
 
-    /* ── AWARDS ── */
-    .award-list { list-style: none; }
-    .award-list li {
-      display: grid;
-      grid-template-columns: 60px 1fr;
-      gap: 1rem;
-      padding: 0.6rem 0;
-      border-bottom: 1px solid var(--border);
-      font-size: 0.9rem;
-    }
-    .award-list li:last-child { border-bottom: none; }
-    .award-year { font-weight: 600; color: var(--accent); font-size: 0.85rem; }
+/* ── SKILLS ── */
+.skills-wrap{display:grid;grid-template-columns:1fr 1fr;gap:3rem}
+.skill-group-title{
+  font-family:'Playfair Display',serif;
+  font-size:1.05rem;font-weight:500;
+  margin-bottom:1.2rem;color:var(--ink);
+}
+.skill{margin-bottom:1rem}
+.skill-row{display:flex;justify-content:space-between;font-size:.78rem;color:var(--muted);margin-bottom:.3rem}
+.skill-track{width:100%;height:3px;background:var(--rule);border-radius:999px;overflow:hidden}
+.skill-fill{height:100%;border-radius:999px;width:0;transition:width 1.5s cubic-bezier(.22,1,.36,1);}
+.skill-fill.c{box-shadow:0 0 8px rgba(29,53,87,.35)}
+.skill-fill.r{box-shadow:0 0 8px rgba(201,168,76,.35)}
+.skill-fill.c{background:var(--accent)}
+.skill-fill.r{background:var(--accent2)}
 
-    /* ── EXPERIENCE ── */
-    .exp-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 1.1rem 1.3rem;
-      margin-bottom: 1rem;
-    }
-    .exp-card .exp-role { font-weight: 600; color: var(--primary); font-size: 0.97rem; }
-    .exp-card .exp-org { color: var(--accent); font-size: 0.9rem; font-weight: 600; }
-    .exp-card .exp-period { font-size: 0.83rem; color: var(--muted); }
-    .exp-card .exp-desc { font-size: 0.88rem; margin-top: 0.4rem; color: var(--text); }
+/* ── CAROUSEL ── */
+.carousel-outer{overflow:hidden;position:relative;padding:4px 0}
+.carousel-outer::before,.carousel-outer::after{
+  content:'';position:absolute;top:0;bottom:0;width:80px;z-index:2;pointer-events:none;
+}
+.carousel-outer::before{left:0;background:linear-gradient(90deg,var(--soft),transparent)}
+.carousel-outer::after{right:0;background:linear-gradient(-90deg,var(--soft),transparent)}
+.carousel-track{
+  display:flex;gap:14px;
+  animation:marquee 38s linear infinite;
+  width:max-content;
+}
+.carousel-outer:hover .carousel-track{animation-play-state:paused}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.cert-tile{
+  flex-shrink:0;min-width:220px;max-width:240px;
+  border:1px solid var(--rule);border-radius:4px;
+  padding:14px 16px;background:var(--white);
+  transition:border-color .2s,box-shadow .2s;
+}
+.cert-tile:hover{border-color:var(--accent2);box-shadow:0 6px 24px rgba(0,0,0,.07)}
+.cert-org{font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent2);margin-bottom:.3rem;font-weight:600}
+.cert-name{font-size:.84rem;color:var(--ink);line-height:1.35;font-weight:500;margin-bottom:.3rem}
+.cert-yr{font-size:.72rem;color:var(--muted)}
 
-    /* ── MEDIA / BLOG CARDS ── */
-    .media-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-left: 4px solid #4a90d9;
-      border-radius: 6px;
-      padding: 1rem 1.2rem;
-      margin-bottom: 1rem;
-    }
-    .media-card.blog { border-left-color: #5a9e6f; }
-    .media-card .media-title { font-weight: 600; color: var(--primary); font-size: 0.96rem; }
-    .media-card .media-meta { font-size: 0.84rem; color: var(--muted); margin-top: 0.2rem; }
-    .media-card .media-desc { font-size: 0.87rem; margin-top: 0.4rem; }
-    .media-card .media-link a {
-      display: inline-block;
-      margin-top: 0.5rem;
-      font-size: 0.82rem;
-      color: #4a90d9;
-      text-decoration: none;
-      font-weight: 500;
-    }
-    .media-card .media-link a:hover { text-decoration: underline; }
-    .add-entry-note {
-      font-size: 0.82rem;
-      color: var(--muted);
-      font-style: italic;
-      margin-top: 0.5rem;
-    }
+/* ── TIMELINE ── */
+.tl-list{list-style:none;border-left:1px solid var(--rule);padding-left:1.8rem;margin-left:.5rem}
+.tl-item{position:relative;margin-bottom:2rem;padding-bottom:.2rem}
+.tl-item::before{
+  content:'';position:absolute;left:-2.3rem;top:.55rem;
+  width:8px;height:8px;border-radius:50%;
+  background:var(--accent2);
+  box-shadow:0 0 0 3px var(--cream);
+}
+.tl-date{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:.2rem;font-weight:600}
+.tl-title{font-size:.98rem;font-weight:600;color:var(--ink);margin-bottom:.1rem;line-height:1.4}
+.tl-sub{font-size:.84rem;color:var(--muted);margin-bottom:.3rem}
+.tl-desc{font-size:.84rem;color:var(--mid);line-height:1.7}
+.award-pill{
+  display:inline-flex;align-items:center;gap:.3rem;
+  font-size:.7rem;padding:2px 10px;border-radius:2px;
+  border:1px solid rgba(201,168,76,.5);
+  background:rgba(201,168,76,.07);color:#8a6d2a;
+  margin-top:.35rem;
+}
+html[data-theme="dark"] .award-pill{color:var(--accent2)}
 
-    /* ── FOOTER ── */
-    footer {
-      background: var(--primary);
-      color: #a0b4c8;
-      text-align: center;
-      padding: 1.5rem 1rem;
-      font-size: 0.82rem;
-    }
-    footer a { color: var(--accent); text-decoration: none; }
+/* ── PUBLICATIONS ── */
+.pub-cols{display:grid;grid-template-columns:1fr 1fr;gap:1.8rem}
+.pub-entry{
+  border-bottom:1px solid var(--rule);
+  padding:1.1rem 0;
+}
+.pub-entry:last-child{border-bottom:none}
+.pub-cat{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem}
+.pub-title{font-size:.9rem;font-weight:600;color:var(--ink);line-height:1.45;margin-bottom:.2rem}
+.pub-meta{font-size:.8rem;color:var(--muted);font-style:italic}
 
-    /* ── RESPONSIVE ── */
-    @media (max-width: 640px) {
-      .header-inner { flex-direction: column; }
-      .timeline li { grid-template-columns: 80px 1fr; }
-      .conf-list li { grid-template-columns: 75px 1fr; }
-      nav ul li a { padding: 0.65rem 0.6rem; font-size: 0.78rem; }
-    }
-  </style>
+/* ── BOOKS ── */
+.books-row{display:flex;flex-wrap:wrap;gap:1.6rem}
+.book-card{
+  flex:1 1 200px;max-width:240px;
+  border:1px solid var(--rule);border-radius:4px;
+  overflow:hidden;background:var(--white);
+  transition:box-shadow .2s,transform .2s;
+}
+.book-card:hover{box-shadow:0 12px 40px rgba(0,0,0,.1);transform:translateY(-2px)}
+.book-cover{
+  height:140px;
+  background:linear-gradient(135deg,var(--accent) 0%,#0a2240 100%);
+  display:flex;align-items:center;justify-content:center;
+  padding:1rem;text-align:center;
+}
+.book-cover span{font-family:'Playfair Display',serif;font-size:.88rem;color:#fff;font-style:italic;line-height:1.45}
+.book-info{padding:.9rem 1rem}
+.book-title{font-size:.88rem;font-weight:600;color:var(--ink);margin-bottom:.2rem}
+.book-pub{font-size:.76rem;color:var(--muted)}
+
+/* ── ACHIEVEMENTS ── */
+.ach-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:1rem}
+.ach-entry{
+  display:flex;gap:.8rem;align-items:flex-start;
+  padding:.9rem 1rem;border:1px solid var(--rule);border-radius:4px;
+  background:var(--white);transition:border-color .2s;
+}
+.ach-entry:hover{border-color:var(--accent2)}
+.ach-icon{font-size:1.1rem;flex-shrink:0;padding-top:.1rem}
+.ach-yr{font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:.1rem}
+.ach-text{font-size:.84rem;color:var(--ink);line-height:1.5}
+
+/* ── MEDIA ── */
+.media-list{list-style:none;display:flex;flex-direction:column;gap:1px}
+.media-item{
+  padding:1.1rem 0;
+  border-bottom:1px solid var(--rule);
+  display:grid;grid-template-columns:120px 1fr;gap:1.2rem;align-items:start;
+}
+.media-item:last-child{border-bottom:none}
+.media-date{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding-top:.2rem}
+.media-title{font-size:.9rem;font-weight:600;color:var(--ink);margin-bottom:.2rem}
+.media-body{font-size:.82rem;color:var(--mid);line-height:1.65}
+.media-link{font-size:.78rem;color:var(--accent);margin-top:.3rem;display:inline-block}
+
+/* ── CONNECT ── */
+.connect-band{
+  background:var(--accent);
+  padding:clamp(50px,7vw,80px) clamp(20px,6vw,80px);
+  display:grid;grid-template-columns:1fr auto;gap:3rem;align-items:center;
+}
+.connect-band h2{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.6rem,3vw,2.4rem);
+  font-weight:500;color:#fff;margin-bottom:.5rem;
+}
+.connect-band p{color:rgba(255,255,255,.75);font-size:.94rem;max-width:520px}
+.connect-links{display:flex;flex-direction:column;gap:.7rem;flex-shrink:0}
+.connect-pill{
+  display:inline-flex;align-items:center;gap:.5rem;
+  padding:10px 22px;border:1px solid rgba(255,255,255,.4);
+  color:#fff;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;font-weight:500;
+  border-radius:2px;background:rgba(255,255,255,.08);
+  transition:background .2s;white-space:nowrap;
+}
+.connect-pill:hover{background:rgba(255,255,255,.18)}
+
+/* ── FOOTER ── */
+footer{
+  padding:1.4rem clamp(20px,6vw,80px);
+  border-top:1px solid var(--rule);
+  display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:.8rem;
+  font-size:.76rem;color:var(--muted);
+}
+
+/* ── RESPONSIVE ── */
+@media(max-width:860px){
+  .hero{grid-template-columns:1fr!important;gap:2rem}
+  .profile-pic-wrap{display:flex;flex-direction:row;align-items:center;gap:1.2rem;width:100%;margin-bottom:.5rem}
+  .profile-pic-frame{width:90px;flex-shrink:0;box-shadow:3px 3px 0 var(--rule)}
+  .profile-pic-caption{margin-top:0;text-align:left}
+  .hero-right{padding-top:0}
+  .hero-stat-block{display:flex;flex-wrap:wrap;gap:1.2rem}
+  .hero-stat{margin-bottom:0}
+  .about-grid,.skills-wrap,.pub-cols{grid-template-columns:1fr}
+  .connect-band{grid-template-columns:1fr}
+  .books-row{flex-direction:column}
+  .book-card{max-width:100%}
+}
+@media(max-width:600px){
+  .nav{padding:0 16px;height:50px}
+  .nav-links{display:none}
+  .nav-logo{font-size:.88rem}
+  .btn-dl{padding:5px 11px;font-size:.68rem;letter-spacing:.06em}
+  .theme-toggle{width:30px;height:30px;font-size:.8rem}
+  .hero{padding:24px 16px 28px!important;gap:1.2rem}
+  .hero-h1{font-size:clamp(1.9rem,8vw,2.4rem)!important;letter-spacing:-.02em;margin-bottom:1rem}
+  .hero-sub{font-size:.88rem;margin-bottom:1.4rem}
+  .hero-tags{gap:.3rem;margin-bottom:1.4rem}
+  .hero-tag{font-size:.68rem;padding:3px 8px}
+  .hero-ctas{flex-direction:column;align-items:stretch;gap:.55rem}
+  .btn-primary,.btn-secondary{width:100%;justify-content:center;padding:11px 16px;font-size:.76rem}
+  .hero-ctas .btn-dl{width:100%;justify-content:center;padding:11px 16px;font-size:.76rem}
+  .hero-right{display:block}
+  .hero-stat-block{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-bottom:1rem}
+  .hero-stat strong{font-size:1.7rem}
+  .hero-stat span{font-size:.65rem;letter-spacing:.12em}
+  .hero-note{font-size:.78rem;padding-left:.8rem}
+  .profile-pic-wrap{flex-direction:row;align-items:center;gap:.8rem;margin-bottom:.4rem}
+  .profile-pic-frame{width:68px}
+  .profile-pic-caption{font-size:.64rem}
+  .section{padding:32px 16px}
+  .section-alt{padding:32px 16px}
+  .section-title{font-size:clamp(1.25rem,5vw,1.6rem)}
+  .section-desc{font-size:.86rem}
+  .about-grid{gap:1.4rem}
+  .about-body p{font-size:.88rem}
+  .quote-block{font-size:.92rem;padding-left:.9rem;margin-bottom:1.4rem}
+  .info-pair .v{font-size:.84rem}
+  .skills-wrap{gap:1.6rem}
+  .skill-group-title{font-size:.94rem}
+  .skill-row{font-size:.72rem}
+  .carousel-outer::before,.carousel-outer::after{width:28px}
+  .cert-tile{min-width:170px;max-width:200px;padding:10px 12px}
+  .cert-org{font-size:.6rem}
+  .cert-name{font-size:.76rem}
+  .cert-yr{font-size:.68rem}
+  .tl-list{padding-left:1.3rem;margin-left:.3rem}
+  .tl-title{font-size:.88rem}
+  .tl-sub{font-size:.76rem}
+  .tl-desc{font-size:.78rem}
+  .tl-date{font-size:.64rem}
+  .award-pill{font-size:.66rem;padding:2px 8px}
+  .pub-cols{grid-template-columns:1fr;gap:0}
+  .pub-title{font-size:.84rem}
+  .pub-meta{font-size:.76rem}
+  .books-row{flex-direction:column}
+  .book-card{max-width:100%;flex:none}
+  .book-cover{height:110px}
+  .book-cover span{font-size:.8rem}
+  .book-title{font-size:.84rem}
+  .book-pub{font-size:.72rem}
+  .ach-grid{grid-template-columns:1fr}
+  .ach-text{font-size:.8rem}
+  .ach-yr{font-size:.62rem}
+  .media-item{grid-template-columns:1fr;gap:.25rem}
+  .media-date{padding-top:0;font-size:.65rem}
+  .media-title{font-size:.84rem}
+  .media-body{font-size:.78rem}
+  .connect-band{padding:32px 16px;grid-template-columns:1fr;gap:1.6rem}
+  .connect-band h2{font-size:clamp(1.3rem,5vw,1.8rem)}
+  .connect-band p{font-size:.86rem}
+  .connect-links{flex-direction:row;flex-wrap:wrap;gap:.5rem}
+  .connect-pill{font-size:.72rem;padding:8px 12px;white-space:nowrap}
+  footer{flex-direction:column;text-align:center;gap:.35rem;padding:.9rem 16px;font-size:.72rem}
+}
+@media(max-width:400px){
+  .hero-h1{font-size:1.75rem!important}
+  .hero-stat-block{grid-template-columns:1fr 1fr}
+  .hero-stat strong{font-size:1.5rem}
+  .section-title{font-size:1.2rem}
+  .connect-pill{font-size:.68rem;padding:7px 10px}
+  .tl-list{padding-left:1.1rem}
+}
+
+/* ── PROFILE PIC ── */
+.profile-pic-wrap{
+  position:relative;
+  width:clamp(160px,18vw,220px);
+  flex-shrink:0;
+}
+.profile-pic-frame{
+  width:100%;
+  aspect-ratio:1/1;
+  border-radius:4px;
+  overflow:hidden;
+  background:var(--soft);
+  border:1px solid var(--rule);
+  box-shadow:6px 6px 0 var(--rule);
+  position:relative;
+}
+.profile-pic-frame img{
+  width:100%;height:100%;
+  object-fit:cover;object-position:center top;
+  display:block;
+}
+.profile-pic-placeholder{
+  width:100%;height:100%;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  gap:.6rem;
+  background:linear-gradient(135deg,var(--soft) 0%,var(--rule) 100%);
+  color:var(--muted);
+  font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;
+  text-align:center;padding:1rem;cursor:pointer;
+}
+.profile-pic-placeholder span.icon{font-size:2.4rem;opacity:.5}
+.profile-pic-upload{
+  position:absolute;bottom:8px;right:8px;
+  background:var(--accent);color:#fff;
+  font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;font-weight:600;
+  padding:4px 9px;border-radius:2px;cursor:pointer;
+  border:none;opacity:0;transition:opacity .2s;
+}
+.profile-pic-frame:hover .profile-pic-upload{opacity:1}
+.profile-pic-caption{
+  font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);text-align:center;margin-top:.6rem;line-height:1.5;
+}
+
+</style>
 </head>
 <body>
 
-<!-- ══════════════ HEADER ══════════════ -->
-<header>
-  <div class="header-inner">
-    <!-- <div class="avatar-placeholder">&#9670;</div> -->
-    <img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcS-DZc3a93jUsRN4WfmAmPQeNrtK-verlAURcuSJSAGi-voKhBr"
-     alt="Mayukh Mukhopadhyay"
-     style="width:110px; height:110px; border-radius:50%;
-            border:3px solid #b5813c; object-fit:cover; flex-shrink:0;" />
-    <div class="header-text">
-      <h1>Mayukh Mukhopadhyay</h1>
-      <div class="title-line">Executive Doctoral Candidate &nbsp;|&nbsp; Department of Marketing &nbsp;|&nbsp; IIM Indore</div>
-      <!-- <div class="title-line" style="margin-top:0.15rem;">Data Consultant &nbsp;|&nbsp; Author &nbsp;|&nbsp; Podcast Host</div> -->
-      <div class="contact-links">
-        <a href="mailto:ef22mayukhm@iimidr.ac.in">✉ Email</a>
-        <a href="https://mayukhpsm.github.io/online-cv/mayukh_wiki.html" target="_blank">🌐 Personal Wiki</a>
-        <a href="https://scholar.google.co.in/citations?user=0fX4LNgAAAAJ&hl=en" target="_blank">📚 Google Scholar</a>
-        <a href="https://www.linkedin.com/in/mayukhpsm" target="_blank">💼 LinkedIn</a>
-        <a href="https://open.spotify.com/show/1FSNMlJzYxvlPswFdyCZx1" target="_blank">🎙 Podcast</a>
+<!-- ── NAV ── -->
+<nav class="nav">
+  <div class="nav-logo">Mayukh Mukhopadhyay</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#research">Research</a></li>
+    <li><a href="#conferences">Conferences</a></li>
+    <li><a href="#recognition">Awards</a></li>
+    <li><a href="#connect">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <a class="btn-dl" href="cv-mayukh-mukhopadhyay.pdf" download>⬇ CV</a>
+    <button class="theme-toggle" id="themeBtn">🌙</button>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero" style="grid-template-columns:clamp(160px,18vw,220px) 1fr clamp(200px,28vw,340px)">
+  <!-- PROFILE PIC -->
+  <div class="profile-pic-wrap" style="align-self:flex-start;padding-top:.5rem">
+    <div class="profile-pic-frame" id="picFrame" onclick="document.getElementById('picInput').click()">
+      <!--
+	  <div class="profile-pic-placeholder" id="picPlaceholder">
+        <span class="icon">🖼</span>
+        <span>Click to add<br>profile photo</span>
+      </div>	  
+      <img id="picImg" src="" alt="Mayukh Mukhopadhyay" style="display:none"/> -->
+	  <img src="mayukh-pic.png" alt="Mayukh Mukhopadhyay" style="display:block"/>
+      <button class="profile-pic-upload" onclick="event.stopPropagation();document.getElementById('picInput').click()">Bella Center CPH</button>
+    </div>
+    <p class="profile-pic-caption">Techie on Weekdays,<br>Fuzzy on Weekends.</p>
+    <input type="file" id="picInput" accept="image/*" style="display:none"/>
+  </div>
+  <div>
+    <div class="hero-eyebrow label">Data Consultant · Executive PhD Candidate · Author</div>
+    <h1 class="hero-h1">Mayukh<br>Mukhopadhyay</h1>
+    <p class="hero-sub">Fifteen years of telecom consulting at TCS and BT Group, combined with active doctoral research in marketing, nostalgia, and mediated influence at IIM Indore. I work at the place where data systems meet human stories.</p>
+    <div class="hero-tags">
+      <span class="hero-tag">Nostalgia Marketing</span>
+      <span class="hero-tag">Podcast Marketing</span>
+      <span class="hero-tag">Soft Power &amp; Digital Diplomacy</span>
+      <span class="hero-tag">Telecom Data Systems</span>
+      <span class="hero-tag">AI in Marketing</span>
+      <span class="hero-tag">Blockchain &amp; Web3</span>
+    </div>
+    <div class="hero-ctas">
+      <a class="btn-primary" href="#research">View Publications</a>
+      <a class="btn-secondary" href="#connect">Get in touch</a>
+      <a class="btn-dl" href="cv-mayukh-mukhopadhyay.pdf" download>⬇ Download CV</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-stat-block">
+	  <div class="hero-stat"><strong class="counter" data-target="250" data-suffix="+">0</strong><span>G-Scholar Citations</span></div>
+	  <div class="hero-stat"><strong class="counter" data-target="160" data-suffix="+">0</strong><span>Peer reviews (WoS)</span></div>
+      <div class="hero-stat"><strong class="counter" data-target="15" data-suffix="+">0</strong><span>Years in industry</span></div>
+      <div class="hero-stat"><strong class="counter" data-target="15" data-suffix="+">0</strong><span>Refereed conferences</span></div>
+	  <div class="hero-stat"><strong class="counter" data-target="10" data-suffix="+">0</strong><span>Refereed Essays and Cases</span></div>
+      <div class="hero-stat"><strong class="counter" data-target="3" data-suffix="">0</strong><span>Best paper awards</span></div>
+    </div>
+    <p class="hero-note">Currently in the All-but-Dissertation (ABD) stage of an Executive PhD at IIM Indore under Professor Ashish Sadh. Also serving as Curriculum Committee Member, AOM SIM Division, 2026.</p>
+  </div>
+</section>
+
+<!-- ── ABOUT ── -->
+<section class="section" id="about">
+  <div class="section-head">
+    <div class="label" style="margin-bottom:.5rem">Profile</div>
+    <h2 class="section-title">A practitioner–scholar, at the intersection of data, narrative, and influence</h2>
+  </div>
+  <div class="about-grid">
+    <div class="about-body">
+      <p>I am a full-time Data Consultant with more than 15 years of experience in the telecom billing and payments domain, working across complex transformation programs, business continuity initiatives, and data-driven problem solving. My roles at Tata Consultancy Services and BT Group plc have spanned revenue assurance architecture, GDPR-compliant cloud migrations, and multi-year digital transformation programs including Brexit and All-IP transitions.</p>
+      <p>Alongside my professional journey, I have remained deeply committed to academic learning and research. I hold an M.Engg from Jadavpur University and an MBA from IIT Kharagpur, and I am currently in the ABD stage of my Executive PhD at IIM Indore, supervised by Professor Ashish Sadh.</p>
+      <p>My academic interests center on complex emotions — especially nostalgia — and how brands, narratives, and mediated communication use them to shape influence and engagement. This curiosity extends naturally into questions of Soft Power and Digital Diplomacy, and into AI's growing role in marketing decision-making.</p>
+      <p>Beyond formal roles, I author books, review manuscripts for international journals and conferences, and host the AI-assisted podcast <em>Revise and Resubmit – The Mayukh Show</em>. I believe that expertise is never a finished state — it is an ongoing responsibility to keep learning, contributing, and staying curious.</p>
+    </div>
+    <div class="about-aside">
+      <div class="quote-block">"Influence is often built not through direct persuasion, but through emotion, meaning, and the stories people come to inhabit."<br> ~Dr. Robert Cialdini</div>
+      <div class="info-pair"><div class="k">Current role</div><div class="v">Design Practitioner, TCS & BT Group plc</div></div>
+      <div class="info-pair"><div class="k">Academic role</div><div class="v">Executive PhD Candidate, IIM Indore (ABD)</div></div>
+      <div class="info-pair"><div class="k">Podcast</div><div class="v"><a href="https://www.youtube.com/channel/UCmKUFa76ANTeNyBuD_rLvWQ" target="_blank" style="color:var(--accent)">Revise and Resubmit – The Mayukh Show</a></div></div>
+      <div class="info-pair"><div class="k">Location</div><div class="v">Kolkata, West Bengal, India</div></div>
+      <div class="info-pair"><div class="k">Open to</div><div class="v">Research collaboration · Consulting · Academic partnerships · Speaking</div></div>
+    </div>
+  </div>
+</section>
+
+<hr class="rule"/>
+
+<!-- ── SKILLS ── -->
+<section class="section section-alt" id="skills">
+  <div class="section-head">
+    <div class="label" style="margin-bottom:.5rem">Competencies</div>
+    <h2 class="section-title">Skills</h2>
+    <p class="section-desc">Strategy taught me structure. Research taught me depth. Communication taught me reach. Together, they define how I work.</p>
+  </div>
+  <div class="skills-wrap">
+    <div>
+      <div class="skill-group-title">Consulting &amp; Industry</div>
+      <div class="skill"><div class="skill-row"><span>Telecom data &amp; billing systems</span><span>Expert</span></div><div class="skill-track"><div class="skill-fill c" data-w="93"></div></div></div>
+      <div class="skill"><div class="skill-row"><span>Revenue assurance &amp; leakage</span><span>Expert</span></div><div class="skill-track"><div class="skill-fill c" data-w="90"></div></div></div>
+      <div class="skill"><div class="skill-row"><span>Cloud migration &amp; GDPR</span><span>Advanced</span></div><div class="skill-track"><div class="skill-fill c" data-w="86"></div></div></div>
+      <div class="skill"><div class="skill-row"><span>Stakeholder communication</span><span>Expert</span></div><div class="skill-track"><div class="skill-fill c" data-w="91"></div></div></div>
+      <div class="skill"><div class="skill-row"><span>Digital transformation</span><span>Advanced</span></div><div class="skill-track"><div class="skill-fill c" data-w="88"></div></div></div>
+    </div>
+    <div>
+      <div class="skill-group-title">Research, Writing &amp; Communication</div>
+      <div class="skill"><div class="skill-row"><span>Academic writing &amp; SLR</span><span>Expert</span></div><div class="skill-track"><div class="skill-fill r" data-w="94"></div></div></div>
+      <div class="skill"><div class="skill-row"><span>Peer review (160+ WoS)</span><span>Expert</span></div><div class="skill-track"><div class="skill-fill r" data-w="96"></div></div></div>
+      <div class="skill"><div class="skill-row"><span>Conceptual &amp; qualitative research</span><span>Advanced</span></div><div class="skill-track"><div class="skill-fill r" data-w="88"></div></div></div>
+      <div class="skill"><div class="skill-row"><span>Podcast hosting &amp; public writing</span><span>Advanced</span></div><div class="skill-track"><div class="skill-fill r" data-w="85"></div></div></div>
+      <div class="skill"><div class="skill-row"><span>Conference presentation</span><span>Expert</span></div><div class="skill-track"><div class="skill-fill r" data-w="92"></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── WORKSHOPS CAROUSEL ── -->
+<section class="section section-alt" style="padding-top:0">
+  <div class="section-head" style="margin-bottom:1.6rem">
+    <div class="label">Workshops, Programmes &amp; Certifications</div>
+  </div>
+  <div class="carousel-outer">
+    <div class="carousel-track">
+      <div class="cert-tile"><div class="cert-org">Academy of Management</div><div class="cert-name">AMR Bridge Reviewer Program – Graduate</div><div class="cert-yr">2025 · AOM Annual Meeting, Copenhagen</div></div>
+      <div class="cert-tile"><div class="cert-org">McKinsey &amp; Company</div><div class="cert-name">McKinsey Forward Program – Structured Problem Solving</div><div class="cert-yr">2025 · McKinsey Partners</div></div>
+      <div class="cert-tile"><div class="cert-org">UNESCO · Said Business School</div><div class="cert-name">AI and Digital Transformation in Government</div><div class="cert-yr">2025 · University of Oxford</div></div>
+      <div class="cert-tile"><div class="cert-org">World Bank Group</div><div class="cert-name">Manage Successful Field Research</div><div class="cert-yr">2025 · World Bank</div></div>
+      <div class="cert-tile"><div class="cert-org">Academy of Management</div><div class="cert-name">Virtual Summer School in Entrepreneurship Research</div><div class="cert-yr">2025 · Prof. Vishal K. Gupta · Copenhagen offsite</div></div>
+      <div class="cert-tile"><div class="cert-org">MIS Quarterly</div><div class="cert-name">MISQ-Insider: Behavioral Cybersecurity Interviews</div><div class="cert-yr">2024 · MISQ Insider Initiative</div></div>
+      <div class="cert-tile"><div class="cert-org">AIB Seoul 2024</div><div class="cert-name">Outstanding Reviewer Recognition</div><div class="cert-yr">2024 · Academy of International Business</div></div>
+      <div class="cert-tile"><div class="cert-org">Smart India Hackathon</div><div class="cert-name">Innovation Cell Appreciation – 250+ Projects</div><div class="cert-yr">2024–2025 · Blockchain &amp; Smart Education</div></div>
+      <!-- duplicates for seamless loop -->
+      <div class="cert-tile"><div class="cert-org">Academy of Management</div><div class="cert-name">AMR Bridge Reviewer Program – Graduate</div><div class="cert-yr">2025 · AOM Annual Meeting, Copenhagen</div></div>
+      <div class="cert-tile"><div class="cert-org">McKinsey &amp; Company</div><div class="cert-name">McKinsey Forward Program – Structured Problem Solving</div><div class="cert-yr">2025 · McKinsey Partners</div></div>
+      <div class="cert-tile"><div class="cert-org">UNESCO · Said Business School</div><div class="cert-name">AI and Digital Transformation in Government</div><div class="cert-yr">2025 · University of Oxford</div></div>
+      <div class="cert-tile"><div class="cert-org">World Bank Group</div><div class="cert-name">Manage Successful Field Research</div><div class="cert-yr">2025 · World Bank</div></div>
+      <div class="cert-tile"><div class="cert-org">Academy of Management</div><div class="cert-name">Virtual Summer School in Entrepreneurship Research</div><div class="cert-yr">2025 · Prof. Vishal K. Gupta · Copenhagen offsite</div></div>
+      <div class="cert-tile"><div class="cert-org">MIS Quarterly</div><div class="cert-name">MISQ-Insider: Behavioral Cybersecurity Interviews</div><div class="cert-yr">2024 · MISQ Insider Initiative</div></div>
+      <div class="cert-tile"><div class="cert-org">AIB Seoul 2024</div><div class="cert-name">Outstanding Reviewer Recognition</div><div class="cert-yr">2024 · Academy of International Business</div></div>
+      <div class="cert-tile"><div class="cert-org">Smart India Hackathon</div><div class="cert-name">Innovation Cell Appreciation – 250+ Projects</div><div class="cert-yr">2024–2025 · Blockchain &amp; Smart Education</div></div>
+    </div>
+  </div>
+</section>
+
+<hr class="rule"/>
+
+<!-- ── EDUCATION ── -->
+<section class="section" id="education">
+  <div class="section-head">
+    <div class="label" style="margin-bottom:.5rem">Academic Journey</div>
+    <h2 class="section-title">Education</h2>
+  </div>
+  <ul class="tl-list">
+    <li class="tl-item">
+      <div class="tl-date">2022 – Present</div>
+      <div class="tl-title">Executive PhD Candidate, Marketing</div>
+      <div class="tl-sub">Indian Institute of Management, Indore · Supervisor: Professor Ashish Sadh</div>
+      <div class="tl-desc">ABD stage. Work accepted at MUF-2026 (IIM Calcutta), IMPeC-2025 (IIM Sambalpur), PGRC-2024 (Taylor's University Malaysia), Journal of Marketing Communication 2024, and INFORMS Marketing Science Conference 2024.</div>
+    </li>
+    <li class="tl-item">
+      <div class="tl-date">2018 – 2021</div>
+      <div class="tl-title">Master of Business Administration (MBA)</div>
+      <div class="tl-sub">VGSoM, Indian Institute of Technology, Kharagpur · Supervisor: Professor Sangeeta Sahney</div>
+      <div class="tl-desc">Thesis DOI: <a href="https://doi.org/10.48550/arXiv.2201.02857" target="_blank" style="color:var(--accent)">10.48550/arXiv.2201.02857</a></div>
+    </li>
+    <li class="tl-item">
+      <div class="tl-date">2014 – 2016</div>
+      <div class="tl-title">Master of Engineering, Software Engineering</div>
+      <div class="tl-sub">Department of Information Technology, Jadavpur University · Supervisor: Professor Parama Bhowmick</div>
+      <div class="tl-desc">Thesis DOI: <a href="https://doi.org/10.1101/053074" target="_blank" style="color:var(--accent)">10.1101/053074</a></div>
+    </li>
+    <li class="tl-item">
+      <div class="tl-date">2005 – 2009</div>
+      <div class="tl-title">Bachelor of Technology, Electronics &amp; Communication Engineering</div>
+      <div class="tl-sub">West Bengal University of Technology · Supervisor: Professor Ardhendu Shekhar Biswas</div>
+      <div class="tl-desc">Thesis DOI: <a href="https://doi.org/10.48550/arXiv.1311.0842" target="_blank" style="color:var(--accent)">10.48550/arXiv.1311.0842</a></div>
+    </li>
+  </ul>
+</section>
+
+<hr class="rule"/>
+
+<!-- ── EXPERIENCE ── -->
+<section class="section section-alt" id="experience">
+  <div class="section-head">
+    <div class="label" style="margin-bottom:.5rem">Industry</div>
+    <h2 class="section-title">Experience</h2>
+  </div>
+  <ul class="tl-list">
+    <li class="tl-item">
+      <div class="tl-date">2010 – Present</div>
+      <div class="tl-title">Assistant Consultant (Full-Time)</div>
+      <div class="tl-sub">Tata Consultancy Services · Communication, Media &amp; Information Unit</div>
+      <div class="tl-desc">Design Practitioner for end-to-end data pipeline architecture to detect and prevent revenue leakage. Specializes in cloud migration and digital transformation projects for telecom giants operating under strict GDPR compliance. Individual contributor and team player across large-scale programs.</div>
+    </li>
+    <li class="tl-item">
+      <div class="tl-date">2010 – Present</div>
+      <div class="tl-title">Design Practitioner (Sub-Contract)</div>
+      <div class="tl-sub">BT Group plc (British Telecom) · BT Enterprise Division</div>
+      <div class="tl-desc">Supports migration of critical data pipelines during major transformation events including Brexit, GDPR enactment, Cloud migration, and All-IP initiatives. Ensures business continuity and regulatory compliance across high-stakes transformation programs.</div>
+    </li>
+  </ul>
+</section>
+
+<hr class="rule"/>
+
+<!-- ── RESEARCH ── -->
+<section class="section" id="research">
+  <div class="section-head">
+    <div class="label" style="margin-bottom:.5rem">Scholarship</div>
+    <h2 class="section-title">Publications &amp; Writing</h2>
+    <p class="section-desc">Refereed journal articles, teaching cases, book review essays, and books — spanning nostalgia marketing, blockchain, AI, and communication theory.</p>
+  </div>
+
+  <h3 class="label" style="margin-bottom:1.1rem;color:var(--mid)">Journal Articles &amp; Teaching Cases</h3>
+  <div class="pub-cols">
+    <div>
+      <div class="pub-entry"><div class="pub-cat">Journal Article · 2026 · ABDC B</div><div class="pub-title">Nostalgia marketing — a systematic literature review and future directions</div><div class="pub-meta">Journal of Marketing Communications, (Vol 32, Issue 1), Taylor &amp; Francis</div></div>
+      <div class="pub-entry"><div class="pub-cat">Journal Article · 2025 · IIM Indore Flagship Journal</div><div class="pub-title">Examining Drivers of B2B Subscription Commerce in Digital Ecosystem Using Fuzzy Cognitive Mapping</div><div class="pub-meta">Journal of Contemporary Business Research, (Vol 1, Issue 1), Sage Publications</div></div>
+      <div class="pub-entry"><div class="pub-cat">Teaching Case · 2025 · ABS 1</div><div class="pub-title">Golden brush and evolving canvas — Navigating the digital art and Non-fungible tokens</div><div class="pub-meta">Journal of Information Technology Teaching Cases, (Vol 15, Issue 1), Sage UK</div></div>
+    </div>
+    <div>
+      <div class="pub-entry"><div class="pub-cat">Teaching Case · 2025 · ABS 1</div><div class="pub-title">Be my AI — micro-volunteering in the time of ChatGPT</div><div class="pub-meta">Journal of Information Technology Teaching Cases, (Vol 15, Issue 1), Sage UK</div></div>
+      <div class="pub-entry"><div class="pub-cat">Journal Article · 2023 · ProQuest One Business</div><div class="pub-title">A Concept Note on Symbolic Convergence Theory</div><div class="pub-meta">IUP Journal of Soft Skills, (Vol 17, Issue 3), IUP Publications</div></div>
+      <div class="pub-entry" style="border-left:2px solid var(--accent2);padding-left:.8rem"><div class="pub-cat">Work-in-Progress · 2026 · FT50</div><div class="pub-title">Article Related to Organizational Nostalgia</div><div class="pub-meta">Under Review · Organization Studies</div></div>
+    </div>
+  </div>
+
+  <h3 class="label" style="margin:2.2rem 0 1rem;color:var(--mid)">Book Review Essays</h3>
+  <div class="pub-cols">
+    <div>
+      <div class="pub-entry"><div class="pub-cat">Book Review · 2026 · ABDC A*</div><div class="pub-title">The Hashtag Hustle by Annabell et al.</div><div class="pub-meta">Oxford University Commonwealth Law Journal, Taylor &amp; Francis</div></div>
+      <div class="pub-entry"><div class="pub-cat">Book Review · 2025 · ABDC A, ABS 3</div><div class="pub-title">Hydrodynamics of Markets by Alexander Lipton</div><div class="pub-meta">Quantitative Finance, Taylor &amp; Francis</div></div>
+      <div class="pub-entry"><div class="pub-cat">Book Review · 2025 · ABDC A</div><div class="pub-title">Tough Broad by Caroline Paul</div><div class="pub-meta">Leisure Studies, Taylor &amp; Francis</div></div>
+    </div>
+    <div>
+      <div class="pub-entry"><div class="pub-cat">Book Review · 2025 · ABDC C</div><div class="pub-title">Who Owns Football? by Nick Miller</div><div class="pub-meta">Soccer &amp; Society, Taylor &amp; Francis</div></div>
+      <div class="pub-entry"><div class="pub-cat">Book Review · 2025 · Scopus Q1</div><div class="pub-title">Wildfire by Ferin D. Anderson and Stephanie S. McPherson</div><div class="pub-meta">Society &amp; Natural Resources (Vol 38, Issue 6), Taylor &amp; Francis</div></div>
+      <div class="pub-entry"><div class="pub-cat">Book Review · 2024 · ABDC B</div><div class="pub-title">Mine Your Language by Abhishek Borah</div><div class="pub-meta">Journal of Global Marketing (Vol 37, Issue 4), Taylor &amp; Francis</div></div>
+    </div>
+  </div>
+
+  <h3 class="label" style="margin:2.2rem 0 1rem;color:var(--mid)">Books</h3>
+  <div class="books-row">
+    <div class="book-card">
+      <div class="book-cover"><span>Ethereum Smart Contract Development</span></div>
+      <div class="book-info">
+        <div class="book-title">Ethereum Smart Contract Development</div>
+        <div class="book-pub">Packt Publishing UK · 2018<br>Author: Mayukh Mukhopadhyay<br><a class="media-link" href="https://www.oreilly.com/library/view/ethereum-smart-contract/9781788473040/3dd03f9b-f474-4a51-9593-530113b6523c.xhtml" target="_blank">🔗 Check at O'Reilly →</a></div>
+      </div>
+    </div>
+    <div class="book-card">
+      <div class="book-cover" style="background:linear-gradient(135deg,#0e3a68,#1a6cf0)"><span>Five Shades of Emerging Business Cases</span></div>
+      <div class="book-info">
+        <div class="book-title">Five Shades of Emerging Business Cases</div>
+        <div class="book-pub">Eliva Press EU · 2021<br>Kaushik G &amp; Mayukh M<br><a class="media-link" href="https://www.amazon.com/Five-Shades-Emerging-Business-Cases/dp/163648395X" target="_blank">🔗 Check at Amazon →</a></div>
       </div>
     </div>
   </div>
-</header>
+</section>
 
-<!-- ══════════════ NAV ══════════════ -->
-<nav>
-  <ul>
-    <li><a href="#profile">About</a></li>
-    <li><a href="#education">Education</a></li>
-    <li><a href="#publications">Publications</a></li>
-    <li><a href="#conferences">Conferences</a></li>
-    <li><a href="#awards">Awards</a></li>
-    <li><a href="#experience">Experience</a></li>
-    <li><a href="#media">Media &amp; Press</a></li>
-    <li><a href="#blog">Blog &amp; Writings</a></li>
+<hr class="rule"/>
+
+<!-- ── CONFERENCES ── -->
+<section class="section section-alt" id="conferences">
+  <div class="section-head">
+    <div class="label" style="margin-bottom:.5rem">Conference Activity</div>
+    <h2 class="section-title">Refereed Presentations</h2>
+    <p class="section-desc">Fifteen-plus refereed presentations at IIMs, AOM Copenhagen, and INFORMS.</p>
+  </div>
+  <ul class="tl-list">
+    <!--<li class="tl-item"><div class="tl-date">Mar 2026</div><div class="tl-title">Beyond Bandura: Enhancing Organizational Cloud Competency using Connectivism</div><div class="tl-sub">Academy of Management 2026 Annual Meeting · Philadelphia</div></li> -->
+    <li class="tl-item"><div class="tl-date">Mar 2026</div><div class="tl-title">To Kill a Mocking Fad: A Framework for Evaluating Analogies in Marketing Discourse</div><div class="tl-sub">ICM-2026 · IIM Bodhgaya</div></li>
+    <li class="tl-item"><div class="tl-date">Feb 2026</div><div class="tl-title">Nostalgia Washing as a Fact Making Strategy</div><div class="tl-sub">MUF-2026 · IIM Calcutta</div></li>
+    <li class="tl-item"><div class="tl-date">Feb 2026</div><div class="tl-title">Podcast or Perish: Long Form Conversations as the New Red Carpet</div><div class="tl-sub">ICIC-2026 · Track: Film Distribution &amp; Marketing · IIM Ranchi</div></li>
+    <li class="tl-item"><div class="tl-date">Feb 2026</div><div class="tl-title">striver's takeUforward: Scaling a Bootstrapped Coding Platform</div><div class="tl-sub">2nd Case &amp; Research Conference · IIM Nagpur &amp; Ivey Publishing</div></li>
+    <li class="tl-item"><div class="tl-date">Oct 2025</div><div class="tl-title">Sonic Soft Power: China's Podcast Diplomacy</div><div class="tl-sub">18th AICCS · ICS Delhi &amp; Ministry of External Affairs</div><div class="award-pill">🏆 Winner — Mira Sinha Bhattacharjea Award</div></li>
+    <li class="tl-item"><div class="tl-date">Jul 2025</div><div class="tl-title">Typology of Threat Culture in the Metaverse</div><div class="tl-sub">Academy of Management 2025 Annual Meeting · Copenhagen</div><div class="award-pill">🏆 AOM Travel Award &amp; FIIB Best Paper 2024</div></li>
+    <li class="tl-item"><div class="tl-date">Jun 2025</div><div class="tl-title">Nostalgia-Driven Innovation: SLR, Conceptual Model &amp; Future Direction</div><div class="tl-sub">FMOS 2025 · American Institute of Applied Sciences, Switzerland</div></li>
+    <li class="tl-item"><div class="tl-date">May 2025</div><div class="tl-title">Sonic Branding: Podcast Marketing as a Startup Growth Catalyst</div><div class="tl-sub">VIPANAN-2025 · IIM Visakhapatnam</div></li>
+    <li class="tl-item"><div class="tl-date">Jan 2025</div><div class="tl-title">Large Language Models and Marketing Managers — A Reversal of Decision Calculus</div><div class="tl-sub">iMarC IV · Track: AI/ML in Marketing · IIM Shillong &amp; Sunway University</div></li>
+    <li class="tl-item"><div class="tl-date">Jan 2025</div><div class="tl-title">The Uncanny Positivity of AI Hallucination</div><div class="tl-sub">IMPeC-2025 · Track: Marketing Practice &amp; Research · IIM Sambalpur</div></li>
+    <li class="tl-item"><div class="tl-date">Dec 2024</div><div class="tl-title">BarberShop: Podcast Marketing for Bombay Shaving Company</div><div class="tl-sub">IIM Nagpur Ivey Case Conference 2024</div></li>
+    <li class="tl-item"><div class="tl-date">Jun 2024</div><div class="tl-title">Shape My Choice: How Iconicity and Nostalgia Marketing Influence Brand Preference</div><div class="tl-sub">INFORMS Marketing Science Conference 2024 · Co-Authored (Presented by PhD Supervisor)</div></li>
+    <li class="tl-item"><div class="tl-date">Jan 2024</div><div class="tl-title">Crouching Leopard, Hidden Unicorn: Funding the Indian Health-Tech Sector</div><div class="tl-sub">9th PAN IIM World Management Conference 2023</div></li>
+    <li class="tl-item"><div class="tl-date">Dec 2023</div><div class="tl-title">From Click to Quick — Examining the Drivers of Quick Commerce</div><div class="tl-sub">ICM 2023 · Syracuse University &amp; IIM Kashipur</div></li>
+    <li class="tl-item"><div class="tl-date">Jun 2023</div><div class="tl-title">Examining Drivers of B2B Subscription Commerce — Fuzzy Cognitive Mapping</div><div class="tl-sub">CERE 2023 · IIM Indore</div><div class="award-pill">🏆 Best Paper Award (Top 3 of 139 presentations)</div></li>
+    <li class="tl-item"><div class="tl-date">Apr 2023</div><div class="tl-title">Unlocking Chat Engine Adoption: A Push-Pull-Mooring Framework</div><div class="tl-sub">ICM 2023 · University of Gothenburg &amp; IIM Bodhgaya</div></li>
+	<li class="tl-item"><div class="tl-date">Feb 2022</div><div class="tl-title">Who Moved My Grocery, in 10 Minutes? - A Light on Indian Dark Stores</div><div class="tl-sub">National Case Development Conference 2022 · Loyola Institute of Business Administration, Chennai </div></li>
   </ul>
-</nav>
+</section>
 
-<!-- ══════════════ MAIN ══════════════ -->
-<main>
+<hr class="rule"/>
 
-  <!-- PROFILE -->
-  <section id="profile">
-    <h2 class="section-heading">Profile Summary</h2>
-    <p>I am a full-time Data Consultant with more than 15 years of experience in the telecom billing and payments domain, where I have worked across complex transformation programs, business continuity initiatives, and data-driven problem solving. Over the years, I have learned that the most important challenges are rarely only technical. They are also about communication, judgment, and the ability to bring clarity to situations that are layered, fast-moving, and often uncertain.</p>
-  
-    <p style="margin-top:1rem;">Alongside my professional journey, I have remained deeply committed to academic learning and research. I hold an M.Engg from Jadavpur University and an MBA from IIT Kharagpur, and I am currently in the ABD stage of my Executive PhD journey at IIM Indore. I still see myself as a learner first, shaped as much by questions as by answers. That mindset has kept me grounded and constantly open to growth.</p>
-  
-    <p style="margin-top:1rem;">My academic interests revolve around a broader theme that continues to fascinate me: I study complex emotions and how brands, narratives, and mediated communication use them to shape influence and engagement. Within that space, I am especially interested in nostalgia marketing and podcast marketing, particularly how memory, identity, voice, and storytelling create trust, attachment, and a sense of belonging. I am also drawn to questions in International Relations, especially Soft Power and Digital Diplomacy, because they extend this same curiosity into a wider arena, where symbols, narratives, platforms, and cultural signals shape perception across borders, institutions, and public life. What ties these interests together for me is a simple idea: influence is often built not only through direct persuasion, but through emotion, meaning, and the stories people come to inhabit.</p>
-  
-    <p style="margin-top:1rem;">Professionally, I have often found myself working at the intersection of analytical rigor and practical execution. My role has required me to translate technical complexity into business understanding, align stakeholders across functions, and support decisions that are thoughtful and actionable. I enjoy that bridge-building work. It has taught me that clarity matters, patience is underrated, and jargon usually arrives just before confusion starts feeling important.</p>
-  
-    <p style="margin-top:1rem;">Beyond my formal roles, I enjoy contributing to wider intellectual and professional communities through writing, peer review, and content creation. I am the author of <em>Ethereum Smart Contract Development</em> published by Packt UK, and I actively review for international journals and conferences. I also host the AI-assisted podcast <em>Revise and Resubmit - The Mayukh Show</em>, which reflects my interest in ideas, inquiry, and the occasionally dramatic rhythm of academic life. Revisions, in my experience, are rarely glamorous, but they are usually where the real learning begins.</p>
-  
-    <p style="margin-top:1rem;">If my work brings together consulting, research, and communication, it is because I have come to value thoughtful inquiry as much as practical relevance. Whether I am engaging with data, ideas, or people, I try to bring sincerity, discipline, and curiosity to the table. I do not think of expertise as a finished state. I see it as an ongoing responsibility to keep learning, keep contributing, and stay humble enough to know there is always more to understand.</p>
-  </section>
+<!-- ── RECOGNITION ── -->
+<section class="section" id="recognition">
+  <div class="section-head">
+    <div class="label" style="margin-bottom:.5rem">Honours</div>
+    <h2 class="section-title">Awards &amp; Recognition</h2>
+  </div>
+  <div class="ach-grid">
+    <div class="ach-entry"><div class="ach-icon">🏛️</div><div><div class="ach-yr">2026</div><div class="ach-text">Curriculum Committee Member — Academy of Management SIM Division</div></div></div>
+    <div class="ach-entry"><div class="ach-icon">🥇</div><div><div class="ach-yr">2026</div><div class="ach-text">TCS AIP Anchor Award — For Hands-On Training 245+ Associates on the dark side of Metaverse</div></div></div>
+    <div class="ach-entry"><div class="ach-icon">🔬</div><div><div class="ach-yr">2026</div><div class="ach-text">Appreciated by ACM India for 60+ Activity Based Funding (ABF) Assessments</div></div></div>
+    <div class="ach-entry"><div class="ach-icon">🥇</div><div><div class="ach-yr">2025</div><div class="ach-text">Outstanding Performer — Jointly by TCS &amp; BT for HAAS to GCP Migration</div></div></div>	
+    <div class="ach-entry"><div class="ach-icon">🏆</div><div><div class="ach-yr">2025</div><div class="ach-text">Winner — Mira Sinha Bhattacharjea Award, 18th All India Conference of China Studies</div></div></div>
+    <div class="ach-entry"><div class="ach-icon">💻</div><div><div class="ach-yr">2025</div><div class="ach-text">Senior Recognition Award — Association for Computing Machinery (ACM)</div></div></div>
+    <div class="ach-entry"><div class="ach-icon">✈️</div><div><div class="ach-yr">2025</div><div class="ach-text">Travel Award — AOM Conflict Management Division to present at AOM2025 Copenhagen</div></div></div>
+    <div class="ach-entry"><div class="ach-icon">📋</div><div><div class="ach-yr">2025</div><div class="ach-text">AMR Bridge Reviewer Graduate — recognized by Editor-in-Chief Kris Byron at AOM2025 Copenhagen</div></div></div>
+    <div class="ach-entry"><div class="ach-icon">💡</div><div><div class="ach-yr">2025</div><div class="ach-text">Innovation Cell Appreciation — assessed 250+ Blockchain &amp; Smart Education projects, Smart India Hackathon 2024 &amp; 2025</div></div></div>
+    <div class="ach-entry"><div class="ach-icon">🌏</div><div><div class="ach-yr">2024</div><div class="ach-text">Outstanding Reviewer Appreciation — Academy of International Business, AIB 2024 Seoul &amp; AIB 2026 Manchester</div></div></div>
+    <div class="ach-entry"><div class="ach-icon">📝</div><div><div class="ach-yr">2024</div><div class="ach-text">160+ Web-of-Science Verified Peer Reviews with 2 Excellent Reviewer Ratings</div></div></div>
+    <div class="ach-entry"><div class="ach-icon">🥇</div><div><div class="ach-yr">2023</div><div class="ach-text">Best Paper Award (Top 3) among 139 presentations — CERE 2023, IIM Indore</div></div></div>
+  </div>
+</section>
 
+<hr class="rule"/>
 
-  <!-- EDUCATION -->
-  <section id="education">
-    <h2 class="section-heading">Educational Qualification</h2>
-    <ul class="timeline">
-      <li>
-        <div class="tl-year">2022–present</div>
-        <div class="tl-body">
-          <div class="degree">Executive PhD Candidate, Marketing</div>
-          <div class="inst">Indian Institute of Management, Indore</div>
-          <div class="detail">Supervisor: Professor Ashish Sadh &nbsp;·&nbsp; Work accepted at <a href="https://x.com/mayukhdifferent/status/2022497952082858083" target="_blank">MUF-2026 (IIM Calcutta)</a>, <a href="https://iimsambalpur.ac.in/IMPeC-2025/pdf/Abstract.pdf#page=110" target="_blank">IMPeC-2025 (IIM Sambalpur)</a>, <a href="https://www.crit-taylors.com/_files/ugd/6db1d2_b2afa94586d0411289944c2461690bd1.pdf#page=260" target="_blank">PGRC-2024 (Taylor's University Malaysia)</a>, <a href="https://doi.org/10.1080/13527266.2024.2306551" target="_blank">Journal of Marketing Communication 2024</a>, and <a href="https://www.unsw.edu.au/content/dam/pdfs/business/marketing/events/2024-06-isms-marketing-science-conference/2024-06-ISMS-Marketing-Science-Conference-Presentation-Overview-June-21.pdf#page=3" target="_blank">INFORMS Marketing Science Conference 2024</a></div>
-        </div>
-      </li>
-      <li>
-        <div class="tl-year">2018–2021</div>
-        <div class="tl-body">
-          <div class="degree">Master of Business Administration (MBA)</div>
-          <div class="inst">VGSoM, Indian Institute of Technology, Kharagpur</div>
-          <div class="detail">Supervisor: Professor Sangeeta Sahney &nbsp;·&nbsp; <a href="https://doi.org/10.48550/arXiv.2201.02857" target="_blank">Thesis DOI 10.48550/arXiv.2201.02857</a></div>
-        </div>
-      </li>
-      <li>
-        <div class="tl-year">2014–2016</div>
-        <div class="tl-body">
-          <div class="degree">Master of Engineering, Software Engineering</div>
-          <div class="inst">Department of Information Technology, Jadavpur University</div>
-          <div class="detail">Supervisor: Professor Parama Bhowmick &nbsp;·&nbsp; <a href="https://doi.org/10.1101/053074" target="_blank">Thesis DOI 10.1101/053074</a></div>
-        </div>
-      </li>
-      <li>
-        <div class="tl-year">2005–2009</div>
-        <div class="tl-body">
-          <div class="degree">Bachelor of Technology, Electronics &amp; Communication</div>
-          <div class="inst">West Bengal University of Technology</div>
-          <div class="detail">Supervisor: Professor Ardhendu Shekhar Biswas &nbsp;·&nbsp; <a href="https://doi.org/10.48550/arXiv.1311.0842" target="_blank">Thesis DOI 10.48550/arXiv.1311.0842</a></div>
-        </div>
-      </li>
-    </ul>
-  </section>
+<!-- ── MEDIA ── -->
+<section class="section section-alt" id="media">
+  <div class="section-head">
+    <div class="label" style="margin-bottom:.5rem">Media &amp; Writing</div>
+    <h2 class="section-title">Press, Blogs &amp; Interviews</h2>
+  </div>
+  <ul class="media-list">
+    <li class="media-item">
+      <div class="media-date">Mar 2026 · AOM Blog</div>
+      <div><div class="media-title">Book Review on The Triangle of Power</div><div class="media-body">Book Review Essay published in the Academy of Management SIM Blog.</div><a class="media-link" href="https://connect.aom.org/blogs/mayukh-mukhopadhyay/2026/03/07/book-review-on-the-triangle-of-power" target="_blank">Read article →</a>&nbsp;&nbsp;<a class="media-link" href="https://connect.aom.org/aomthrivemicrositetemplate/profile/contributions/contributions-list?UserKey=992048f2-e3f1-4989-b8c5-018cd6f758c0" target="_blank">Essay Portfolio in AOM SIM Blog →</a></div>
+    </li>
+    <li class="media-item">
+      <div class="media-date">Feb 2026 · insiderFinance Wire</div>
+      <div><div class="media-title">A Quiet Race for Uncertainty: The Silent Financing of Quantum GCC Hubs in the Global South</div><div class="media-body">Explores how Global Capability Centers in India are becoming primary vehicles for financing and developing quantum technology.</div><a class="media-link" href="https://wire.insiderfinance.io/a-quiet-race-for-uncertainty-dada3ada1e9c" target="_blank">Read article →</a>&nbsp;&nbsp;<a class="media-link" href="https://wire.insiderfinance.io/search?q=mayukh+mukhopadhyay" target="_blank">Article Portfolio in insiderFinance →</a></div>
+    </li>
+    <li class="media-item">
+      <div class="media-date">Dec 2025 · AOM Blog</div>
+      <div><div class="media-title">The Scrapper's Way: Book Review</div><div class="media-body">Book Review Essay published in AOM Management Consulting Blog.</div><a class="media-link" href="https://connect.aom.org/mc/blogs/mayukh-mukhopadhyay/2025/12/31/the-scrapper-way-book-review" target="_blank">Read article →</a></div>
+    </li>
+    <li class="media-item">
+      <div class="media-date">2025 · ICS Delhi</div>
+      <div><div class="media-title">Announcement of Mira Sinha Bhattacharjea Award 2025</div><div class="media-body">Announcement by Institute of Chinese Studies, Delhi for the best paper at the 18th AICCS.</div><a class="media-link" href="https://www.linkedin.com/posts/icsdelhi_18thaiccs-conference2025-18thaiccs-activity-7405277204143792128-pwet/" target="_blank">Award details →</a></div>
+    </li>
+    <li class="media-item">
+      <div class="media-date">2024 · MIS Quarterly</div>
+      <div><div class="media-title">MISQ-Insider: Behavioral Cybersecurity &amp; Braggart's Dilemma</div><div class="media-body">Interviews on behavioral cybersecurity research as part of the MISQ-Insider initiative.</div><a class="media-link" href="https://www.linkedin.com/feed/update/urn:li:activity:7227748656714563584/" target="_blank">Interview 1 →</a>&nbsp;&nbsp;<a class="media-link" href="https://www.linkedin.com/feed/update/urn:li:activity:7237818079328493569/" target="_blank">Interview 2 →</a></div>
+    </li>
+  </ul>
+</section>
 
-  <!-- PUBLICATIONS -->
-  <section id="publications">
-    <h2 class="section-heading">Publications, Workshops &amp; Work-in-Progress</h2>
+<!-- ── CONNECT BAND ── -->
+<div class="connect-band" id="connect">
+  <div>
+    <h2>Let's connect</h2>
+    <p>Open to research collaborations, consulting engagements, conference invitations, book reviews, and any conversation at the intersection of data, ideas, and communication.</p>
+  </div>
+  <div class="connect-links">
+    <a class="connect-pill" href="cv-mayukh-mukhopadhyay.pdf" download>⬇ Download CV</a>
+    <a class="connect-pill" href="https://www.linkedin.com/in/mayukhpsm" target="_blank">💼 LinkedIn</a>
+    <a class="connect-pill" href="https://scholar.google.com/citations?user=0fX4LNgAAAAJ" target="_blank">🎓 Google Scholar</a>
+    <a class="connect-pill" href="https://mayukhmukhopadhyay.com" target="_blank">🌍 Main Website</a>
+    <a class="connect-pill" href="https://podcasts.apple.com/gb/podcast/revise-and-resubmit-the-mayukh-show/id1770883122" target="_blank">🎙️ Podcast</a>
+	<a class="connect-pill" href="https://mayukhmukhopadhyay.com/wiki/" target="_blank">🌍 Personal Wiki</a>
+  </div>
+</div>
 
-    <!-- ── Refereed Journal Articles ── -->
-    <div class="pub-group-title">Refereed Journal Articles &amp; Teaching Cases</div>
-
-    <div class="pub-card">
-      <div class="pub-title">Examining Drivers of B2B Subscription Commerce in Digital Ecosystem Using Fuzzy Cognitive Mapping</div>
-      <div class="pub-meta">Mayukh Mukhopadhyay &nbsp;·&nbsp; <em>Journal of Contemporary Business Research</em>, Sage Publications, 2025</div>
-      <div class="pub-tags"><span class="tag">IIM Indore Flagship Journal</span><span class="tag">Volume 1, Issue 1</span><span class="tag">pp 23-33</span></div>
-      <div class="embed-zone">
-        <div class="embed-label">🎬 Related Media</div>
-        <div class="embed-row">
-          <div class="embed-placeholder"> <a href="https://podcasts.apple.com/us/podcast/drivers-of-b2b-subscription-commerce-in-digital/id1770883122?i=1000690307752" target="_blank">🎙 AI-Assisted Podcast </a></div>
-          <div class="embed-placeholder"> <a href="https://doi.org/10.1177/3049513X241292862" target="_blank"> DOI 10.1177/3049513X241292862 </a></div>
-        </div>
-      </div>
-    </div>
-    
-    <div class="pub-card">
-      <div class="pub-title">Nostalgia marketing — a systematic literature review and future directions</div>
-      <div class="pub-meta">Mayukh Mukhopadhyay &nbsp;·&nbsp; <em>Journal of Marketing Communications</em>, Taylor &amp; Francis, 2024</div>
-      <div class="pub-tags">
-        <span class="tag">ABDC B</span><span class="tag">Scopus Q1</span><span class="tag">Volume 32, Issue 1, Pages 83-103, 2026</span>
-      </div>
-      <!-- ── EMBED ZONE: add YouTube/Podcast links for this paper here ── -->
-      <div class="embed-zone">
-        <div class="embed-label">🎬 Related Media</div>
-        <div class="embed-row">
-          <!-- REPLACE src with your YouTube embed URL, e.g. https://www.youtube.com/embed/VIDEO_ID -->
-          <!-- <iframe width="280" height="157" src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe> -->
-          <!-- REPLACE src with your podcast embed URL from Spotify/Anchor/etc. -->
-          <!-- <iframe style="border-radius:12px" src="https://open.spotify.com/embed/episode/EPISODE_ID" width="280" height="80" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe> 
-          <div class="embed-placeholder">▶ Add YouTube embed for this paper</div> -->
-          <div class="embed-placeholder"> <a href="https://www.youtube.com/watch?v=w0u8zCZPPVE" target="_blank">🎙 AI-Assisted Podcast </a></div> 
-          <div class="embed-placeholder"> <a href="https://doi.org/10.1080/13527266.2024.2306551" target="_blank"> DOI 10.1080/13527266.2024.2306551</a></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="pub-card">
-      <div class="pub-title">Golden brush and evolving canvas — Navigating the digital art and Non-fungible tokens</div>
-      <div class="pub-meta">Mayukh Mukhopadhyay &nbsp;·&nbsp; <em>Journal of Information Technology Teaching Cases</em>, Sage UK, 2023</div>
-      <div class="pub-tags"><span class="tag">ABS 1</span><span class="tag">Scopus Q2</span><span class="tag">2023</span></div>
-      <div class="embed-zone">
-        <div class="embed-label">🎬 Related Media</div>
-        <div class="embed-row">
-          <div class="embed-placeholder"> <a href="https://www.youtube.com/watch?v=E4MuZARHYFg" target="_blank">🎙 AI-Assisted Podcast </a></div>
-          <div class="embed-placeholder"> <a href="https://doi.org/10.1177/20438869231215085" target="_blank"> DOI 10.1177/20438869231215085 </a></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="pub-card">
-      <div class="pub-title">Be my AI — micro-volunteering in the time of ChatGPT</div>
-      <div class="pub-meta">Mayukh Mukhopadhyay &nbsp;·&nbsp; <em>Journal of Information Technology Teaching Cases</em>, Sage UK, 2023</div>
-      <div class="pub-tags"><span class="tag">ABS 1</span><span class="tag">Scopus Q2</span><span class="tag">2023</span></div>
-      <div class="embed-zone">
-        <div class="embed-label">🎬 Related Media</div>
-        <div class="embed-row">
-          <div class="embed-placeholder"> <a href="https://www.youtube.com/watch?v=qX3A9swCzjI" target="_blank">🎙 AI-Assisted Podcast </a></div>
-          <div class="embed-placeholder"> <a href="https://doi.org/10.1177/20438869231200283" target="_blank"> DOI 10.1177/20438869231200283 </a></div>
-          <div class="embed-placeholder"> <a href="https://x.com/mayukhdifferent/status/1979793301101551907" target="_blank"> Used in Minor Exam at IIT Delhi ExMBA </a></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="pub-card">
-      <div class="pub-title">A Concept Note on Symbolic Convergence Theory</div>
-      <div class="pub-meta">Mayukh Mukhopadhyay &nbsp;·&nbsp; <em> IUP Journal of Soft Skills </em>, IUP Publications, 2023</div>
-      <div class="pub-tags"><span class="tag">The ICFAI Society</span><span class="tag">Volume 17, Issue 3</span><span class="tag">pp 5-16</span></div>
-      <div class="embed-zone">
-        <div class="embed-label">🎬 Related Media</div> 
-        <div class="embed-row">
-          <div class="embed-placeholder"> <a href="https://open.spotify.com/episode/64357CWwBpEHsvEfZJzRdO?si=fVtDO8DIQmyW5P6C9P6ICA&context=spotify%3Ashow%3A1FSNMlJzYxvlPswFdyCZx1" target="_blank">🎙 AI-Assisted Podcast </a></div>
-          <div class="embed-placeholder"> <a href="https://dx.doi.org/10.2139/ssrn.4293559" target="_blank"> Chicago Booth: Center for Decision Research Working Paper </a></div>
-          <div class="embed-placeholder"> <a href="https://iupindia.in/ViewArticleDetails.asp?ArticleID=333" target="_blank"> Journal Published Version </a></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ── Book Review Essays ── -->
-    <div class="pub-group-title">Refereed Book Review Essays</div>
-
-    <div class="pub-card">
-      <div class="pub-title">Book Review: <em>The Hashtag Hustle</em> by Annabell et al.</div>
-      <div class="pub-meta">Mayukh Mukhopadhyay &nbsp;·&nbsp; <em>Oxford University Commonwealth Law Journal</em>, Taylor &amp; Francis, 2026</div>
-      <div class="pub-tags"><span class="tag">ABDC A*</span><span class="tag">Scopus</span><span class="tag">2026</span></div>
-      <div class="embed-zone">
-        <div class="embed-label">🎬 Related Media</div>
-        <div class="embed-row">
-          <div class="embed-placeholder"> <a href="https://www.youtube.com/watch?v=ljcGrYiOB60" target="_blank">🎙 AI-Assisted Podcast </a></div>
-          <div class="embed-placeholder"> <a href="https://doi.org/10.1080/14729342.2025.2599025" target="_blank"> DOI 10.1080/14729342.2025.2599025 </a></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="pub-card">
-      <div class="pub-title">Book Review: <em>Hydrodynamics of Markets</em> by Alexander Lipton</div>
-      <div class="pub-meta">Mayukh Mukhopadhyay &nbsp;·&nbsp; <em>Quantitative Finance</em>, Taylor &amp; Francis, 2025</div>
-      <div class="pub-tags"><span class="tag">ABDC A</span><span class="tag">ABS 3</span><span class="tag">WoS</span><span class="tag">2025</span></div>
-      <div class="embed-zone">
-        <div class="embed-label">🎬 Related Media</div>
-        <div class="embed-row">
-          <div class="embed-placeholder"> <a href="https://www.youtube.com/watch?v=oJzzQTnTPsk" target="_blank">🎙 AI-Assisted Podcast </a></div>
-          <div class="embed-placeholder"> <a href="https://doi.org/10.1080/14697688.2025.2487101" target="_blank"> DOI 10.1080/14697688.2025.2487101 </a></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="pub-card">
-      <div class="pub-title">Book Review: <em>Tough Broad</em> by Caroline Paul</div>
-      <div class="pub-meta">Mayukh Mukhopadhyay &nbsp;·&nbsp; <em>Leisure Studies</em>, Taylor &amp; Francis, 2025</div>
-      <div class="pub-tags"><span class="tag">ABDC A</span><span class="tag">Scopus</span><span class="tag">WoS</span><span class="tag">2025</span></div>
-      <div class="embed-zone">
-        <div class="embed-label">🎬 Related Media</div>
-        <div class="embed-row">
-          <div class="embed-placeholder"> <a href="youtube.com/watch?v=8LwqvVy1afk" target="_blank">🎙 AI-Assisted Podcast </a></div>
-          <div class="embed-placeholder"> <a href="https://doi.org/10.1080/02614367.2025.2451291" target="_blank"> DOI 10.1080/02614367.2025.2451291 </a></div>
-          <div class="embed-placeholder"> <a href="https://www.linkedin.com/feed/update/urn:li:activity:7412200490400178177/" target="_blank"> Declared as Most-Viewed Book Review Essay of 2025 </a></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="pub-card">
-      <div class="pub-title">Book Review: <em>Who Owns Football?</em> by Nick Miller</div>
-      <div class="pub-meta">Mayukh Mukhopadhyay &nbsp;·&nbsp; <em>Soccer &amp; Society</em>, Taylor &amp; Francis, 2025</div>
-      <div class="pub-tags"><span class="tag">ABDC C</span><span class="tag">Scopus</span><span class="tag">WoS</span><span class="tag">2025</span></div>
-      <div class="embed-zone">
-        <div class="embed-label">🎬 Related Media</div>
-        <div class="embed-row">
-          <div class="embed-placeholder"> <a href="https://www.youtube.com/watch?v=kno508muwRk" target="_blank">🎙 AI-Assisted Podcast </a></div>
-          <div class="embed-placeholder"> <a href="https://doi.org/10.1080/14660970.2025.2497192" target="_blank"> DOI 10.1080/14660970.2025.2497192 </a></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="pub-card">
-      <div class="pub-title">Book Review: <em>Mine Your Language</em> by Abhishek Borah</div>
-      <div class="pub-meta">Mayukh Mukhopadhyay &nbsp;·&nbsp; <em>Journal of Global Marketing</em> (Vol 37, Issue 4), Taylor &amp; Francis, 2024</div>
-      <div class="pub-tags"><span class="tag">ABDC B</span><span class="tag">Scopus</span><span class="tag">WoS</span><span class="tag">2024</span></div>
-      <div class="embed-zone">
-        <div class="embed-label">🎬 Related Media</div>
-        <div class="embed-row">
-          <div class="embed-placeholder"> <a href="https://www.youtube.com/watch?v=s-7jEhMqNYc" target="_blank">🎙 AI-Assisted Podcast </a></div>
-          <div class="embed-placeholder"> <a href="https://doi.org/10.1080/08911762.2024.2393601" target="_blank"> DOI 10.1080/08911762.2024.2393601 </a></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ── Refereed Book ── -->
-    <div class="pub-group-title">Refereed Book</div>
-
-    <div class="pub-card">
-      <div class="pub-title">Ethereum Smart Contract Development</div>
-      <div class="pub-meta">Mayukh Mukhopadhyay &nbsp;·&nbsp; Packt Publishing UK, 2018</div>
-      <div class="pub-tags"><span class="tag">Reference Textbook</span><span class="tag">City University of Hong Kong CS4389</span></div>
-      <div class="embed-zone">
-        <div class="embed-label">🎬 Related Media</div>
-        <div class="embed-row">
-          <div class="embed-placeholder"> <a href="https://www.youtube.com/playlist?list=PLXs7Va5fWFZ6YJp5g3NpWQEvAg3xt_G8Z" target="_blank"> ▶ YouTube Playlist of Chapters </a></div>
-          <div class="embed-placeholder"> <a href="https://www.cityu.edu.hk/catalogue/ug/202122/course/CS4389.pdf" target="_blank"> CUHK Syllabus of CS4389 </a></div>
-          <div class="embed-placeholder"> <a href="https://x.com/mayukhdifferent/status/1949617084146549175" target="_blank"> Catalogued by Royal Danish Library </a></div>
-        </div>
-      </div>
-    </div>
-
-      <div class="pub-card">
-      <div class="pub-title">Five Shades of Emerging Business Cases</div>
-      <div class="pub-meta">Kaushik Ghosh, Mayukh Mukhopadhyay &nbsp;·&nbsp; Eliva Press EU, 2021</div>
-      <div class="pub-tags"><span class="tag">DOI 10.5281/zenodo.5654779</span><span class="tag">ISBN 978-1-63648-395-5</span></div>
-      <div class="embed-zone">
-        <div class="embed-label">🎬 Related Media</div>
-        <div class="embed-row">
-          <div class="embed-placeholder"> <a href="https://fsebcbook.github.io/" target="_blank"> Companion Site for Instructors </a></div>
-          <div class="embed-placeholder"> <a href="https://fsebcbook.github.io/#fwdmb" target="_blank"> Foreword By Dr Mahul Brahma </a></div>
-          <div class="embed-placeholder"> <a href="https://www.amazon.com/dp/163648395X" target="_blank"> Amazon </a></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ── Work in Progress ── -->
-    <div class="pub-group-title">Work-in-Progress</div>
-
-    <div class="pub-card">
-      <div class="pub-title">Article Related to Organizational Nostalgia</div>
-      <div class="pub-meta">Mayukh Mukhopadhyay &nbsp;·&nbsp; Under Review, <em>Organization Studies</em>, 2026</div>
-      <div class="pub-tags"><span class="tag wip">Under Review</span><span class="tag">FT-50</span><span class="tag">2026</span></div>
-      <div class="embed-zone">
-        <!-- <div class="embed-label">🎬 Related Media</div>
-        <div class="embed-row">
-          <div class="embed-placeholder">▶ Add YouTube embed</div>
-          <div class="embed-placeholder">🎙 Add Podcast embed</div>
-        </div> -->
-      </div>
-    </div>
-
-    <!-- ── Workshops ── -->
-    <div class="pub-group-title">Workshops Attended</div>
-    <ul class="conf-list">
-      <li>
-        <div class="conf-date">2025</div>
-        <div class="conf-body">
-          <div class="conf-title"><a href="https://credsverse.com/credentials/09ead088-328f-474b-b9ce-efddd7265c8e" target="_blank">AMR Bridge Reviewer Program </a></div>
-          <div class="conf-venue">Organized by Academy of Management &nbsp;·&nbsp; Graduation Ceremony at AOM2025 Copenhagen &nbsp;·&nbsp; Mentored by Prof. Hossam Zeitoun</div>
-        </div>
-      </li>
-      <li>
-        <div class="conf-date">2025</div>
-        <div class="conf-body">
-          <div class="conf-title"><a href="https://x.com/mayukhdifferent/status/1974385657448685898" target="_blank">Virtual Summer School in Entrepreneurship Research </a></div>
-          <div class="conf-venue">Organized by Prof. Vishal K. Gupta &nbsp;·&nbsp; Offsite session at AOM2025 Copenhagen</div>
-        </div>
-      </li>
-      <li>
-        <div class="conf-date">2025</div>
-        <div class="conf-body">
-          <div class="conf-title"><a href="https://www.credly.com/badges/ed5f6f94-3aec-4a11-a792-24ca1cd2538d/public_url" target="_blank">McKinsey Forward Program</a></div>
-          <div class="conf-venue">Organized by McKinsey Partners &nbsp;·&nbsp; Structured Problem Solving for mid-career consultants</div>
-        </div>
-      </li>
-      <li>
-        <div class="conf-date">2025</div>
-        <div class="conf-body">
-          <div class="conf-title"><a href="https://certify.sbs.ox.ac.uk/0db896b3-1dbe-4173-8110-280639756c0f#acc.hNrEm9Vt" target="_blank">
-AI and Digital Transformation in Government</a></div>
-          <div class="conf-venue">Organized by UNESCO &nbsp;·&nbsp; Said Business School, University of Oxford</div>
-        </div>
-      </li>
-      <li>
-        <div class="conf-date">2025</div>
-        <div class="conf-body">
-          <div class="conf-title"><a href="https://media.licdn.com/dms/image/v2/D562DAQGuUOEbrHxaMg/profile-treasury-image-shrink_800_800/B56ZoQmeD7HAAY-/0/1761215113212?e=1774760400&v=beta&t=t8uShCwPaxDh5jgqEONDzKKwweZ1KxATX0VCaqinVzw" target="_blank">
-Manage Successful Field Research</a></div>
-          <div class="conf-venue">Organized by The World Bank Group</div>
-        </div>
-      </li>		  
-    </ul>
-  </section>
-
-  <!-- CONFERENCES -->
-  <section id="conferences">
-    <h2 class="section-heading">Refereed Conference Presentations</h2>
-    <ul class="conf-list">
-      <li>
-        <div class="conf-date">Feb 2026</div>
-        <div class="conf-body">
-          <div class="conf-title">Nostalgia Washing as a Fact Making Strategy</div>
-          <div class="conf-venue">MUF-2026, IIM Calcutta &nbsp;·&nbsp; <a href="https://x.com/mayukhdifferent/status/2022497952082858083" target="_blank">🔗 Certificate of Presentation</a> &nbsp;·&nbsp; <a href="https://podcasts.apple.com/us/podcast/nostalgia-washing-mukhopadhyay-2026-muf-2026-iim-calcutta/id1759909784?i=1000749582294" target="_blank">🎬 AI-Assisted Podcast</a></div>
-        </div>
-      </li>
-      <li>
-        <div class="conf-date">Feb 2026</div>
-        <div class="conf-body">
-          <div class="conf-title">Podcast or Perish: Long Form Conversations as the New Red Carpet</div>
-          <div class="conf-venue">ICIC-2026, Track "Film Distribution and Marketing", IIM Ranchi &nbsp;·&nbsp; <a href="https://x.com/mayukhdifferent/status/2027792819637965044" target="_blank">🔗 Certificate of Presentation</a> &nbsp;·&nbsp; <a href="https://podcasts.apple.com/us/podcast/podcast-or-perish-mukhopadhyay-2026-icic-2026-iim-ranchi/id1759909784?i=1000750773860" target="_blank">🎬 AI-Assisted Podcast</a></div>
-        </div>
-      </li>
-      <li>
-        <div class="conf-date">Feb 2026</div>
-        <div class="conf-body">
-          <div class="conf-title">striver's takeUforward: Scaling a Bootstrapped Coding Platform</div>
-          <div class="conf-venue">2nd Case &amp; Research Conference, IIM Nagpur &amp; Ivey Publishing &nbsp;·&nbsp; <a href="https://x.com/mayukhdifferent/status/2026615526282457313" target="_blank">🔗 Certificate of Presentation</a> &nbsp;·&nbsp; <a href="https://podcasts.apple.com/us/podcast/case-id-69-mukhopadhyay-2026/id1759909784?i=1000748646036" target="_blank">🎬 AI-Assisted Podcast</a></div>
-        </div>
-      </li>
-      <li>
-        <div class="conf-date">Oct 2025</div>
-        <div class="conf-body">
-          <div class="conf-title">Sonic Soft Power: China's Podcast Diplomacy</div>
-          <div class="conf-venue">18th AICCS, ICS Delhi &amp; Ministry of External Affairs &nbsp;·&nbsp; <a href="https://x.com/mayukhdifferent/status/2002676168252879078" target="_blank">🔗 Best Paper Award</a> &nbsp;·&nbsp; <a href="https://podcasts.apple.com/us/podcast/18th-aiccs-presentation-summary/id1770883122?i=1000733230187" target="_blank">🎬 AI-Assisted Podcast</a></div>
-          <div class="conf-award">🏆 Winner — Mira Sinha Bhattacharjea Award</div>
-        </div>
-      </li>
-      <li>
-        <div class="conf-date">Jul 2025</div>
-        <div class="conf-body">
-          <div class="conf-title">Typology of Threat Culture in the Metaverse</div>
-          <div class="conf-venue">Academy of Management 2025 Annual Meeting, Copenhagen &nbsp;·&nbsp; <a href="https://doi.org/10.5465/AMPROC.2025.17805poster" target="_blank">🔗 AOM Proceedings, Vol. 2025, No. 1</a> &nbsp;·&nbsp; <a href="https://podcasts.apple.com/us/podcast/typology-of-threat-culture-in-the-metaverse/id1770883122?i=1000719362795" target="_blank">🎬 AI-Assisted Podcast</a> &nbsp;·&nbsp; <a href="https://www.spatial.io/s/AOM2025-Poster-ID-17805-Metaverse-6862b2cc4a7d6311bc4b3bd0?share=103293405026324439" target="_blank">🎬 Metaverse on Spatial</a></div>
-          <div class="conf-award">🏆 Travel Award (Poster) — AoM Conflict Management Division &amp; Winner (Best Paper) - 9th FIIB Research Conference 2024  </div>
-        </div>
-      </li>
-      <li>
-        <div class="conf-date">Jun 2025</div>
-        <div class="conf-body">
-          <div class="conf-title">Nostalgia-Driven Innovation: A Systematic Literature Review, Conceptual Model, and Future Direction</div>
-          <div class="conf-venue">FMOS 2025, American Institute of Applied Sciences in Switzerland &nbsp;·&nbsp; <a href="https://credsverse.com/credentials/255408cf-daa8-4d32-9e25-228f35886894" target="_blank">🔗 Certificate of Participation</a></div>
-        </div>
-      </li>
-      <li>
-        <div class="conf-date">May 2025</div>
-        <div class="conf-body">
-          <div class="conf-title">Sonic Branding: Podcast Marketing as a Startup Growth Catalyst in Emerging Markets</div>
-          <div class="conf-venue">VIPANAN-2025, IIM Visakhapatnam &nbsp;·&nbsp; <a href="https://mayukhpsm.github.io/online-cv/VIPANAN2025MM.pdf" target="_blank">🔗 Certificate of Presentation</a></div>
-        </div>
-      </li>
-      <li>
-        <div class="conf-date">Jan 2025</div>
-        <div class="conf-body">
-          <div class="conf-title">Large Language Models and Marketing Managers — A Reversal of Decision Calculus</div>
-          <div class="conf-venue">iMarC IV, Track "AI/ML in Marketing", IIM Shillong &amp; Sunway University  &nbsp;·&nbsp; <a href="https://www.linkedin.com/posts/mayukhpsm_brand-decisioncalculus-research-activity-7291278189006405632-XIb7/" target="_blank">🔗 Certificate of Presentation</a></div>
-        </div>
-      </li>
-      <li>
-        <div class="conf-date">Jan 2025</div>
-        <div class="conf-body">
-          <div class="conf-title">The Uncanny Positivity of AI Hallucination</div>
-          <div class="conf-venue">IMPeC-2025, Track "Marketing Practice and Research", IIM Sambalpur &nbsp;·&nbsp; <a href="https://www.linkedin.com/feed/update/urn:li:activity:7295986691868172288/" target="_blank">🔗 Certificate of Presentation</a></div>
-        </div>
-      </li>
-      <li>
-        <div class="conf-date">Dec 2024</div>
-        <div class="conf-body">
-          <div class="conf-title">BarberShop: Podcast Marketing for Bombay Shaving Company</div>
-          <div class="conf-venue">IIM Nagpur Ivey Case Conference 2024 &nbsp;·&nbsp; <a href="https://mayukhpsm.github.io/online-cv/IIMNCC110.pdf" target="_blank">🔗 Certificate of Presentation</a></div>
-        </div>
-      </li>
-      <li>
-        <div class="conf-date">Jun 2024</div>
-        <div class="conf-body">
-          <div class="conf-title">Shape My Choice: How Iconicity and Nostalgia Marketing Influence Brand Preference</div>
-          <div class="conf-venue">INFORMS Marketing Science Conference 2024 &nbsp;·&nbsp; Presented by Professor Ashish Sadh &amp; co-authored by Mayukh Mukhopadhyay &nbsp;·&nbsp; <a href="https://www.youtube.com/watch?v=Bm-oUgFm4qw" target="_blank">🎬 AI-Assisted Podcast</a></div>
-        </div>
-      </li>
-      <li>
-        <div class="conf-date">Jan 2024</div>
-        <div class="conf-body">
-          <div class="conf-title">Crouching Leopard, Hidden Unicorn: Funding the Indian Health-Tech Sector</div>
-          <div class="conf-venue">9th PAN IIM World Management Conference 2023 &nbsp;·&nbsp; <a href="https://mayukhpsm.github.io/online-cv/PANIIM2024.jpg" target="_blank">🔗 Certificate of Presentation</a></div>
-        </div>
-      </li>
-      <li>
-        <div class="conf-date">Dec 2023</div>
-        <div class="conf-body">
-          <div class="conf-title">From Click to Quick — Examining the Drivers of Quick Commerce on Online Consumer Behavior Using Fuzzy Cognitive Mapping</div>
-          <div class="conf-venue">International Conference on Marketing Innovation 2023, Syracuse University &amp; IIM Kashipur &nbsp;·&nbsp; <a href="https://www.linkedin.com/posts/mayukhpsm_qcommerce-marketing-research-activity-7142400298458755073-KL8y/" target="_blank">🔗 Certificate of Presentation</a></div>
-        </div>
-      </li>
-      <!-- <li>
-        <div class="conf-date">Dec 2023</div>
-        <div class="conf-body">
-          <div class="conf-title">Going Beyond Bandura — Enhancing Employee's Cloud Competency using Connectivism</div>
-          <div class="conf-venue">16th ISDSI-Global Conference 2023, IIM Ranchi &nbsp;·&nbsp; <a href="https://mayukhpsm.github.io/online-cv/ISDSI2023-MayukhMukhopadhyay.pdf" target="_blank">🔗 Certificate of Presentation</a></div>
-        </div>
-      </li> -->
-      <li>
-        <div class="conf-date">Jun 2023</div>
-        <div class="conf-body">
-          <div class="conf-title">Examining Drivers of B2B Subscription Commerce in Digital Ecosystem using Fuzzy Cognitive Mapping</div>
-          <div class="conf-venue">CERE 2023, IIM Indore &nbsp;·&nbsp; <a href="https://mayukhpsm.github.io/online-cv/CERE2023BestpaperCert.pdf" target="_blank">🔗 Best Paper Award</a></div>
-          <div class="conf-award">🏆 Winner — Best Paper Award (Top 3)</div>
-        </div>
-      </li>
-      <li>
-        <div class="conf-date">Apr 2023</div>
-        <div class="conf-body">
-          <div class="conf-title">Unlocking Chat Engine Adoption: A Push-Pull-Mooring Framework</div>
-          <div class="conf-venue">ICM 2023, University of Gothenburg &amp; IIM Bodhgaya &nbsp;·&nbsp; <a href="https://www.linkedin.com/posts/mayukhpsm_international-conference-of-marketing-2023-activity-7056178538130944001-utWw/" target="_blank">🔗 Certificate of Presentation</a></div>
-        </div>
-      </li>
-    </ul>
-  </section>
-
-  <!-- AWARDS -->
-  <section id="awards">
-    <h2 class="section-heading">Academic Achievements &amp; Recognitions</h2>
-    <ul class="award-list">
-      <li><div class="award-year">2026</div><div>Recognized as <strong>Curriculum Committee Member</strong> for Academy of Management SIM Division</div></li>
-      <li><div class="award-year">2025</div><div><strong>Winner — Mira Sinha Bhattacharjea Award</strong> at the 18th All India Conference of China Studies</div></li>
-      <li><div class="award-year">2025</div><div><strong>Senior Recognition Award</strong> from Association for Computing Machinery</div></li>
-      <li><div class="award-year">2025</div><div><strong>Travel Award</strong> from Academy of Management Conflict Management Division to present at AOM2025 Copenhagen</div></li>
-      <li><div class="award-year">2025</div><div>Recognized as <strong>AMR Bridge Reviewer Graduate</strong> at AOM2025 Copenhagen by Editor-in-Chief Kris Byron</div></li>
-      <li><div class="award-year">2025</div><div>Appreciation from Innovation Cell for assessing 250+ Blockchain &amp; Smart Education projects — Smart India Hackathon 2024 &amp; 2025</div></li>
-      <li><div class="award-year">2024</div><div><strong>Outstanding Reviewer Appreciation</strong> from Academy of International Business — AIB 2024 Seoul</div></li>
-      <li><div class="award-year">2024</div><div>Conducted Interviews on Behavioral Cybersecurity for <em>MIS Quarterly</em> as part of MISQ-Insider</div></li>
-      <li><div class="award-year">2024</div><div>160+ Web-of-Science Verified Peer-Reviews with 2 <strong>Excellent Reviewer</strong> Ratings</div></li>
-      <li><div class="award-year">2023</div><div>Reviewer for AOM Annual Conference (since 2024) and <em>Journal of Consumer Behavior</em></div></li>
-      <li><div class="award-year">2023</div><div><strong>Best Paper Award (Top-3)</strong> among 139 presentations at CERE 2023, IIM Indore</div></li>
-    </ul>
-  </section>
-
-  <!-- EXPERIENCE -->
-  <section id="experience">
-    <h2 class="section-heading">Present Employment &amp; Experience</h2>
-
-    <div class="exp-card">
-      <div class="exp-role">Design Practitioner (Sub-Contract)</div>
-      <div class="exp-org">BT Group plc (former British Telecom)</div>
-      <div class="exp-period">2010 – Present &nbsp;·&nbsp; BT Enterprise Division</div>
-      <div class="exp-desc">I help my clients to migrate their critical data pipeline during major transformation events like Brexit, Enacting GDPR, Cloud migration and All IP initiatives.</div>
-    </div>
-
-    <div class="exp-card">
-      <div class="exp-role">Assistant Consultant (Full-Time)</div>
-      <div class="exp-org">Tata Consultancy Services</div>
-      <div class="exp-period">2010 – Present &nbsp;·&nbsp; Communication, Media &amp; Information Unit</div>
-      <div class="exp-desc">I work as a Design Practitioner where I design end-to-end data pipeline to detect and prevent revenue leakage. I specialize in cloud migration and digital transformation projects for telecom giants operating under strict GDPR compliance. I am a team player and also an individual contributor.</div>
-    </div>
-  </section>
-
-  <!-- MEDIA AND PRESS -->
-  <section id="media">
-    <h2 class="section-heading">Media &amp; Press Release</h2>
-    <!-- <p class="add-entry-note" style="margin-bottom:1rem;">Mentions in Social Media, Twitter and Policy Outlet</p> -->
-
-    <div class="media-card">
-      <div class="media-title">MISQ-Insider Interview: Behavioral Cybersecurity &amp; Braggart’s Dilemma</div>
-      <div class="media-meta">MIS Quarterly &nbsp;·&nbsp; 2024</div>
-      <div class="media-desc">Conducted interviews on behavioral cybersecurity research and Braggart’s Dilemma as part of the MISQ-Insider initiative.</div>
-      <div class="media-link"><a href="https://www.linkedin.com/posts/misqinsider_interview-time-will-tell-activity-7227748656714563584-hpeB/" target="_blank">🔗 Read Interview 1</a> &nbsp;·&nbsp; <a href="https://www.linkedin.com/feed/update/urn:li:activity:7237818079328493569/" target="_blank">🔗 Read Interview 2</a></div>
-    </div>
-
-    <!-- TEMPLATE — duplicate and fill for each new entry -->
-    <div class="media-card">
-      <div class="media-title">Announcement of Mira Sinha Bhattacharjea Award 2025</div>
-      <div class="media-meta">Institute of Chinese Studies, Delhi &nbsp;·&nbsp; 2025 </div>
-      <div class="media-desc">Announcement by ICS Delhi for the best paper award of 18th AICCS</div>
-      <div class="media-link"><a href="https://www.linkedin.com/feed/update/urn:li:activity:7413122899735281664/" target="_blank">🔗 Award Details</a></div>
-    </div>
-  </section>
-
-  <!-- BLOG AND WRITINGS -->
-  <section id="blog">
-    <h2 class="section-heading">Published Blog &amp; General Writings</h2>
-    <!-- <p class="add-entry-note" style="margin-bottom:1rem;">Add Medium articles, LinkedIn newsletters, blog posts, or general essays below.</p> -->
-
-    <div class="media-card blog">
-      <div class="media-title">A Quiet Race for Uncertainty: The Silent Financing of Quantum GCC Hubs in the Global South</div>
-      <div class="media-meta">insiderFinance Wire &nbsp;·&nbsp; Feb 2026 </div>
-      <div class="media-desc">This article explores how Global Capability Centers (GCCs) in the Global South, particularly India, are becoming the primary vehicle for financing and developing quantum technology. </div>
-      <div class="media-link"><a href="https://wire.insiderfinance.io/a-quiet-race-for-uncertainty-dada3ada1e9c" target="_blank">🔗 Read This Article</a> &nbsp;·&nbsp; <a href="https://wire.insiderfinance.io/search?q=mayukh+mukhopadhyay" target="_blank">🔗 Publication Profile at insiderFinance Wire</a></div>
-      <!-- Optional podcast/audio embed -->
-      <div class="embed-zone">
-        <div class="embed-label">🎙 Audio / Podcast Version</div>
-        <div class="embed-row">
-          <div class="embed-placeholder"><a href="https://podcasts.apple.com/us/podcast/a-quiet-race-for-uncertainty-mukhopadhyay-2026/id1759909784?i=1000752781003" target="_blank">🎙 Listen to the Podcast</a></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="media-card blog">
-      <div class="media-title">Book Review on The Triangle of Power</div>
-      <div class="media-meta">Academy of Management &nbsp;·&nbsp;  Mar 2026 </div>
-      <div class="media-desc"> Book Review Essay Published in Academy of Management SIM Blog</div>
-      <div class="media-link"><a href="https://connect.aom.org/blogs/mayukh-mukhopadhyay/2026/03/07/book-review-on-the-triangle-of-power" target="_blank">🔗 Read Article</a> &nbsp;·&nbsp; <a href="https://connect.aom.org/aomthrivemicrositetemplate/profile/contributions/contributions-list?UserKey=992048f2-e3f1-4989-b8c5-018cd6f758c0" target="_blank">🔗 My other essays in AOM SIM Blog</a></div>
-    </div> 
-
-    <div class="media-card blog">
-      <div class="media-title">The Scrapper’s Way: Book Review</div>
-      <div class="media-meta">Academy of Management &nbsp;·&nbsp;  Dec 2025 </div>
-      <div class="media-desc"> Book Review Essay Published in AOM Management Consulting Blog</div>
-      <div class="media-link"><a href="https://connect.aom.org/mc/blogs/mayukh-mukhopadhyay/2025/12/31/the-scrapper-way-book-review" target="_blank">🔗 Read Article</a></div>
-    </div>
-  </section>
-
-</main>
-
-<!-- ══════════════ FOOTER ══════════════ -->
+<!-- ── FOOTER ── -->
 <footer>
-  <p>© 2026 Mayukh Mukhopadhyay &nbsp;·&nbsp; Executive PhD Candidate, IIM Indore &nbsp;·&nbsp;
-  <a href="mailto:ef22mayukhm@iimidr.ac.in">ef22mayukhm(at)iimidr(dot)ac(dot)in</a></p>
-  <p style="margin-top:0.3rem;font-size:0.76rem;">Download a copy of my <a href="https://mayukhpsm.github.io/online-cv/MayukhM_AcademicCV.pdf" target="_blank">Academic CV</a>, or my <a href="https://mayukhpsm.github.io/online-cv/MayukhM_15Y_CV.pdf" target="_blank">Professional CV</a>, or listen to my <a href="https://mayukhpsm.github.io/online-cv/mayukhm-audio-cv.MP3" target="_blank">Audio CV</a>, or play my <a href="https://mayukhpsm.github.io/mayukhcareer.html" target="_blank">Career-Run Game</a></p>
+  <span>© 2026 Mayukh Mukhopadhyay</span>
+  <span>Data Consultant · IIM Indore PhD Candidate · Author · Podcast Host</span>
+  <a href="https://mayukhmukhopadhyay.com" style="color:var(--muted)">mayukhmukhopadhyay.com</a>
 </footer>
 
+<script>
+// ── Theme toggle ──
+const btn = document.getElementById('themeBtn');
+const root = document.documentElement;
+const saved = localStorage.getItem('mm-dk-theme');
+if(saved){root.setAttribute('data-theme',saved)}
+else if(window.matchMedia('(prefers-color-scheme:dark)').matches){root.setAttribute('data-theme','dark')}
+btn.textContent = root.getAttribute('data-theme')==='dark'?'☀️':'🌙';
+btn.addEventListener('click',()=>{
+  const t = root.getAttribute('data-theme')==='dark'?'light':'dark';
+  root.setAttribute('data-theme',t);
+  localStorage.setItem('mm-dk-theme',t);
+  btn.textContent = t==='dark'?'☀️':'🌙';
+});
+
+// ── Counter animation ──
+function animateCounter(el){
+  const target = parseInt(el.getAttribute('data-target'),10);
+  const suffix = el.getAttribute('data-suffix') || '';
+  const duration = 1800;
+  const steps = 60;
+  let step = 0;
+  const timer = setInterval(()=>{
+    step++;
+    const val = Math.min(Math.round((target/steps)*step), target);
+    el.textContent = val + suffix;
+    if(val >= target){ clearInterval(timer); el.textContent = target + suffix; }
+  }, duration/steps);
+}
+let countersFired = false;
+function runCounters(){
+  if(countersFired) return;
+  countersFired = true;
+  document.querySelectorAll('.counter').forEach((el,i)=>{
+    setTimeout(()=>animateCounter(el), i*200);
+  });
+}
+const heroRight = document.querySelector('.hero-right');
+if(heroRight){
+  const cObs = new IntersectionObserver(entries=>{
+    if(entries[0].isIntersecting) runCounters();
+  },{threshold:0.15});
+  cObs.observe(heroRight);
+}
+window.addEventListener('load',()=>{
+  if(!heroRight) return;
+  const r = heroRight.getBoundingClientRect();
+  if(r.top < window.innerHeight) runCounters();
+});
+
+// ── Animated skill bars (staggered) ──
+const fills = document.querySelectorAll('.skill-fill');
+let fired = false;
+function runSkills(){
+  if(fired) return;
+  fired = true;
+  fills.forEach((f,i)=>{
+    setTimeout(()=>{ f.style.width = f.getAttribute('data-w')+'%'; }, i*120);
+  });
+}
+const skillsEl = document.getElementById('skills');
+const obs = new IntersectionObserver(entries=>{
+  if(entries[0].isIntersecting) runSkills();
+},{threshold:0.1});
+obs.observe(skillsEl);
+window.addEventListener('load',()=>{
+  const r = skillsEl.getBoundingClientRect();
+  if(r.top < window.innerHeight) runSkills();
+});
+
+// ── Profile picture upload ──
+document.getElementById('picInput').addEventListener('change',function(e){
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = function(ev){
+    const img = document.getElementById('picImg');
+    img.src = ev.target.result;
+    img.style.display = 'block';
+    document.getElementById('picPlaceholder').style.display = 'none';
+  };
+  reader.readAsDataURL(file);
+});
+</script>
 </body>
 </html>
