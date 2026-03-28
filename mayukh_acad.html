@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Mayukh Mukhopadhyay — Data Consultant & Academic Researcher</title>
+<title>Mayukh M</title>
 <meta name="description" content="Mayukh Mukhopadhyay — Data Consultant at TCS & BT Group, Executive PhD Candidate at IIM Indore, Author, Peer Reviewer, and Podcast Host."/>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <style>
@@ -318,18 +318,92 @@ footer{
 
 /* ── RESPONSIVE ── */
 @media(max-width:860px){
-  .hero{grid-template-columns:1fr}
-  .profile-pic-wrap{display:none}
+  .hero{grid-template-columns:1fr!important;gap:2rem}
+  .profile-pic-wrap{display:flex;flex-direction:row;align-items:center;gap:1.2rem;width:100%;margin-bottom:.5rem}
+  .profile-pic-frame{width:90px;flex-shrink:0;box-shadow:3px 3px 0 var(--rule)}
+  .profile-pic-caption{margin-top:0;text-align:left}
   .hero-right{padding-top:0}
-  .hero-stat-block{display:flex;flex-wrap:wrap;gap:1.5rem}
+  .hero-stat-block{display:flex;flex-wrap:wrap;gap:1.2rem}
   .hero-stat{margin-bottom:0}
   .about-grid,.skills-wrap,.pub-cols{grid-template-columns:1fr}
   .connect-band{grid-template-columns:1fr}
+  .books-row{flex-direction:column}
+  .book-card{max-width:100%}
 }
 @media(max-width:600px){
+  .nav{padding:0 16px;height:50px}
   .nav-links{display:none}
-  .media-item{grid-template-columns:1fr}
-  .media-date{padding-top:0}
+  .nav-logo{font-size:.88rem}
+  .btn-dl{padding:5px 11px;font-size:.68rem;letter-spacing:.06em}
+  .theme-toggle{width:30px;height:30px;font-size:.8rem}
+  .hero{padding:24px 16px 28px!important;gap:1.2rem}
+  .hero-h1{font-size:clamp(1.9rem,8vw,2.4rem)!important;letter-spacing:-.02em;margin-bottom:1rem}
+  .hero-sub{font-size:.88rem;margin-bottom:1.4rem}
+  .hero-tags{gap:.3rem;margin-bottom:1.4rem}
+  .hero-tag{font-size:.68rem;padding:3px 8px}
+  .hero-ctas{flex-direction:column;align-items:stretch;gap:.55rem}
+  .btn-primary,.btn-secondary{width:100%;justify-content:center;padding:11px 16px;font-size:.76rem}
+  .hero-ctas .btn-dl{width:100%;justify-content:center;padding:11px 16px;font-size:.76rem}
+  .hero-right{display:block}
+  .hero-stat-block{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-bottom:1rem}
+  .hero-stat strong{font-size:1.7rem}
+  .hero-stat span{font-size:.65rem;letter-spacing:.12em}
+  .hero-note{font-size:.78rem;padding-left:.8rem}
+  .profile-pic-wrap{flex-direction:row;align-items:center;gap:.8rem;margin-bottom:.4rem}
+  .profile-pic-frame{width:68px}
+  .profile-pic-caption{font-size:.64rem}
+  .section{padding:32px 16px}
+  .section-alt{padding:32px 16px}
+  .section-title{font-size:clamp(1.25rem,5vw,1.6rem)}
+  .section-desc{font-size:.86rem}
+  .about-grid{gap:1.4rem}
+  .about-body p{font-size:.88rem}
+  .quote-block{font-size:.92rem;padding-left:.9rem;margin-bottom:1.4rem}
+  .info-pair .v{font-size:.84rem}
+  .skills-wrap{gap:1.6rem}
+  .skill-group-title{font-size:.94rem}
+  .skill-row{font-size:.72rem}
+  .carousel-outer::before,.carousel-outer::after{width:28px}
+  .cert-tile{min-width:170px;max-width:200px;padding:10px 12px}
+  .cert-org{font-size:.6rem}
+  .cert-name{font-size:.76rem}
+  .cert-yr{font-size:.68rem}
+  .tl-list{padding-left:1.3rem;margin-left:.3rem}
+  .tl-title{font-size:.88rem}
+  .tl-sub{font-size:.76rem}
+  .tl-desc{font-size:.78rem}
+  .tl-date{font-size:.64rem}
+  .award-pill{font-size:.66rem;padding:2px 8px}
+  .pub-cols{grid-template-columns:1fr;gap:0}
+  .pub-title{font-size:.84rem}
+  .pub-meta{font-size:.76rem}
+  .books-row{flex-direction:column}
+  .book-card{max-width:100%;flex:none}
+  .book-cover{height:110px}
+  .book-cover span{font-size:.8rem}
+  .book-title{font-size:.84rem}
+  .book-pub{font-size:.72rem}
+  .ach-grid{grid-template-columns:1fr}
+  .ach-text{font-size:.8rem}
+  .ach-yr{font-size:.62rem}
+  .media-item{grid-template-columns:1fr;gap:.25rem}
+  .media-date{padding-top:0;font-size:.65rem}
+  .media-title{font-size:.84rem}
+  .media-body{font-size:.78rem}
+  .connect-band{padding:32px 16px;grid-template-columns:1fr;gap:1.6rem}
+  .connect-band h2{font-size:clamp(1.3rem,5vw,1.8rem)}
+  .connect-band p{font-size:.86rem}
+  .connect-links{flex-direction:row;flex-wrap:wrap;gap:.5rem}
+  .connect-pill{font-size:.72rem;padding:8px 12px;white-space:nowrap}
+  footer{flex-direction:column;text-align:center;gap:.35rem;padding:.9rem 16px;font-size:.72rem}
+}
+@media(max-width:400px){
+  .hero-h1{font-size:1.75rem!important}
+  .hero-stat-block{grid-template-columns:1fr 1fr}
+  .hero-stat strong{font-size:1.5rem}
+  .section-title{font-size:1.2rem}
+  .connect-pill{font-size:.68rem;padding:7px 10px}
+  .tl-list{padding-left:1.1rem}
 }
 
 /* ── PROFILE PIC ── */
@@ -410,9 +484,9 @@ footer{
       </div>	  
       <img id="picImg" src="" alt="Mayukh Mukhopadhyay" style="display:none"/> -->
 	  <img src="mayukh-pic.png" alt="Mayukh Mukhopadhyay" style="display:block"/>
-      <button class="profile-pic-upload" onclick="event.stopPropagation();document.getElementById('picInput').click()">Change photo</button>
+      <button class="profile-pic-upload" onclick="event.stopPropagation();document.getElementById('picInput').click()">Bella Center CPH</button>
     </div>
-    <p class="profile-pic-caption">Mayukh<br>Mukhopadhyay</p>
+    <p class="profile-pic-caption">Techie on Weekdays,<br>Fuzzy on Weekends.</p>
     <input type="file" id="picInput" accept="image/*" style="display:none"/>
   </div>
   <div>
@@ -436,13 +510,14 @@ footer{
 
   <div class="hero-right">
     <div class="hero-stat-block">
-	  <div class="hero-stat"><strong>160+</strong><span>Peer reviews (WoS)</span></div>
-      <div class="hero-stat"><strong>15+</strong><span>Years in industry</span></div>
-      <div class="hero-stat"><strong>15+</strong><span>Refereed conferences</span></div>
-	  <div class="hero-stat"><strong>10+</strong><span>Refeered Essays and Cases</span></div>
-      <div class="hero-stat"><strong>3</strong><span>Best paper awards</span></div>
+	  <div class="hero-stat"><strong class="counter" data-target="250" data-suffix="+">0</strong><span>G-Scholar Citations</span></div>
+	  <div class="hero-stat"><strong class="counter" data-target="160" data-suffix="+">0</strong><span>Peer reviews (WoS)</span></div>
+      <div class="hero-stat"><strong class="counter" data-target="15" data-suffix="+">0</strong><span>Years in industry</span></div>
+      <div class="hero-stat"><strong class="counter" data-target="15" data-suffix="+">0</strong><span>Refereed conferences</span></div>
+	  <div class="hero-stat"><strong class="counter" data-target="10" data-suffix="+">0</strong><span>Refereed Essays and Cases</span></div>
+      <div class="hero-stat"><strong class="counter" data-target="3" data-suffix="">0</strong><span>Best paper awards</span></div>
     </div>
-    <p class="hero-note">Currently in the ABD stage of an Executive PhD at IIM Indore under Professor Ashish Sadh. Also serving as Curriculum Committee Member, AOM SIM Division, 2026.</p>
+    <p class="hero-note">Currently in the All-but-Dissertation (ABD) stage of an Executive PhD at IIM Indore under Professor Ashish Sadh. Also serving as Curriculum Committee Member, AOM SIM Division, 2026.</p>
   </div>
 </section>
 
@@ -460,7 +535,7 @@ footer{
       <p>Beyond formal roles, I author books, review manuscripts for international journals and conferences, and host the AI-assisted podcast <em>Revise and Resubmit – The Mayukh Show</em>. I believe that expertise is never a finished state — it is an ongoing responsibility to keep learning, contributing, and staying curious.</p>
     </div>
     <div class="about-aside">
-      <div class="quote-block">"Influence is often built not through direct persuasion, but through emotion, meaning, and the stories people come to inhabit." ~Dr. Robert Cialdini</div>
+      <div class="quote-block">"Influence is often built not through direct persuasion, but through emotion, meaning, and the stories people come to inhabit."<br> ~Dr. Robert Cialdini</div>
       <div class="info-pair"><div class="k">Current role</div><div class="v">Design Practitioner, TCS & BT Group plc</div></div>
       <div class="info-pair"><div class="k">Academic role</div><div class="v">Executive PhD Candidate, IIM Indore (ABD)</div></div>
       <div class="info-pair"><div class="k">Podcast</div><div class="v"><a href="https://www.youtube.com/channel/UCmKUFa76ANTeNyBuD_rLvWQ" target="_blank" style="color:var(--accent)">Revise and Resubmit – The Mayukh Show</a></div></div>
@@ -477,7 +552,7 @@ footer{
   <div class="section-head">
     <div class="label" style="margin-bottom:.5rem">Competencies</div>
     <h2 class="section-title">Skills</h2>
-    <p class="section-desc">Spanning telecom data consulting, academic research, and public communication — the bars animate when you reach this section.</p>
+    <p class="section-desc">Strategy taught me structure. Research taught me depth. Communication taught me reach. Together, they define how I work.</p>
   </div>
   <div class="skills-wrap">
     <div>
@@ -600,27 +675,28 @@ footer{
   <h3 class="label" style="margin-bottom:1.1rem;color:var(--mid)">Journal Articles &amp; Teaching Cases</h3>
   <div class="pub-cols">
     <div>
-      <div class="pub-entry"><div class="pub-cat">Journal Article · 2025</div><div class="pub-title">Examining Drivers of B2B Subscription Commerce in Digital Ecosystem Using Fuzzy Cognitive Mapping</div><div class="pub-meta">Journal of Contemporary Business Research, Sage Publications</div></div>
-      <div class="pub-entry"><div class="pub-cat">Journal Article · 2024</div><div class="pub-title">Nostalgia marketing — a systematic literature review and future directions</div><div class="pub-meta">Journal of Marketing Communications, Taylor &amp; Francis</div></div>
-      <div class="pub-entry"><div class="pub-cat">Teaching Case · 2023</div><div class="pub-title">Golden brush and evolving canvas — Navigating the digital art and Non-fungible tokens</div><div class="pub-meta">Journal of Information Technology Teaching Cases, Sage UK</div></div>
+      <div class="pub-entry"><div class="pub-cat">Journal Article · 2026 · ABDC B</div><div class="pub-title">Nostalgia marketing — a systematic literature review and future directions</div><div class="pub-meta">Journal of Marketing Communications, (Vol 32, Issue 1), Taylor &amp; Francis</div></div>
+      <div class="pub-entry"><div class="pub-cat">Journal Article · 2025 · IIM Indore Flagship Journal</div><div class="pub-title">Examining Drivers of B2B Subscription Commerce in Digital Ecosystem Using Fuzzy Cognitive Mapping</div><div class="pub-meta">Journal of Contemporary Business Research, (Vol 1, Issue 1), Sage Publications</div></div>
+      <div class="pub-entry"><div class="pub-cat">Teaching Case · 2025 · ABS 1</div><div class="pub-title">Golden brush and evolving canvas — Navigating the digital art and Non-fungible tokens</div><div class="pub-meta">Journal of Information Technology Teaching Cases, (Vol 15, Issue 1), Sage UK</div></div>
     </div>
     <div>
-      <div class="pub-entry"><div class="pub-cat">Teaching Case · 2023</div><div class="pub-title">Be my AI — micro-volunteering in the time of ChatGPT</div><div class="pub-meta">Journal of Information Technology Teaching Cases, Sage UK</div></div>
-      <div class="pub-entry"><div class="pub-cat">Journal Article · 2023</div><div class="pub-title">A Concept Note on Symbolic Convergence Theory</div><div class="pub-meta">IUP Journal of Soft Skills, IUP Publications</div></div>
-      <div class="pub-entry" style="border-left:2px solid var(--accent2);padding-left:.8rem"><div class="pub-cat">Work-in-Progress · 2026</div><div class="pub-title">Article Related to Organizational Nostalgia</div><div class="pub-meta">Under Review · Organization Studies</div></div>
+      <div class="pub-entry"><div class="pub-cat">Teaching Case · 2025 · ABS 1</div><div class="pub-title">Be my AI — micro-volunteering in the time of ChatGPT</div><div class="pub-meta">Journal of Information Technology Teaching Cases, (Vol 15, Issue 1), Sage UK</div></div>
+      <div class="pub-entry"><div class="pub-cat">Journal Article · 2023 · ProQuest One Business</div><div class="pub-title">A Concept Note on Symbolic Convergence Theory</div><div class="pub-meta">IUP Journal of Soft Skills, (Vol 17, Issue 3), IUP Publications</div></div>
+      <div class="pub-entry" style="border-left:2px solid var(--accent2);padding-left:.8rem"><div class="pub-cat">Work-in-Progress · 2026 · FT50</div><div class="pub-title">Article Related to Organizational Nostalgia</div><div class="pub-meta">Under Review · Organization Studies</div></div>
     </div>
   </div>
 
   <h3 class="label" style="margin:2.2rem 0 1rem;color:var(--mid)">Book Review Essays</h3>
   <div class="pub-cols">
     <div>
-      <div class="pub-entry"><div class="pub-cat">Book Review · 2026</div><div class="pub-title">The Hashtag Hustle by Annabell et al.</div><div class="pub-meta">Oxford University Commonwealth Law Journal, Taylor &amp; Francis</div></div>
-      <div class="pub-entry"><div class="pub-cat">Book Review · 2025</div><div class="pub-title">Hydrodynamics of Markets by Alexander Lipton</div><div class="pub-meta">Quantitative Finance, Taylor &amp; Francis</div></div>
-      <div class="pub-entry"><div class="pub-cat">Book Review · 2025</div><div class="pub-title">Tough Broad by Caroline Paul</div><div class="pub-meta">Leisure Studies, Taylor &amp; Francis</div></div>
+      <div class="pub-entry"><div class="pub-cat">Book Review · 2026 · ABDC A*</div><div class="pub-title">The Hashtag Hustle by Annabell et al.</div><div class="pub-meta">Oxford University Commonwealth Law Journal, Taylor &amp; Francis</div></div>
+      <div class="pub-entry"><div class="pub-cat">Book Review · 2025 · ABDC A, ABS 3</div><div class="pub-title">Hydrodynamics of Markets by Alexander Lipton</div><div class="pub-meta">Quantitative Finance, Taylor &amp; Francis</div></div>
+      <div class="pub-entry"><div class="pub-cat">Book Review · 2025 · ABDC A</div><div class="pub-title">Tough Broad by Caroline Paul</div><div class="pub-meta">Leisure Studies, Taylor &amp; Francis</div></div>
     </div>
     <div>
-      <div class="pub-entry"><div class="pub-cat">Book Review · 2025</div><div class="pub-title">Who Owns Football? by Nick Miller</div><div class="pub-meta">Soccer &amp; Society, Taylor &amp; Francis</div></div>
-      <div class="pub-entry"><div class="pub-cat">Book Review · 2024</div><div class="pub-title">Mine Your Language by Abhishek Borah</div><div class="pub-meta">Journal of Global Marketing (Vol 37, Issue 4), Taylor &amp; Francis</div></div>
+      <div class="pub-entry"><div class="pub-cat">Book Review · 2025 · ABDC C</div><div class="pub-title">Who Owns Football? by Nick Miller</div><div class="pub-meta">Soccer &amp; Society, Taylor &amp; Francis</div></div>
+      <div class="pub-entry"><div class="pub-cat">Book Review · 2025 · Scopus Q1</div><div class="pub-title">Wildfire by Ferin D. Anderson and Stephanie S. McPherson</div><div class="pub-meta">Society &amp; Natural Resources (Vol 38, Issue 6), Taylor &amp; Francis</div></div>
+      <div class="pub-entry"><div class="pub-cat">Book Review · 2024 · ABDC B</div><div class="pub-title">Mine Your Language by Abhishek Borah</div><div class="pub-meta">Journal of Global Marketing (Vol 37, Issue 4), Taylor &amp; Francis</div></div>
     </div>
   </div>
 
@@ -630,14 +706,14 @@ footer{
       <div class="book-cover"><span>Ethereum Smart Contract Development</span></div>
       <div class="book-info">
         <div class="book-title">Ethereum Smart Contract Development</div>
-        <div class="book-pub">Packt Publishing UK · 2018<br>Author: Mayukh Mukhopadhyay</div>
+        <div class="book-pub">Packt Publishing UK · 2018<br>Author: Mayukh Mukhopadhyay<br><a class="media-link" href="https://www.oreilly.com/library/view/ethereum-smart-contract/9781788473040/3dd03f9b-f474-4a51-9593-530113b6523c.xhtml" target="_blank">🔗 Check at O'Reilly →</a></div>
       </div>
     </div>
     <div class="book-card">
       <div class="book-cover" style="background:linear-gradient(135deg,#0e3a68,#1a6cf0)"><span>Five Shades of Emerging Business Cases</span></div>
       <div class="book-info">
         <div class="book-title">Five Shades of Emerging Business Cases</div>
-        <div class="book-pub">Eliva Press EU · 2021<br>Kaushik Ghosh &amp; Mayukh Mukhopadhyay</div>
+        <div class="book-pub">Eliva Press EU · 2021<br>Kaushik G &amp; Mayukh M<br><a class="media-link" href="https://www.amazon.com/Five-Shades-Emerging-Business-Cases/dp/163648395X" target="_blank">🔗 Check at Amazon →</a></div>
       </div>
     </div>
   </div>
@@ -653,6 +729,8 @@ footer{
     <p class="section-desc">Fifteen-plus refereed presentations at IIMs, AOM Copenhagen, and INFORMS.</p>
   </div>
   <ul class="tl-list">
+    <!--<li class="tl-item"><div class="tl-date">Mar 2026</div><div class="tl-title">Beyond Bandura: Enhancing Organizational Cloud Competency using Connectivism</div><div class="tl-sub">Academy of Management 2026 Annual Meeting · Philadelphia</div></li> -->
+    <li class="tl-item"><div class="tl-date">Mar 2026</div><div class="tl-title">To Kill a Mocking Fad: A Framework for Evaluating Analogies in Marketing Discourse</div><div class="tl-sub">ICM-2026 · IIM Bodhgaya</div></li>
     <li class="tl-item"><div class="tl-date">Feb 2026</div><div class="tl-title">Nostalgia Washing as a Fact Making Strategy</div><div class="tl-sub">MUF-2026 · IIM Calcutta</div></li>
     <li class="tl-item"><div class="tl-date">Feb 2026</div><div class="tl-title">Podcast or Perish: Long Form Conversations as the New Red Carpet</div><div class="tl-sub">ICIC-2026 · Track: Film Distribution &amp; Marketing · IIM Ranchi</div></li>
     <li class="tl-item"><div class="tl-date">Feb 2026</div><div class="tl-title">striver's takeUforward: Scaling a Bootstrapped Coding Platform</div><div class="tl-sub">2nd Case &amp; Research Conference · IIM Nagpur &amp; Ivey Publishing</div></li>
@@ -663,12 +741,12 @@ footer{
     <li class="tl-item"><div class="tl-date">Jan 2025</div><div class="tl-title">Large Language Models and Marketing Managers — A Reversal of Decision Calculus</div><div class="tl-sub">iMarC IV · Track: AI/ML in Marketing · IIM Shillong &amp; Sunway University</div></li>
     <li class="tl-item"><div class="tl-date">Jan 2025</div><div class="tl-title">The Uncanny Positivity of AI Hallucination</div><div class="tl-sub">IMPeC-2025 · Track: Marketing Practice &amp; Research · IIM Sambalpur</div></li>
     <li class="tl-item"><div class="tl-date">Dec 2024</div><div class="tl-title">BarberShop: Podcast Marketing for Bombay Shaving Company</div><div class="tl-sub">IIM Nagpur Ivey Case Conference 2024</div></li>
-    <li class="tl-item"><div class="tl-date">Jun 2024</div><div class="tl-title">Shape My Choice: How Iconicity and Nostalgia Marketing Influence Brand Preference</div><div class="tl-sub">INFORMS Marketing Science Conference 2024</div></li>
+    <li class="tl-item"><div class="tl-date">Jun 2024</div><div class="tl-title">Shape My Choice: How Iconicity and Nostalgia Marketing Influence Brand Preference</div><div class="tl-sub">INFORMS Marketing Science Conference 2024 · Co-Authored (Presented by PhD Supervisor)</div></li>
     <li class="tl-item"><div class="tl-date">Jan 2024</div><div class="tl-title">Crouching Leopard, Hidden Unicorn: Funding the Indian Health-Tech Sector</div><div class="tl-sub">9th PAN IIM World Management Conference 2023</div></li>
     <li class="tl-item"><div class="tl-date">Dec 2023</div><div class="tl-title">From Click to Quick — Examining the Drivers of Quick Commerce</div><div class="tl-sub">ICM 2023 · Syracuse University &amp; IIM Kashipur</div></li>
-    <!--<li class="tl-item"><div class="tl-date">Dec 2023</div><div class="tl-title">Going Beyond Bandura — Cloud Competency via Connectivism</div><div class="tl-sub">16th ISDSI-Global Conference 2023 · IIM Ranchi</div></li> -->
     <li class="tl-item"><div class="tl-date">Jun 2023</div><div class="tl-title">Examining Drivers of B2B Subscription Commerce — Fuzzy Cognitive Mapping</div><div class="tl-sub">CERE 2023 · IIM Indore</div><div class="award-pill">🏆 Best Paper Award (Top 3 of 139 presentations)</div></li>
     <li class="tl-item"><div class="tl-date">Apr 2023</div><div class="tl-title">Unlocking Chat Engine Adoption: A Push-Pull-Mooring Framework</div><div class="tl-sub">ICM 2023 · University of Gothenburg &amp; IIM Bodhgaya</div></li>
+	<li class="tl-item"><div class="tl-date">Feb 2022</div><div class="tl-title">Who Moved My Grocery, in 10 Minutes? - A Light on Indian Dark Stores</div><div class="tl-sub">National Case Development Conference 2022 · Loyola Institute of Business Administration, Chennai </div></li>
   </ul>
 </section>
 
@@ -682,13 +760,15 @@ footer{
   </div>
   <div class="ach-grid">
     <div class="ach-entry"><div class="ach-icon">🏛️</div><div><div class="ach-yr">2026</div><div class="ach-text">Curriculum Committee Member — Academy of Management SIM Division</div></div></div>
+    <div class="ach-entry"><div class="ach-icon">🥇</div><div><div class="ach-yr">2026</div><div class="ach-text">TCS AIP Anchor Award — For Hands-On Training 245+ Associates on the dark side of Metaverse</div></div></div>
+    <div class="ach-entry"><div class="ach-icon">🔬</div><div><div class="ach-yr">2026</div><div class="ach-text">Appreciated by ACM India for 60+ Activity Based Funding (ABF) Assessments</div></div></div>
+    <div class="ach-entry"><div class="ach-icon">🥇</div><div><div class="ach-yr">2025</div><div class="ach-text">Outstanding Performer — Jointly by TCS &amp; BT for HAAS to GCP Migration</div></div></div>	
     <div class="ach-entry"><div class="ach-icon">🏆</div><div><div class="ach-yr">2025</div><div class="ach-text">Winner — Mira Sinha Bhattacharjea Award, 18th All India Conference of China Studies</div></div></div>
     <div class="ach-entry"><div class="ach-icon">💻</div><div><div class="ach-yr">2025</div><div class="ach-text">Senior Recognition Award — Association for Computing Machinery (ACM)</div></div></div>
     <div class="ach-entry"><div class="ach-icon">✈️</div><div><div class="ach-yr">2025</div><div class="ach-text">Travel Award — AOM Conflict Management Division to present at AOM2025 Copenhagen</div></div></div>
     <div class="ach-entry"><div class="ach-icon">📋</div><div><div class="ach-yr">2025</div><div class="ach-text">AMR Bridge Reviewer Graduate — recognized by Editor-in-Chief Kris Byron at AOM2025 Copenhagen</div></div></div>
     <div class="ach-entry"><div class="ach-icon">💡</div><div><div class="ach-yr">2025</div><div class="ach-text">Innovation Cell Appreciation — assessed 250+ Blockchain &amp; Smart Education projects, Smart India Hackathon 2024 &amp; 2025</div></div></div>
-    <div class="ach-entry"><div class="ach-icon">🌏</div><div><div class="ach-yr">2024</div><div class="ach-text">Outstanding Reviewer Appreciation — Academy of International Business, AIB 2024 Seoul</div></div></div>
-    <div class="ach-entry"><div class="ach-icon">🔬</div><div><div class="ach-yr">2024</div><div class="ach-text">MISQ-Insider — Behavioral Cybersecurity Interviews, MIS Quarterly</div></div></div>
+    <div class="ach-entry"><div class="ach-icon">🌏</div><div><div class="ach-yr">2024</div><div class="ach-text">Outstanding Reviewer Appreciation — Academy of International Business, AIB 2024 Seoul &amp; AIB 2026 Manchester</div></div></div>
     <div class="ach-entry"><div class="ach-icon">📝</div><div><div class="ach-yr">2024</div><div class="ach-text">160+ Web-of-Science Verified Peer Reviews with 2 Excellent Reviewer Ratings</div></div></div>
     <div class="ach-entry"><div class="ach-icon">🥇</div><div><div class="ach-yr">2023</div><div class="ach-text">Best Paper Award (Top 3) among 139 presentations — CERE 2023, IIM Indore</div></div></div>
   </div>
@@ -738,7 +818,7 @@ footer{
     <a class="connect-pill" href="https://scholar.google.com/citations?user=0fX4LNgAAAAJ" target="_blank">🎓 Google Scholar</a>
     <a class="connect-pill" href="https://mayukhmukhopadhyay.com" target="_blank">🌍 Main Website</a>
     <a class="connect-pill" href="https://podcasts.apple.com/gb/podcast/revise-and-resubmit-the-mayukh-show/id1770883122" target="_blank">🎙️ Podcast</a>
-	<a class="connect-pill" href="https://mayukhpsm.github.io/online-cv/mayukh_wiki.html" target="_blank">🌍 Personal Wiki</a>
+	<a class="connect-pill" href="https://mayukhmukhopadhyay.com/wiki/" target="_blank">🌍 Personal Wiki</a>
   </div>
 </div>
 
@@ -755,7 +835,7 @@ const btn = document.getElementById('themeBtn');
 const root = document.documentElement;
 const saved = localStorage.getItem('mm-dk-theme');
 if(saved){root.setAttribute('data-theme',saved)}
-else if(window.matchMedia('(prefers-color-scheme: dark)').matches){root.setAttribute('data-theme','dark')}
+else if(window.matchMedia('(prefers-color-scheme:dark)').matches){root.setAttribute('data-theme','dark')}
 btn.textContent = root.getAttribute('data-theme')==='dark'?'☀️':'🌙';
 btn.addEventListener('click',()=>{
   const t = root.getAttribute('data-theme')==='dark'?'light':'dark';
@@ -764,31 +844,63 @@ btn.addEventListener('click',()=>{
   btn.textContent = t==='dark'?'☀️':'🌙';
 });
 
+// ── Counter animation ──
+function animateCounter(el){
+  const target = parseInt(el.getAttribute('data-target'),10);
+  const suffix = el.getAttribute('data-suffix') || '';
+  const duration = 1800;
+  const steps = 60;
+  let step = 0;
+  const timer = setInterval(()=>{
+    step++;
+    const val = Math.min(Math.round((target/steps)*step), target);
+    el.textContent = val + suffix;
+    if(val >= target){ clearInterval(timer); el.textContent = target + suffix; }
+  }, duration/steps);
+}
+let countersFired = false;
+function runCounters(){
+  if(countersFired) return;
+  countersFired = true;
+  document.querySelectorAll('.counter').forEach((el,i)=>{
+    setTimeout(()=>animateCounter(el), i*200);
+  });
+}
+const heroRight = document.querySelector('.hero-right');
+if(heroRight){
+  const cObs = new IntersectionObserver(entries=>{
+    if(entries[0].isIntersecting) runCounters();
+  },{threshold:0.15});
+  cObs.observe(heroRight);
+}
+window.addEventListener('load',()=>{
+  if(!heroRight) return;
+  const r = heroRight.getBoundingClientRect();
+  if(r.top < window.innerHeight) runCounters();
+});
+
 // ── Animated skill bars (staggered) ──
 const fills = document.querySelectorAll('.skill-fill');
 let fired = false;
 function runSkills(){
   if(fired) return;
   fired = true;
-  fills.forEach((f, i) => {
-    setTimeout(() => {
-      f.style.width = f.getAttribute('data-w') + '%';
-    }, i * 120);
+  fills.forEach((f,i)=>{
+    setTimeout(()=>{ f.style.width = f.getAttribute('data-w')+'%'; }, i*120);
   });
 }
 const skillsEl = document.getElementById('skills');
-const obs = new IntersectionObserver(entries => {
+const obs = new IntersectionObserver(entries=>{
   if(entries[0].isIntersecting) runSkills();
-}, {threshold: 0.1});
+},{threshold:0.1});
 obs.observe(skillsEl);
-// Also fire if already in view on load
-window.addEventListener('load', () => {
+window.addEventListener('load',()=>{
   const r = skillsEl.getBoundingClientRect();
   if(r.top < window.innerHeight) runSkills();
 });
 
 // ── Profile picture upload ──
-document.getElementById('picInput').addEventListener('change', function(e){
+document.getElementById('picInput').addEventListener('change',function(e){
   const file = e.target.files[0];
   if(!file) return;
   const reader = new FileReader();
@@ -800,7 +912,6 @@ document.getElementById('picInput').addEventListener('change', function(e){
   };
   reader.readAsDataURL(file);
 });
-
 </script>
 </body>
 </html>
