@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Revise and Resubmit – The Mayukh Show</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f7f5f0;
+      --bg2: #eeeae2;
+      --card: #ffffff;
+      --text: #1a1a1a;
+      --text2: #555;
+      --accent: #b5451b;
+      --accent2: #e8702a;
+      --border: #ddd;
+      --shadow: 0 4px 24px rgba(0,0,0,0.08);
+    }
+    [data-theme="dark"] {
+      --bg: #111111;
+      --bg2: #1c1c1c;
+      --card: #1e1e1e;
+      --text: #f0ece4;
+      --text2: #aaa;
+      --accent: #e8702a;
+      --accent2: #f59347;
+      --border: #333;
+      --shadow: 0 4px 24px rgba(0,0,0,0.5);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      transition: background 0.3s, color 0.3s;
+    }
+
+    /* TOP BAR */
+    #topbar {
+      background: var(--accent);
+      color: #fff;
+      text-align: center;
+      padding: 9px 20px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+    #topbar a { color: #ffe8d6; text-decoration: underline; }
+    #topbar a:hover { color: #fff; }
+
+    /* NAVBAR */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 30px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .nav-links { display: flex; align-items: center; gap: 22px; }
+    .nav-links a {
+      font-size: 0.88rem;
+      color: var(--text2);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+    #theme-toggle {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      padding: 6px 14px;
+      cursor: pointer;
+      font-size: 0.82rem;
+      color: var(--text);
+      font-weight: 600;
+      transition: background 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    #theme-toggle:hover { background: var(--accent); color: #fff; }
+
+    /* HERO */
+    #hero {
+      background: linear-gradient(135deg, var(--bg2) 0%, var(--bg) 100%);
+      padding: 72px 30px 60px;
+      text-align: center;
+    }
+    .hero-tag {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 20px;
+      margin-bottom: 18px;
+    }
+    #hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.8rem);
+      font-weight: 900;
+      line-height: 1.12;
+      color: var(--text);
+      max-width: 780px;
+      margin: 0 auto 16px;
+    }
+    #hero h1 span { color: var(--accent); }
+    #hero p {
+      font-size: clamp(0.95rem, 2vw, 1.15rem);
+      color: var(--text2);
+      max-width: 580px;
+      margin: 0 auto 32px;
+      line-height: 1.7;
+    }
+    .cta-group { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      padding: 13px 28px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.92rem;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover { background: var(--accent2); transform: translateY(-2px); }
+    .btn-outline {
+      background: transparent;
+      color: var(--accent);
+      border: 2px solid var(--accent);
+      padding: 11px 26px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.92rem;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-outline:hover { background: var(--accent); color: #fff; transform: translateY(-2px); }
+
+    /* LISTEN ON */
+    #listen {
+      background: var(--bg2);
+      padding: 36px 30px;
+      text-align: center;
+    }
+    #listen p { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text2); font-weight: 600; margin-bottom: 18px; }
+    .platform-icons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 24px;
+    }
+    .platform-pill {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 40px;
+      padding: 10px 20px;
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 600;
+      font-size: 0.88rem;
+      transition: box-shadow 0.2s, transform 0.15s;
+      box-shadow: var(--shadow);
+    }
+    .platform-pill:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.14); }
+    .platform-pill svg { width: 22px; height: 22px; flex-shrink: 0; }
+
+    /* SECTION COMMON */
+    section { padding: 72px 30px; }
+    .section-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--accent);
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 3vw, 2.4rem);
+      font-weight: 900;
+      line-height: 1.2;
+      margin-bottom: 14px;
+    }
+    .section-sub { color: var(--text2); font-size: 1rem; max-width: 560px; line-height: 1.7; margin-bottom: 40px; }
+    .container { max-width: 1100px; margin: 0 auto; }
+
+    /* STATS */
+    #stats { background: var(--accent); }
+    #stats .section-title { color: #fff; }
+    #stats .section-label { color: rgba(255,255,255,0.7); }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 24px;
+      margin-top: 8px;
+    }
+    .stat-card {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 16px;
+      padding: 28px 20px;
+      text-align: center;
+      backdrop-filter: blur(6px);
+    }
+    .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: #fff;
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.8);
+      margin-top: 8px;
+      font-weight: 500;
+      line-height: 1.4;
+    }
+
+    /* LATEST EPISODES */
+    #episodes { background: var(--bg); }
+    .episodes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 22px;
+    }
+    .ep-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 22px;
+      box-shadow: var(--shadow);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .ep-card:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(0,0,0,0.13); }
+    .ep-date { font-size: 0.75rem; color: var(--text2); margin-bottom: 8px; font-weight: 500; }
+    .ep-title { font-size: 1rem; font-weight: 700; line-height: 1.4; margin-bottom: 10px; color: var(--text); }
+    .ep-desc { font-size: 0.84rem; color: var(--text2); line-height: 1.6; margin-bottom: 14px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+    .ep-listen {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .ep-listen:hover { color: var(--accent2); }
+    #ep-loading { text-align: center; color: var(--text2); font-size: 0.95rem; padding: 30px; }
+
+    /* YOUTUBE EMBEDS */
+    #research { background: var(--bg2); }
+    .cert-carousel-outer {
+      overflow: hidden;
+      border-radius: 16px;
+      position: relative;
+    }
+    .cert-carousel-track {
+      display: flex;
+      gap: 24px;
+      animation: cert-scroll 40s linear infinite;
+      width: max-content;
+    }
+    .cert-carousel-outer:hover .cert-carousel-track { animation-play-state: paused; }
+    @keyframes cert-scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .cert-card {
+      flex-shrink: 0;
+      width: 420px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .cert-card:hover { transform: scale(1.03); box-shadow: 0 8px 32px rgba(0,0,0,0.14); }
+    .cert-card img {
+      width: 100%;
+      height: 260px;
+      object-fit: cover;
+      display: block;
+    }
+    .cert-caption {
+      font-size: 0.85rem;
+      color: var(--text2);
+      text-align: center;
+      padding: 12px 16px;
+      font-style: italic;
+      border-top: 1px solid var(--border);
+    }
+
+    /* TESTIMONIAL CAROUSEL */
+    #testimonials { background: var(--bg); overflow: hidden; }
+    .carousel-outer {
+      position: relative;
+      overflow: hidden;
+      border-radius: 16px;
+    }
+    .carousel-track {
+      display: flex;
+      gap: 20px;
+      animation: scroll-loop 35s linear infinite;
+      width: max-content;
+    }
+    .carousel-outer:hover .carousel-track { animation-play-state: paused; }
+    @keyframes scroll-loop {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .testi-card {
+      flex-shrink: 0;
+      width: 320px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 22px;
+      box-shadow: var(--shadow);
+      transition: transform 0.2s;
+    }
+    .testi-card:hover { transform: scale(1.02); }
+    .testi-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      color: #fff;
+      font-size: 1.1rem;
+      margin-bottom: 12px;
+      overflow: hidden;
+    }
+    .testi-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .testi-name { font-weight: 700; font-size: 0.92rem; margin-bottom: 2px; }
+    .testi-handle { font-size: 0.78rem; color: var(--text2); margin-bottom: 12px; }
+    .testi-text { font-size: 0.87rem; color: var(--text); line-height: 1.6; margin-bottom: 14px; }
+    .testi-link {
+      font-size: 0.78rem;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .testi-link:hover { text-decoration: underline; }
+    .testi-platform { font-size: 0.72rem; color: var(--text2); }
+    .carousel-hint { text-align: center; font-size: 0.78rem; color: var(--text2); margin-top: 14px; }
+
+    /* CONTACT */
+    #contact { background: var(--bg2); text-align: center; }
+    .contact-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 48px 36px;
+      max-width: 580px;
+      margin: 0 auto;
+      box-shadow: var(--shadow);
+    }
+    .contact-box h2 { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 900; margin-bottom: 14px; }
+    .contact-box p { color: var(--text2); margin-bottom: 26px; line-height: 1.7; }
+    .contact-email {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--accent);
+      color: #fff;
+      padding: 14px 28px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1rem;
+      transition: background 0.2s;
+    }
+    .contact-email:hover { background: var(--accent2); }
+
+    /* FOOTER */
+    footer {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 28px 20px;
+      font-size: 0.82rem;
+      color: var(--text2);
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+
+    /* HAMBURGER */
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: var(--text); border-radius: 2px; transition: all 0.3s; }
+    @media (max-width: 700px) {
+      .nav-links { display: none; flex-direction: column; position: absolute; top: 56px; left: 0; right: 0; background: var(--card); border-bottom: 1px solid var(--border); padding: 18px 24px; gap: 16px; z-index: 999; }
+      .nav-links.open { display: flex; }
+      .hamburger { display: flex; }
+      nav { flex-wrap: wrap; }
+      section { padding: 52px 18px; }
+      .testi-card { width: 270px; }
+    }
+  </style>
+</head>
+<body data-theme="light">
+
+<!-- TOP BAR -->
+<div id="topbar">
+  ← Back to main site: <a href="https://mayukhmukhopadhyay.com/aboutme/" target="_blank">mayukhmukhopadhyay.com</a>
+</div>
+
+<!-- NAVBAR -->
+<nav>
+  <a class="nav-logo" href="#">R&R · The Mayukh Show</a>
+  <div class="nav-links" id="navlinks">
+    <a href="#episodes">Episodes</a>
+    <a href="#research">Research</a>
+    <a href="#testimonials">Reviews</a>
+    <a href="#contact">Contact</a>
+    <button id="theme-toggle" onclick="toggleTheme()">🌙 Dark</button>
+  </div>
+  <div class="hamburger" id="hamburger" onclick="toggleNav()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <span class="hero-tag">🎙 Academic Podcast</span>
+  <h1>Revise &amp; Resubmit<br/><span>The Mayukh Show</span></h1>
+  <p>Where research meets ai-assisted conversation. Exploring the world of academic publishing — every Sunday and Monday.</p>
+  <div class="cta-group">
+    <a href="https://www.youtube.com/playlist?list=PLXs7Va5fWFZ7-OxyR20IQlrbtZYRoH4CY" target="_blank" class="btn-primary">▶ Listen Now</a>
+    <a href="#episodes" class="btn-outline">Latest Episodes</a>
+  </div>
+</section>
+
+<!-- LISTEN ON -->
+<div id="listen">
+  <p>Available on</p>
+  <div class="platform-icons">
+    <!-- Spotify -->
+    <a href="https://creators.spotify.com/pod/profile/mayukh-mukhopadhyay2" target="_blank" class="platform-pill" style="color:#1db954;">
+      <svg viewBox="0 0 24 24" fill="#1db954"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.586 14.424a.622.622 0 0 1-.857.207c-2.348-1.435-5.304-1.76-8.785-.964a.623.623 0 0 1-.277-1.215c3.809-.87 7.077-.496 9.712 1.115a.623.623 0 0 1 .207.857zm1.223-2.722a.78.78 0 0 1-1.072.257c-2.687-1.652-6.785-2.131-9.965-1.166a.78.78 0 0 1-.973-.519.781.781 0 0 1 .519-.972c3.632-1.102 8.147-.568 11.234 1.328a.78.78 0 0 1 .257 1.072zm.105-2.835C14.692 8.95 9.375 8.775 6.297 9.71a.937.937 0 1 1-.543-1.793c3.532-1.072 9.404-.865 13.115 1.338a.937.937 0 0 1-.955 1.612z"/></svg>
+      Spotify
+    </a>
+    <!-- YouTube -->
+    <a href="https://www.youtube.com/playlist?list=PLXs7Va5fWFZ7-OxyR20IQlrbtZYRoH4CY" target="_blank" class="platform-pill" style="color:#ff0000;">
+      <svg viewBox="0 0 24 24" fill="#ff0000"><path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
+      YouTube
+    </a>
+    <!-- Apple Podcasts -->
+    <a href="https://podcasts.apple.com/us/podcast/revise-and-resubmit-the-mayukh-show/id1770883122" target="_blank" class="platform-pill" style="color:#9933cc;">
+      <svg viewBox="0 0 24 24" fill="#9933cc"><path d="M12.003 0C5.373 0 0 5.372 0 12.003 0 18.63 5.372 24 12.003 24 18.63 24 24 18.63 24 12.003 24 5.372 18.63 0 12.003 0zm0 4.204c1.701 0 3.285.57 4.556 1.53a7.712 7.712 0 0 0-1.342 1.018 6.22 6.22 0 0 0-3.215-.887c-3.436 0-6.228 2.79-6.228 6.225 0 3.436 2.792 6.226 6.228 6.226.96 0 1.872-.222 2.687-.614a7.74 7.74 0 0 0 .944 1.4 7.8 7.8 0 0 1-3.63.898C7.153 19.999 4 16.848 4 12.09c0-4.758 3.153-7.886 8.003-7.886zM12 7.198a4.896 4.896 0 0 1 4.896 4.896A4.896 4.896 0 0 1 12 16.99a4.896 4.896 0 0 1-4.895-4.896A4.896 4.896 0 0 1 12 7.198zm0 1.702a3.194 3.194 0 1 0 0 6.388 3.194 3.194 0 0 0 0-6.388zm0 1.395a1.8 1.8 0 1 1 0 3.6 1.8 1.8 0 0 1 0-3.6z"/></svg>
+      Apple Podcasts
+    </a>
+    <!-- Amazon Music -->
+    <a href="https://music.amazon.it/podcasts/f64c70fc-f70b-498e-87f3-669152e83730/revise-and-resubmit---the-mayukh-show" target="_blank" class="platform-pill" style="color:#00a8e1;">
+      <svg viewBox="0 0 24 24" fill="#00a8e1"><path d="M13.958 10.09c0 1.232.029 2.256-.591 3.351-.502.891-1.301 1.438-2.186 1.438-1.214 0-1.922-.924-1.922-2.292 0-2.692 2.415-3.182 4.7-3.182v.685zm3.186 7.705a.661.661 0 0 1-.75.074c-1.052-.873-1.24-1.276-1.814-2.106-1.731 1.767-2.958 2.297-5.204 2.297-2.657 0-4.725-1.638-4.725-4.921 0-2.564 1.388-4.309 3.367-5.163 1.715-.754 4.11-.889 5.942-1.097v-.41c0-.753.06-1.642-.383-2.294-.385-.579-1.124-.819-1.776-.819-1.205 0-2.277.618-2.54 1.899-.054.285-.261.567-.549.582l-3.076-.333c-.259-.057-.547-.266-.472-.66C6.054 2.409 8.975 1.5 11.59 1.5c1.336 0 3.083.356 4.136 1.366 1.335 1.245 1.207 2.907 1.207 4.718v4.274c0 1.285.533 1.849 1.034 2.543.176.246.214.54-.009.722l-2.824 2.672zm3.981 3.522c-2.198 1.618-5.395 2.483-8.14 2.483-3.85 0-7.31-1.424-9.928-3.792-.206-.186-.022-.439.226-.296 2.826 1.645 6.314 2.633 9.923 2.633 2.433 0 5.108-.504 7.571-1.547.373-.159.685.244.348.519zm.99-1.129c-.28-.361-1.852-.17-2.558-.086-.214.026-.247-.161-.054-.297 1.252-.88 3.307-.626 3.545-.331.239.297-.063 2.35-1.239 3.329-.181.151-.353.071-.272-.128.265-.661.858-2.146.578-2.487z"/></svg>
+      Amazon Music
+    </a>
+  </div>
+</div>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="container">
+    <div class="section-label">By the numbers</div>
+    <div class="section-title">Podcast at a Glance</div>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-number" data-target="540" data-suffix="+">0</div>
+        <div class="stat-label">Episodes</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" data-target="75" data-suffix="+">0</div>
+        <div class="stat-label">Countries Reached</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" data-target="2300" data-suffix="+">0</div>
+        <div class="stat-label">Hours of Streaming</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" data-target="40" data-prefix="+" data-suffix="%">0</div>
+        <div class="stat-label">Retention Rate</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" data-target="3" data-suffix="+">0</div>
+        <div class="stat-label">Conference Papers on Podcast</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">🏆</div>
+        <div class="stat-label">Subscribed by Booker Prize Laureates &amp; Academic Professors</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LATEST EPISODES -->
+<section id="episodes">
+  <div class="container">
+    <div class="section-label">Fresh off the feed</div>
+    <div class="section-title">Latest Episodes</div>
+    <div class="section-sub">Auto-loaded from the RSS feed. Updated every time you publish.</div>
+    <div class="episodes-grid" id="ep-grid">
+      <div id="ep-loading">⏳ Loading latest episodes…</div>
+    </div>
+  </div>
+</section>
+
+<!-- YOUTUBE VIDEOS -->
+<section id="research">
+  <div class="container">
+    <div class="section-label">Research</div>
+    <div class="section-title">Certifications &amp; Credentials</div>
+    <div class="section-sub">Academic certifications and professional achievements.</div>
+    <div class="cert-carousel-outer">
+      <div class="cert-carousel-track" id="certTrack">
+        <!-- CERTIFICATE 1 — Replace src with your certificate image URL -->
+        <div class="cert-card">
+          <img src="https://media.licdn.com/dms/image/v2/D562DAQFovCOYmNqJhQ/profile-treasury-image-shrink_800_800/B56ZylFjYWKAAY-/0/1772296223199?e=1775440800&v=beta&t=0c07xxTLhMJ7TucsS53ftzKdThJoR2UMkixquOtyUAQ" alt="Certificate 1" loading="lazy"/>
+          <p class="cert-caption">ICIC-2026, IIM Ranchi</p>
+        </div>
+        <!-- CERTIFICATE 2 -->
+        <div class="cert-card">
+          <img src="https://media.licdn.com/dms/image/v2/D562DAQHYtnWUqVXCyg/profile-treasury-image-shrink_800_800/B56ZsTmvWKGgAY-/0/1765560482603?e=1775440800&v=beta&t=wgPSkAM9xyUpeI-159rL9VTKdlsdfSf-7lPARnkitjk" alt="Certificate 2" loading="lazy"/>
+          <p class="cert-caption">18th AICCS, ICS Delhi</p>
+        </div>
+        <!-- CERTIFICATE 3 -->
+        <div class="cert-card">
+          <img src="https://media.licdn.com/dms/image/v2/D562DAQEylridfQ1--g/profile-treasury-image-shrink_800_800/B56ZbU8MwRGsAY-/0/1747329273849?e=1775440800&v=beta&t=kBOt00qoBiaidVeXxUDURn9FZSpuF6xtxqrd29gpd7I" alt="Certificate 3" loading="lazy"/>
+          <p class="cert-caption">IMC 2025, IIM Vizag</p>
+        </div>
+        <!-- CERTIFICATE 4 -->
+        <div class="cert-card">
+          <img src="https://media.licdn.com/dms/image/v2/D562DAQGY7MiGI0qY4g/profile-treasury-image-shrink_800_800/profile-treasury-image-shrink_800_800/0/1736645722878?e=1775440800&v=beta&t=rN1VyLi4dokv4PffGa4ISSS0kfD4_L_g21OLDXenzuI" alt="Certificate 4" loading="lazy"/>
+          <p class="cert-caption">IVEY Case Conference 2024, IIM Nagpur</p>
+        </div>
+        <!-- CERTIFICATE 5 
+        <div class="cert-card">
+          <img src="https://via.placeholder.com/420x300?text=Certificate+5" alt="Certificate 5" loading="lazy"/>
+          <p class="cert-caption">Certificate Title #5 — Issuing Body</p>
+        </div> -->
+        <!-- CERTIFICATE 6 
+        <div class="cert-card">
+          <img src="https://via.placeholder.com/420x300?text=Certificate+6" alt="Certificate 6" loading="lazy"/>
+          <p class="cert-caption">Certificate Title #6 — Issuing Body</p>
+        </div> -->
+        <!-- Duplicates for seamless infinite loop -->
+        <div class="cert-card">
+          <img src="https://via.placeholder.com/420x300?text=Certificate+1" alt="Certificate 1" loading="lazy"/>
+          <p class="cert-caption">Certificate Title #1 — Issuing Body</p>
+        </div>
+        <div class="cert-card">
+          <img src="https://via.placeholder.com/420x300?text=Certificate+2" alt="Certificate 2" loading="lazy"/>
+          <p class="cert-caption">Certificate Title #2 — Issuing Body</p>
+        </div>
+        <div class="cert-card">
+          <img src="https://via.placeholder.com/420x300?text=Certificate+3" alt="Certificate 3" loading="lazy"/>
+          <p class="cert-caption">Certificate Title #3 — Issuing Body</p>
+        </div>
+        <div class="cert-card">
+          <img src="https://via.placeholder.com/420x300?text=Certificate+4" alt="Certificate 4" loading="lazy"/>
+          <p class="cert-caption">Certificate Title #4 — Issuing Body</p>
+        </div>
+        <div class="cert-card">
+          <img src="https://via.placeholder.com/420x300?text=Certificate+5" alt="Certificate 5" loading="lazy"/>
+          <p class="cert-caption">Certificate Title #5 — Issuing Body</p>
+        </div>
+        <div class="cert-card">
+          <img src="https://via.placeholder.com/420x300?text=Certificate+6" alt="Certificate 6" loading="lazy"/>
+          <p class="cert-caption">Certificate Title #6 — Issuing Body</p>
+        </div>
+      </div>
+    </div>
+    <p class="carousel-hint">← scrolls automatically · hover to pause →</p>
+  </div>
+</section>
+
+<!-- TESTIMONIALS CAROUSEL -->
+<section id="testimonials">
+  <div class="container">
+    <div class="section-label">What listeners say</div>
+    <div class="section-title">Listener Reviews</div>
+    <div class="section-sub">Hover to pause. Click "View Post" to open the original testimonial.</div>
+  </div>
+  <div class="carousel-outer" style="margin-top:20px;">
+    <div class="carousel-track" id="carousel-track">
+
+      <!-- ===== TESTIMONIAL CARDS — Add/edit below ===== -->
+
+      <div class="testi-card">
+        <div class="testi-avatar">A</div>
+        <div class="testi-name">Academic Prof.</div>
+        <div class="testi-handle">@linkedin_handle · LinkedIn</div>
+        <div class="testi-text">"One of the most thoughtful academic podcasts I've encountered. Mayukh brings genuine depth to every conversation."</div>
+        <a href="#" class="testi-link" target="_blank">🔗 View Post</a>
+      </div>
+
+      <div class="testi-card">
+        <div class="testi-avatar">B</div>
+        <div class="testi-name">PhD Researcher</div>
+        <div class="testi-handle">@twitter_handle · Twitter/X</div>
+        <div class="testi-text">"Revise &amp; Resubmit has genuinely changed how I think about publishing strategy. A must-listen for every doctoral student."</div>
+        <a href="#" class="testi-link" target="_blank">🔗 View Post</a>
+      </div>
+
+      <div class="testi-card">
+        <div class="testi-avatar">C</div>
+        <div class="testi-name">Management Scholar</div>
+        <div class="testi-handle">@linkedin_handle · LinkedIn</div>
+        <div class="testi-text">"Rare to find a podcast that bridges East-West perspectives in organizational theory so elegantly."</div>
+        <a href="#" class="testi-link" target="_blank">🔗 View Post</a>
+      </div>
+
+      <div class="testi-card">
+        <div class="testi-avatar">D</div>
+        <div class="testi-name">Listener from USA</div>
+        <div class="testi-handle">@twitter_handle · Twitter/X</div>
+        <div class="testi-text">"600+ episodes and every single one has something new. That's remarkable consistency and quality."</div>
+        <a href="#" class="testi-link" target="_blank">🔗 View Post</a>
+      </div>
+
+      <div class="testi-card">
+        <div class="testi-avatar">E</div>
+        <div class="testi-name">Booker Prize Reader</div>
+        <div class="testi-handle">@linkedin_handle · LinkedIn</div>
+        <div class="testi-text">"I don't subscribe to many podcasts, but Revise &amp; Resubmit is a permanent fixture in my playlist."</div>
+        <a href="#" class="testi-link" target="_blank">🔗 View Post</a>
+      </div>
+
+      <div class="testi-card">
+        <div class="testi-avatar">F</div>
+        <div class="testi-name">Conference Presenter</div>
+        <div class="testi-handle">@twitter_handle · Twitter/X</div>
+        <div class="testi-text">"I cited this podcast in my AOM paper — that says it all about the scholarly value it brings."</div>
+        <a href="#" class="testi-link" target="_blank">🔗 View Post</a>
+      </div>
+
+      <!-- ===== END TESTIMONIALS — duplicated below for seamless loop ===== -->
+
+    </div>
+  </div>
+  <p class="carousel-hint">← scroll auto-plays in loop · hover to pause →</p>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-box">
+      <div class="section-label" style="text-align:center;">Get in touch</div>
+      <h2>Collaborate or Appear</h2>
+      <p>For collaboration proposals, guest appearances, or sponsorships — reach out directly.</p>
+      <a href="mailto:reviseandresubmit.tms@gmail.com" class="contact-email">
+        ✉️ Write to Me
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 <strong>Revise and Resubmit – The Mayukh Show</strong> · Hosted by <a href="https://mayukhmukhopadhyay.com/aboutme/" target="_blank">Mayukh Mukhopadhyay</a></p>
+  <p style="margin-top:8px;">Kolkata, India · <a href="https://www.linkedin.com/in/mayukhpsm/" target="_blank">Connect over Linkedin</a></p>
+</footer>
+
+<script>
+  // ── THEME TOGGLE ──
+  function toggleTheme() {
+    const body = document.body;
+    const btn = document.getElementById('theme-toggle');
+    if (body.getAttribute('data-theme') === 'dark') {
+      body.setAttribute('data-theme', 'light');
+      btn.textContent = '🌙 Dark';
+    } else {
+      body.setAttribute('data-theme', 'dark');
+      btn.textContent = '☀️ Light';
+    }
+  }
+
+  // ── HAMBURGER ──
+  function toggleNav() {
+    document.getElementById('navlinks').classList.toggle('open');
+  }
+
+  // ── COUNTER ANIMATION ──
+  function animateCounters() {
+    document.querySelectorAll('[data-target]').forEach(el => {
+      const target = parseInt(el.dataset.target);
+      const suffix = el.dataset.suffix || '';
+      const prefix = el.dataset.prefix || '';
+      const duration = 1800;
+      const step = 16;
+      const increment = target / (duration / step);
+      let current = 0;
+      const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+          current = target;
+          clearInterval(timer);
+        }
+        el.textContent = prefix + Math.floor(current).toLocaleString() + suffix;
+      }, step);
+    });
+  }
+
+  const statsObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        animateCounters();
+        statsObserver.disconnect();
+      }
+    });
+  }, { threshold: 0.3 });
+  statsObserver.observe(document.getElementById('stats'));
+
+  // ── RSS FEED LOADER ──
+  async function loadEpisodes() {
+    const RSS_URL = 'https://anchor.fm/s/fb564e14/podcast/rss';
+    const PROXIES = [
+      'https://api.rss2json.com/v1/api.json?rss_url=',
+      'https://api.allorigins.win/get?url=',
+      'https://corsproxy.io/?'
+    ];
+
+    // Try rss2json first (returns clean JSON)
+    try {
+      const resp = await fetch(PROXIES[0] + encodeURIComponent(RSS_URL));
+      if (resp.ok) {
+        const data = await resp.json();
+        if (data.status === 'ok' && data.items && data.items.length > 0) {
+          renderEpisodes(data.items.slice(0, 4).map(item => ({
+            title: item.title || 'Episode',
+            desc: item.description?.replace(/<[^>]*>/g, '') || '',
+            link: item.link || item.guid || '#',
+            pubDate: item.pubDate || ''
+          })));
+          return;
+        }
+      }
+    } catch(e) {}
+
+    // Fallback: allorigins raw XML
+    for (let i = 1; i < PROXIES.length; i++) {
+      try {
+        const url = i === 1
+          ? PROXIES[i] + encodeURIComponent(RSS_URL)
+          : PROXIES[i] + RSS_URL;
+        const resp = await fetch(url);
+        if (!resp.ok) continue;
+        let rawXml;
+        if (i === 1) {
+          const data = await resp.json();
+          rawXml = data.contents;
+        } else {
+          rawXml = await resp.text();
+        }
+        const parser = new DOMParser();
+        const xml = parser.parseFromString(rawXml, 'text/xml');
+        const items = xml.querySelectorAll('item');
+        if (!items.length) continue;
+        const episodes = [];
+        items.forEach((item, idx) => {
+          if (idx >= 4) return;
+          episodes.push({
+            title: item.querySelector('title')?.textContent || 'Episode',
+            desc: item.querySelector('description')?.textContent?.replace(/<[^>]*>/g, '') || '',
+            link: item.querySelector('link')?.textContent || '#',
+            pubDate: item.querySelector('pubDate')?.textContent || ''
+          });
+        });
+        renderEpisodes(episodes);
+        return;
+      } catch(e) {}
+    }
+
+    // All proxies failed — show fallback with direct RSS link
+    const grid = document.getElementById('ep-grid');
+    grid.innerHTML = '<p style="color:var(--text2);text-align:center;padding:20px">⚠️ Could not load episodes automatically. <a href="https://anchor.fm/s/fb564e14/podcast/rss" target="_blank" style="color:var(--accent)">Open RSS feed directly →</a></p>';
+  }
+
+  function renderEpisodes(episodes) {
+    const grid = document.getElementById('ep-grid');
+    if (!episodes.length) {
+      grid.innerHTML = '<p style="color:var(--text2);text-align:center">No episodes found.</p>';
+      return;
+    }
+    grid.innerHTML = '';
+    episodes.forEach(({ title, desc, link, pubDate }) => {
+      const date = pubDate ? new Date(pubDate).toLocaleDateString('en-GB', {day:'numeric',month:'short',year:'numeric'}) : '';
+      grid.innerHTML += `<div class="ep-card"><div class="ep-date">${date}</div><div class="ep-title">${title}</div><div class="ep-desc">${desc.substring(0,180)}</div><a href="${link}" target="_blank" class="ep-listen">Listen →</a></div>`;
+    });
+  }
+
+  loadEpisodes();
+
+
+  // ── CAROUSEL SEAMLESS LOOP (duplicate cards) ──
+  window.addEventListener('load', () => {
+    const track = document.getElementById('carousel-track');
+    const clone = track.innerHTML;
+    track.innerHTML += clone;
+  });
+</script>
+</body>
+</html>
