@@ -1034,10 +1034,13 @@ function tuneToStation(idx) {
     updateSignal(true, true);
   });
 
-  // Animate freq needle to matching position
+  // Animate freq needle and update frequency display based on station index
   const freqPct = (idx / Math.max(filteredStations.length - 1, 1)) * 100;
   updateNeedle(freqPct);
-  document.getElementById('displayFreq').textContent = freqBands[currentFreqIdx].name;
+  // Map station index to a realistic FM frequency between 87.5 and 108.0
+  const fmMin = 87.5, fmMax = 108.0;
+  const mappedFreq = fmMin + (freqPct / 100) * (fmMax - fmMin);
+  document.getElementById('displayFreq').textContent = 'FM ' + mappedFreq.toFixed(1);
 
   renderStations(); // re-render to highlight
 }
