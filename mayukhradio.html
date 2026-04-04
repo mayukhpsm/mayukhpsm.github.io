@@ -2,6 +2,7 @@
 <html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mayukh's World Radio — Nostalgia Dial</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -560,8 +561,10 @@ body::before {
   pointer-events: none;
   transition: opacity 0.2s, transform 0.2s;
   z-index: 200;
-  max-height: 380px;
+  max-height: 560px;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .stations-panel.visible {
@@ -596,12 +599,34 @@ body::before {
 }
 .stations-close:hover { color: var(--radio-chrome); }
 
+.filter-group-label {
+  width: 100%;
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 0.15em;
+  color: var(--radio-amber);
+  text-shadow: 0 0 6px var(--radio-amber-glow);
+  padding: var(--space-2) var(--space-1) var(--space-1);
+  border-top: 1px solid rgba(255,184,48,0.15);
+  margin-top: var(--space-1);
+  text-transform: uppercase;
+  pointer-events: none;
+}
 .country-filter {
   display: flex;
   gap: var(--space-2);
   flex-wrap: wrap;
   margin-bottom: var(--space-3);
+  max-height: 160px;
+  overflow-y: auto;
+  padding-right: var(--space-1);
+  scrollbar-width: thin;
+  scrollbar-color: var(--radio-chrome-shadow) transparent;
+  flex-shrink: 0;
 }
+.country-filter::-webkit-scrollbar { width: 4px; }
+.country-filter::-webkit-scrollbar-track { background: transparent; }
+.country-filter::-webkit-scrollbar-thumb { background: var(--radio-chrome-shadow); border-radius: 2px; }
 
 .country-btn {
   background: rgba(200,169,106,0.1);
@@ -624,13 +649,18 @@ body::before {
 
 .stations-list {
   overflow-y: auto;
-  max-height: 230px;
+  flex: 1 1 auto;
+  min-height: 120px;
+  max-height: 280px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--space-2);
   scrollbar-width: thin;
-  scrollbar-color: rgba(200,169,106,0.2) transparent;
+  scrollbar-color: rgba(200,169,106,0.3) transparent;
 }
+.stations-list::-webkit-scrollbar { width: 4px; }
+.stations-list::-webkit-scrollbar-track { background: transparent; }
+.stations-list::-webkit-scrollbar-thumb { background: rgba(200,169,106,0.3); border-radius: 2px; }
 
 .station-card {
   background: rgba(255,255,255,0.03);
@@ -788,15 +818,47 @@ body::before {
           <button class="stations-close" id="stationsClose" aria-label="Close stations">✕</button>
         </div>
         <div class="country-filter" id="countryFilter">
+          <div class="filter-group-label">🌐 GLOBAL</div>
           <button class="country-btn active" data-country="all">All</button>
           <button class="country-btn" data-country="US">USA</button>
           <button class="country-btn" data-country="GB">UK</button>
-          <button class="country-btn" data-country="IN">India</button>
           <button class="country-btn" data-country="DE">Germany</button>
           <button class="country-btn" data-country="FR">France</button>
-          <button class="country-btn" data-country="BR">Brazil</button>
           <button class="country-btn" data-country="JP">Japan</button>
           <button class="country-btn" data-country="AU">Australia</button>
+
+          <div class="filter-group-label">🇮🇳 SOUTH ASIA</div>
+          <button class="country-btn" data-country="IN">India (All)</button>
+          <button class="country-btn" data-country="IN" data-tag="bengali">Bangla · India</button>
+          <button class="country-btn" data-country="IN" data-tag="assam">Assam</button>
+          <button class="country-btn" data-country="IN" data-tag="manipur">Manipur</button>
+          <button class="country-btn" data-country="IN" data-tag="nagaland">Nagaland</button>
+          <button class="country-btn" data-country="IN" data-tag="tamil">Tamil · India</button>
+          <button class="country-btn" data-country="BD">Bangladesh</button>
+          <button class="country-btn" data-country="LK">Sri Lanka</button>
+          <button class="country-btn" data-country="PK">Pakistan</button>
+          <button class="country-btn" data-country="NP">Nepal</button>
+
+          <div class="filter-group-label">🌍 AFRICA</div>
+          <button class="country-btn" data-country="NG">Nigeria</button>
+          <button class="country-btn" data-country="ZA">South Africa</button>
+          <button class="country-btn" data-country="KE">Kenya</button>
+          <button class="country-btn" data-country="GH">Ghana</button>
+          <button class="country-btn" data-country="ET">Ethiopia</button>
+          <button class="country-btn" data-country="EG">Egypt</button>
+          <button class="country-btn" data-country="MA">Morocco</button>
+          <button class="country-btn" data-country="SN">Senegal</button>
+          <button class="country-btn" data-country="TZ">Tanzania</button>
+
+          <div class="filter-group-label">🌎 LATIN AMERICA</div>
+          <button class="country-btn" data-country="BR">Brazil</button>
+          <button class="country-btn" data-country="MX">Mexico</button>
+          <button class="country-btn" data-country="AR">Argentina</button>
+          <button class="country-btn" data-country="CO">Colombia</button>
+          <button class="country-btn" data-country="CL">Chile</button>
+          <button class="country-btn" data-country="PE">Peru</button>
+          <button class="country-btn" data-country="VE">Venezuela</button>
+          <button class="country-btn" data-country="EC">Ecuador</button>
         </div>
         <div class="stations-list" id="stationsList">
           <div class="loading-msg">LOADING STATIONS…</div>
@@ -969,11 +1031,12 @@ function updateSignal(active, weak = false) {
 // ─── RADIO BROWSER API ───
 const API_BASE = 'https://de1.api.radio-browser.info/json';
 
-async function fetchStations(country = '') {
+async function fetchStations(country = '', tag = '') {
   document.getElementById('stationsList').innerHTML = '<div class="loading-msg">SCANNING FREQUENCIES…</div>';
   try {
-    let url = `${API_BASE}/stations/search?limit=60&hidebroken=true&has_extended_info=false&order=clickcount&reverse=true`;
+    let url = `${API_BASE}/stations/search?limit=80&hidebroken=true&has_extended_info=false&order=clickcount&reverse=true`;
     if (country && country !== 'all') url += `&countrycode=${country}`;
+    if (tag) url += `&tag=${encodeURIComponent(tag)}`;
 
     const resp = await fetch(url);
     if (!resp.ok) throw new Error('API error');
@@ -1052,7 +1115,8 @@ document.getElementById('countryFilter').addEventListener('click', e => {
   document.querySelectorAll('.country-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   currentCountry = btn.dataset.country;
-  fetchStations(currentCountry);
+  const currentTag = btn.dataset.tag || '';
+  fetchStations(currentCountry, currentTag);
 });
 
 // ─── CATCH BUTTON ───
