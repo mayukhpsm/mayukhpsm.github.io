@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-skin="original">
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
@@ -13,18 +13,16 @@
 :root {
   --font-display: 'Special Elite', 'Georgia', serif;
   --font-mono: 'Share Tech Mono', 'Courier New', monospace;
-
-  --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
-  --text-sm: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
-  --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
-  --text-lg: clamp(1.125rem, 1rem + 0.75vw, 1.5rem);
-  --text-xl: clamp(1.5rem, 1.2rem + 1.25vw, 2.25rem);
-
+  --text-xs: clamp(0.7rem, 0.65rem + 0.25vw, 0.85rem);
+  --text-sm: clamp(0.8rem, 0.75rem + 0.3vw, 0.95rem);
+  --text-base: clamp(0.9rem, 0.85rem + 0.25vw, 1.05rem);
+  --text-lg: clamp(1rem, 0.9rem + 0.6vw, 1.35rem);
+  --text-xl: clamp(1.3rem, 1rem + 1vw, 2rem);
   --space-1: 0.25rem; --space-2: 0.5rem; --space-3: 0.75rem;
   --space-4: 1rem; --space-5: 1.25rem; --space-6: 1.5rem;
   --space-8: 2rem; --space-10: 2.5rem; --space-12: 3rem;
 
-  /* Warm walnut radio palette */
+  /* ORIGINAL skin */
   --radio-body: #3b2a1a;
   --radio-body-mid: #4e3822;
   --radio-body-light: #6b4e30;
@@ -38,18 +36,46 @@
   --radio-dial-track: #0d0a06;
   --radio-needle: #e05540;
   --radio-amber: #ffb830;
-  --radio-amber-glow: rgba(255, 184, 48, 0.3);
+  --radio-amber-glow: rgba(255,184,48,0.3);
   --radio-green: #3ddc84;
-  --radio-green-glow: rgba(61, 220, 132, 0.25);
+  --radio-green-glow: rgba(61,220,132,0.25);
   --radio-display-bg: #0c1810;
   --radio-display-text: #3ddc84;
   --radio-knob: #2a1d10;
   --radio-knob-rim: #8a6540;
-
   --color-text: #e8d5b0;
   --color-text-muted: #a08860;
   --color-text-faint: #6a5840;
   --shadow-warm: 0 8px 32px rgba(0,0,0,0.6), 0 2px 8px rgba(0,0,0,0.4);
+  --bg-body: radial-gradient(ellipse at center, #1a1208 0%, #0d0a06 60%, #060402 100%);
+}
+
+/* STEEL skin */
+[data-skin="steel"] {
+  --radio-body: #2a2e35; --radio-body-mid: #353b45; --radio-body-light: #464f5e;
+  --radio-body-highlight: #6a7a8f; --radio-grill: #1a1e24; --radio-grill-line: #0f1215;
+  --radio-chrome: #8ab0c8; --radio-chrome-bright: #b8d4e8; --radio-chrome-shadow: #3a5060;
+  --radio-dial-bg: #12161c; --radio-dial-track: #0a0d10; --radio-needle: #5ab8ff;
+  --radio-amber: #5ab8ff; --radio-amber-glow: rgba(90,184,255,0.3);
+  --radio-green: #5ab8ff; --radio-green-glow: rgba(90,184,255,0.25);
+  --radio-display-bg: #0a1018; --radio-display-text: #5ab8ff;
+  --radio-knob: #1a1e24; --radio-knob-rim: #5a7a90;
+  --color-text: #c8dce8; --color-text-muted: #7090a8; --color-text-faint: #405060;
+  --bg-body: radial-gradient(ellipse at center, #1a1e26 0%, #0d1018 60%, #06080c 100%);
+}
+
+/* PINK skin */
+[data-skin="pink"] {
+  --radio-body: #4a1a2e; --radio-body-mid: #5e2240; --radio-body-light: #7a3055;
+  --radio-body-highlight: #a0506e; --radio-grill: #2e0f1e; --radio-grill-line: #1e0812;
+  --radio-chrome: #e890b8; --radio-chrome-bright: #f8b8d8; --radio-chrome-shadow: #803858;
+  --radio-dial-bg: #1e0c14; --radio-dial-track: #12060c; --radio-needle: #ff6ea8;
+  --radio-amber: #ff90c8; --radio-amber-glow: rgba(255,144,200,0.3);
+  --radio-green: #ff90c8; --radio-green-glow: rgba(255,144,200,0.25);
+  --radio-display-bg: #140810; --radio-display-text: #ff90c8;
+  --radio-knob: #2e0f1e; --radio-knob-rim: #a05070;
+  --color-text: #f0c8dc; --color-text-muted: #c07090; --color-text-faint: #805060;
+  --bg-body: radial-gradient(ellipse at center, #2a0e1c 0%, #160810 60%, #0a0408 100%);
 }
 
 /* ─── BASE ─── */
@@ -58,17 +84,16 @@ html { -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
 body {
   min-height: 100dvh;
   font-family: var(--font-display);
-  background: radial-gradient(ellipse at center, #1a1208 0%, #0d0a06 60%, #060402 100%);
+  background: var(--bg-body);
   color: var(--color-text);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: var(--space-8) var(--space-4);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: var(--space-6) var(--space-4);
   overflow-x: hidden;
+  transition: background 0.5s;
 }
 
-/* ─── DUST/GRAIN OVERLAY ─── */
+/* ─── GRAIN OVERLAY ─── */
 body::before {
   content: '';
   position: fixed; inset: 0; pointer-events: none; z-index: 100;
@@ -76,76 +101,41 @@ body::before {
   opacity: 0.3;
 }
 
-/* ─── RADIO CHASSIS ─── */
+/* ─── CHASSIS ─── */
 .radio-chassis {
-  width: min(760px, 100%);
+  width: min(720px, 100%);
   background: linear-gradient(160deg, var(--radio-body-light) 0%, var(--radio-body) 40%, var(--radio-body-mid) 100%);
   border-radius: 18px 18px 22px 22px;
   box-shadow:
     0 0 0 3px var(--radio-chrome-shadow),
     0 0 0 5px var(--radio-chrome),
-    0 0 0 6px var(--radio-chrome-shadow),
+    0 0 0 7px var(--radio-chrome-shadow),
     0 20px 60px rgba(0,0,0,0.8),
-    0 4px 16px rgba(0,0,0,0.5),
     inset 0 1px 0 rgba(255,255,255,0.08),
     inset 0 -2px 4px rgba(0,0,0,0.4);
-  padding: var(--space-8) var(--space-8) var(--space-10);
+  padding: clamp(1rem,3vw,2rem) clamp(1rem,3vw,2rem) clamp(1.5rem,4vw,2.5rem);
   position: relative;
   user-select: none;
+  transition: background 0.5s, box-shadow 0.5s;
 }
-
-/* Wood grain texture */
 .radio-chassis::before {
-  content: '';
-  position: absolute; inset: 0;
-  border-radius: inherit;
-  background-image: repeating-linear-gradient(
-    90deg,
-    transparent 0px,
-    rgba(255,255,255,0.015) 1px,
-    transparent 2px,
-    transparent 6px
-  );
+  content: ''; position: absolute; inset: 0; border-radius: inherit;
+  background-image: repeating-linear-gradient(90deg, transparent 0px, rgba(255,255,255,0.015) 1px, transparent 2px, transparent 6px);
   pointer-events: none;
 }
 
-/* ─── BRAND BADGE ─── */
-.brand-bar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: var(--space-6);
-  gap: var(--space-3);
-}
-
-.brand-logo {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-}
-
+/* ─── BRAND BAR ─── */
+.brand-bar { display:flex; align-items:center; justify-content:center; margin-bottom: var(--space-5); gap: var(--space-3); }
+.brand-logo { display:flex; align-items:center; gap: var(--space-2); }
 .brand-logo svg { color: var(--radio-chrome); }
+.brand-name { font-family: var(--font-display); font-size: var(--text-lg); color: var(--radio-chrome); letter-spacing: 0.18em; text-transform: uppercase; text-shadow: 0 0 12px var(--radio-amber-glow); }
+.brand-line { flex:1; height:1px; background: linear-gradient(90deg, transparent, var(--radio-chrome-shadow), var(--radio-chrome), var(--radio-chrome-shadow), transparent); }
 
-.brand-name {
-  font-family: var(--font-display);
-  font-size: var(--text-lg);
-  color: var(--radio-chrome);
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  text-shadow: 0 0 12px var(--radio-amber-glow);
-}
-
-.brand-line {
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--radio-chrome-shadow), var(--radio-chrome), var(--radio-chrome-shadow), transparent);
-}
-
-/* ─── MAIN LAYOUT ─── */
+/* ─── MAIN FACE ─── */
 .radio-face {
   display: grid;
-  grid-template-columns: 1fr 220px;
-  gap: var(--space-6);
+  grid-template-columns: 1fr minmax(180px, 220px);
+  gap: clamp(0.75rem,2vw,1.5rem);
   align-items: start;
 }
 
@@ -154,592 +144,183 @@ body::before {
   background: var(--radio-grill);
   border-radius: 10px;
   padding: var(--space-3);
-  box-shadow:
-    inset 0 2px 8px rgba(0,0,0,0.8),
-    inset 0 -1px 2px rgba(255,255,255,0.03),
-    0 1px 0 rgba(255,255,255,0.06);
+  box-shadow: inset 0 2px 8px rgba(0,0,0,0.8), inset 0 -1px 2px rgba(255,255,255,0.03), 0 1px 0 rgba(255,255,255,0.06);
   aspect-ratio: 1.2;
-  position: relative;
   overflow: hidden;
 }
-
-.grill-dots {
-  display: grid;
-  grid-template-columns: repeat(14, 1fr);
-  gap: 5px;
-  height: 100%;
-  padding: var(--space-2);
-}
-
-.grill-dot {
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: var(--radio-grill-line);
-  box-shadow: inset 0 1px 2px rgba(0,0,0,0.9), 0 0.5px 0 rgba(255,255,255,0.03);
-  transition: background 0.3s, box-shadow 0.3s;
-}
-
-.grill-dot.pulse {
-  animation: dotPulse 0.1s ease-out forwards;
-}
-
+.grill-dots { display:grid; grid-template-columns:repeat(14,1fr); gap:5px; height:100%; padding: var(--space-2); }
+.grill-dot { aspect-ratio:1; border-radius:50%; background:var(--radio-grill-line); box-shadow:inset 0 1px 2px rgba(0,0,0,0.9); transition:background 0.3s; }
+.grill-dot.pulse { animation:dotPulse 0.1s ease-out forwards; }
 @keyframes dotPulse {
-  0% { background: var(--radio-grill-line); }
-  50% { background: rgba(255,184,48,0.25); box-shadow: 0 0 4px var(--radio-amber-glow); }
-  100% { background: var(--radio-grill-line); }
+  0% { background:var(--radio-grill-line); }
+  50% { background:rgba(255,184,48,0.25); box-shadow:0 0 4px var(--radio-amber-glow); }
+  100% { background:var(--radio-grill-line); }
 }
 
 /* ─── RIGHT PANEL ─── */
-.right-panel {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
-}
+.right-panel { display:flex; flex-direction:column; gap: var(--space-3); }
 
-/* ─── DISPLAY SCREEN ─── */
+/* ─── DISPLAY ─── */
 .display-screen {
   background: var(--radio-display-bg);
   border-radius: 8px;
-  padding: var(--space-3) var(--space-4);
-  box-shadow:
-    inset 0 2px 6px rgba(0,0,0,0.8),
-    inset 0 0 20px rgba(0,0,0,0.4),
-    0 0 8px rgba(61,220,132,0.08);
+  padding: var(--space-3) var(--space-3);
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.8), inset 0 0 20px rgba(0,0,0,0.4), 0 0 8px rgba(61,220,132,0.08);
   border: 1px solid rgba(61,220,132,0.15);
-  position: relative;
-  overflow: hidden;
-  min-height: 80px;
+  position: relative; overflow: hidden; min-height: 75px;
 }
-
-/* CRT scanline effect */
 .display-screen::after {
-  content: '';
-  position: absolute; inset: 0;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent 0px,
-    transparent 2px,
-    rgba(0,0,0,0.08) 2px,
-    rgba(0,0,0,0.08) 4px
-  );
-  pointer-events: none;
+  content:''; position:absolute; inset:0;
+  background:repeating-linear-gradient(0deg,transparent 0px,transparent 2px,rgba(0,0,0,0.08) 2px,rgba(0,0,0,0.08) 4px);
+  pointer-events:none;
 }
+.display-freq { font-family:var(--font-mono); font-size:var(--text-xl); color:var(--radio-display-text); text-shadow:0 0 10px rgba(61,220,132,0.8),0 0 20px rgba(61,220,132,0.4); letter-spacing:0.1em; line-height:1; }
+.display-station { font-family:var(--font-mono); font-size:var(--text-xs); color:rgba(61,220,132,0.7); margin-top: var(--space-1); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:100%; }
+.display-country { font-family:var(--font-mono); font-size:var(--text-xs); color:rgba(61,220,132,0.5); margin-top:2px; }
+.signal-bar { display:flex; gap:3px; margin-top: var(--space-2); align-items:flex-end; }
+.signal-bar span { width:5px; background:rgba(61,220,132,0.2); border-radius:1px; transition:background 0.2s; }
+.signal-bar span:nth-child(1){height:4px} .signal-bar span:nth-child(2){height:7px} .signal-bar span:nth-child(3){height:10px} .signal-bar span:nth-child(4){height:13px} .signal-bar span:nth-child(5){height:16px}
+.signal-bar.active span { background:var(--radio-display-text); box-shadow:0 0 4px rgba(61,220,132,0.6); }
+.signal-bar.weak span:nth-child(n+4) { background:rgba(61,220,132,0.2); box-shadow:none; }
 
-.display-freq {
-  font-family: var(--font-mono);
-  font-size: var(--text-xl);
-  color: var(--radio-display-text);
-  text-shadow: 0 0 10px rgba(61,220,132,0.8), 0 0 20px rgba(61,220,132,0.4);
-  letter-spacing: 0.1em;
-  line-height: 1;
-}
+/* ─── FREQ DIAL ─── */
+.freq-dial-wrapper { background:linear-gradient(180deg,#1a1208 0%,#0d0a06 100%); border-radius:8px; padding: var(--space-3); box-shadow:inset 0 2px 8px rgba(0,0,0,0.8); border:1px solid rgba(255,184,48,0.1); }
+.freq-dial-label { font-family:var(--font-mono); font-size:var(--text-xs); color:var(--radio-amber); text-align:center; margin-bottom: var(--space-2); letter-spacing:0.12em; text-shadow:0 0 8px var(--radio-amber-glow); text-transform:uppercase; }
+.freq-scale { position:relative; height:30px; background:linear-gradient(180deg,#2a2010 0%,#1a1408 100%); border-radius:4px; overflow:hidden; border:1px solid rgba(255,184,48,0.15); }
+.freq-scale-inner { position:absolute; top:0; left:0; bottom:0; width:100%; display:flex; align-items:center; font-family:var(--font-mono); font-size:9px; color:var(--radio-amber); }
+.freq-band-label { position:absolute; top:2px; transform:translateX(-50%); font-size:8px; color:rgba(255,184,48,0.7); font-family:var(--font-mono); white-space:nowrap; }
+.freq-needle-container { position:absolute; inset:0; pointer-events:none; }
+.freq-needle-line { position:absolute; top:0; bottom:0; width:2px; background:linear-gradient(180deg,var(--radio-needle),rgba(224,85,64,0.3)); transform:translateX(-50%); left:50%; box-shadow:0 0 6px rgba(224,85,64,0.8); transition:left 0.1s ease-out; }
 
-.display-station {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  color: rgba(61,220,132,0.7);
-  margin-top: var(--space-1);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 100%;
-  text-shadow: 0 0 6px rgba(61,220,132,0.4);
-}
-
-.display-country {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  color: rgba(61,220,132,0.5);
-  margin-top: 2px;
-  text-shadow: 0 0 4px rgba(61,220,132,0.3);
-}
-
-.signal-bar {
-  display: flex;
-  gap: 3px;
-  margin-top: var(--space-2);
-  align-items: flex-end;
-}
-
-.signal-bar span {
-  width: 5px;
-  background: rgba(61,220,132,0.2);
-  border-radius: 1px;
-  transition: background 0.2s, height 0.2s;
-}
-.signal-bar span:nth-child(1) { height: 4px; }
-.signal-bar span:nth-child(2) { height: 7px; }
-.signal-bar span:nth-child(3) { height: 10px; }
-.signal-bar span:nth-child(4) { height: 13px; }
-.signal-bar span:nth-child(5) { height: 16px; }
-
-.signal-bar.active span { background: var(--radio-display-text); box-shadow: 0 0 4px rgba(61,220,132,0.6); }
-.signal-bar.weak span:nth-child(n+4) { background: rgba(61,220,132,0.2); box-shadow: none; }
-
-/* ─── FREQUENCY BAND DIAL ─── */
-.freq-dial-wrapper {
-  background: linear-gradient(180deg, #1a1208 0%, #0d0a06 100%);
-  border-radius: 8px;
-  padding: var(--space-3);
-  box-shadow: inset 0 2px 8px rgba(0,0,0,0.8);
-  border: 1px solid rgba(255,184,48,0.1);
-}
-
-.freq-dial-label {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  color: var(--radio-amber);
-  text-align: center;
-  margin-bottom: var(--space-2);
-  letter-spacing: 0.12em;
-  text-shadow: 0 0 8px var(--radio-amber-glow);
-  text-transform: uppercase;
-}
-
-.freq-scale {
-  position: relative;
-  height: 32px;
-  background: linear-gradient(180deg, #2a2010 0%, #1a1408 100%);
-  border-radius: 4px;
-  overflow: hidden;
-  border: 1px solid rgba(255,184,48,0.15);
-}
-
-.freq-scale-inner {
-  position: absolute;
-  top: 0; left: 0; bottom: 0;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  font-family: var(--font-mono);
-  font-size: 9px;
-  color: var(--radio-amber);
-}
-
-.freq-band-label {
-  position: absolute;
-  top: 2px;
-  transform: translateX(-50%);
-  font-size: 8px;
-  color: rgba(255,184,48,0.7);
-  font-family: var(--font-mono);
-  white-space: nowrap;
-}
-
-.freq-needle-container {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-
-.freq-needle-line {
-  position: absolute;
-  top: 0; bottom: 0;
-  width: 2px;
-  background: linear-gradient(180deg, var(--radio-needle), rgba(224,85,64,0.3));
-  transform: translateX(-50%);
-  left: 50%;
-  box-shadow: 0 0 6px rgba(224,85,64,0.8);
-  transition: left 0.1s ease-out;
-}
-
-/* ─── KNOB SECTION ─── */
-.controls-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-4);
-}
-
-.knob-group {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-2);
-}
-
-.knob-label {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  color: var(--color-text-muted);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
-.knob-wrapper {
-  position: relative;
-  width: 64px;
-  height: 64px;
-}
-
+/* ─── KNOBS ─── */
+.controls-row { display:grid; grid-template-columns:1fr 1fr; gap: var(--space-3); }
+.knob-group { display:flex; flex-direction:column; align-items:center; gap: var(--space-2); }
+.knob-label { font-family:var(--font-mono); font-size:var(--text-xs); color:var(--color-text-muted); letter-spacing:0.1em; text-transform:uppercase; }
+.knob-wrapper { position:relative; width:clamp(48px,7vw,64px); height:clamp(48px,7vw,64px); }
 .knob {
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 38% 30%, #8a6540, #4e3822 40%, var(--radio-knob) 70%);
-  border: 3px solid var(--radio-knob-rim);
-  cursor: grab;
-  position: relative;
-  box-shadow:
-    0 4px 12px rgba(0,0,0,0.7),
-    0 1px 0 rgba(255,255,255,0.1),
-    inset 0 1px 0 rgba(255,255,255,0.15),
-    inset 0 -2px 4px rgba(0,0,0,0.5);
-  transition: box-shadow 0.1s;
-  touch-action: none;
+  width:100%; height:100%; border-radius:50%;
+  background:radial-gradient(circle at 38% 30%, #8a6540, #4e3822 40%, var(--radio-knob) 70%);
+  border:3px solid var(--radio-knob-rim);
+  cursor:grab; position:relative;
+  box-shadow:0 4px 12px rgba(0,0,0,0.7),0 1px 0 rgba(255,255,255,0.1),inset 0 1px 0 rgba(255,255,255,0.15),inset 0 -2px 4px rgba(0,0,0,0.5);
+  transition:box-shadow 0.1s; touch-action:none;
 }
-
-.knob:active { cursor: grabbing; box-shadow: 0 2px 8px rgba(0,0,0,0.8), inset 0 2px 4px rgba(0,0,0,0.5); }
-
-/* Knob tick marks */
-.knob::before {
-  content: '';
-  position: absolute;
-  top: 5px; left: 50%;
-  transform: translateX(-50%);
-  width: 3px; height: 10px;
-  background: var(--radio-chrome);
-  border-radius: 2px;
-  box-shadow: 0 0 4px rgba(200,169,106,0.6);
-}
-
-.knob-surround {
-  position: absolute;
-  inset: -8px;
-  border-radius: 50%;
-  border: 2px solid rgba(200,169,106,0.2);
-  pointer-events: none;
-}
-
-/* Graduated ticks around knob */
-.knob-ticks {
-  position: absolute;
-  inset: -14px;
-  border-radius: 50%;
-  pointer-events: none;
-}
+.knob:active { cursor:grabbing; }
+.knob::before { content:''; position:absolute; top:5px; left:50%; transform:translateX(-50%); width:3px; height:10px; background:var(--radio-chrome); border-radius:2px; box-shadow:0 0 4px rgba(200,169,106,0.6); }
+.knob-surround { position:absolute; inset:-8px; border-radius:50%; border:2px solid rgba(200,169,106,0.2); pointer-events:none; }
+.knob.volume { background:radial-gradient(circle at 38% 30%, #a07840, #5a3820 40%, #2a1d10 70%); }
 
 /* ─── BOTTOM CONTROLS ─── */
-.bottom-controls {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: var(--space-6);
-  gap: var(--space-4);
-  flex-wrap: wrap;
-}
+.bottom-controls { display:flex; align-items:center; justify-content:space-between; margin-top: var(--space-5); gap: var(--space-3); flex-wrap:wrap; }
+.power-indicator { display:flex; align-items:center; gap: var(--space-2); }
+.power-dot { width:10px; height:10px; border-radius:50%; background:#1a3a1a; box-shadow:inset 0 1px 2px rgba(0,0,0,0.5); transition:all 0.3s; }
+.power-dot.on { background:var(--radio-green); box-shadow:0 0 8px var(--radio-green-glow),0 0 16px var(--radio-green-glow); animation:powerPulse 2s ease-in-out infinite; }
+@keyframes powerPulse { 0%,100%{box-shadow:0 0 8px var(--radio-green-glow),0 0 16px var(--radio-green-glow);} 50%{box-shadow:0 0 12px rgba(61,220,132,0.5),0 0 24px rgba(61,220,132,0.3);} }
+.power-label { font-family:var(--font-mono); font-size:var(--text-xs); color:var(--color-text-muted); letter-spacing:0.1em; }
+
+/* ─── CATCH BUTTON WRAPPER ─── */
+.catch-btn-wrap { position:relative; display:inline-flex; align-items:center; gap:10px; }
 
 /* ─── CATCH BUTTON ─── */
 .catch-btn {
-  background: linear-gradient(180deg, #c8a96a 0%, #8a6530 40%, #5a3e18 100%);
-  color: #1a1208;
-  font-family: var(--font-display);
-  font-size: var(--text-sm);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  padding: var(--space-3) var(--space-8);
-  border-radius: 30px;
-  border: none;
-  cursor: pointer;
-  box-shadow:
-    0 4px 12px rgba(0,0,0,0.5),
-    0 1px 0 rgba(255,255,255,0.2),
-    inset 0 1px 0 rgba(255,255,255,0.3),
-    inset 0 -2px 4px rgba(0,0,0,0.2);
-  transition: all 0.15s ease;
-  position: relative;
-  overflow: hidden;
-  min-height: 44px;
+  background:linear-gradient(180deg,#c8a96a 0%,#8a6530 40%,#5a3e18 100%);
+  color:#1a1208; font-family:var(--font-display); font-size:var(--text-sm);
+  letter-spacing:0.12em; text-transform:uppercase;
+  padding: var(--space-2) var(--space-6);
+  border-radius:30px; border:none; cursor:pointer;
+  box-shadow:0 4px 12px rgba(0,0,0,0.5),0 1px 0 rgba(255,255,255,0.2),inset 0 1px 0 rgba(255,255,255,0.3),inset 0 -2px 4px rgba(0,0,0,0.2);
+  transition:all 0.15s ease; position:relative; overflow:hidden; min-height:40px; white-space:nowrap;
 }
+.catch-btn::before { content:''; position:absolute; inset:0; background:linear-gradient(180deg,rgba(255,255,255,0.2) 0%,transparent 50%); border-radius:inherit; }
+.catch-btn:hover { background:linear-gradient(180deg,#e8cc8a 0%,#a07840 40%,#6a4a20 100%); transform:translateY(-1px); box-shadow:0 6px 18px rgba(0,0,0,0.5),0 0 20px var(--radio-amber-glow); }
+.catch-btn:active { transform:translateY(1px); }
 
-.catch-btn::before {
-  content: '';
-  position: absolute; inset: 0;
-  background: linear-gradient(180deg, rgba(255,255,255,0.2) 0%, transparent 50%);
-  border-radius: inherit;
+/* ─── BLINKING HINT ─── */
+.catch-hint {
+  display:inline-flex; align-items:center; gap:5px;
+  font-family:var(--font-mono); font-size:clamp(0.55rem,1.2vw,0.7rem);
+  color:var(--radio-amber); white-space:nowrap; pointer-events:none;
+  animation:hintBlink 1.4s ease-in-out infinite;
 }
+.catch-hint .hint-arrow { font-size:1em; animation:arrowBounce 1.4s ease-in-out infinite; }
+@keyframes hintBlink { 0%,100%{opacity:1} 50%{opacity:0.1} }
+@keyframes arrowBounce { 0%,100%{transform:translateX(0)} 50%{transform:translateX(-4px)} }
+.hint-hidden { display:none !important; }
 
-.catch-btn:hover {
-  background: linear-gradient(180deg, #e8cc8a 0%, #a07840 40%, #6a4a20 100%);
-  box-shadow: 0 6px 18px rgba(0,0,0,0.5), 0 0 20px var(--radio-amber-glow);
-  transform: translateY(-1px);
-}
-
-.catch-btn:active {
-  transform: translateY(1px);
-  box-shadow: 0 2px 6px rgba(0,0,0,0.5), inset 0 2px 4px rgba(0,0,0,0.2);
-}
-
-/* ─── POWER INDICATOR ─── */
-.power-indicator {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-}
-
-.power-dot {
-  width: 10px; height: 10px;
-  border-radius: 50%;
-  background: #1a3a1a;
-  box-shadow: inset 0 1px 2px rgba(0,0,0,0.5);
-  transition: all 0.3s;
-}
-
-.power-dot.on {
-  background: var(--radio-green);
-  box-shadow: 0 0 8px var(--radio-green-glow), 0 0 16px var(--radio-green-glow);
-  animation: powerPulse 2s ease-in-out infinite;
-}
-
-@keyframes powerPulse {
-  0%, 100% { box-shadow: 0 0 8px var(--radio-green-glow), 0 0 16px var(--radio-green-glow); }
-  50% { box-shadow: 0 0 12px rgba(61,220,132,0.5), 0 0 24px rgba(61,220,132,0.3); }
-}
-
-.power-label {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  color: var(--color-text-muted);
-  letter-spacing: 0.1em;
-}
-
-/* ─── STATION LIST ─── */
-.station-ticker {
-  background: linear-gradient(180deg, rgba(10,8,4,0.9), rgba(20,15,8,0.9));
-  border-top: 1px solid rgba(200,169,106,0.2);
-  border-radius: 0 0 16px 16px;
-  margin: var(--space-4) calc(-1 * var(--space-8)) calc(-1 * var(--space-10));
-  padding: var(--space-3) var(--space-8);
-  display: flex;
-  align-items: center;
-  gap: var(--space-4);
-  overflow: hidden;
-}
-
-.ticker-label {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  color: var(--radio-amber);
-  white-space: nowrap;
-  letter-spacing: 0.1em;
-  text-shadow: 0 0 6px var(--radio-amber-glow);
-}
-
-.ticker-scroll {
-  overflow: hidden;
-  flex: 1;
-  position: relative;
-}
-
-.ticker-inner {
-  display: flex;
-  gap: var(--space-8);
-  animation: tickerScroll 25s linear infinite;
-  white-space: nowrap;
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  color: var(--color-text-muted);
-}
-
-@keyframes tickerScroll {
-  0% { transform: translateX(100%); }
-  100% { transform: translateX(-100%); }
-}
-
-/* ─── STATION POPUP ─── */
+/* ─── STATIONS PANEL ─── */
 .stations-panel {
-  position: absolute;
-  bottom: calc(100% + 12px);
-  left: 50%;
-  transform: translateX(-50%) translateY(10px);
-  width: min(680px, 90vw);
-  background: linear-gradient(160deg, #2a1d10 0%, #1a1208 100%);
-  border-radius: 12px;
-  border: 1px solid rgba(200,169,106,0.3);
-  box-shadow: 0 20px 60px rgba(0,0,0,0.8), 0 0 0 1px rgba(200,169,106,0.1);
-  padding: var(--space-4);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.2s, transform 0.2s;
-  z-index: 200;
-  max-height: 560px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
+  position:absolute; bottom:calc(100% + 12px); left:50%;
+  transform:translateX(-50%) translateY(10px);
+  width:min(660px,90vw);
+  background:linear-gradient(160deg,#2a1d10 0%,#1a1208 100%);
+  border-radius:12px; border:1px solid rgba(200,169,106,0.3);
+  box-shadow:0 20px 60px rgba(0,0,0,0.8),0 0 0 1px rgba(200,169,106,0.1);
+  padding: var(--space-4); opacity:0; pointer-events:none;
+  transition:opacity 0.2s,transform 0.2s; z-index:200;
+  max-height:min(560px,70vh); overflow:hidden; display:flex; flex-direction:column;
 }
+.stations-panel.visible { opacity:1; pointer-events:all; transform:translateX(-50%) translateY(0); }
+.stations-panel-header { display:flex; align-items:center; justify-content:space-between; margin-bottom: var(--space-3); padding-bottom: var(--space-3); border-bottom:1px solid rgba(200,169,106,0.2); }
+.stations-panel-title { font-family:var(--font-display); font-size:var(--text-base); color:var(--radio-chrome); letter-spacing:0.1em; }
+.stations-close { background:none; border:none; cursor:pointer; color:var(--color-text-muted); font-size:var(--text-lg); padding: var(--space-1); line-height:1; transition:color 0.15s; }
+.stations-close:hover { color:var(--radio-chrome); }
 
-.stations-panel.visible {
-  opacity: 1;
-  pointer-events: all;
-  transform: translateX(-50%) translateY(0);
+/* ─── COUNTRY FILTER ─── */
+.filter-group-label { width:100%; font-family:var(--font-mono); font-size:8px; letter-spacing:0.15em; color:var(--radio-amber); text-shadow:0 0 6px var(--radio-amber-glow); padding: var(--space-2) var(--space-1) var(--space-1); border-top:1px solid rgba(255,184,48,0.15); margin-top: var(--space-1); text-transform:uppercase; pointer-events:none; }
+.country-filter { display:flex; gap: var(--space-2); flex-wrap:wrap; margin-bottom: var(--space-3); max-height:160px; overflow-y:auto; padding-right: var(--space-1); scrollbar-width:thin; scrollbar-color:var(--radio-chrome-shadow) transparent; flex-shrink:0; }
+.country-filter::-webkit-scrollbar{width:4px} .country-filter::-webkit-scrollbar-thumb{background:var(--radio-chrome-shadow);border-radius:2px}
+.country-btn { background:rgba(200,169,106,0.1); border:1px solid rgba(200,169,106,0.2); border-radius:20px; padding: var(--space-1) var(--space-3); font-family:var(--font-mono); font-size:var(--text-xs); color:var(--color-text-muted); cursor:pointer; transition:all 0.15s; min-height:28px; }
+.country-btn:hover,.country-btn.active { background:rgba(200,169,106,0.25); color:var(--radio-chrome); border-color:rgba(200,169,106,0.5); }
+.air-btn { border-color:var(--radio-amber) !important; color:var(--radio-amber) !important; }
+.air-btn:hover { background:var(--radio-amber) !important; color:var(--radio-grill) !important; }
+
+/* ─── STATIONS LIST ─── */
+.stations-list { overflow-y:auto; flex:1 1 auto; min-height:120px; max-height:min(280px,40vh); display:grid; grid-template-columns:1fr 1fr; gap: var(--space-2); scrollbar-width:thin; scrollbar-color:rgba(200,169,106,0.3) transparent; }
+.stations-list::-webkit-scrollbar{width:4px} .stations-list::-webkit-scrollbar-thumb{background:rgba(200,169,106,0.3);border-radius:2px}
+.station-card { background:rgba(255,255,255,0.03); border:1px solid rgba(200,169,106,0.1); border-radius:8px; padding: var(--space-2) var(--space-3); cursor:pointer; transition:all 0.15s; display:flex; flex-direction:column; gap:2px; }
+.station-card:hover { background:rgba(200,169,106,0.1); border-color:rgba(200,169,106,0.3); }
+.station-card.playing { background:rgba(61,220,132,0.1); border-color:rgba(61,220,132,0.3); }
+.sc-name { font-family:var(--font-mono); font-size:var(--text-xs); color:var(--color-text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.sc-meta { font-size:10px; color:var(--color-text-faint); font-family:var(--font-mono); }
+.loading-msg { font-family:var(--font-mono); font-size:var(--text-xs); color:var(--radio-amber); text-align:center; padding: var(--space-6); grid-column:1/-1; animation:blink 1s step-end infinite; }
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+
+/* ─── STATION TICKER ─── */
+.station-ticker { background:linear-gradient(180deg,rgba(10,8,4,0.9),rgba(20,15,8,0.9)); border-top:1px solid rgba(200,169,106,0.2); border-radius:0 0 16px 16px; margin:var(--space-4) calc(-1*clamp(1rem,3vw,2rem)) calc(-1*clamp(1.5rem,4vw,2.5rem)); padding: var(--space-3) clamp(1rem,3vw,2rem); display:flex; align-items:center; gap: var(--space-4); overflow:hidden; }
+.ticker-label { font-family:var(--font-mono); font-size:var(--text-xs); color:var(--radio-amber); white-space:nowrap; letter-spacing:0.1em; text-shadow:0 0 6px var(--radio-amber-glow); }
+.ticker-scroll { overflow:hidden; flex:1; position:relative; }
+.ticker-inner { display:flex; gap: var(--space-8); animation:tickerScroll 25s linear infinite; white-space:nowrap; font-family:var(--font-mono); font-size:var(--text-xs); color:var(--color-text-muted); }
+@keyframes tickerScroll{0%{transform:translateX(100%)}100%{transform:translateX(-100%)}}
+
+/* ─── SKIN TOGGLE ─── */
+.skin-bar {
+  display:flex; align-items:center; justify-content:center;
+  gap:clamp(4px,1vw,10px); margin-top:clamp(6px,1.5vw,12px);
+  flex-wrap:wrap;
 }
-
-.stations-panel-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: var(--space-3);
-  padding-bottom: var(--space-3);
-  border-bottom: 1px solid rgba(200,169,106,0.2);
+.skin-label { font-family:var(--font-mono); font-size:clamp(0.55rem,1.2vw,0.7rem); color:var(--color-text-muted); letter-spacing:0.1em; white-space:nowrap; }
+.skin-btn {
+  background:rgba(200,169,106,0.08); border:1px solid rgba(200,169,106,0.25);
+  color:var(--color-text-muted); font-family:var(--font-mono);
+  font-size:clamp(0.55rem,1.2vw,0.7rem); padding:4px 12px; border-radius:4px;
+  cursor:pointer; letter-spacing:0.08em; transition:all 0.25s; white-space:nowrap;
 }
-
-.stations-panel-title {
-  font-family: var(--font-display);
-  font-size: var(--text-base);
-  color: var(--radio-chrome);
-  letter-spacing: 0.1em;
-}
-
-.stations-close {
-  background: none; border: none; cursor: pointer;
-  color: var(--color-text-muted);
-  font-size: var(--text-lg);
-  padding: var(--space-1);
-  line-height: 1;
-  transition: color 0.15s;
-}
-.stations-close:hover { color: var(--radio-chrome); }
-
-.filter-group-label {
-  width: 100%;
-  font-family: var(--font-mono);
-  font-size: 8px;
-  letter-spacing: 0.15em;
-  color: var(--radio-amber);
-  text-shadow: 0 0 6px var(--radio-amber-glow);
-  padding: var(--space-2) var(--space-1) var(--space-1);
-  border-top: 1px solid rgba(255,184,48,0.15);
-  margin-top: var(--space-1);
-  text-transform: uppercase;
-  pointer-events: none;
-}
-.country-filter {
-  display: flex;
-  gap: var(--space-2);
-  flex-wrap: wrap;
-  margin-bottom: var(--space-3);
-  max-height: 160px;
-  overflow-y: auto;
-  padding-right: var(--space-1);
-  scrollbar-width: thin;
-  scrollbar-color: var(--radio-chrome-shadow) transparent;
-  flex-shrink: 0;
-}
-.country-filter::-webkit-scrollbar { width: 4px; }
-.country-filter::-webkit-scrollbar-track { background: transparent; }
-.country-filter::-webkit-scrollbar-thumb { background: var(--radio-chrome-shadow); border-radius: 2px; }
-
-.country-btn {
-  background: rgba(200,169,106,0.1);
-  border: 1px solid rgba(200,169,106,0.2);
-  border-radius: 20px;
-  padding: var(--space-1) var(--space-3);
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  color: var(--color-text-muted);
-  cursor: pointer;
-  transition: all 0.15s;
-  min-height: 28px;
-}
-
-.country-btn:hover, .country-btn.active {
-  background: rgba(200,169,106,0.25);
-  color: var(--radio-chrome);
-  border-color: rgba(200,169,106,0.5);
-}
-
-.stations-list {
-  overflow-y: auto;
-  flex: 1 1 auto;
-  min-height: 120px;
-  max-height: 280px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-2);
-  scrollbar-width: thin;
-  scrollbar-color: rgba(200,169,106,0.3) transparent;
-}
-.stations-list::-webkit-scrollbar { width: 4px; }
-.stations-list::-webkit-scrollbar-track { background: transparent; }
-.stations-list::-webkit-scrollbar-thumb { background: rgba(200,169,106,0.3); border-radius: 2px; }
-
-.station-card {
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(200,169,106,0.1);
-  border-radius: 8px;
-  padding: var(--space-2) var(--space-3);
-  cursor: pointer;
-  transition: all 0.15s;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.station-card:hover {
-  background: rgba(200,169,106,0.1);
-  border-color: rgba(200,169,106,0.3);
-}
-
-.station-card.playing {
-  background: rgba(61,220,132,0.1);
-  border-color: rgba(61,220,132,0.3);
-}
-
-.sc-name {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  color: var(--color-text);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.sc-meta {
-  font-size: 10px;
-  color: var(--color-text-faint);
-  font-family: var(--font-mono);
-}
-
-.loading-msg {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  color: var(--radio-amber);
-  text-align: center;
-  padding: var(--space-6);
-  grid-column: 1/-1;
-  animation: blink 1s step-end infinite;
-}
-
-@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-
-/* ─── VOLUME KNOB SPECIAL ─── */
-.knob.volume { background: radial-gradient(circle at 38% 30%, #a07840, #5a3820 40%, #2a1d10 70%); }
+.skin-btn:hover { border-color:var(--radio-amber); color:var(--radio-amber); background:rgba(255,184,48,0.1); }
+.skin-btn.active { border-color:var(--radio-amber); color:var(--radio-amber); background:rgba(255,184,48,0.15); font-weight:bold; }
 
 /* ─── RESPONSIVE ─── */
-@media (max-width: 580px) {
-  .radio-face {
-    grid-template-columns: 1fr;
-  }
-  .speaker-grill {
-    aspect-ratio: 2;
-  }
-  .bottom-controls {
-    justify-content: center;
-  }
-  .stations-list {
-    grid-template-columns: 1fr;
-  }
+@media (max-width:560px) {
+  .radio-face { grid-template-columns:1fr; }
+  .speaker-grill { aspect-ratio:2.5; }
+  .bottom-controls { justify-content:center; }
+  .stations-list { grid-template-columns:1fr; }
+  .stations-panel { bottom:auto; top:calc(100% + 8px); max-height:min(480px,60vh); }
+  .catch-hint { font-size:0.6rem; }
 }
-
-/* ─── AIR / CUSTOM DIRECT STREAM BUTTONS ─── */
-.air-btn {
-  border-color: var(--radio-amber) !important;
-  color: var(--radio-amber) !important;
+@media (min-width:561px) and (max-width:768px) {
+  .radio-face { grid-template-columns:1fr minmax(160px,200px); }
+  .stations-panel { width:min(580px,92vw); }
 }
-.air-btn:hover {
-  background: var(--radio-amber) !important;
-  color: var(--radio-grill) !important;
-}
-
 </style>
 </head>
 <body>
@@ -749,9 +330,8 @@ body::before {
   <div class="brand-bar">
     <div class="brand-line"></div>
     <div class="brand-logo">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-label="World Radio">
-        <circle cx="12" cy="12" r="10"/>
-        <ellipse cx="12" cy="12" rx="4" ry="10"/>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <circle cx="12" cy="12" r="10"/><ellipse cx="12" cy="12" rx="4" ry="10"/>
         <path d="M2 12h20M4.93 7h14.14M4.93 17h14.14"/>
       </svg>
       <span class="brand-name">Mayukh's Radio</span>
@@ -761,50 +341,28 @@ body::before {
 
   <!-- Main Face -->
   <div class="radio-face">
-    <!-- Speaker Grill -->
-    <div class="speaker-grill" id="speakerGrill">
-      <div class="grill-dots" id="grillDots"></div>
-    </div>
-
-    <!-- Right Panel -->
+    <div class="speaker-grill"><div class="grill-dots" id="grillDots"></div></div>
     <div class="right-panel">
-      <!-- Display Screen -->
       <div class="display-screen">
         <div class="display-freq" id="displayFreq">FM 87.5</div>
         <div class="display-station" id="displayStation">— SEARCHING —</div>
         <div class="display-country" id="displayCountry">TUNE TO A STATION</div>
-        <div class="signal-bar" id="signalBar">
-          <span></span><span></span><span></span><span></span><span></span>
-        </div>
+        <div class="signal-bar" id="signalBar"><span></span><span></span><span></span><span></span><span></span></div>
       </div>
-
-      <!-- Frequency Scale -->
       <div class="freq-dial-wrapper">
         <div class="freq-dial-label">Frequency Band</div>
         <div class="freq-scale">
-          <div class="freq-scale-inner">
-            <!-- Labels positioned by JS -->
-          </div>
-          <div class="freq-needle-container">
-            <div class="freq-needle-line" id="freqNeedle"></div>
-          </div>
+          <div class="freq-scale-inner"></div>
+          <div class="freq-needle-container"><div class="freq-needle-line" id="freqNeedle"></div></div>
         </div>
       </div>
-
-      <!-- Knobs -->
       <div class="controls-row">
         <div class="knob-group">
-          <div class="knob-wrapper">
-            <div class="knob" id="tuneKnob" role="slider" aria-label="Tune frequency" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
-            <div class="knob-surround"></div>
-          </div>
+          <div class="knob-wrapper"><div class="knob" id="tuneKnob" role="slider" aria-label="Tune"></div><div class="knob-surround"></div></div>
           <span class="knob-label">Tune</span>
         </div>
         <div class="knob-group">
-          <div class="knob-wrapper">
-            <div class="knob volume" id="volKnob" role="slider" aria-label="Volume" aria-valuemin="0" aria-valuemax="100" aria-valuenow="80"></div>
-            <div class="knob-surround"></div>
-          </div>
+          <div class="knob-wrapper"><div class="knob volume" id="volKnob" role="slider" aria-label="Volume"></div><div class="knob-surround"></div></div>
           <span class="knob-label">Volume</span>
         </div>
       </div>
@@ -818,17 +376,17 @@ body::before {
       <span class="power-label" id="powerLabel">STANDBY</span>
     </div>
 
-    <div style="position: relative;">
-      <button class="catch-btn" id="catchBtn" aria-label="Catch world radio frequencies">
-        ⊕ Catch Frequency
-      </button>
+    <div class="catch-btn-wrap">
+      <button class="catch-btn" id="catchBtn">⊕ Catch Frequency</button>
+      <span class="catch-hint" id="catchHint"><span class="hint-arrow">👆</span> press to explore channels</span>
       <!-- Stations Panel -->
       <div class="stations-panel" id="stationsPanel">
         <div class="stations-panel-header">
           <span class="stations-panel-title">World Stations</span>
-          <button class="stations-close" id="stationsClose" aria-label="Close stations">✕</button>
+          <button class="stations-close" id="stationsClose">✕</button>
         </div>
         <div class="country-filter" id="countryFilter">
+
           <div class="filter-group-label">🌐 GLOBAL</div>
           <button class="country-btn active" data-country="all">All</button>
           <button class="country-btn" data-country="US">USA</button>
@@ -945,22 +503,22 @@ body::before {
           <button class="country-btn air-btn" data-custom-url="https://icecast-vgtrk.cdnvideo.ru/nrj_mp3_128kbps" data-station-name="NRJ Russia" data-station-country="Russia">NRJ Russia</button>
           <button class="country-btn air-btn" data-custom-url="https://icecast-vgtrk.cdnvideo.ru/vestifm_mp3_128kbps" data-station-name="Vesti FM" data-station-country="Russia">Vesti FM</button>
 
-          <div class="filter-group-label">🇨🇳 CHINA</div>
-          <button class="country-btn" data-country="CN">China (All)</button>
-          <button class="country-btn" data-country="CN" data-tag="news">China News</button>
-          <button class="country-btn" data-country="CN" data-tag="pop">Chinese Pop</button>
-          <button class="country-btn air-btn" data-custom-url="https://stream.cri.cn/am1008.mp3" data-station-name="CRI AM 1008" data-station-country="China">CRI AM 1008</button>
-          <button class="country-btn air-btn" data-custom-url="https://stream.cri.cn/cnr1.mp3" data-station-name="CNR-1 Voice of China" data-station-country="China">CNR-1</button>
-          <button class="country-btn air-btn" data-custom-url="https://stream.cri.cn/english.mp3" data-station-name="CRI English" data-station-country="China">CRI English</button>
 
-          <div class="filter-group-label">🇰🇵 NORTH KOREA</div>
-          <button class="country-btn air-btn" data-custom-url="https://www.rfa.org/korean/live/rfa_korean.mp3" data-station-name="RFA Korean" data-station-country="North Korea">RFA Korean</button>
-          <button class="country-btn air-btn" data-custom-url="https://audio.kbs.co.kr/radio/open/html5/2020/09/01/hanminjok.m3u8" data-station-name="KBS Hanminjok" data-station-country="South/North Korea">KBS Hanminjok</button>
+          <div class="filter-group-label">🇨🇦 CANADA</div>
+          <button class="country-btn" data-country="CA">Canada (All)</button>
+          <button class="country-btn" data-country="CA" data-tag="news">Canada News</button>
+          <button class="country-btn" data-country="CA" data-tag="rock">Canada Rock</button>
+          <button class="country-btn air-btn" data-custom-url="https://cbc_r1_tor-lh.akamaihd.net/i/cbcr1tor_1@304584/master.m3u8" data-station-name="CBC Radio One" data-station-country="Canada">CBC Radio One</button>
+          <button class="country-btn air-btn" data-custom-url="https://cbc_r2_tor-lh.akamaihd.net/i/cbcr2tor_1@302831/master.m3u8" data-station-name="CBC Radio Two" data-station-country="Canada">CBC Radio Two</button>
+          <button class="country-btn air-btn" data-custom-url="https://live.leanstream.co/CJAD" data-station-name="CJAD 800 Montreal" data-station-country="Canada">CJAD 800</button>
+          <button class="country-btn air-btn" data-custom-url="https://live.leanstream.co/CFTRFM" data-station-name="680 News Toronto" data-station-country="Canada">680 News TO</button>
 
-          <div class="filter-group-label">🇲🇽 MEXICO (Featured)</div>
-          <button class="country-btn air-btn" data-custom-url="https://playerservices.streamtheworld.com/api/livestream-redirect/XHIMS_FMAAC.aac" data-station-name="Imagen Radio 90.5" data-station-country="Mexico">Imagen 90.5</button>
-          <button class="country-btn air-btn" data-custom-url="https://playerservices.streamtheworld.com/api/livestream-redirect/XEQRAAC.aac" data-station-name="W Radio Mexico" data-station-country="Mexico">W Radio MX</button>
-          <button class="country-btn air-btn" data-custom-url="https://playerservices.streamtheworld.com/api/livestream-redirect/XHEX_FMAAC.aac" data-station-name="EXA FM Mexico" data-station-country="Mexico">EXA FM</button>
+          <div class="filter-group-label">🇳🇿 NEW ZEALAND</div>
+          <button class="country-btn" data-country="NZ">New Zealand (All)</button>
+          <button class="country-btn" data-country="NZ" data-tag="news">NZ News</button>
+          <button class="country-btn air-btn" data-custom-url="https://rnz-ice.streamguys1.com/national" data-station-name="RNZ National" data-station-country="New Zealand">RNZ National</button>
+          <button class="country-btn air-btn" data-custom-url="https://rnz-ice.streamguys1.com/concert" data-station-name="RNZ Concert" data-station-country="New Zealand">RNZ Concert</button>
+          <button class="country-btn air-btn" data-custom-url="https://rnz-ice.streamguys1.com/rnzworld" data-station-name="RNZ Pacific" data-station-country="New Zealand">RNZ Pacific</button>
 
           <div class="filter-group-label">🧊 ANTARCTICA</div>
           <button class="country-btn air-btn" data-custom-url="https://stream.mcmurdostation.live/radio" data-station-name="McMurdo Station Radio" data-station-country="Antarctica">McMurdo Radio</button>
@@ -971,176 +529,110 @@ body::before {
           <button class="country-btn air-btn" data-custom-url="https://air.pc.cdn.bitgravity.com/air/live/pbaudio046/chunklist.m3u8" data-station-name="AIR Bangla (Kolkata)" data-station-country="India">AIR Bangla</button>
           <button class="country-btn air-btn" data-custom-url="https://air.pc.cdn.bitgravity.com/air/live/pbaudio001/chunklist.m3u8" data-station-name="AIR Delhi" data-station-country="India">AIR Delhi</button>
           <button class="country-btn air-btn" data-custom-url="https://air.pc.cdn.bitgravity.com/air/live/pbaudio002/chunklist.m3u8" data-station-name="AIR Mumbai" data-station-country="India">AIR Mumbai</button>
-        </div>
-        <div class="stations-list" id="stationsList">
-          <div class="loading-msg">LOADING STATIONS…</div>
-        </div>
+                </div>
+        <div class="stations-list" id="stationsList"><div class="loading-msg">LOADING STATIONS…</div></div>
       </div>
     </div>
 
-    <div style="font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-text-faint); text-align: right; line-height: 1.4;">
+    <div style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--color-text-faint);text-align:right;line-height:1.4;">
       MW · FM · SW<br>WORLD BAND
     </div>
   </div>
 
-  <!-- Station Ticker -->
+  <!-- Skin Toggle Bar (inside chassis so CSS vars work) -->
+  <div class="skin-bar">
+    <span class="skin-label">SKIN:</span>
+    <button class="skin-btn active" id="skin-original" onclick="setSkin('original')">ORIGINAL</button>
+    <button class="skin-btn" id="skin-steel" onclick="setSkin('steel')">STEEL</button>
+    <button class="skin-btn" id="skin-pink" onclick="setSkin('pink')">PINK</button>
+  </div>
+
+  <!-- Ticker -->
   <div class="station-ticker">
     <span class="ticker-label">ON AIR ▶</span>
-    <div class="ticker-scroll">
-      <div class="ticker-inner" id="tickerInner">
-        Loading world stations…
-      </div>
-    </div>
+    <div class="ticker-scroll"><div class="ticker-inner" id="tickerInner">Loading world stations…</div></div>
   </div>
 </div>
 
-<!-- Hidden audio element -->
 <audio id="radioAudio" crossorigin="anonymous" preload="none"></audio>
 
 <script>
 // ─── GRILL DOTS ───
 const grillDots = document.getElementById('grillDots');
-for (let i = 0; i < 14 * 10; i++) {
-  const d = document.createElement('div');
-  d.className = 'grill-dot';
-  grillDots.appendChild(d);
+for (let i = 0; i < 140; i++) {
+  const d = document.createElement('div'); d.className = 'grill-dot'; grillDots.appendChild(d);
 }
 
 // ─── STATE ───
-let currentStation = null;
-let allStations = [];
-let filteredStations = [];
-let knobAngle = 0;
-let volAngle = 216; // 80% volume
-let isDragging = false;
-let isVolDragging = false;
-let dragStartY = 0;
-let dragStartAngle = 0;
-let freqIndex = 0;
+let currentStation = null, allStations = [], filteredStations = [];
 let panelOpen = false;
-let currentCountry = 'all';
-
 const audio = document.getElementById('radioAudio');
 audio.volume = 0.8;
 
-// ─── KNOB INTERACTION ───
+// ─── KNOB ───
 function setupKnob(knobEl, onChange, initialAngle) {
-  let startY, startAngle, angle = initialAngle || 0;
-  let lastY;
-  const indicator = knobEl.querySelector('::before') || knobEl;
-
+  let angle = initialAngle || 0, startY, startAngle;
   function setAngle(a) {
     angle = ((a % 360) + 360) % 360;
     knobEl.style.transform = `rotate(${angle}deg)`;
     onChange(angle);
   }
-
   knobEl.addEventListener('mousedown', e => {
-    e.preventDefault();
-    startY = e.clientY;
-    startAngle = angle;
-    const onMove = e => {
-      const delta = startY - e.clientY;
-      setAngle(startAngle + delta * 1.5);
-    };
-    const onUp = () => {
-      document.removeEventListener('mousemove', onMove);
-      document.removeEventListener('mouseup', onUp);
-    };
-    document.addEventListener('mousemove', onMove);
-    document.addEventListener('mouseup', onUp);
+    e.preventDefault(); startY = e.clientY; startAngle = angle;
+    const move = e => setAngle(startAngle + (startY - e.clientY) * 1.5);
+    const up = () => { document.removeEventListener('mousemove', move); document.removeEventListener('mouseup', up); };
+    document.addEventListener('mousemove', move); document.addEventListener('mouseup', up);
   });
-
   knobEl.addEventListener('touchstart', e => {
-    e.preventDefault();
-    startY = e.touches[0].clientY;
-    startAngle = angle;
-    const onMove = e => {
-      const delta = startY - e.touches[0].clientY;
-      setAngle(startAngle + delta * 1.5);
-    };
-    const onEnd = () => {
-      knobEl.removeEventListener('touchmove', onMove);
-      knobEl.removeEventListener('touchend', onEnd);
-    };
-    knobEl.addEventListener('touchmove', onMove, { passive: false });
-    knobEl.addEventListener('touchend', onEnd);
+    e.preventDefault(); startY = e.touches[0].clientY; startAngle = angle;
+    const move = e => setAngle(startAngle + (startY - e.touches[0].clientY) * 1.5);
+    const end = () => { knobEl.removeEventListener('touchmove', move); knobEl.removeEventListener('touchend', end); };
+    knobEl.addEventListener('touchmove', move, {passive:false}); knobEl.addEventListener('touchend', end);
   });
-
-  knobEl.addEventListener('wheel', e => {
-    e.preventDefault();
-    setAngle(angle + (e.deltaY > 0 ? -5 : 5));
-  }, { passive: false });
-
+  knobEl.addEventListener('wheel', e => { e.preventDefault(); setAngle(angle + (e.deltaY > 0 ? -5 : 5)); }, {passive:false});
   setAngle(angle);
-  return { setAngle: a => setAngle(a) };
 }
 
-// ─── FREQUENCY NEEDLE ───
+// ─── NEEDLE ───
 const needle = document.getElementById('freqNeedle');
-function updateNeedle(pct) {
-  needle.style.left = `${pct}%`;
-}
+function updateNeedle(pct) { needle.style.left = pct + '%'; }
 
-// ─── TUNE KNOB → FREQUENCY ───
+// ─── FREQ BANDS ───
 const freqBands = [
-  { label: '87.5', name: 'FM 87.5' }, { label: '90', name: 'FM 90.0' },
-  { label: '92', name: 'FM 92.0' }, { label: '94', name: 'FM 94.0' },
-  { label: '96', name: 'FM 96.0' }, { label: '98', name: 'FM 98.0' },
-  { label: '100', name: 'FM 100.0' }, { label: '102', name: 'FM 102.0' },
-  { label: '104', name: 'FM 104.0' }, { label: '106', name: 'FM 106.0' },
-  { label: '108', name: 'FM 108.0' },
+  {label:'87.5',name:'FM 87.5'},{label:'90',name:'FM 90.0'},{label:'92',name:'FM 92.0'},
+  {label:'94',name:'FM 94.0'},{label:'96',name:'FM 96.0'},{label:'98',name:'FM 98.0'},
+  {label:'100',name:'FM 100.0'},{label:'102',name:'FM 102.0'},{label:'104',name:'FM 104.0'},
+  {label:'106',name:'FM 106.0'},{label:'108',name:'FM 108.0'},
 ];
 
-let currentFreqIdx = 0;
-let tuneTimeout = null;
-
 setupKnob(document.getElementById('tuneKnob'), angle => {
-  const pct = (angle / 360);
-  const idx = Math.floor(pct * freqBands.length) % freqBands.length;
-  currentFreqIdx = idx;
-  const freqPct = (idx / (freqBands.length - 1)) * 100;
-  updateNeedle(freqPct);
+  const idx = Math.floor((angle / 360) * freqBands.length) % freqBands.length;
+  updateNeedle((idx / (freqBands.length - 1)) * 100);
   document.getElementById('displayFreq').textContent = freqBands[idx].name;
-
-  // Animate grill on tune
   animateGrill();
-
-  // Clear old selection if no station playing
-  if (!currentStation) {
-    document.getElementById('displayStation').textContent = '— TUNING —';
-    document.getElementById('displayCountry').textContent = '';
-    updateSignal(false);
-  }
+  if (!currentStation) { document.getElementById('displayStation').textContent = '— TUNING —'; updateSignal(false); }
 }, 0);
 
-// Volume knob
 setupKnob(document.getElementById('volKnob'), angle => {
-  const vol = Math.max(0, Math.min(1, angle / 300));
-  audio.volume = vol;
+  audio.volume = Math.max(0, Math.min(1, angle / 300));
 }, 216);
 
 // ─── GRILL ANIMATION ───
-let grillAnimFrame = null;
 function animateGrill() {
   const dots = grillDots.querySelectorAll('.grill-dot');
   const count = Math.floor(Math.random() * 20) + 5;
   for (let i = 0; i < count; i++) {
     const idx = Math.floor(Math.random() * dots.length);
-    setTimeout(() => {
-      dots[idx].classList.add('pulse');
-      setTimeout(() => dots[idx].classList.remove('pulse'), 200);
-    }, i * 30);
+    setTimeout(() => { dots[idx].classList.add('pulse'); setTimeout(() => dots[idx].classList.remove('pulse'), 200); }, i * 30);
   }
 }
 
-// ─── SIGNAL INDICATOR ───
+// ─── SIGNAL ───
 function updateSignal(active, weak = false) {
-  const bar = document.getElementById('signalBar');
-  bar.className = 'signal-bar' + (active ? ' active' : '') + (weak ? ' weak' : '');
+  document.getElementById('signalBar').className = 'signal-bar' + (active?' active':'') + (weak?' weak':'');
 }
 
-// ─── RADIO BROWSER API ───
+// ─── API ───
 const API_BASE = 'https://de1.api.radio-browser.info/json';
 
 async function fetchStations(country = '', tag = '') {
@@ -1149,86 +641,80 @@ async function fetchStations(country = '', tag = '') {
     let url = `${API_BASE}/stations/search?limit=80&hidebroken=true&has_extended_info=false&order=clickcount&reverse=true`;
     if (country && country !== 'all') url += `&countrycode=${country}`;
     if (tag) url += `&tag=${encodeURIComponent(tag)}`;
-
     const resp = await fetch(url);
-    if (!resp.ok) throw new Error('API error');
+    if (!resp.ok) throw new Error();
     const data = await resp.json();
     allStations = data.filter(s => s.url_resolved && s.name);
     filteredStations = allStations;
-    renderStations();
-    updateTicker();
-  } catch (e) {
+    renderStations(); updateTicker();
+  } catch(e) {
     document.getElementById('stationsList').innerHTML = '<div class="loading-msg">SIGNAL LOST — CHECK CONNECTION</div>';
   }
 }
 
 function renderStations() {
   const list = document.getElementById('stationsList');
-  if (!filteredStations.length) {
-    list.innerHTML = '<div class="loading-msg">NO STATIONS FOUND</div>';
-    return;
+  if (!filteredStations.length) { list.innerHTML = '<div class="loading-msg">NO STATIONS FOUND</div>'; return; }
+  list.innerHTML = filteredStations.slice(0, 60).map((s, i) =>
+    `<div class="station-card" data-idx="${i}" onclick="tuneToStation(${i})"><div class="sc-name">${escHtml(s.name)}</div><div class="sc-meta">${s.country||'?'} · ${s.codec||'MP3'}</div></div>`
+  ).join('');
+  if (currentStation) {
+    const idx = filteredStations.indexOf(currentStation);
+    if (idx >= 0) { const el = list.querySelector(`[data-idx="${idx}"]`); if(el) el.classList.add('playing'); }
   }
-  list.innerHTML = filteredStations.slice(0, 60).map((s, i) => `
-    <div class="station-card ${currentStation === s ? 'playing' : ''}"
-         data-idx="${i}" onclick="tuneToStation(${i})">
-      <div class="sc-name">${escHtml(s.name)}</div>
-      <div class="sc-meta">${s.country || '?'} · ${s.codec || 'MP3'}</div>
-    </div>
-  `).join('');
 }
 
 function updateTicker() {
-  const names = allStations.slice(0, 20).map(s => s.name).join('  ·  ');
-  document.getElementById('tickerInner').textContent = names || 'No stations loaded';
+  document.getElementById('tickerInner').textContent = allStations.slice(0, 20).map(s => s.name).join('  ·  ') || 'No stations loaded';
 }
 
-function escHtml(s) {
-  return s.replace(/&/g,'&').replace(/</g,'<').replace(/>/g,'>');
-}
+function escHtml(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
-// ─── TUNE TO STATION ───
+// ─── TUNE TO API STATION ───
 function tuneToStation(idx) {
   const station = filteredStations[idx];
   if (!station) return;
-
   currentStation = station;
-
-  // Update display
-  document.getElementById('displayStation').textContent = station.name.slice(0, 22).toUpperCase();
-  document.getElementById('displayCountry').textContent = `${station.country || '?'} · ${station.tags ? station.tags.slice(0,20) : ''}`;
-  document.getElementById('powerDot').classList.add('on');
-  document.getElementById('powerLabel').textContent = 'ON AIR';
-  updateSignal(true);
-  animateGrill();
-
-  // Play
-  audio.src = station.url_resolved;
-  audio.load();
-  audio.play().catch(() => {
-    document.getElementById('displayStation').textContent = '— STREAM ERROR —';
-    updateSignal(true, true);
-  });
-
-  // Animate freq needle and update frequency display based on station index
+  playStream(station.url_resolved, station.name, station.country || '', station.tags || '');
   const freqPct = (idx / Math.max(filteredStations.length - 1, 1)) * 100;
   updateNeedle(freqPct);
-  // Map station index to a realistic FM frequency between 87.5 and 108.0
-  const fmMin = 87.5, fmMax = 108.0;
-  const mappedFreq = fmMin + (freqPct / 100) * (fmMax - fmMin);
-  document.getElementById('displayFreq').textContent = 'FM ' + mappedFreq.toFixed(1);
-
-  renderStations(); // re-render to highlight
+  const freq = 87.5 + (freqPct / 100) * 20.5;
+  document.getElementById('displayFreq').textContent = 'FM ' + freq.toFixed(1);
+  renderStations();
 }
 
-// ─── COUNTRY FILTER ───
+// ─── PLAY STREAM (shared) ───
+function playStream(url, name, country, tags) {
+  document.getElementById('displayStation').textContent = name.slice(0, 22).toUpperCase();
+  document.getElementById('displayCountry').textContent = country + (tags ? ' · ' + String(tags).slice(0,18) : '');
+  document.getElementById('powerDot').classList.add('on');
+  document.getElementById('powerLabel').textContent = 'ON AIR';
+  updateSignal(true); animateGrill();
+  audio.src = url; audio.load();
+  audio.play().catch(() => {
+    document.getElementById('displayStation').textContent = '— STREAM ERROR —';
+    document.getElementById('powerLabel').textContent = 'ERROR';
+    updateSignal(true, true);
+  });
+}
+
+// ─── COUNTRY FILTER CLICK (API buttons) ───
 document.getElementById('countryFilter').addEventListener('click', e => {
   const btn = e.target.closest('.country-btn');
   if (!btn) return;
+
+  // If it's a direct-stream air-btn, play it directly
+  if (btn.dataset.customUrl) {
+    document.querySelectorAll('.country-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    playStream(btn.dataset.customUrl, btn.dataset.stationName || btn.textContent, btn.dataset.stationCountry || '', '');
+    return;
+  }
+
+  // Otherwise fetch from API
   document.querySelectorAll('.country-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-  currentCountry = btn.dataset.country;
-  const currentTag = btn.dataset.tag || '';
-  fetchStations(currentCountry, currentTag);
+  fetchStations(btn.dataset.country || '', btn.dataset.tag || '');
 });
 
 // ─── CATCH BUTTON ───
@@ -1236,6 +722,7 @@ document.getElementById('catchBtn').addEventListener('click', () => {
   panelOpen = !panelOpen;
   document.getElementById('stationsPanel').classList.toggle('visible', panelOpen);
   if (panelOpen && !allStations.length) fetchStations();
+  document.getElementById('catchHint').classList.add('hint-hidden');
 });
 
 document.getElementById('stationsClose').addEventListener('click', () => {
@@ -1243,7 +730,6 @@ document.getElementById('stationsClose').addEventListener('click', () => {
   document.getElementById('stationsPanel').classList.remove('visible');
 });
 
-// Close panel on outside click
 document.addEventListener('click', e => {
   if (panelOpen && !document.getElementById('stationsPanel').contains(e.target) && e.target.id !== 'catchBtn') {
     panelOpen = false;
@@ -1256,14 +742,11 @@ audio.addEventListener('playing', () => {
   document.getElementById('powerDot').classList.add('on');
   document.getElementById('powerLabel').textContent = 'ON AIR';
   updateSignal(true);
-  setInterval(animateGrill, 800);
 });
-
 audio.addEventListener('waiting', () => {
   document.getElementById('powerLabel').textContent = 'BUFFERING';
   updateSignal(true, true);
 });
-
 audio.addEventListener('error', () => {
   document.getElementById('displayStation').textContent = '— STREAM ERROR —';
   document.getElementById('powerLabel').textContent = 'STANDBY';
@@ -1271,60 +754,39 @@ audio.addEventListener('error', () => {
   updateSignal(false);
 });
 
-// ─── STATIC FLICKER EFFECT when tuning ───
-let staticInterval = null;
-function startStaticFlicker() {
-  if (staticInterval) clearInterval(staticInterval);
-  staticInterval = setInterval(() => {
-    const disp = document.getElementById('displayStation');
+// ─── STATIC FLICKER ───
+function startStatic() {
+  let t = setInterval(() => {
     if (!currentStation) {
-      const chars = '▒░▓■□▪▫◆◇';
-      disp.textContent = Array.from({length: 12}, () => chars[Math.floor(Math.random()*chars.length)]).join('');
+      const c = '▒░▓■□▪▫◆◇';
+      document.getElementById('displayStation').textContent = Array.from({length:12}, () => c[Math.floor(Math.random()*c.length)]).join('');
     }
   }, 120);
-  setTimeout(() => clearInterval(staticInterval), 1500);
+  setTimeout(() => clearInterval(t), 1500);
 }
-
-document.getElementById('tuneKnob').addEventListener('mousedown', startStaticFlicker);
-document.getElementById('tuneKnob').addEventListener('touchstart', startStaticFlicker, {passive: true});
+document.getElementById('tuneKnob').addEventListener('mousedown', startStatic);
+document.getElementById('tuneKnob').addEventListener('touchstart', startStatic, {passive:true});
 
 // ─── KEYBOARD ───
 document.addEventListener('keydown', e => {
-  if (e.key === 'ArrowRight' || e.key === 'ArrowUp') {
-    if (filteredStations.length) {
-      const idx = filteredStations.indexOf(currentStation);
-      tuneToStation((idx + 1) % filteredStations.length);
-    }
-  } else if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') {
-    if (filteredStations.length) {
-      const idx = filteredStations.indexOf(currentStation);
-      tuneToStation((idx - 1 + filteredStations.length) % filteredStations.length);
-    }
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+    const idx = filteredStations.indexOf(currentStation);
+    if (idx < filteredStations.length - 1) tuneToStation(idx + 1);
+  } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+    const idx = filteredStations.indexOf(currentStation);
+    if (idx > 0) tuneToStation(idx - 1);
+  } else if (e.key === ' ') {
+    e.preventDefault();
+    if (audio.paused) audio.play(); else audio.pause();
   }
 });
 
-// ─── AIR / CUSTOM-URL STATION BUTTONS ───
-document.getElementById('countryFilter').addEventListener('click', e => {
-  const btn = e.target.closest('.air-btn');
-  if (!btn) return;
-  const url = btn.dataset.customUrl;
-  const name = btn.dataset.stationName || btn.textContent;
-  const country = btn.dataset.stationCountry || '';
-  if (!url) return;
-  document.getElementById('displayStation').textContent = name.slice(0, 22).toUpperCase();
-  document.getElementById('displayCountry').textContent = country;
-  document.getElementById('powerDot').classList.add('on');
-  document.getElementById('powerLabel').textContent = 'ON AIR';
-  updateSignal(true);
-  animateGrill();
-  audio.src = url;
-  audio.load();
-  audio.play().catch(() => {
-    document.getElementById('displayStation').textContent = '— STREAM ERROR —';
-    updateSignal(true, true);
-  });
-}, true);
-
+// ─── SKIN SWITCHER ───
+function setSkin(name) {
+  document.documentElement.setAttribute('data-skin', name);
+  document.querySelectorAll('.skin-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('skin-' + name).classList.add('active');
+}
 </script>
 </body>
 </html>
