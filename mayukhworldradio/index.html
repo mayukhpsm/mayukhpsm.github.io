@@ -372,32 +372,49 @@ body::before {
   .knob { width: 52px; height: 52px; }
   .knob-label { font-size: 0.65rem; }
 
-  /* Bottom controls */
+  /* Bottom controls — stack vertically on mobile */
   .bottom-controls {
-    flex-direction: row;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
-    flex-wrap: nowrap;
-    gap: 8px;
+    justify-content: center;
+    gap: 10px;
     margin-top: 12px;
   }
 
-  /* Catch button */
+  /* Catch button — full centered */
+  .catch-btn-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
   .catch-btn {
-    font-size: 0.7rem;
-    padding: 7px 16px;
+    font-size: 0.75rem;
+    padding: 8px 28px;
     letter-spacing: 0.06em;
-    min-height: 34px;
+    min-height: 36px;
+    width: auto;
   }
 
-  /* Hint text */
+  /* Hint text — centered above button */
   .catch-hint {
-    font-size: 0.58rem;
+    font-size: 0.6rem;
     letter-spacing: 0.04em;
+    text-align: center;
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 2px;
   }
 
-  /* WORLD BAND label — hide on portrait to save space */
-  .worldband-label { display: none; }
+  /* Power + world band in a small row below button */
+  .power-indicator { order: 2; }
+  .worldband-label {
+    display: block;
+    order: 3;
+    font-size: 0.55rem !important;
+    text-align: center !important;
+  }
 
   /* Stations panel — fixed center on mobile */
   .stations-panel {
