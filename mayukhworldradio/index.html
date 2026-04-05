@@ -309,17 +309,122 @@ body::before {
 .skin-btn.active { border-color:var(--radio-amber); color:var(--radio-amber); background:rgba(255,184,48,0.15); font-weight:bold; }
 
 /* ─── RESPONSIVE ─── */
-@media (max-width:560px) {
-  .radio-face { grid-template-columns:1fr; }
-  .speaker-grill { aspect-ratio:2.5; }
-  .bottom-controls { justify-content:center; }
-  .stations-list { grid-template-columns:1fr; }
-  .stations-panel { bottom:auto; top:calc(100% + 8px); max-height:min(480px,60vh); }
-  .catch-hint { font-size:0.6rem; }
-}
+/* ── TABLET ── */
 @media (min-width:561px) and (max-width:768px) {
   .radio-face { grid-template-columns:1fr minmax(160px,200px); }
   .stations-panel { width:min(580px,92vw); }
+}
+
+/* ── SMARTPHONE PORTRAIT ── */
+@media (max-width:560px) {
+  body {
+    padding: 12px 10px;
+    justify-content: flex-start;
+  }
+
+  .radio-chassis {
+    width: 100%;
+    border-radius: 14px;
+    padding: 14px 12px 18px;
+  }
+
+  /* Hide speaker grill on very small screens — saves space */
+  .speaker-grill { display: none; }
+
+  /* Full width single column */
+  .radio-face {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .right-panel { gap: 10px; }
+
+  /* Display screen */
+  .display-screen {
+    min-height: 65px;
+    padding: 10px 12px;
+  }
+  .display-freq { font-size: clamp(1.2rem, 7vw, 1.6rem); }
+  .display-station, .display-country { font-size: 0.68rem; }
+
+  /* Freq dial */
+  .freq-dial-wrapper { padding: 8px 10px; }
+  .freq-dial-label { font-size: 0.65rem; margin-bottom: 6px; }
+  .freq-scale { height: 24px; }
+
+  /* Knobs — smaller and centered */
+  .controls-row { gap: 12px; justify-items: center; }
+  .knob-wrapper { width: 52px; height: 52px; }
+  .knob { width: 52px; height: 52px; }
+  .knob-label { font-size: 0.65rem; }
+
+  /* Bottom controls */
+  .bottom-controls {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  /* Catch button */
+  .catch-btn {
+    font-size: 0.7rem;
+    padding: 7px 16px;
+    letter-spacing: 0.06em;
+    min-height: 34px;
+  }
+
+  /* Hint text */
+  .catch-hint {
+    font-size: 0.58rem;
+    letter-spacing: 0.04em;
+  }
+
+  /* WORLD BAND label — hide on portrait to save space */
+  .worldband-label { display: none; }
+
+  /* Stations panel — full width, opens upward */
+  .stations-panel {
+    width: 96vw;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    max-height: 55vh;
+    bottom: calc(100% + 8px);
+    top: auto;
+    padding: 12px;
+  }
+  .stations-panel.visible {
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* Stations list single column */
+  .stations-list {
+    grid-template-columns: 1fr;
+    max-height: 38vh;
+  }
+
+  /* Country filter */
+  .country-filter { max-height: 120px; }
+  .country-btn { font-size: 0.62rem; padding: 4px 8px; min-height: 26px; }
+  .filter-group-label { font-size: 7px; }
+
+  /* Station ticker */
+  .station-ticker { padding: 8px 12px; gap: 10px; }
+  .ticker-label { font-size: 0.62rem; }
+  .ticker-inner { font-size: 0.62rem; }
+
+  /* Brand */
+  .brand-name { font-size: 0.95rem; letter-spacing: 0.12em; }
+
+  /* Skin bar */
+  .skin-bar { gap: 6px; margin-top: 10px; }
+  .skin-btn { font-size: 0.6rem; padding: 3px 8px; }
+  .skin-label { font-size: 0.6rem; }
+
+  /* Power indicator */
+  .power-label { font-size: 0.62rem; }
 }
 </style>
 </head>
@@ -535,7 +640,7 @@ body::before {
       </div>
       </div>
 
-      <div style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--color-text-faint);text-align:right;line-height:1.4;">
+      <div class="worldband-label" style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--color-text-faint);text-align:right;line-height:1.4;">
         MW · FM · SW<br>WORLD BAND
       </div>
     </div>
