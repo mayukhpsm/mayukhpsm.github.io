@@ -729,6 +729,17 @@ body::before {
     grid-template-columns: 1fr;
   }
 }
+
+/* ─── AIR / CUSTOM DIRECT STREAM BUTTONS ─── */
+.air-btn {
+  border-color: var(--radio-amber) !important;
+  color: var(--radio-amber) !important;
+}
+.air-btn:hover {
+  background: var(--radio-amber) !important;
+  color: var(--radio-grill) !important;
+}
+
 </style>
 </head>
 <body>
@@ -925,6 +936,41 @@ body::before {
           <button class="country-btn" data-country="PE">Peru</button>
           <button class="country-btn" data-country="VE">Venezuela</button>
           <button class="country-btn" data-country="EC">Ecuador</button>
+          <div class="filter-group-label">🇷🇺 RUSSIA</div>
+          <button class="country-btn" data-country="RU">Russia (All)</button>
+          <button class="country-btn" data-country="RU" data-tag="news">Russia News</button>
+          <button class="country-btn" data-country="RU" data-tag="pop">Russia Pop</button>
+          <button class="country-btn" data-country="RU" data-tag="rock">Russia Rock</button>
+          <button class="country-btn air-btn" data-custom-url="https://icecast-vgtrk.cdnvideo.ru/mayakfm_mp3_128kbps" data-station-name="Radio Mayak" data-station-country="Russia">Radio Mayak</button>
+          <button class="country-btn air-btn" data-custom-url="https://icecast-vgtrk.cdnvideo.ru/nrj_mp3_128kbps" data-station-name="NRJ Russia" data-station-country="Russia">NRJ Russia</button>
+          <button class="country-btn air-btn" data-custom-url="https://icecast-vgtrk.cdnvideo.ru/vestifm_mp3_128kbps" data-station-name="Vesti FM" data-station-country="Russia">Vesti FM</button>
+
+          <div class="filter-group-label">🇨🇳 CHINA</div>
+          <button class="country-btn" data-country="CN">China (All)</button>
+          <button class="country-btn" data-country="CN" data-tag="news">China News</button>
+          <button class="country-btn" data-country="CN" data-tag="pop">Chinese Pop</button>
+          <button class="country-btn air-btn" data-custom-url="https://stream.cri.cn/am1008.mp3" data-station-name="CRI AM 1008" data-station-country="China">CRI AM 1008</button>
+          <button class="country-btn air-btn" data-custom-url="https://stream.cri.cn/cnr1.mp3" data-station-name="CNR-1 Voice of China" data-station-country="China">CNR-1</button>
+          <button class="country-btn air-btn" data-custom-url="https://stream.cri.cn/english.mp3" data-station-name="CRI English" data-station-country="China">CRI English</button>
+
+          <div class="filter-group-label">🇰🇵 NORTH KOREA</div>
+          <button class="country-btn air-btn" data-custom-url="https://www.rfa.org/korean/live/rfa_korean.mp3" data-station-name="RFA Korean" data-station-country="North Korea">RFA Korean</button>
+          <button class="country-btn air-btn" data-custom-url="https://audio.kbs.co.kr/radio/open/html5/2020/09/01/hanminjok.m3u8" data-station-name="KBS Hanminjok" data-station-country="South/North Korea">KBS Hanminjok</button>
+
+          <div class="filter-group-label">🇲🇽 MEXICO (Featured)</div>
+          <button class="country-btn air-btn" data-custom-url="https://playerservices.streamtheworld.com/api/livestream-redirect/XHIMS_FMAAC.aac" data-station-name="Imagen Radio 90.5" data-station-country="Mexico">Imagen 90.5</button>
+          <button class="country-btn air-btn" data-custom-url="https://playerservices.streamtheworld.com/api/livestream-redirect/XEQRAAC.aac" data-station-name="W Radio Mexico" data-station-country="Mexico">W Radio MX</button>
+          <button class="country-btn air-btn" data-custom-url="https://playerservices.streamtheworld.com/api/livestream-redirect/XHEX_FMAAC.aac" data-station-name="EXA FM Mexico" data-station-country="Mexico">EXA FM</button>
+
+          <div class="filter-group-label">🧊 ANTARCTICA</div>
+          <button class="country-btn air-btn" data-custom-url="https://stream.mcmurdostation.live/radio" data-station-name="McMurdo Station Radio" data-station-country="Antarctica">McMurdo Radio</button>
+          <button class="country-btn air-btn" data-custom-url="https://ice6.somafm.com/spacestation-128-mp3" data-station-name="SomaFM Space Station" data-station-country="Antarctica/Space">SomaFM Space Stn</button>
+          <button class="country-btn air-btn" data-custom-url="https://ice2.somafm.com/deepspaceone-128-mp3" data-station-name="SomaFM Deep Space One" data-station-country="Antarctica/Space">Deep Space One</button>
+
+          <div class="filter-group-label">📻 AIR FEATURED</div>
+          <button class="country-btn air-btn" data-custom-url="https://air.pc.cdn.bitgravity.com/air/live/pbaudio046/chunklist.m3u8" data-station-name="AIR Bangla (Kolkata)" data-station-country="India">AIR Bangla</button>
+          <button class="country-btn air-btn" data-custom-url="https://air.pc.cdn.bitgravity.com/air/live/pbaudio001/chunklist.m3u8" data-station-name="AIR Delhi" data-station-country="India">AIR Delhi</button>
+          <button class="country-btn air-btn" data-custom-url="https://air.pc.cdn.bitgravity.com/air/live/pbaudio002/chunklist.m3u8" data-station-name="AIR Mumbai" data-station-country="India">AIR Mumbai</button>
         </div>
         <div class="stations-list" id="stationsList">
           <div class="loading-msg">LOADING STATIONS…</div>
@@ -1256,6 +1302,29 @@ document.addEventListener('keydown', e => {
     }
   }
 });
+
+// ─── AIR / CUSTOM-URL STATION BUTTONS ───
+document.getElementById('countryFilter').addEventListener('click', e => {
+  const btn = e.target.closest('.air-btn');
+  if (!btn) return;
+  const url = btn.dataset.customUrl;
+  const name = btn.dataset.stationName || btn.textContent;
+  const country = btn.dataset.stationCountry || '';
+  if (!url) return;
+  document.getElementById('displayStation').textContent = name.slice(0, 22).toUpperCase();
+  document.getElementById('displayCountry').textContent = country;
+  document.getElementById('powerDot').classList.add('on');
+  document.getElementById('powerLabel').textContent = 'ON AIR';
+  updateSignal(true);
+  animateGrill();
+  audio.src = url;
+  audio.load();
+  audio.play().catch(() => {
+    document.getElementById('displayStation').textContent = '— STREAM ERROR —';
+    updateSignal(true, true);
+  });
+}, true);
+
 </script>
 </body>
 </html>
