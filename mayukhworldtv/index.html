@@ -257,4 +257,98 @@ function loadStream(url){
   }
 }
 
-function showBuffering(s){document.getElementById('b
+function showBuffering(s){document.getElementById('bufferingBadge').style.display=s?'block':'none';}
+function showError(msg){
+  const t=document.getElementById('errToast');t.textContent='⚠ '+msg;t.style.display='block';
+  setTimeout(()=>{t.style.display='none';},5000);
+}
+
+function buildGrills(){
+  ['grillLeft','grillRight'].forEach(id=>{
+    const g=document.getElementById(id);
+    for(let i=0;i<24;i++){const d=document.createElement('div');d.className='grill-dot';g.appendChild(d);}
+  });
+}
+
+function buildChannelButtons(){
+  const grid=document.getElementById('channelGrid');grid.innerHTML='';
+  CHANNELS.forEach((ch,idx)=>{
+    const btn=document.createElement('button');
+    btn.className='channel-btn';btn.id='chbtn_'+idx;
+    btn.innerHTML='<span class="ch-btn-num">CH '+ch.num+'</span>'+ch.name+'<span class="ch-btn-region">'+ch.regionLabel+'</span>';
+    btn.onclick=()=>tuneChannel(idx);
+    grid.appendChild(btn);
+  });
+}
+
+function filterRegion(el,region){
+  currentRegion=region;
+  document.querySelectorAll('.region-tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');updateVisibility();
+}
+function updateVisibility(){
+  CHANNELS.forEach((ch,idx)=>{
+    const btn=document.getElementById('chbtn_'+idx);if(!btn)return;
+    const show=currentRegion==='all'||currentRegion===ch.region;
+    btn.style.display=show?'block':'none';
+  });
+}
+
+function tuneChannel(idx){
+  if(!isPowered)powerOn();
+  currentIdx=idx;const ch=CHANNELS[idx];
+  document.querySelectorAll('.channel-btn').forEach(b=>b.classList.remove('active'));
+  const btn=document.getElementById('chbtn_'+idx);
+  if(btn){btn.classList.add('active');btn.scrollIntoView({block:'nearest'});}
+  stopNoise();document.getElementById('staticWrap').classList.add('hidden');
+  document.getElementById('chNumber').textContent='CH '+ch.num;
+  document.getElementById('chName').innerHTML='<span class="ch-region-tag">◈ '+ch.regionLabel+'</span>'+ch.name;
+  document.getElementById('audioChDisplay').textContent=ch.num+' · '+ch.name+' · '+ch.regionLabel;
+  document.getElementById('tickerText').textContent='◈ NOW TUNED: CH '+ch.num+' — '+ch.name+' ('+ch.regionLabel+') ◈ HLS LIVE ◈ WORLD TV ◈';
+  document.getElementById('audioOverlay').classList.toggle('active',audioMode);
+  loadStream(ch.url);
+}
+
+function toggleAudioMode(){
+  audioMode=!audioMode;
+  const btn=document.getElementById('audioModeBtn'),ov=document.getElementById('audioOverlay');
+  if(audioMode){btn.textContent='🎧 AUDIO MODE';btn.classList.add('audio-mode-on');if(currentIdx>=0)ov.classList.add('active');}
+  else{btn.textContent='🖥️ VIDEO MODE';btn.classList.remove('audio-mode-on');ov.classList.remove('active');}
+}
+
+function getVisible(){
+  return CHANNELS.map((_,i)=>i).filter(i=>currentRegion==='all'||currentRegion===CHANNELS[i].region);
+}
+function prevChannel(){if(!isPowered)return;const v=getVisible();if(!v.length)return;let p=v.indexOf(currentIdx);p=p<=0?v.length-1:p-1;tuneChannel(v[p]);}
+function nextChannel(){if(!isPowered)return;const v=getVisible();if(!v.length)return;let p=v.indexOf(currentIdx);p=p<0||p>=v.length-1?0:p+1;tuneChannel(v[p]);}
+function randomChannel(){if(!isPowered)return;const v=getVisible();if(!v.length)return;let r;do{r=v[Math.floor(Math.random()*v.length)];}while(r===currentIdx&&v.length>1);tuneChannel(r);}
+
+function powerOff(){
+  isPowered=false;
+  if(hlsInstance){hlsInstance.destroy();hlsInstance=null;}
+  document.getElementById('tvVideo').src='';
+  document.getElementById('staticWrap').classList.remove('hidden');
+  document.getElementById('staticText').textContent='· STANDBY ·';
+  document.getElementById('staticSub').textContent='PRESS ANY CHANNEL TO RESUME';
+  document.getElementById('chNumber').textContent='--';
+  document.getElementById('chName').innerHTML='<span class="ch-region-tag">◈ OFF</span>standby';
+  document.getElementById('powerLight').classList.remove('on');
+  document.getElementById('audioOverlay').classList.remove('active');
+  document.querySelectorAll('.channel-btn').forEach(b=>b.classList.remove('active'));
+  currentIdx=-1;startNoise();
+}
+function powerOn(){
+  isPowered=true;
+  document.getElementById('staticText').textContent='◈ NO SIGNAL ◈';
+  document.getElementById('staticSub').textContent='SELECT A CHANNEL BELOW';
+  document.getElementById('powerLight').classList.add('on');
+}
+
+buildGrills();buildChannelButtons();updateVisibility();startNoise();
+window.addEventListener('resize',()=>{
+  const c=document.getElementById('staticCanvas'),s=document.getElementById('mainScreen');
+  c.width=s.offsetWidth;c.height=s.offsetHeight;
+});
+</script>
+</body>
+</html>
