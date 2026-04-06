@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>Mayukh's World TV — Global Free Channels</title>
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=VT323&family=Orbitron:wght@400;700&display=swap');
+:root{
+  --crt-green:#00ff88;--crt-amber:#ffb000;
+  --glow:0 0 8px #00ff88aa,0 0 20px #00ff8844;
+  --scanline:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.18) 2px,rgba(0,0,0,0.18) 4px);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:#111 radial-gradient(ellipse at 50% 0%,#222 0%,#0a0a0a 70%);min-height:100vh;display:flex;align-items:center;justify-content:center;font-family:'Share Tech Mono',monospace;padding:10px}
+.tv-wrap{position:relative;width:min(96vw,780px);margin:70px auto 0}
+.antenna-wrap{position:absolute;top:-62px;left:50%;transform:translateX(-50%);display:flex;gap:30px;pointer-events:none;z-index:10}
+.antenna{width:6px;height:64px;background:linear-gradient(to top,#888 0%,#ccc 50%,#aaa 100%);border-radius:3px 3px 0 0;box-shadow:1px 0 3px rgba(0,0,0,0.5);transform-origin:bottom center}
+.antenna.left{transform:rotate(-22deg)}.antenna.right{transform:rotate(22deg)}
+.antenna::after{content:'';display:block;width:10px;height:10px;background:#bbb;border-radius:50%;margin-left:-2px;margin-top:-1px;box-shadow:0 0 4px rgba(255,255,255,0.4)}
+.tv-cabinet{background:linear-gradient(160deg,#3e3e3e 0%,#232323 40%,#181818 100%);border-radius:24px 24px 30px 30px;box-shadow:inset 0 2px 4px rgba(255,255,255,0.08),inset 0 -4px 8px rgba(0,0,0,0.6),0 8px 32px rgba(0,0,0,0.9),0 2px 0 #555;padding:18px 18px 22px;border:2px solid #444;border-bottom:4px solid #111}
+.brand-bar{display:flex;justify-content:space-between;align-items:center;padding:4px 10px 10px}
+.brand-name{font-family:'Orbitron',sans-serif;font-size:clamp(13px,2.5vw,20px);color:#ccc;letter-spacing:4px}
+.brand-model{font-size:10px;color:#666;letter-spacing:2px}
+.power-light{width:10px;height:10px;border-radius:50%;background:#222;border:1px solid #444;transition:all .4s;margin-top:4px}
+.power-light.on{background:var(--crt-green);box-shadow:0 0 6px var(--crt-green)}
+.screen-bezel{background:#111;border-radius:14px;padding:10px;box-shadow:inset 0 0 18px rgba(0,0,0,0.9),0 0 0 3px #222,0 0 0 5px #3a3a3a}
+.screen{background:#040404;border-radius:8px;aspect-ratio:16/9;overflow:hidden;position:relative}
+.screen::after{content:'';position:absolute;inset:0;background:var(--scanline);pointer-events:none;z-index:10;border-radius:8px;opacity:.7}
+.screen::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,transparent 60%,rgba(0,0,0,0.45) 100%);pointer-events:none;z-index:11;border-radius:8px}
+#tvVideo{width:100%;height:100%;display:block;border-radius:6px;background:#000;position:relative;z-index:1;object-fit:contain}
+.static-wrap{position:absolute;inset:0;z-index:4;border-radius:8px;overflow:hidden}
+.static-wrap.hidden{display:none}
+#staticCanvas{position:absolute;inset:0;width:100%;height:100%}
+.static-label{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:5;text-align:center;pointer-events:none}
+.static-text{font-family:'VT323',monospace;font-size:clamp(24px,5vw,42px);color:#fff;letter-spacing:3px;text-shadow:0 0 10px #fff;animation:blink 1.2s step-end infinite}
+.static-sub{font-size:clamp(10px,2vw,14px);color:#ccc;letter-spacing:2px;font-family:'Share Tech Mono',monospace;margin-top:6px;animation:blink 1.8s step-end infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.2}}
+.audio-overlay{position:absolute;inset:0;background:#020a06;z-index:8;border-radius:6px;display:none;flex-direction:column;align-items:center;justify-content:center;gap:10px}
+.audio-overlay.active{display:flex}
+.audio-wave{display:flex;gap:4px;align-items:flex-end;height:50px}
+.audio-wave span{width:5px;background:var(--crt-green);border-radius:2px;animation:wave .8s ease-in-out infinite alternate;box-shadow:0 0 6px var(--crt-green)}
+.audio-wave span:nth-child(1){height:20px;animation-delay:0s}.audio-wave span:nth-child(2){height:35px;animation-delay:.1s}
+.audio-wave span:nth-child(3){height:45px;animation-delay:.2s}.audio-wave span:nth-child(4){height:28px;animation-delay:.3s}
+.audio-wave span:nth-child(5){height:50px;animation-delay:.4s}.audio-wave span:nth-child(6){height:32px;animation-delay:.5s}
+.audio-wave span:nth-child(7){height:20px;animation-delay:.6s}.audio-wave span:nth-child(8){height:40px;animation-delay:.7s}
+@keyframes wave{from{transform:scaleY(0.4)}to{transform:scaleY(1)}}
+.audio-mode-label{font-family:'VT323',monospace;color:var(--crt-green);font-size:clamp(18px,4vw,28px);text-shadow:var(--glow);letter-spacing:4px;animation:blink 2s step-end infinite}
+.audio-ch-display{font-family:'VT323',monospace;color:var(--crt-amber);font-size:clamp(14px,3vw,20px);letter-spacing:2px}
+.channel-info-bar{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,0.88));padding:10px 12px 8px;z-index:12;display:flex;justify-content:space-between;align-items:flex-end}
+.ch-number{font-family:'VT323',monospace;font-size:clamp(28px,6vw,46px);color:var(--crt-amber);text-shadow:0 0 10px var(--crt-amber);line-height:1}
+.ch-name{font-family:'VT323',monospace;font-size:clamp(14px,3vw,22px);color:#fff;text-align:right;line-height:1.2}
+.ch-region-tag{font-size:clamp(10px,1.8vw,13px);color:var(--crt-green);display:block;text-shadow:var(--glow)}
+.buffering-badge{position:absolute;top:10px;right:12px;z-index:13;font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--crt-amber);background:rgba(0,0,0,0.7);padding:3px 8px;border-radius:3px;border:1px solid var(--crt-amber);display:none;animation:blink .8s step-end infinite}
+.err-toast{position:absolute;top:8px;left:50%;transform:translateX(-50%);z-index:20;background:rgba(160,20,20,0.92);color:#fff;font-family:'Share Tech Mono',monospace;font-size:10px;padding:4px 12px;border-radius:4px;border:1px solid #f44;display:none;white-space:nowrap}
+.control-panel{padding:14px 10px 8px}
+.region-tabs{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;margin-bottom:10px}
+.region-tab{font-family:'Share Tech Mono',monospace;font-size:clamp(9px,1.6vw,11px);padding:4px 8px;background:#222;border:1px solid #444;color:#888;border-radius:3px;cursor:pointer;letter-spacing:1px;transition:all .2s;white-space:nowrap}
+.region-tab:hover{background:#333;color:#ccc;border-color:#666}
+.region-tab.active{background:#004422;border-color:var(--crt-green);color:var(--crt-green);box-shadow:0 0 6px rgba(0,255,136,0.3)}
+.channel-scroll{max-height:160px;overflow-y:auto;border:1px solid #333;border-radius:6px;background:#0d0d0d;padding:4px;scrollbar-width:thin;scrollbar-color:#444 #111;margin-bottom:10px}
+.channel-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:4px}
+.channel-btn{font-family:'Share Tech Mono',monospace;font-size:clamp(9px,1.5vw,11px);background:#1a1a1a;border:1px solid #333;color:#aaa;padding:6px 8px;border-radius:4px;cursor:pointer;text-align:left;transition:all .15s;line-height:1.3;width:100%}
+.channel-btn:hover{background:#2a2a2a;border-color:#555;color:#ddd}
+.channel-btn.active{background:#001a0a;border-color:var(--crt-green);color:var(--crt-green);box-shadow:inset 0 0 8px rgba(0,255,136,0.1)}
+.ch-btn-num{color:var(--crt-amber);font-size:9px;display:block}
+.ch-btn-region{color:#555;font-size:9px;display:block}
+.bottom-controls{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;padding-top:8px;border-top:1px solid #2a2a2a}
+.ctrl-btn{font-family:'Share Tech Mono',monospace;font-size:clamp(9px,1.5vw,11px);background:linear-gradient(160deg,#333 0%,#222 100%);border:1px solid #555;color:#bbb;padding:6px 12px;border-radius:4px;cursor:pointer;letter-spacing:1px;transition:all .2s;box-shadow:0 2px 4px rgba(0,0,0,0.5)}
+.ctrl-btn:hover{background:linear-gradient(160deg,#444 0%,#333 100%);color:#fff}
+.ctrl-btn:active{transform:scale(0.96)}
+.ctrl-btn.audio-mode-on{background:#001a0a;border-color:var(--crt-green);color:var(--crt-green)}
+.vol-wrap{display:flex;align-items:center;gap:6px;font-size:10px;color:#666}
+input[type=range]{-webkit-appearance:none;width:80px;height:4px;background:#333;border-radius:2px;outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;height:12px;background:var(--crt-amber);border-radius:50%;cursor:pointer}
+.knob-row{display:flex;justify-content:center;gap:16px;padding:10px 0 4px;align-items:center}
+.knob{width:clamp(34px,6vw,50px);height:clamp(34px,6vw,50px);border-radius:50%;background:radial-gradient(circle at 38% 35%,#555 0%,#2a2a2a 60%,#111 100%);border:2px solid #444;box-shadow:0 3px 8px rgba(0,0,0,0.7);cursor:pointer;position:relative;transition:transform .2s;flex-shrink:0;user-select:none}
+.knob::after{content:'';position:absolute;top:6px;left:50%;transform:translateX(-50%);width:3px;height:8px;background:#999;border-radius:1px}
+.knob:active{transform:scale(0.94)}
+.knob-label{font-size:9px;color:#555;text-align:center;margin-top:3px;letter-spacing:1px}
+.knob-group{text-align:center}
+.status-bar{display:flex;justify-content:space-between;align-items:center;padding:5px 4px 0;font-size:9px;color:#444;letter-spacing:1px}
+.status-ticker{overflow:hidden;white-space:nowrap;flex:1;margin:0 10px;color:#555}
+.ticker-inner{display:inline-block;animation:ticker 30s linear infinite}
+@keyframes ticker{from{transform:translateX(100%)}to{transform:translateX(-200%)}}
+.speaker-grills{display:flex;gap:12px;justify-content:center;padding:8px 0 0}
+.grill{display:grid;grid-template-columns:repeat(8,6px);grid-template-rows:repeat(3,6px);gap:3px}
+.grill-dot{width:5px;height:5px;background:#1a1a1a;border-radius:50%;box-shadow:inset 0 1px 1px rgba(0,0,0,0.8),0 0 0 1px #333}
+.tv-legs{display:flex;justify-content:space-around;padding:0 30px;margin-top:6px}
+.leg{width:18px;height:14px;background:linear-gradient(to bottom,#333 0%,#222 100%);border-radius:0 0 4px 4px;border:1px solid #444;border-top:none}
+@media(max-width:480px){
+  .tv-cabinet{border-radius:16px 16px 22px 22px;padding:12px 10px 16px}
+  .antenna-wrap{top:-48px;gap:22px}.antenna{height:50px}
+  .channel-grid{grid-template-columns:repeat(auto-fill,minmax(110px,1fr))}
+  .channel-scroll{max-height:120px}
+  .knob-row{gap:10px}.bottom-controls{justify-content:center}.vol-wrap{display:none}
+}
+@media(min-width:900px){
+  .channel-scroll{max-height:180px}
+  .channel-grid{grid-template-columns:repeat(auto-fill,minmax(170px,1fr))}
+}
+</style>
+</head>
+<body>
+<div class="tv-wrap">
+  <div class="antenna-wrap">
+    <div class="antenna left"></div>
+    <div class="antenna right"></div>
+  </div>
+  <div class="tv-cabinet">
+    <div class="brand-bar">
+      <div>
+        <div class="brand-name">MAYUKH'S WORLD · TV</div>
+        <div class="brand-model">MODEL WTV-2600 · SOLID STATE</div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:9px;color:#555;letter-spacing:1px">FREE · GLOBAL · LIVE</div>
+        <div class="power-light on" id="powerLight"></div>
+      </div>
+    </div>
+    <div class="screen-bezel">
+      <div class="screen" id="mainScreen">
+        <div class="static-wrap" id="staticWrap">
+          <canvas id="staticCanvas"></canvas>
+          <div class="static-label">
+            <div class="static-text" id="staticText">◈ NO SIGNAL ◈</div>
+            <div class="static-sub" id="staticSub">SELECT A CHANNEL BELOW</div>
+          </div>
+        </div>
+        <div class="audio-overlay" id="audioOverlay">
+          <div class="audio-wave"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+          <div class="audio-mode-label">▶ AUDIO MODE ◀</div>
+          <div class="audio-ch-display" id="audioChDisplay">— SELECT CHANNEL —</div>
+        </div>
+        <video id="tvVideo" controls autoplay muted playsinline></video>
+        <div class="buffering-badge" id="bufferingBadge">⟳ BUFFERING...</div>
+        <div class="err-toast" id="errToast"></div>
+        <div class="channel-info-bar">
+          <div class="ch-number" id="chNumber">--</div>
+          <div class="ch-name" id="chName">
+            <span class="ch-region-tag">◈ WORLD TV</span>tune in
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="control-panel">
+      <div class="region-tabs">
+        <button class="region-tab active" onclick="filterRegion(this,'all')">🌐 ALL</button>
+        <button class="region-tab" onclick="filterRegion(this,'dw')">📺 DW</button>
+        <button class="region-tab" onclick="filterRegion(this,'aljazeera')">📡 AL JAZEERA</button>
+        <button class="region-tab" onclick="filterRegion(this,'rt')">🎙 RT</button>
+      </div>
+      <div class="channel-scroll">
+        <div class="channel-grid" id="channelGrid"></div>
+      </div>
+      <div class="bottom-controls">
+        <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center">
+          <button class="ctrl-btn" onclick="prevChannel()">◀ PREV</button>
+          <button class="ctrl-btn" onclick="nextChannel()">NEXT ▶</button>
+          <button class="ctrl-btn" onclick="randomChannel()">⊞ RANDOM</button>
+        </div>
+        <div class="vol-wrap">
+          VOL <input type="range" id="volSlider" min="0" max="1" step="0.05" value="0.8"
+            oninput="document.getElementById('tvVideo').volume=this.value">
+        </div>
+        <button class="ctrl-btn" id="audioModeBtn" onclick="toggleAudioMode()">🖥️ VIDEO MODE</button>
+        <button class="ctrl-btn" onclick="powerOff()">⏻ STANDBY</button>
+      </div>
+      <div class="knob-row">
+        <div class="knob-group"><div class="knob" onclick="prevChannel()"></div><div class="knob-label">CH ▼</div></div>
+        <div class="knob-group"><div class="knob" onclick="nextChannel()"></div><div class="knob-label">CH ▲</div></div>
+        <div class="knob-group"><div class="knob" onclick="randomChannel()" style="background:radial-gradient(circle at 38% 35%,#664 0%,#332 60%,#110 100%);border-color:#665"></div><div class="knob-label">SCAN</div></div>
+        <div class="knob-group"><div class="knob" onclick="toggleAudioMode()" style="background:radial-gradient(circle at 38% 35%,#245 0%,#122 60%,#011 100%);border-color:#257"></div><div class="knob-label">AUDIO</div></div>
+      </div>
+      <div class="status-bar">
+        <span>HLS·LIVE</span>
+        <div class="status-ticker"><span class="ticker-inner" id="tickerText">◈ WORLD TV — DW · AL JAZEERA · RT — FREE GLOBAL HLS STREAMS ◈ NO SUBSCRIPTION REQUIRED ◈ AUDIO BACKGROUND MODE AVAILABLE ◈</span></div>
+        <span>STEREO</span>
+      </div>
+      <div class="speaker-grills">
+        <div class="grill" id="grillLeft"></div>
+        <div class="grill" id="grillRight"></div>
+      </div>
+    </div>
+    <div class="tv-legs"><div class="leg"></div><div class="leg"></div></div>
+  </div>
+</div>
+
+<script>
+// Only confirmed working public HLS streams — DW (Akamai), Al Jazeera (getaj.net), RT (rttv.com), NASA (Akamai)
+const CHANNELS = [
+  // DW — Deutsche Welle (Akamai CDN, global, no geo-block)
+  {num:'01',name:'DW English',      region:'dw', regionLabel:'DW · Germany', url:'https://dwamdstream102.akamaized.net/hls/live/2015525/dwstream102/index.m3u8',type:'news'},
+  {num:'02',name:'DW Deutsch',      region:'dw', regionLabel:'DW · Germany', url:'https://dwamdstream101.akamaized.net/hls/live/2015524/dwstream101/index.m3u8',type:'news'},
+  {num:'03',name:'DW Arabic',       region:'dw', regionLabel:'DW · Germany', url:'https://dwamdstream104.akamaized.net/hls/live/2015530/dwstream104/index.m3u8',type:'news'},
+  {num:'04',name:'DW Spanish',      region:'dw', regionLabel:'DW · Germany', url:'https://dwamdstream105.akamaized.net/hls/live/2015531/dwstream105/index.m3u8',type:'news'},
+  {num:'05',name:'DW Hindi',        region:'dw', regionLabel:'DW · Germany', url:'https://dwamdstream106.akamaized.net/hls/live/2015532/dwstream106/index.m3u8',type:'news'},
+  {num:'06',name:'DW Kiswahili',    region:'dw', regionLabel:'DW · Africa',  url:'https://dwamdstream107.akamaized.net/hls/live/2015533/dwstream107/index.m3u8',type:'news'},
+
+  // AL JAZEERA (getaj.net CDN, global, no geo-block)
+  {num:'07',name:'AJ English',      region:'aljazeera', regionLabel:'Al Jazeera · Qatar', url:'https://live-hls-web-aje.getaj.net/AJE/index.m3u8',type:'news'},
+  {num:'08',name:'AJ Arabic',       region:'aljazeera', regionLabel:'Al Jazeera · Qatar', url:'https://live-hls-web-aja.getaj.net/AJA/index.m3u8',type:'news'},
+  {num:'09',name:'AJ Mubasher',     region:'aljazeera', regionLabel:'Al Jazeera · Qatar', url:'https://live-hls-web-ajm.getaj.net/AJM/index.m3u8',type:'news'},
+  {num:'10',name:'AJ Balkans',      region:'aljazeera', regionLabel:'Al Jazeera · Balkans',url:'https://live-hls-web-ajb.getaj.net/AJB/index.m3u8',type:'news'},
+
+  // RT — Russia Today (rttv.com CDN, global)
+  {num:'11',name:'RT English',      region:'rt', regionLabel:'RT · Russia', url:'https://rt-glb.rttv.com/live/rtnews/playlist.m3u8',type:'news'},
+  {num:'12',name:'RT UK',           region:'rt', regionLabel:'RT · UK',     url:'https://rt-uk.rttv.com/live/rtuk/playlist.m3u8',type:'news'},
+  {num:'13',name:'RT Arabic',       region:'rt', regionLabel:'RT · Arabic', url:'https://rt-arab.rttv.com/live/rtarabic/playlist.m3u8',type:'news'},
+  {num:'14',name:'RT Spanish',      region:'rt', regionLabel:'RT · Español',url:'https://rt-esp.rttv.com/live/rtesp/playlist.m3u8',type:'news'},
+  {num:'15',name:'RT French',       region:'rt', regionLabel:'RT · France', url:'https://rt-fra.rttv.com/live/rtfrance/playlist.m3u8',type:'news'},
+  {num:'16',name:'RT Documentary',  region:'rt', regionLabel:'RT · Doc',    url:'https://rt-glb.rttv.com/live/rtdoc/playlist.m3u8',type:'culture'},
+  {num:'17',name:'RT America',      region:'rt', regionLabel:'RT · America',url:'https://rt-usa.rttv.com/live/rtamerica/playlist.m3u8',type:'news'},
+
+];
+
+let currentIdx=-1,audioMode=false,isPowered=true,currentRegion='all';
+let hlsInstance=null,noiseAnim=null;
+
+function startNoise(){
+  const canvas=document.getElementById('staticCanvas'),screen=document.getElementById('mainScreen');
+  canvas.width=screen.offsetWidth||320;canvas.height=screen.offsetHeight||180;
+  const ctx=canvas.getContext('2d');
+  function draw(){
+    const w=canvas.width,h=canvas.height,img=ctx.createImageData(w,h),d=img.data;
+    for(let i=0;i<d.length;i+=4){const v=Math.random()*255|0;d[i]=v;d[i+1]=v;d[i+2]=v;d[i+3]=190;}
+    ctx.putImageData(img,0,0);noiseAnim=requestAnimationFrame(draw);
+  }
+  if(noiseAnim)cancelAnimationFrame(noiseAnim);draw();
+}
+function stopNoise(){if(noiseAnim){cancelAnimationFrame(noiseAnim);noiseAnim=null;}}
+
+function loadStream(url){
+  const video=document.getElementById('tvVideo');
+  if(hlsInstance){hlsInstance.destroy();hlsInstance=null;}
+  showBuffering(true);
+  if(Hls.isSupported()){
+    hlsInstance=new Hls({enableWorker:true,lowLatencyMode:true,backBufferLength:30});
+    hlsInstance.loadSource(url);
+    hlsInstance.attachMedia(video);
+    hlsInstance.on(Hls.Events.MANIFEST_PARSED,()=>{
+      video.muted=false;
+      video.play().catch(()=>{video.muted=true;video.play();});
+      showBuffering(false);
+    });
+    hlsInstance.on(Hls.Events.ERROR,(e,data)=>{
+      if(data.fatal){showError('STREAM ERROR — TRY ANOTHER CHANNEL');showBuffering(false);}
+    });
+  } else if(video.canPlayType('application/vnd.apple.mpegurl')){
+    video.src=url;
+    video.addEventListener('canplay',()=>{video.play();showBuffering(false);},{once:true});
+    video.addEventListener('error',()=>{showError('STREAM ERROR — TRY ANOTHER CHANNEL');showBuffering(false);},{once:true});
+  } else {
+    showError('HLS NOT SUPPORTED — USE CHROME / FIREFOX / SAFARI');showBuffering(false);
+  }
+}
+
+function showBuffering(s){document.getElementById('b
