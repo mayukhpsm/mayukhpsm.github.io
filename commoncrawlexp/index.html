@@ -5,687 +5,387 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Common Crawl Explorer — Research Interface</title>
 <style>
-  :root {
-    --primary: #1a237e;
-    --accent: #1565c0;
-    --accent2: #0d47a1;
-    --light: #e3f2fd;
-    --lighter: #f0f7ff;
-    --border: #b0bec5;
-    --text: #1a1a2e;
-    --muted: #546e7a;
-    --success: #1b5e20;
-    --warn: #e65100;
-    --card: #ffffff;
-    --shadow: 0 2px 12px rgba(26,35,126,0.10);
-    --radius: 10px;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Segoe UI', Arial, sans-serif; background: #eef2f7; color: var(--text); min-height: 100vh; }
-
-  /* HEADER */
-  header {
-    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-    color: white; padding: 18px 32px;
-    display: flex; align-items: center; gap: 16px;
-    box-shadow: 0 3px 16px rgba(26,35,126,0.18);
-  }
-  header .logo { font-size: 2rem; }
-  header h1 { font-size: 1.45rem; font-weight: 700; letter-spacing: 0.5px; }
-  header p { font-size: 0.82rem; opacity: 0.82; margin-top: 2px; }
-
-  /* MAIN */
-  .container { max-width: 1340px; margin: 0 auto; padding: 28px 20px; }
-
-  /* SEARCH CARD */
-  .search-card {
-    background: var(--card); border-radius: var(--radius);
-    box-shadow: var(--shadow); padding: 26px 28px 20px; margin-bottom: 20px;
-  }
-  .search-card h2 { font-size: 1rem; font-weight: 700; color: var(--primary); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.6px; }
-  .search-row { display: flex; gap: 14px; flex-wrap: wrap; align-items: flex-end; }
-  .field-group { display: flex; flex-direction: column; gap: 5px; }
-  .field-group label { font-size: 0.78rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.4px; }
-  input[type="text"], select, input[type="month"] {
-    border: 1.5px solid var(--border); border-radius: 6px;
-    padding: 9px 12px; font-size: 0.93rem; color: var(--text);
-    background: #f8fbff; outline: none; transition: border 0.2s;
-  }
-  input[type="text"]:focus, select:focus, input[type="month"]:focus {
-    border-color: var(--accent); background: white;
-  }
-  #keywordInput { width: 320px; }
-  #hashtagInput { width: 220px; }
-  #matchType { width: 140px; }
-  #dateFrom, #dateTo { width: 155px; }
-  #limitSelect { width: 120px; }
-
-  .btn {
-    padding: 9px 22px; font-size: 0.93rem; font-weight: 700;
-    border: none; border-radius: 6px; cursor: pointer; transition: all 0.18s;
-  }
-  .btn-primary { background: var(--accent); color: white; }
-  .btn-primary:hover { background: var(--primary); }
-  .btn-secondary { background: #eceff1; color: var(--text); }
-  .btn-secondary:hover { background: #cfd8dc; }
-  .btn-warn { background: var(--warn); color: white; font-size: 0.85rem; padding: 7px 16px; }
-  .btn-warn:hover { background: #bf360c; }
-
-  .hint { font-size: 0.76rem; color: var(--muted); margin-top: 5px; }
-
-  /* STATUS BAR */
-  #statusBar {
-    background: var(--lighter); border: 1px solid var(--border);
-    border-radius: 7px; padding: 10px 16px; margin-bottom: 14px;
-    font-size: 0.88rem; color: var(--muted); display: none;
-  }
-  #statusBar.active { display: block; }
-  #statusBar.error { background: #fff3e0; border-color: #ffcc02; color: var(--warn); }
-  #statusBar.success { background: #e8f5e9; border-color: #a5d6a7; color: var(--success); }
-
-  /* RESULTS CARD */
-  .results-card {
-    background: var(--card); border-radius: var(--radius);
-    box-shadow: var(--shadow); padding: 0; overflow: hidden; display: none;
-  }
-  .results-card.active { display: block; }
-
-  .results-header {
-    background: var(--lighter); border-bottom: 1px solid var(--border);
-    padding: 14px 22px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;
-  }
-  .results-header h3 { font-size: 1rem; color: var(--primary); font-weight: 700; }
-  .results-meta { font-size: 0.82rem; color: var(--muted); }
-
-  /* ANALYSIS TOOLBAR */
-  .analysis-bar {
-    background: #f5f7fa; border-bottom: 1px solid var(--border);
-    padding: 12px 22px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
-  }
-  .analysis-bar span { font-size: 0.8rem; font-weight: 700; color: var(--muted); text-transform: uppercase; margin-right: 4px; }
-  .btn-analysis {
-    padding: 6px 16px; font-size: 0.82rem; font-weight: 600;
-    border: 1.5px solid var(--accent); color: var(--accent);
-    background: white; border-radius: 20px; cursor: pointer; transition: all 0.15s;
-  }
-  .btn-analysis:hover, .btn-analysis.active { background: var(--accent); color: white; }
-  #selectedCount { font-size: 0.8rem; color: var(--muted); margin-left: auto; }
-
-  /* TABLE */
-  .table-wrapper { overflow-x: auto; }
-  table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
-  thead tr { background: var(--primary); color: white; }
-  thead th { padding: 11px 10px; text-align: left; font-weight: 600; font-size: 0.79rem; letter-spacing: 0.3px; white-space: nowrap; }
-  thead th:first-child { width: 36px; }
-  tbody tr { border-bottom: 1px solid #eceff1; transition: background 0.12s; }
-  tbody tr:hover { background: var(--lighter); }
-  tbody tr.selected { background: #e3f2fd; }
-  tbody td { padding: 9px 10px; vertical-align: top; }
-  tbody td.url-cell { max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  tbody td.url-cell a { color: var(--accent); text-decoration: none; font-size: 0.82rem; }
-  tbody td.url-cell a:hover { text-decoration: underline; }
-  .badge {
-    display: inline-block; padding: 2px 8px; border-radius: 12px;
-    font-size: 0.72rem; font-weight: 700; margin-right: 3px;
-  }
-  .badge-200 { background: #e8f5e9; color: #2e7d32; }
-  .badge-301 { background: #fff8e1; color: #f57f17; }
-  .badge-404 { background: #fce4ec; color: #c62828; }
-  .badge-other { background: #f3e5f5; color: #6a1b9a; }
-  .mime-badge { background: #e3f2fd; color: #1565c0; display: inline-block; padding: 2px 7px; border-radius: 10px; font-size: 0.71rem; }
-  .tag-coded { background: #e8f5e9; color: #2e7d32; font-size: 0.72rem; padding: 2px 7px; border-radius: 10px; font-weight: 600; }
-
-  /* PAGINATION */
-  .pagination {
-    display: flex; align-items: center; justify-content: center;
-    gap: 6px; padding: 16px 22px; border-top: 1px solid #eceff1; flex-wrap: wrap;
-  }
-  .page-btn {
-    padding: 5px 12px; border: 1.5px solid var(--border);
-    background: white; border-radius: 5px; cursor: pointer;
-    font-size: 0.82rem; color: var(--text); transition: all 0.12s;
-  }
-  .page-btn:hover { background: var(--light); border-color: var(--accent); color: var(--accent); }
-  .page-btn.active { background: var(--accent); color: white; border-color: var(--accent); font-weight: 700; }
-  .page-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-  #pageInfo { font-size: 0.82rem; color: var(--muted); margin: 0 8px; }
-
-  /* MODALS */
-  .modal-overlay {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.5); z-index: 1000; display: none; align-items: center; justify-content: center;
-  }
-  .modal-overlay.open { display: flex; }
-  .modal {
-    background: white; border-radius: 12px; box-shadow: 0 8px 40px rgba(0,0,0,0.22);
-    width: 90%; max-width: 700px; max-height: 88vh; overflow-y: auto;
-  }
-  .modal-header {
-    background: var(--primary); color: white; padding: 16px 22px;
-    border-radius: 12px 12px 0 0; display: flex; justify-content: space-between; align-items: center;
-  }
-  .modal-header h3 { font-size: 1rem; }
-  .modal-close { background: none; border: none; color: white; font-size: 1.4rem; cursor: pointer; line-height: 1; }
-  .modal-body { padding: 22px; }
-  .modal-section { margin-bottom: 18px; }
-  .modal-section h4 { font-size: 0.88rem; font-weight: 700; color: var(--primary); margin-bottom: 8px; }
-  .modal-section p { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
-  .code-snippet {
-    background: #1a1a2e; color: #a5d6a7; font-family: monospace; font-size: 0.8rem;
-    padding: 14px; border-radius: 7px; overflow-x: auto; line-height: 1.6;
-    white-space: pre;
-  }
-  .topic-tag {
-    display: inline-block; padding: 4px 12px; border-radius: 20px;
-    font-size: 0.78rem; font-weight: 600; margin: 3px;
-  }
-  .loading-spinner {
-    display: inline-block; width: 18px; height: 18px;
-    border: 2px solid #b0bec5; border-top: 2px solid var(--accent);
-    border-radius: 50%; animation: spin 0.8s linear infinite; vertical-align: middle; margin-right: 8px;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
-
-  /* EXPORT BAR */
-  .export-bar {
-    padding: 10px 22px; background: #f8fbff; border-top: 1px solid #eceff1;
-    display: flex; gap: 8px; align-items: center;
-  }
-  .export-bar span { font-size: 0.8rem; color: var(--muted); font-weight: 600; }
-
-  /* CRAWL SELECTOR */
-  #crawlSelect { width: 200px; }
-
-  /* RESPONSIVE */
-  @media (max-width: 700px) {
-    .search-row { flex-direction: column; }
-    #keywordInput, #hashtagInput { width: 100%; }
-  }
+:root {
+  --primary: #1a237e; --accent: #1565c0; --light: #e3f2fd;
+  --border: #b0bec5; --text: #1a1a2e; --muted: #546e7a;
+  --card: #ffffff; --shadow: 0 2px 12px rgba(26,35,126,0.10); --radius: 10px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', Arial, sans-serif; background: #eef2f7; color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
+header { background: linear-gradient(135deg,#1a237e,#1565c0); color: #fff; padding: 16px 28px; display: flex; align-items: center; gap: 14px; box-shadow: 0 3px 14px rgba(26,35,126,0.18); }
+header h1 { font-size: 1.35rem; font-weight: 700; }
+header p  { font-size: 0.78rem; opacity: 0.82; margin-top: 2px; }
+.container { max-width: 1380px; margin: 0 auto; padding: 24px 18px; flex: 1; }
+.card { background: #fff; border-radius: var(--radius); box-shadow: var(--shadow); padding: 22px 24px; margin-bottom: 18px; }
+.card h2 { font-size: 0.9rem; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 14px; }
+.row { display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-end; }
+.fg { display: flex; flex-direction: column; gap: 4px; }
+.fg label { font-size: 0.73rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .4px; }
+input[type=text], input[type=month], select {
+  border: 1.5px solid var(--border); border-radius: 6px; padding: 8px 11px;
+  font-size: 0.9rem; color: var(--text); background: #f8fbff; outline: none; transition: border .2s;
+}
+input:focus, select:focus { border-color: var(--accent); background: #fff; }
+#kwIn { width: 300px; } #htIn { width: 200px; } #matchType { width: 140px; }
+#crawlSel { width: 210px; } #dateFrom,#dateTo { width: 152px; }
+#limitSel { width: 120px; } #mimeF { width: 130px; } #statusF { width: 110px; }
+.btn { padding: 8px 20px; font-size: 0.9rem; font-weight: 700; border: none; border-radius: 6px; cursor: pointer; transition: all .15s; }
+.btn-p { background: var(--accent); color: #fff; } .btn-p:hover { background: var(--primary); }
+.btn-s { background: #eceff1; color: var(--text); } .btn-s:hover { background: #cfd8dc; }
+#statusBar { display: none; padding: 10px 16px; border-radius: 7px; font-size: 0.87rem; margin-bottom: 14px; border: 1px solid transparent; }
+#statusBar.info  { display:block; background:#e3f2fd; border-color:#90caf9; color:#0d47a1; }
+#statusBar.ok    { display:block; background:#e8f5e9; border-color:#a5d6a7; color:#1b5e20; }
+#statusBar.err   { display:block; background:#fff3e0; border-color:#ffcc80; color:#e65100; }
+.spin { display:inline-block; width:14px; height:14px; border:2px solid #90caf9; border-top:2px solid var(--accent); border-radius:50%; animation:spin .7s linear infinite; vertical-align:middle; margin-right:6px; }
+@keyframes spin { to { transform:rotate(360deg); } }
+.res-card { display:none; } .res-card.show { display:block; }
+.res-hdr { background:#f5f7fa; border-bottom:1px solid #eceff1; padding:12px 20px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; }
+.res-hdr h3 { font-size:.95rem; color:var(--primary); font-weight:700; }
+.res-meta { font-size:.8rem; color:var(--muted); }
+.anal-bar { background:#f8fafc; border-bottom:1px solid #eceff1; padding:10px 20px; display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+.anal-bar .lbl { font-size:.75rem; font-weight:700; color:var(--muted); text-transform:uppercase; }
+.abtn { padding:5px 14px; font-size:.79rem; font-weight:600; border:1.5px solid var(--accent); color:var(--accent); background:#fff; border-radius:20px; cursor:pointer; transition:all .15s; }
+.abtn:hover,.abtn.on { background:var(--accent); color:#fff; }
+#selCount { font-size:.79rem; color:var(--muted); margin-left:auto; }
+.tw { overflow-x:auto; }
+table { width:100%; border-collapse:collapse; font-size:.83rem; }
+thead tr { background:var(--primary); color:#fff; }
+thead th { padding:10px 9px; text-align:left; font-size:.76rem; font-weight:600; white-space:nowrap; }
+tbody tr { border-bottom:1px solid #eceff1; transition:background .1s; }
+tbody tr:hover { background:#f0f7ff; }
+tbody tr.sel { background:#e3f2fd; }
+tbody td { padding:8px 9px; vertical-align:top; }
+.uc { max-width:250px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.uc a { color:var(--accent); text-decoration:none; font-size:.79rem; }
+.uc a:hover { text-decoration:underline; }
+.badge { display:inline-block; padding:2px 7px; border-radius:11px; font-size:.7rem; font-weight:700; }
+.b200 { background:#e8f5e9; color:#2e7d32; } .b301 { background:#fff8e1; color:#f57f17; }
+.b404 { background:#fce4ec; color:#c62828; } .bX  { background:#f3e5f5; color:#6a1b9a; }
+.mb { background:#e3f2fd; color:#1565c0; display:inline-block; padding:2px 7px; border-radius:10px; font-size:.69rem; }
+.ctag { background:#e8f5e9; color:#2e7d32; font-size:.7rem; padding:2px 7px; border-radius:10px; font-weight:600; }
+.pgn { display:flex; align-items:center; justify-content:center; gap:5px; padding:14px 20px; border-top:1px solid #eceff1; flex-wrap:wrap; }
+.pb { padding:4px 11px; border:1.5px solid var(--border); background:#fff; border-radius:5px; cursor:pointer; font-size:.8rem; transition:all .12s; }
+.pb:hover { background:var(--light); border-color:var(--accent); color:var(--accent); }
+.pb.on { background:var(--accent); color:#fff; border-color:var(--accent); font-weight:700; }
+.pb:disabled { opacity:.38; cursor:not-allowed; }
+.exp-bar { padding:9px 20px; background:#f8fbff; border-top:1px solid #eceff1; display:flex; gap:7px; align-items:center; }
+.exp-bar span { font-size:.78rem; color:var(--muted); font-weight:600; }
+/* MODALS */
+.ov { position:fixed; inset:0; background:rgba(0,0,0,.48); z-index:999; display:none; align-items:center; justify-content:center; }
+.ov.open { display:flex; }
+.modal { background:#fff; border-radius:12px; box-shadow:0 8px 40px rgba(0,0,0,.22); width:90%; max-width:680px; max-height:88vh; overflow-y:auto; }
+.mhdr { background:var(--primary); color:#fff; padding:14px 20px; border-radius:12px 12px 0 0; display:flex; justify-content:space-between; align-items:center; }
+.mhdr h3 { font-size:.95rem; } .mcl { background:none; border:none; color:#fff; font-size:1.35rem; cursor:pointer; }
+.mbody { padding:20px; }
+.ms h4 { font-size:.85rem; font-weight:700; color:var(--primary); margin-bottom:7px; }
+.ms p  { font-size:.83rem; color:var(--muted); line-height:1.6; margin-bottom:8px; }
+.code { background:#1a1a2e; color:#a5d6a7; font-family:monospace; font-size:.77rem; padding:13px; border-radius:7px; overflow-x:auto; line-height:1.6; white-space:pre; margin-top:6px; }
+.ttag { display:inline-block; padding:3px 11px; border-radius:18px; font-size:.76rem; font-weight:600; margin:3px; }
+.g2 { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+footer { background:#fff; border-top:1px solid #cfd8dc; padding:14px 24px; text-align:center; color:#546e7a; font-size:.82rem; box-shadow:0 -1px 6px rgba(0,0,0,.04); }
+footer a { color:var(--accent); text-decoration:none; }
+@media(max-width:600px){ .row{flex-direction:column;} #kwIn,#htIn{width:100%;} }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
 <header>
-  <div class="logo">🕸️</div>
+  <div style="font-size:1.9rem;">🕸️</div>
   <div>
     <h1>Common Crawl Explorer</h1>
-    <p>Research interface · Common Crawl Index API + local backend fallback · Up to 1,000,000 records · Qualitative & NLP Analysis</p>
+    <p>CDX Index API · Amazon Open Data · Up to 1,000,000 records · Qualitative &amp; NLP Analysis</p>
   </div>
 </header>
 
 <div class="container">
 
-  <!-- SEARCH PANEL -->
-  <div class="search-card">
-    <h2>🔍 Search Parameters</h2>
-    <div class="search-row">
-      <div class="field-group">
-        <label>Keywords</label>
-        <input type="text" id="keywordInput" placeholder="e.g. organizational nostalgia, phubbing" />
-      </div>
-      <div class="field-group">
-        <label>Hashtags / Domain Filter</label>
-        <input type="text" id="hashtagInput" placeholder="e.g. #nostalgia or *.twitter.com" />
-      </div>
-      <div class="field-group">
-        <label>Match Type</label>
-        <select id="matchType">
-          <option value="domain">Domain (*.example.com)</option>
-          <option value="host">Host</option>
-          <option value="prefix">URL Prefix</option>
-          <option value="exact" selected>Exact URL</option>
-        </select>
-      </div>
-      <div class="field-group">
-        <label>Crawl Index</label>
-        <select id="crawlSelect"></select>
-      </div>
+<!-- SEARCH CARD -->
+<div class="card">
+  <h2>🔍 Search Parameters</h2>
+  <div class="row">
+    <div class="fg"><label>Keywords</label><input type="text" id="kwIn" placeholder="e.g. organizational nostalgia, phubbing"/></div>
+    <div class="fg"><label>Hashtag / Domain Filter</label><input type="text" id="htIn" placeholder="#nostalgia or *.reddit.com"/></div>
+    <div class="fg"><label>Match Type</label>
+      <select id="matchType">
+        <option value="domain">Domain (*.example.com)</option>
+        <option value="host">Host</option>
+        <option value="prefix">URL Prefix</option>
+        <option value="exact" selected>Exact / Wildcard</option>
+      </select>
     </div>
-    <div class="search-row" style="margin-top:14px;">
-      <div class="field-group">
-        <label>📅 Timeline: Start (Month–Year)</label>
-        <input type="month" id="dateFrom" value="2023-01" />
-      </div>
-      <div class="field-group">
-        <label>📅 Timeline: End (Month–Year)</label>
-        <input type="month" id="dateTo" value="2025-12" />
-      </div>
-      <div class="field-group">
-        <label>Max Records</label>
-        <select id="limitSelect">
-          <option value="100">100</option>
-          <option value="500">500</option>
-          <option value="1000" selected>1,000</option>
-          <option value="5000">5,000</option>
-          <option value="10000">10,000</option>
-          <option value="50000">50,000</option>
-          <option value="100000">100,000</option>
-          <option value="500000">500,000</option>
-          <option value="1000000">1,000,000</option>
-        </select>
-      </div>
-      <div class="field-group">
-        <label>Filter: MIME Type</label>
-        <select id="mimeFilter">
-          <option value="">All</option>
-          <option value="text/html">HTML</option>
-          <option value="application/json">JSON</option>
-          <option value="text/plain">Plain Text</option>
-          <option value="application/pdf">PDF</option>
-        </select>
-      </div>
-      <div class="field-group">
-        <label>HTTP Status</label>
-        <select id="statusFilter">
-          <option value="">All</option>
-          <option value="200">200 OK</option>
-          <option value="301">301 Redirect</option>
-          <option value="404">404 Not Found</option>
-        </select>
-      </div>
+    <div class="fg"><label>Crawl Index</label><select id="crawlSel"></select></div>
+  </div>
+  <div class="row" style="margin-top:12px;">
+    <div class="fg"><label>📅 From (Month-Year)</label><input type="month" id="dateFrom" value="2023-01"/></div>
+    <div class="fg"><label>📅 To (Month-Year)</label><input type="month" id="dateTo" value="2025-12"/></div>
+    <div class="fg"><label>Max Records</label>
+      <select id="limitSel">
+        <option value="50">50</option><option value="100">100</option>
+        <option value="500">500</option><option value="1000" selected>1,000</option>
+        <option value="5000">5,000</option><option value="10000">10,000</option>
+        <option value="50000">50,000</option><option value="100000">100,000</option>
+        <option value="1000000">1,000,000</option>
+      </select>
     </div>
-    <div class="search-row" style="margin-top:18px; align-items:center;">
-      <button class="btn btn-primary" onclick="startSearch()">🔎 Search Common Crawl</button>
-      <button class="btn btn-secondary" onclick="loadDemo()">📥 Load Demo Data</button>
-      <button class="btn btn-secondary" onclick="clearAll()">✕ Clear</button>
-      <div class="hint" style="margin-left:auto;">API: <code>https://index.commoncrawl.org/CC-MAIN-{crawl}-index?url=...&output=json</code></div>
+    <div class="fg"><label>MIME Filter</label>
+      <select id="mimeF">
+        <option value="">All</option><option value="text/html">HTML</option>
+        <option value="application/json">JSON</option><option value="text/plain">Plain Text</option>
+        <option value="application/pdf">PDF</option>
+      </select>
+    </div>
+    <div class="fg"><label>HTTP Status</label>
+      <select id="statusF">
+        <option value="">All</option><option value="200">200 OK</option>
+        <option value="301">301 Redirect</option><option value="404">404 Not Found</option>
+      </select>
     </div>
   </div>
-
-  <!-- STATUS BAR -->
-  <div id="statusBar"></div>
-
-  <!-- RESULTS CARD -->
-  <div class="results-card" id="resultsCard">
-    <div class="results-header">
-      <div>
-        <h3>📄 Search Results</h3>
-        <div class="results-meta" id="resultsMeta"></div>
-      </div>
-      <div style="display:flex;gap:8px;">
-        <button class="btn btn-secondary" style="font-size:0.82rem;padding:6px 14px;" onclick="selectAll()">☑ Select All Page</button>
-        <button class="btn btn-secondary" style="font-size:0.82rem;padding:6px 14px;" onclick="deselectAll()">☐ Deselect All</button>
-      </div>
-    </div>
-
-    <!-- ANALYSIS TOOLBAR -->
-    <div class="analysis-bar">
-      <span>🧪 Analyse:</span>
-      <button class="btn-analysis" onclick="openAnalysis('coding')">🏷️ Qualitative Coding</button>
-      <button class="btn-analysis" onclick="openAnalysis('berttopic')">🤖 BERTopic Modelling</button>
-      <button class="btn-analysis" onclick="openAnalysis('lda')">📊 LDA Topic Modelling</button>
-      <button class="btn-analysis" onclick="openAnalysis('sentiment')">💬 Context-Aware Sentiment</button>
-      <div id="selectedCount">0 rows selected</div>
-    </div>
-
-    <!-- TABLE -->
-    <div class="table-wrapper">
-      <table id="resultsTable">
-        <thead>
-          <tr>
-            <th><input type="checkbox" id="selectAllChk" onchange="toggleAllPage(this)"></th>
-            <th>#</th>
-            <th>URL</th>
-            <th>Domain</th>
-            <th>Crawl Date</th>
-            <th>MIME</th>
-            <th>Status</th>
-            <th>Language</th>
-            <th>Size (bytes)</th>
-            <th>Digest</th>
-            <th>Filename (WARC)</th>
-            <th>Coded</th>
-          </tr>
-        </thead>
-        <tbody id="tableBody"></tbody>
-      </table>
-    </div>
-
-    <!-- EXPORT BAR -->
-    <div class="export-bar">
-      <span>Export:</span>
-      <button class="btn btn-secondary" style="font-size:0.8rem;padding:5px 14px;" onclick="exportCSV()">⬇ CSV</button>
-      <button class="btn btn-secondary" style="font-size:0.8rem;padding:5px 14px;" onclick="exportJSON()">⬇ JSON</button>
-      <button class="btn btn-secondary" style="font-size:0.8rem;padding:5px 14px;" onclick="exportTXT()">⬇ URLs (.txt)</button>
-    </div>
-
-    <!-- PAGINATION -->
-    <div class="pagination" id="paginationBar"></div>
+  <div class="row" style="margin-top:16px;align-items:center;">
+    <button class="btn btn-p" id="searchBtn" onclick="doSearch()">🔎 Search Common Crawl</button>
+    <button class="btn btn-s" onclick="loadDemo()">📥 Load Demo Data</button>
+    <button class="btn btn-s" onclick="clearAll()">✕ Clear</button>
+    <button class="btn btn-s" onclick="showPyScript()" style="font-size:.8rem;">🐍 Get Python Script</button>
   </div>
+</div>
+
+<!-- STATUS -->
+<div id="statusBar"></div>
+
+<!-- RESULTS -->
+<div class="card res-card" id="resCard">
+  <div class="res-hdr">
+    <div><h3>📄 Results</h3><div class="res-meta" id="resMeta"></div></div>
+    <div style="display:flex;gap:7px;">
+      <button class="btn btn-s" style="font-size:.79rem;padding:5px 12px;" onclick="selAll()">☑ Select All</button>
+      <button class="btn btn-s" style="font-size:.79rem;padding:5px 12px;" onclick="deselAll()">☐ Deselect</button>
+    </div>
+  </div>
+  <div class="anal-bar">
+    <span class="lbl">🧪 Analyse:</span>
+    <button class="abtn" onclick="openM('m-code')">🏷️ Qualitative Coding</button>
+    <button class="abtn" onclick="openM('m-bert')">🤖 BERTopic</button>
+    <button class="abtn" onclick="openM('m-lda')">📊 LDA</button>
+    <button class="abtn" onclick="openM('m-sent')">💬 Sentiment</button>
+    <div id="selCount">0 rows selected</div>
+  </div>
+  <div class="tw"><table id="tbl">
+    <thead><tr>
+      <th><input type="checkbox" id="allChk" onchange="togAll(this)"/></th>
+      <th>#</th><th>URL</th><th>Domain</th><th>Crawl Date</th>
+      <th>MIME</th><th>Status</th><th>Lang</th><th>Size</th><th>Digest</th><th>WARC File</th><th>Codes</th>
+    </tr></thead>
+    <tbody id="tbody"></tbody>
+  </table></div>
+  <div class="exp-bar">
+    <span>Export:</span>
+    <button class="btn btn-s" style="font-size:.78rem;padding:4px 13px;" onclick="expCSV()">⬇ CSV</button>
+    <button class="btn btn-s" style="font-size:.78rem;padding:4px 13px;" onclick="expJSON()">⬇ JSON</button>
+    <button class="btn btn-s" style="font-size:.78rem;padding:4px 13px;" onclick="expTXT()">⬇ URLs</button>
+  </div>
+  <div class="pgn" id="pgn"></div>
+</div>
 
 </div><!-- /container -->
 
-
-<!-- ======================== MODALS ======================== -->
-
-<!-- QUALITATIVE CODING MODAL -->
-<div class="modal-overlay" id="modal-coding">
+<!-- PYTHON SCRIPT MODAL -->
+<div class="ov" id="m-py">
   <div class="modal">
-    <div class="modal-header">
-      <h3>🏷️ Qualitative Coding Panel</h3>
-      <button class="modal-close" onclick="closeModal('modal-coding')">×</button>
-    </div>
-    <div class="modal-body">
-      <div class="modal-section">
-        <h4>Selected Records</h4>
-        <p id="codingSelectionInfo" style="color:var(--text);font-weight:600;"></p>
+    <div class="mhdr"><h3>🐍 Python Backend Script</h3><button class="mcl" onclick="closeM('m-py')">×</button></div>
+    <div class="mbody">
+      <div class="ms"><h4>Why use this?</h4>
+        <p>The Common Crawl CDX API occasionally returns 504 / CORS errors when called directly from a browser, especially for wildcard queries or large result sets. Running this script locally bypasses CORS entirely and handles pagination robustly. Save the output JSON, then drag-and-drop or paste it into the interface via "Load JSON" below.</p>
       </div>
-      <div class="modal-section">
-        <h4>Assign Code(s)</h4>
-        <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;">
-          <input type="text" id="newCodeInput" placeholder="Type a code label..." style="flex:1;min-width:180px;" />
-          <select id="codeColor" style="width:110px;">
-            <option value="#e8f5e9" data-txt="#2e7d32">🟢 Green</option>
-            <option value="#e3f2fd" data-txt="#1565c0">🔵 Blue</option>
-            <option value="#fce4ec" data-txt="#c62828">🔴 Red</option>
-            <option value="#fff8e1" data-txt="#f57f17">🟡 Yellow</option>
-            <option value="#f3e5f5" data-txt="#6a1b9a">🟣 Purple</option>
-            <option value="#e0f2f1" data-txt="#00695c">🩵 Teal</option>
-          </select>
-          <button class="btn btn-primary" onclick="addCode()" style="padding:7px 16px;">+ Add Code</button>
-        </div>
-        <div id="codeList" style="min-height:32px;display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;"></div>
+      <div class="ms"><h4>Script (Python 3.8+)</h4>
+        <div class="code" id="pyCode">Loading...</div>
       </div>
-      <div class="modal-section">
-        <h4>Memo / Annotation</h4>
-        <textarea id="codingMemo" rows="4" style="width:100%;border:1.5px solid var(--border);border-radius:6px;padding:9px;font-size:0.87rem;resize:vertical;" placeholder="Write your analytical memo here..."></textarea>
-      </div>
-      <div class="modal-section">
-        <h4>Python Backend Script (run locally)</h4>
-        <div class="code-snippet">
-# Qualitative Coding — Export for NVivo / QualCoder / ATLAS.ti
-import json, csv, datetime
-
-coded_records = []  # populate from your exported JSON
-codes = [<span id="codeSnippetList">"code1","code2"</span>]
-memo = """<span id="memoSnippet"></span>"""
-
-with open(f"coded_export_{datetime.date.today()}.json","w") as f:
-    json.dump({"codes": codes, "memo": memo, "records": coded_records}, f, indent=2)
-print("Exported coded dataset for QualCoder / NVivo import.")
-        </div>
-      </div>
-      <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:16px;">
-        <button class="btn btn-primary" onclick="applyCoding()">✅ Apply Codes to Selection</button>
-        <button class="btn btn-secondary" onclick="closeModal('modal-coding')">Cancel</button>
+      <div class="ms" style="margin-top:14px;">
+        <h4>Load local JSON result</h4>
+        <input type="file" id="jsonFile" accept=".json" onchange="loadLocalJSON(this)" style="font-size:.85rem;"/>
       </div>
     </div>
   </div>
 </div>
 
-<!-- BERTTOPIC MODAL -->
-<div class="modal-overlay" id="modal-berttopic">
+<!-- QUALITATIVE CODING -->
+<div class="ov" id="m-code">
   <div class="modal">
-    <div class="modal-header">
-      <h3>🤖 BERTopic Topic Modelling</h3>
-      <button class="modal-close" onclick="closeModal('modal-berttopic')">×</button>
-    </div>
-    <div class="modal-body">
-      <div class="modal-section">
-        <h4>What is BERTopic?</h4>
-        <p>BERTopic uses BERT sentence embeddings + UMAP dimensionality reduction + HDBSCAN clustering to discover coherent topics. It is especially powerful for short-text corpora and social media data, preserving semantic nuance lost by bag-of-words approaches like LDA.</p>
+    <div class="mhdr"><h3>🏷️ Qualitative Coding</h3><button class="mcl" onclick="closeM('m-code')">×</button></div>
+    <div class="mbody">
+      <div class="ms"><p id="codeSelInfo" style="font-weight:700;color:var(--text);"></p></div>
+      <div class="ms"><h4>Add Code</h4>
+        <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;">
+          <input type="text" id="codeInp" placeholder="Code label..." style="flex:1;min-width:160px;"/>
+          <select id="codeCol">
+            <option value="#e8f5e9|#2e7d32">🟢 Green</option>
+            <option value="#e3f2fd|#1565c0">🔵 Blue</option>
+            <option value="#fce4ec|#c62828">🔴 Red</option>
+            <option value="#fff8e1|#f57f17">🟡 Yellow</option>
+            <option value="#f3e5f5|#6a1b9a">🟣 Purple</option>
+          </select>
+          <button class="btn btn-p" onclick="addCode()" style="padding:6px 14px;">+ Add</button>
+        </div>
+        <div id="codeList" style="display:flex;flex-wrap:wrap;gap:6px;min-height:30px;"></div>
       </div>
-      <div class="modal-section">
-        <h4>Configuration</h4>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-          <div class="field-group">
-            <label>Embedding Model</label>
-            <select id="bertModel" style="width:100%;">
-              <option>all-MiniLM-L6-v2 (fast)</option>
-              <option>all-mpnet-base-v2 (accurate)</option>
-              <option>paraphrase-multilingual-MiniLM-L12-v2</option>
-              <option>sentence-transformers/all-distilroberta-v1</option>
-            </select>
+      <div class="ms"><h4>Memo</h4>
+        <textarea id="memo" rows="4" style="width:100%;border:1.5px solid var(--border);border-radius:6px;padding:8px;font-size:.85rem;resize:vertical;" placeholder="Analytical memo..."></textarea>
+      </div>
+      <div class="ms"><h4>Export for QualCoder / NVivo</h4>
+        <div class="code">import json
+coded = json.load(open("commoncrawl_export.json"))
+codes = [r.get("codes",[]) for r in coded]
+print("Coded records ready for QualCoder import.")</div>
+      </div>
+      <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:14px;">
+        <button class="btn btn-p" onclick="applyCodes()">✅ Apply Codes</button>
+        <button class="btn btn-s" onclick="closeM('m-code')">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BERTTOPIC -->
+<div class="ov" id="m-bert">
+  <div class="modal">
+    <div class="mhdr"><h3>🤖 BERTopic Modelling</h3><button class="mcl" onclick="closeM('m-bert')">×</button></div>
+    <div class="mbody">
+      <div class="ms"><h4>About BERTopic</h4>
+        <p>BERTopic uses BERT sentence embeddings + UMAP + HDBSCAN to produce coherent, human-readable topics. It outperforms LDA on short texts and social media data, preserving semantic meaning rather than relying on raw word counts.</p>
+      </div>
+      <div class="ms"><h4>Configuration &amp; Python Script</h4>
+        <div class="g2">
+          <div class="fg"><label>Embedding Model</label>
+            <select style="width:100%;"><option>all-MiniLM-L6-v2 (fast)</option><option>all-mpnet-base-v2 (accurate)</option><option>paraphrase-multilingual-MiniLM-L12-v2</option></select>
           </div>
-          <div class="field-group">
-            <label>Min Topic Size</label>
-            <input type="number" id="bertMinSize" value="10" min="2" style="width:100%;" />
-          </div>
-          <div class="field-group">
-            <label>Nr of Topics</label>
-            <select id="bertNrTopics" style="width:100%;">
-              <option value="auto">Auto</option>
-              <option value="10">10</option>
-              <option value="20">20</option>
-              <option value="30">30</option>
-              <option value="50">50</option>
-            </select>
-          </div>
-          <div class="field-group">
-            <label>Text Field</label>
-            <select id="bertTextField" style="width:100%;">
-              <option value="url">URL (as proxy text)</option>
-              <option value="fetched_text">Fetched Page Text (WET)</option>
-              <option value="title">Page Title (WAT)</option>
-            </select>
+          <div class="fg"><label>Nr of Topics</label>
+            <select style="width:100%;"><option>Auto</option><option>10</option><option>20</option><option>30</option><option>50</option></select>
           </div>
         </div>
-      </div>
-      <div class="modal-section">
-        <h4>Python Script (run in your environment)</h4>
-        <div class="code-snippet">
-pip install bertopic sentence-transformers umap-learn hdbscan
+        <div class="code">pip install bertopic sentence-transformers umap-learn hdbscan
 
 from bertopic import BERTopic
 from sentence_transformers import SentenceTransformer
 import pandas as pd
 
 df = pd.read_csv("commoncrawl_export.csv")
-docs = df["url"].tolist()  # or fetched WET text
+docs = df["url"].tolist()  # replace with WET fetched text
 
-embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
-topic_model = BERTopic(
-    embedding_model=embedding_model,
-    min_topic_size=10,
-    nr_topics="auto",
-    language="english",
-    calculate_probabilities=True,
-    verbose=True
-)
+model = SentenceTransformer("all-MiniLM-L6-v2")
+topic_model = BERTopic(embedding_model=model, min_topic_size=10,
+                       nr_topics="auto", language="english")
 topics, probs = topic_model.fit_transform(docs)
 df["topic_id"] = topics
-topic_info = topic_model.get_topic_info()
-print(topic_info)
-
-topic_model.visualize_topics().show()
+print(topic_model.get_topic_info())
 topic_model.visualize_barchart(top_n_topics=15).show()
-topic_model.save("berttopic_commoncrawl_model")
-        </div>
+topic_model.save("berttopic_model")</div>
       </div>
-      <div style="text-align:right;margin-top:16px;">
-        <button class="btn btn-secondary" onclick="closeModal('modal-berttopic')">Close</button>
-      </div>
+      <div style="text-align:right;margin-top:14px;"><button class="btn btn-s" onclick="closeM('m-bert')">Close</button></div>
     </div>
   </div>
 </div>
 
-<!-- LDA MODAL -->
-<div class="modal-overlay" id="modal-lda">
+<!-- LDA -->
+<div class="ov" id="m-lda">
   <div class="modal">
-    <div class="modal-header">
-      <h3>📊 LDA Topic Modelling</h3>
-      <button class="modal-close" onclick="closeModal('modal-lda')">×</button>
-    </div>
-    <div class="modal-body">
-      <div class="modal-section">
-        <h4>What is LDA?</h4>
-        <p>Latent Dirichlet Allocation (LDA) is a generative probabilistic model that treats documents as mixtures of latent topics. It works well with large corpora and is interpretable. Best for longer text documents like web pages fetched via Common Crawl WET files.</p>
+    <div class="mhdr"><h3>📊 LDA Topic Modelling</h3><button class="mcl" onclick="closeM('m-lda')">×</button></div>
+    <div class="mbody">
+      <div class="ms"><h4>About LDA</h4>
+        <p>Latent Dirichlet Allocation treats each document as a mixture of latent topics. Best for longer text corpora. Pair with pyLDAvis for interactive topic exploration.</p>
       </div>
-      <div class="modal-section">
-        <h4>Configuration</h4>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-          <div class="field-group">
-            <label>Number of Topics (K)</label>
-            <input type="number" id="ldaK" value="20" min="2" max="200" style="width:100%;" />
-          </div>
-          <div class="field-group">
-            <label>Max Iterations</label>
-            <input type="number" id="ldaIter" value="50" min="10" max="500" style="width:100%;" />
-          </div>
-          <div class="field-group">
-            <label>Alpha (document-topic)</label>
-            <select id="ldaAlpha" style="width:100%;">
-              <option value="auto">Auto</option>
-              <option value="symmetric">Symmetric</option>
-              <option value="asymmetric">Asymmetric</option>
-            </select>
-          </div>
-          <div class="field-group">
-            <label>Remove Stopwords</label>
-            <select id="ldaStopwords" style="width:100%;">
-              <option value="english">English</option>
-              <option value="none">None</option>
-              <option value="custom">Custom List</option>
-            </select>
-          </div>
-          <div class="field-group">
-            <label>Min Document Frequency</label>
-            <input type="number" id="ldaMinDf" value="5" min="1" style="width:100%;" />
-          </div>
-          <div class="field-group">
-            <label>Max Document Frequency (%)</label>
-            <input type="number" id="ldaMaxDf" value="95" min="10" max="100" style="width:100%;" />
-          </div>
-        </div>
+      <div class="ms g2">
+        <div class="fg"><label>Topics (K)</label><input type="number" value="20" min="2" style="width:100%;"/></div>
+        <div class="fg"><label>Passes</label><input type="number" value="50" min="5" style="width:100%;"/></div>
+        <div class="fg"><label>Alpha</label><select style="width:100%;"><option>auto</option><option>symmetric</option><option>asymmetric</option></select></div>
+        <div class="fg"><label>Min DF</label><input type="number" value="5" min="1" style="width:100%;"/></div>
       </div>
-      <div class="modal-section">
-        <h4>Python Script (run in your environment)</h4>
-        <div class="code-snippet">
-pip install gensim pyLDAvis nltk pandas
+      <div class="ms"><h4>Python Script</h4>
+        <div class="code">pip install gensim pyLDAvis nltk
 
-import pandas as pd, gensim, nltk, pyLDAvis.gensim_models
+import gensim, pyLDAvis.gensim_models, pandas as pd
 from gensim import corpora
-from gensim.models import LdaModel
 from nltk.corpus import stopwords
-nltk.download("stopwords")
 
 df = pd.read_csv("commoncrawl_export.csv")
-# Fetch text via WET files for each record:
-# wget https://data.commoncrawl.org/{filename} 
+stop = set(stopwords.words("english"))
+texts = [[w for w in d.lower().split() if w not in stop]
+         for d in df["url"].tolist()]
 
-stop_words = set(stopwords.words("english"))
-texts = [[w for w in doc.lower().split() if w not in stop_words]
-         for doc in df["url"].tolist()]
+dct = corpora.Dictionary(texts)
+dct.filter_extremes(no_below=5, no_above=0.95)
+corpus = [dct.doc2bow(t) for t in texts]
 
-dictionary = corpora.Dictionary(texts)
-dictionary.filter_extremes(no_below=5, no_above=0.95)
-corpus = [dictionary.doc2bow(t) for t in texts]
-
-lda = LdaModel(corpus=corpus, id2word=dictionary,
-               num_topics=20, passes=50, alpha="auto")
-
-lda.save("lda_commoncrawl.model")
-vis = pyLDAvis.gensim_models.prepare(lda, corpus, dictionary)
-pyLDAvis.save_html(vis, "lda_topics_visualization.html")
-print("Interactive LDA visualization saved.")
-        </div>
+lda = gensim.models.LdaModel(corpus, id2word=dct,
+      num_topics=20, passes=50, alpha="auto")
+vis = pyLDAvis.gensim_models.prepare(lda, corpus, dct)
+pyLDAvis.save_html(vis, "lda_topics.html")</div>
       </div>
-      <div style="text-align:right;margin-top:16px;">
-        <button class="btn btn-secondary" onclick="closeModal('modal-lda')">Close</button>
-      </div>
+      <div style="text-align:right;margin-top:14px;"><button class="btn btn-s" onclick="closeM('m-lda')">Close</button></div>
     </div>
   </div>
 </div>
 
-<!-- SENTIMENT MODAL -->
-<div class="modal-overlay" id="modal-sentiment">
+<!-- SENTIMENT -->
+<div class="ov" id="m-sent">
   <div class="modal">
-    <div class="modal-header">
-      <h3>💬 Context-Aware Sentiment Analysis</h3>
-      <button class="modal-close" onclick="closeModal('modal-sentiment')">×</button>
-    </div>
-    <div class="modal-body">
-      <div class="modal-section">
-        <h4>About Context-Aware Sentiment</h4>
-        <p>Context-aware sentiment analysis uses transformer-based models (RoBERTa, DeBERTa, DistilBERT) that understand negations, sarcasm, and nuanced expressions — going beyond simple positive/negative polarity scoring. Results include: Positive, Negative, Neutral, Mixed, plus an intensity score (0–1).</p>
+    <div class="mhdr"><h3>💬 Context-Aware Sentiment</h3><button class="mcl" onclick="closeM('m-sent')">×</button></div>
+    <div class="mbody">
+      <div class="ms"><h4>About</h4>
+        <p>Context-aware sentiment uses transformer models (RoBERTa, DeBERTa) that understand negation, sarcasm, and nuanced language. Outputs: Positive / Negative / Neutral + intensity score (0–1).</p>
       </div>
-      <div class="modal-section">
-        <h4>Configuration</h4>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-          <div class="field-group">
-            <label>Model</label>
-            <select id="sentModel" style="width:100%;">
-              <option>cardiffnlp/twitter-roberta-base-sentiment</option>
-              <option>nlptown/bert-base-multilingual-uncased-sentiment</option>
-              <option>siebert/sentiment-roberta-large-english</option>
-              <option>ProsusAI/finbert (finance domain)</option>
-              <option>j-hartmann/emotion-english-distilroberta-base</option>
-            </select>
-          </div>
-          <div class="field-group">
-            <label>Analysis Granularity</label>
-            <select id="sentGran" style="width:100%;">
-              <option>Document-level</option>
-              <option>Sentence-level</option>
-              <option>Aspect-based (ABSA)</option>
-            </select>
-          </div>
-          <div class="field-group">
-            <label>Batch Size</label>
-            <input type="number" id="sentBatch" value="32" min="1" style="width:100%;" />
-          </div>
-          <div class="field-group">
-            <label>Output Labels</label>
-            <select id="sentLabels" style="width:100%;">
-              <option>Positive / Negative / Neutral</option>
-              <option>5-star scale</option>
-              <option>Emotion (joy, anger, fear, sadness, surprise, disgust)</option>
-            </select>
-          </div>
+      <div class="ms g2">
+        <div class="fg"><label>Model</label>
+          <select style="width:100%;">
+            <option>cardiffnlp/twitter-roberta-base-sentiment</option>
+            <option>siebert/sentiment-roberta-large-english</option>
+            <option>nlptown/bert-base-multilingual-uncased-sentiment</option>
+            <option>j-hartmann/emotion-english-distilroberta-base</option>
+          </select>
+        </div>
+        <div class="fg"><label>Granularity</label>
+          <select style="width:100%;"><option>Document-level</option><option>Sentence-level</option><option>Aspect-based (ABSA)</option></select>
+        </div>
+        <div class="fg"><label>Batch Size</label><input type="number" value="32" style="width:100%;"/></div>
+        <div class="fg"><label>Labels</label>
+          <select style="width:100%;"><option>Pos / Neg / Neutral</option><option>5-star scale</option><option>Emotion (6-class)</option></select>
         </div>
       </div>
-      <div class="modal-section">
-        <h4>Python Script (run in your environment)</h4>
-        <div class="code-snippet">
-pip install transformers torch pandas tqdm
+      <div class="ms"><h4>Python Script</h4>
+        <div class="code">pip install transformers torch pandas tqdm
 
 from transformers import pipeline
 import pandas as pd
 from tqdm import tqdm
 
 df = pd.read_csv("commoncrawl_export.csv")
-texts = df["url"].tolist()  # replace with actual page text from WET
+texts = df["url"].tolist()  # swap with WET text
 
-sentiment_pipeline = pipeline(
-    "sentiment-analysis",
+pipe = pipeline("sentiment-analysis",
     model="cardiffnlp/twitter-roberta-base-sentiment",
-    truncation=True, max_length=512, batch_size=32
-)
+    truncation=True, max_length=512, batch_size=32)
 
 results = []
-for batch in tqdm(range(0, len(texts), 32)):
-    batch_texts = texts[batch:batch+32]
-    preds = sentiment_pipeline(batch_texts)
-    results.extend(preds)
+for i in tqdm(range(0, len(texts), 32)):
+    results.extend(pipe(texts[i:i+32]))
 
-df["sentiment_label"] = [r["label"] for r in results]
-df["sentiment_score"] = [r["score"] for r in results]
-df.to_csv("commoncrawl_sentiment_results.csv", index=False)
-print(df["sentiment_label"].value_counts())
-        </div>
+df["sentiment"] = [r["label"] for r in results]
+df["score"]     = [r["score"] for r in results]
+df.to_csv("sentiment_results.csv", index=False)
+print(df["sentiment"].value_counts())</div>
       </div>
-      <div style="text-align:right;margin-top:16px;">
-        <button class="btn btn-secondary" onclick="closeModal('modal-sentiment')">Close</button>
-      </div>
+      <div style="text-align:right;margin-top:14px;"><button class="btn btn-s" onclick="closeM('m-sent')">Close</button></div>
     </div>
   </div>
 </div>
 
+<footer>
+  &copy; 2026 <strong>Mayukh Mukhopadhyay</strong> &nbsp;|&nbsp;
+  Licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a>
+  &nbsp;<img src="https://licensebuttons.net/l/by-nc-nd/4.0/80x15.png" alt="CC BY-NC-ND 4.0" style="vertical-align:middle;margin-left:4px;"/>
+</footer>
 
-<!-- ======================== JAVASCRIPT ======================== -->
 <script>
-// ---- STATE ----
-let allRecords = [];
-let currentPage = 1;
-const PAGE_SIZE = 50;
-const MAX_RECORDS = 1000000;
-let selectedRows = new Set();
-let codes = [];
-let codedRows = {};
-
-// ---- CRAWL LIST ----
-const CRAWLS = [
+// ===== CRAWL LIST =====
+const CRAWL_LIST = [
   "2026-12","2026-08","2026-04",
   "2025-51","2025-47","2025-43","2025-38","2025-33","2025-30","2025-26","2025-21","2025-18","2025-13","2025-08","2025-05",
   "2024-51","2024-46","2024-42","2024-38","2024-33","2024-30","2024-26","2024-22","2024-18","2024-10",
@@ -699,455 +399,416 @@ const CRAWLS = [
   "2016-50","2016-44","2016-40","2016-36","2016-30","2016-26","2016-22","2016-18","2016-07",
   "2015-48"
 ];
-
-const crawlSelect = document.getElementById("crawlSelect");
-CRAWLS.forEach(c => {
-  const opt = document.createElement("option");
-  opt.value = "CC-MAIN-" + c;
-  const [year, week] = c.split("-");
-  opt.textContent = `CC-MAIN-${year}-WK${week}`;
-  if (c === "2025-13") opt.selected = true;
-  crawlSelect.appendChild(opt);
+const sel = document.getElementById("crawlSel");
+CRAWL_LIST.forEach(c => {
+  const o = document.createElement("option");
+  o.value = "CC-MAIN-" + c;
+  o.textContent = "CC-MAIN-" + c;
+  if (c === "2025-13") o.selected = true;
+  sel.appendChild(o);
 });
 
-// ---- CRAWL FROM DATE RANGE ----
-function getCrawlsInRange(fromMonth, toMonth) {
-  const [fy, fm] = fromMonth.split("-").map(Number);
-  const [ty, tm] = toMonth.split("-").map(Number);
-  return CRAWLS.filter(c => {
-    const [cy, cw] = c.split("-").map(Number);
-    const approxMonth = Math.round(cw / 4);
-    const after = cy > fy || (cy === fy && approxMonth >= fm);
-    const before = cy < ty || (cy === ty && approxMonth <= tm);
-    return after && before;
-  }).map(c => "CC-MAIN-" + c);
+// ===== STATE =====
+let ALL = [], PAGE = 1, PAGE_SIZE = 50, MAX = 1000000;
+let SELECTED = new Set(), CODES = [], CODED = {};
+
+// ===== STATUS =====
+function setStatus(msg, type) {
+  const b = document.getElementById("statusBar");
+  b.className = type;
+  b.innerHTML = msg;
 }
 
-// ---- STATUS BAR ----
-function setStatus(msg, type="active") {
-  const bar = document.getElementById("statusBar");
-  bar.className = "active " + type;
-  bar.innerHTML = msg;
-  bar.style.display = "block";
-}
+// ===== MAIN SEARCH =====
+async function doSearch() {
+  const kw    = document.getElementById("kwIn").value.trim();
+  const ht    = document.getElementById("htIn").value.trim();
+  const match = document.getElementById("matchType").value;
+  const crawl = document.getElementById("crawlSel").value;
+  const from  = document.getElementById("dateFrom").value;
+  const to    = document.getElementById("dateTo").value;
+  const limit = parseInt(document.getElementById("limitSel").value);
+  const mime  = document.getElementById("mimeF").value;
+  const stat  = document.getElementById("statusF").value;
 
-// ---- SEARCH ----
-async function startSearch() {
-  const keyword = document.getElementById("keywordInput").value.trim();
-  const hashtag = document.getElementById("hashtagInput").value.trim();
-  const matchType = document.getElementById("matchType").value;
-  const selectedCrawl = document.getElementById("crawlSelect").value;
-  const dateFrom = document.getElementById("dateFrom").value;
-  const dateTo = document.getElementById("dateTo").value;
-  const limit = parseInt(document.getElementById("limitSelect").value);
-  const mime = document.getElementById("mimeFilter").value;
-  const status = document.getElementById("statusFilter").value;
+  if (!kw && !ht) { setStatus("⚠️ Enter a keyword or hashtag/domain.", "err"); return; }
 
-  let urlQuery = keyword || hashtag;
-  if (!urlQuery) {
-    setStatus("⚠️ Please enter a keyword or hashtag/domain to search.", "error");
-    return;
-  }
-
-  if (hashtag && hashtag.startsWith("#")) {
-    urlQuery = "*" + hashtag.replace("#", "") + "*";
-  } else if (hashtag && hashtag.includes("*")) {
-    urlQuery = hashtag;
-  } else if (hashtag) {
-    urlQuery = "*" + hashtag + "*";
+  // Build URL pattern for CDX
+  let pattern = "";
+  if (ht) {
+    if (ht.startsWith("#")) pattern = "*." + ht.slice(1) + "/*";
+    else if (ht.includes("*")) pattern = ht;
+    else pattern = "*." + ht.replace(/^www\./,"") + "/*";
   } else {
-    urlQuery = "*" + keyword.replace(/\s+/g, "*") + "*";
+    // keyword → search across all URLs containing the keyword
+    pattern = "*" + encodeURIComponent(kw) + "*";
   }
 
-  const fromTS = dateFrom ? dateFrom.replace("-", "") + "01000000" : "";
-  const toTS = dateTo ? dateTo.replace("-", "") + "31235959" : "";
-  const crawlsInRange = (dateFrom && dateTo) ? getCrawlsInRange(dateFrom, dateTo) : [selectedCrawl];
-  const crawlCandidates = crawlsInRange.length ? crawlsInRange : [selectedCrawl];
+  const fromTS = from ? from.replace("-","") + "01000000" : "";
+  const toTS   = to   ? to.replace("-","")   + "31235959" : "";
 
-  allRecords = [];
-  currentPage = 1;
-  selectedRows.clear();
+  setStatus('<span class="spin"></span> Querying CDX index...', "info");
+  document.getElementById("searchBtn").disabled = true;
 
-  setStatus(`<span class="loading-spinner"></span> Checking index availability and trying smaller paged queries across ${crawlCandidates.length} crawl(s)...`);
+  ALL = []; PAGE = 1; SELECTED.clear();
 
-  try {
-    const infoResp = await fetch('https://index.commoncrawl.org/collinfo.json');
-    if (!infoResp.ok) throw new Error('Could not load collinfo.json');
-    const collinfo = await infoResp.json();
-    const available = new Set(collinfo.map(c => c.id));
+  // Strategy 1: direct CDX with small pageSize
+  let records = await tryDirectCDX(crawl, pattern, match, fromTS, toTS, mime, stat, limit);
 
-    const usableCrawls = crawlCandidates.filter(c => available.has(c));
-    if (!usableCrawls.length) {
-      throw new Error('No valid crawl index found for selected timeline');
-    }
+  // Strategy 2: CORS proxy fallback
+  if (!records.length) {
+    setStatus('<span class="spin"></span> Direct call blocked — trying CORS proxy...', "info");
+    records = await tryCORSProxy(crawl, pattern, match, fromTS, toTS, mime, stat, limit);
+  }
 
-    const targetPages = Math.max(1, Math.ceil(Math.min(limit, MAX_RECORDS) / PAGE_SIZE));
-    const records = [];
+  document.getElementById("searchBtn").disabled = false;
 
-    for (const crawl of usableCrawls) {
-      for (let page = 0; page < targetPages; page++) {
-        if (records.length >= Math.min(limit, MAX_RECORDS)) break;
-        const params = new URLSearchParams({
-          url: urlQuery,
-          output: 'json',
-          pageSize: '50',
-          page: String(page),
-          matchType: matchType
-        });
-        if (fromTS) params.append('from', fromTS);
-        if (toTS) params.append('to', toTS);
-        if (mime) params.append('filter', 'mime:' + mime);
-        if (status) params.append('filter', 'status:' + status);
-
-        const apiURL = `https://index.commoncrawl.org/${crawl}-index?${params.toString()}`;
-
-        try {
-          const response = await fetch(apiURL, { headers: { 'Accept': 'application/json' } });
-          if (!response.ok) {
-            if (response.status === 504 || response.status === 502 || response.status === 500) break;
-            continue;
-          }
-          const text = await response.text();
-          const lines = text.trim().split('\n').filter(Boolean);
-          if (!lines.length) break;
-          const parsed = lines.map(line => { try { return JSON.parse(line); } catch { return null; } }).filter(Boolean);
-          records.push(...parsed);
-          if (parsed.length < 50) break;
-        } catch (err) {
-          break;
-        }
-      }
-      if (records.length) break;
-    }
-
-    allRecords = dedupeRecords(records).slice(0, Math.min(limit, MAX_RECORDS));
-
-    if (!allRecords.length) {
-      setStatus(`⚠️ Browser-side querying did not return usable records. Use the built-in backend workaround below, or load demo data.`, 'error');
-      showBackendHelp(urlQuery, crawlCandidates, fromTS, toTS, mime, status, matchType, limit);
-      return;
-    }
-
-    setStatus(`✅ Found <strong>${allRecords.length.toLocaleString()}</strong> records using paged CDX queries and crawl fallback.`, 'success');
+  if (records.length) {
+    ALL = records.slice(0, Math.min(limit, MAX));
+    setStatus(`✅ <strong>${ALL.length.toLocaleString()}</strong> records fetched from <strong>${crawl}</strong>`, "ok");
     renderTable();
-    document.getElementById('resultsCard').classList.add('active');
-
-  } catch (e) {
-    setStatus(`⚠️ Direct browser queries failed. A local backend or offline index workflow is more reliable for Common Crawl at scale.`, 'error');
-    showBackendHelp(urlQuery, crawlCandidates, fromTS, toTS, mime, status, matchType, limit);
+    document.getElementById("resCard").classList.add("show");
+    genPyScript(pattern, crawl, fromTS, toTS, mime, stat, match, limit);
+  } else {
+    setStatus(`⚠️ No records returned from live CDX API. This is common when querying broad wildcard patterns from a browser due to CORS restrictions. <br><br>
+      <strong>Options:</strong><br>
+      1️⃣ Click <strong>"📥 Load Demo Data"</strong> to explore the interface with sample data.<br>
+      2️⃣ Click <strong>"🐍 Get Python Script"</strong> to run the exact query locally — paste the output JSON back in.<br>
+      3️⃣ Try a <strong>more specific URL</strong> (e.g. <code>en.wikipedia.org/wiki/Nostalgia</code> with match type <em>Exact</em>).`, "err");
+    genPyScript(pattern, crawl, fromTS, toTS, mime, stat, match, limit);
   }
 }
 
-function dedupeRecords(records) {
-  const seen = new Set();
-  return records.filter(r => {
-    const key = [r.url || '', r.timestamp || '', r.digest || '', r.filename || '', r.offset || ''].join('|');
-    if (seen.has(key)) return false;
-    seen.add(key);
-    return true;
-  });
+// ===== STRATEGY 1: Direct CDX =====
+async function tryDirectCDX(crawl, pattern, match, fromTS, toTS, mime, stat, limit) {
+  const records = [];
+  const maxPages = Math.min(Math.ceil(Math.min(limit,1000)/50), 20);
+  for (let page = 0; page < maxPages; page++) {
+    try {
+      const p = new URLSearchParams({ url: pattern, output: "json", matchType: match, pageSize: "50", page: String(page) });
+      if (fromTS) p.append("from", fromTS);
+      if (toTS)   p.append("to", toTS);
+      if (mime)   p.append("filter", "mime:" + mime);
+      if (stat)   p.append("filter", "statuscode:" + stat);
+      const url = `https://index.commoncrawl.org/${crawl}-index?${p.toString()}`;
+      const resp = await fetch(url, { signal: AbortSignal.timeout(15000) });
+      if (!resp.ok) break;
+      const txt = await resp.text();
+      const lines = txt.trim().split("\n").filter(Boolean);
+      if (!lines.length) break;
+      const parsed = lines.map(l => { try { return JSON.parse(l); } catch { return null; } }).filter(Boolean);
+      records.push(...parsed);
+      if (parsed.length < 50) break;
+    } catch { break; }
+  }
+  return records;
 }
 
-function showBackendHelp(urlQuery, crawlCandidates, fromTS, toTS, mime, status, matchType, limit) {
-  const crawl = crawlCandidates[0] || 'CC-MAIN-2025-13';
-  const filters = [];
-  if (mime) filters.push(`params.append("filter", "mime:${mime}")`);
-  if (status) filters.push(`params.append("filter", "status:${status}")`);
-  const code = `import requests, json
-from pathlib import Path
-
-crawl = "${crawl}"
-base = f"https://index.commoncrawl.org/{crawl}-index"
-limit = ${Math.min(limit, MAX_RECORDS)}
-page_size = 50
-all_rows = []
-page = 0
-
-while len(all_rows) < limit:
-    params = {
-        "url": "${urlQuery}",
-        "output": "json",
-        "page": page,
-        "pageSize": page_size,
-        "matchType": "${matchType}"
+// ===== STRATEGY 2: CORS Proxy =====
+async function tryCORSProxy(crawl, pattern, match, fromTS, toTS, mime, stat, limit) {
+  const records = [];
+  const proxies = [
+    "https://corsproxy.io/?",
+    "https://api.allorigins.win/raw?url="
+  ];
+  const maxPages = Math.min(Math.ceil(Math.min(limit,500)/50), 10);
+  for (const proxy of proxies) {
+    for (let page = 0; page < maxPages; page++) {
+      try {
+        const p = new URLSearchParams({ url: pattern, output: "json", matchType: match, pageSize: "50", page: String(page) });
+        if (fromTS) p.append("from", fromTS);
+        if (toTS)   p.append("to", toTS);
+        if (mime)   p.append("filter", "mime:" + mime);
+        if (stat)   p.append("filter", "statuscode:" + stat);
+        const target = `https://index.commoncrawl.org/${crawl}-index?${p.toString()}`;
+        const proxyUrl = proxy + encodeURIComponent(target);
+        const resp = await fetch(proxyUrl, { signal: AbortSignal.timeout(20000) });
+        if (!resp.ok) break;
+        const txt = await resp.text();
+        const lines = txt.trim().split("\n").filter(Boolean);
+        if (!lines.length) break;
+        const parsed = lines.map(l => { try { return JSON.parse(l); } catch { return null; } }).filter(Boolean);
+        records.push(...parsed);
+        if (parsed.length < 50) break;
+      } catch { break; }
     }
-    ${fromTS ? `params["from"] = "${fromTS}"` : ''}
-    ${toTS ? `params["to"] = "${toTS}"` : ''}
-    ${filters.join('
-    ')}
-
-    r = requests.get(base, params=params, timeout=120)
-    if r.status_code != 200:
-        break
-
-    lines = [x for x in r.text.splitlines() if x.strip()]
-    if not lines:
-        break
-
-    rows = [json.loads(x) for x in lines]
-    all_rows.extend(rows)
-    if len(rows) < page_size:
-        break
-    page += 1
-
-Path("commoncrawl_export.json").write_text(json.dumps(all_rows[:limit], indent=2), encoding="utf-8")
-print(f"Saved {len(all_rows[:limit])} rows to commoncrawl_export.json")`;
-
-  const htmlBlock = `
-    <div style="margin-top:12px;padding:14px 16px;border:1px solid #ffcc80;background:#fff8e1;border-radius:8px;">
-      <div style="font-weight:700;color:#e65100;margin-bottom:8px;">Reliable workaround</div>
-      <div style="font-size:0.84rem;color:#5d4037;line-height:1.55;">Run the Python snippet below locally or through a lightweight backend endpoint, then load the exported JSON/CSV into this interface. This avoids fragile browser-to-CDX calls and 504 errors on the public index.</div>
-      <textarea style="width:100%;margin-top:10px;min-height:260px;border:1px solid #d7ccc8;border-radius:6px;padding:10px;font-family:monospace;font-size:0.8rem;">${code}</textarea>
-    </div>`;
-
-  const bar = document.getElementById('statusBar');
-  bar.innerHTML += htmlBlock;
-  loadDemo();
+    if (records.length) break;
+  }
+  return records;
 }
 
-// ---- DEMO DATA ----
-// ---- DEMO DATA ----
+// ===== DEMO DATA =====
 function loadDemo() {
-  allRecords = [];
-  const domains = ["scholar.google.com","academia.edu","researchgate.net","jstor.org","ssrn.com","medium.com","bbc.com","nytimes.com","theguardian.com","linkedin.com"];
-  const mimes = ["text/html","text/html","text/html","application/json","text/plain"];
-  const statuses = ["200","200","200","200","301","404"];
-  const langs = ["eng","eng","eng","fra","deu","spa","hin"];
-  for(let i=0;i<312;i++){
-    const d=domains[i%domains.length];
-    const ts="202"+Math.floor(Math.random()*4)+String(Math.floor(Math.random()*12)+1).padStart(2,"0")+"01120000";
-    allRecords.push({
-      urlkey: d+"/page-"+i,
+  const domains = ["scholar.google.com","academia.edu","researchgate.net","jstor.org","ssrn.com",
+                   "medium.com","bbc.com","nytimes.com","theguardian.com","linkedin.com",
+                   "sciencedirect.com","springer.com","tandfonline.com","sage.com","wiley.com"];
+  const mimes   = ["text/html","text/html","text/html","application/json","text/plain"];
+  const stats   = ["200","200","200","301","404"];
+  const langs   = ["eng","eng","fra","deu","spa","hin"];
+  const years   = ["2020","2021","2022","2023","2024","2025"];
+  ALL = [];
+  for (let i = 0; i < 312; i++) {
+    const d  = domains[i % domains.length];
+    const yr = years[Math.floor(Math.random()*years.length)];
+    const mn = String(Math.floor(Math.random()*12)+1).padStart(2,"0");
+    const ts = `${yr}${mn}15${String(Math.floor(Math.random()*24)).padStart(2,"0")}${String(Math.floor(Math.random()*60)).padStart(2,"0")}00`;
+    ALL.push({
+      url:      `https://${d}/research/nostalgia-phubbing-article-${i}`,
+      urlkey:   `${d},/research/article-${i}`,
       timestamp: ts,
-      url: "https://"+d+"/articles/nostalgia-phubbing-org-"+i,
-      mime: mimes[i%mimes.length],
-      status: statuses[i%statuses.length],
-      languages: langs[i%langs.length],
-      length: String(Math.floor(Math.random()*500000+5000)),
-      digest: "sha1:"+Math.random().toString(36).substr(2,20).toUpperCase(),
-      filename: "crawl-data/CC-MAIN-2025-13/segments/17459876/warc/CC-MAIN-000"+String(i).padStart(3,"0")+".warc.gz",
-      offset: String(Math.floor(Math.random()*9000000))
+      mime:      mimes[i % mimes.length],
+      status:    stats[i % stats.length],
+      languages: langs[i % langs.length],
+      length:    String(Math.floor(Math.random()*500000+5000)),
+      digest:    "SHA1:" + Math.random().toString(36).slice(2,22).toUpperCase(),
+      filename:  `crawl-data/CC-MAIN-2025-13/segments/174598/${Math.floor(i/50)}/warc/CC-MAIN-${String(i).padStart(5,"0")}.warc.gz`,
+      offset:    String(Math.floor(Math.random()*9000000))
     });
   }
-  currentPage = 1;
-  selectedRows.clear();
-  setStatus(`✅ Loaded <strong>${allRecords.length}</strong> demo records. This simulates real Common Crawl CDX index output.`, "success");
+  PAGE = 1; SELECTED.clear();
+  setStatus(`✅ Loaded <strong>${ALL.length}</strong> demo records — full interface is now active.`, "ok");
   renderTable();
-  document.getElementById("resultsCard").classList.add("active");
+  document.getElementById("resCard").classList.add("show");
+  genPyScript("*nostalgia*","CC-MAIN-2025-13","","","","","exact",1000);
 }
 
-// ---- RENDER TABLE ----
+// ===== RENDER TABLE =====
 function renderTable() {
-  const start = (currentPage-1)*PAGE_SIZE;
-  const end = Math.min(start+PAGE_SIZE, allRecords.length);
-  const pageRows = allRecords.slice(start,end);
-
-  const tbody = document.getElementById("tableBody");
+  const start = (PAGE-1)*PAGE_SIZE, end = Math.min(start+PAGE_SIZE, ALL.length);
+  const tbody = document.getElementById("tbody");
   tbody.innerHTML = "";
-
-  pageRows.forEach((rec, i) => {
-    const globalIdx = start+i;
+  ALL.slice(start,end).forEach((r,i) => {
+    const gi = start+i;
+    const domain = (() => { try { return new URL(r.url).hostname; } catch { return r.urlkey||""; } })();
+    const ts  = r.timestamp||"";
+    const dt  = ts ? `${ts.slice(0,4)}-${ts.slice(4,6)}-${ts.slice(6,8)} ${ts.slice(8,10)}:${ts.slice(10,12)}` : "–";
+    const sc  = r.status||"–";
+    const sc_cls = sc==="200"?"b200":sc==="301"?"b301":sc==="404"?"b404":"bX";
+    const fn  = r.filename||"";
+    const fnS = fn.length>42 ? "..."+fn.slice(-40) : fn;
+    const coded = CODED[gi] ? `<span class="ctag">✓ ${CODED[gi].join(", ")}</span>` : "";
     const tr = document.createElement("tr");
-    tr.className = selectedRows.has(globalIdx) ? "selected" : "";
-
-    const domain = (() => { try { return new URL(rec.url).hostname; } catch { return rec.urlkey||""; }})();
-    const ts = rec.timestamp||"";
-    const dateStr = ts ? `${ts.substr(0,4)}-${ts.substr(4,2)}-${ts.substr(6,2)} ${ts.substr(8,2)}:${ts.substr(10,2)}` : "–";
-    const status = rec.status||"–";
-    const statusClass = status==="200"?"badge-200":status==="301"?"badge-301":status==="404"?"badge-404":"badge-other";
-    const isCoded = codedRows[globalIdx] ? `<span class="tag-coded">✓ ${codedRows[globalIdx].join(", ")}</span>` : "";
-    const fname = rec.filename||"";
-    const fnameShort = fname.length>40 ? "..."+fname.slice(-37) : fname;
-
+    tr.className = SELECTED.has(gi) ? "sel" : "";
     tr.innerHTML = `
-      <td><input type="checkbox" ${selectedRows.has(globalIdx)?"checked":""} onchange="toggleRow(${globalIdx},this)"></td>
-      <td style="color:var(--muted);font-size:0.78rem;">${globalIdx+1}</td>
-      <td class="url-cell"><a href="${rec.url}" target="_blank" title="${rec.url}">${rec.url}</a></td>
-      <td style="font-size:0.8rem;">${domain}</td>
-      <td style="font-size:0.8rem;white-space:nowrap;">${dateStr}</td>
-      <td><span class="mime-badge">${(rec.mime||"–").replace("text/","")}</span></td>
-      <td><span class="badge ${statusClass}">${status}</span></td>
-      <td style="font-size:0.8rem;">${rec.languages||"–"}</td>
-      <td style="font-size:0.8rem;">${rec.length?Number(rec.length).toLocaleString():"–"}</td>
-      <td style="font-size:0.72rem;color:var(--muted);max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${rec.digest||""}">${rec.digest||"–"}</td>
-      <td style="font-size:0.72rem;color:var(--muted);max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${fname}">${fnameShort}</td>
-      <td>${isCoded}</td>
-    `;
+      <td><input type="checkbox" ${SELECTED.has(gi)?"checked":""} onchange="togRow(${gi},this)"/></td>
+      <td style="color:var(--muted);font-size:.76rem;">${gi+1}</td>
+      <td class="uc"><a href="${r.url}" target="_blank" title="${r.url}">${r.url}</a></td>
+      <td style="font-size:.78rem;">${domain}</td>
+      <td style="font-size:.78rem;white-space:nowrap;">${dt}</td>
+      <td><span class="mb">${(r.mime||"–").replace("text/","").replace("application/","")}</span></td>
+      <td><span class="badge ${sc_cls}">${sc}</span></td>
+      <td style="font-size:.78rem;">${r.languages||"–"}</td>
+      <td style="font-size:.78rem;">${r.length?Number(r.length).toLocaleString():"–"}</td>
+      <td style="font-size:.7rem;color:var(--muted);max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${r.digest||""}">${(r.digest||"–").slice(0,18)}</td>
+      <td style="font-size:.7rem;color:var(--muted);max-width:170px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${fn}">${fnS}</td>
+      <td>${coded}</td>`;
     tbody.appendChild(tr);
   });
-
-  const totalPages = Math.ceil(allRecords.length/PAGE_SIZE);
-  document.getElementById("resultsMeta").textContent =
-    `Showing records ${start+1}–${end} of ${allRecords.length.toLocaleString()} total | Page ${currentPage} of ${totalPages.toLocaleString()} | 50 rows/page`;
-  renderPagination(totalPages);
-  document.getElementById("selectAllChk").checked = false;
-  updateSelectedCount();
+  const tp = Math.ceil(ALL.length/PAGE_SIZE);
+  document.getElementById("resMeta").textContent =
+    `Records ${start+1}–${end} of ${ALL.length.toLocaleString()} | Page ${PAGE} of ${tp.toLocaleString()} | 50/page`;
+  renderPgn(tp);
+  document.getElementById("allChk").checked = false;
+  updSelCount();
 }
 
-// ---- PAGINATION ----
-function renderPagination(totalPages) {
-  const bar = document.getElementById("paginationBar");
-  bar.innerHTML = "";
-  const maxBtns = 7;
-
-  const prevBtn = document.createElement("button");
-  prevBtn.className = "page-btn";
-  prevBtn.textContent = "◀ Prev";
-  prevBtn.disabled = currentPage===1;
-  prevBtn.onclick = () => { currentPage--; renderTable(); };
-  bar.appendChild(prevBtn);
-
+// ===== PAGINATION =====
+function renderPgn(tp) {
+  const bar = document.getElementById("pgn"); bar.innerHTML = "";
+  const mkBtn = (lbl, pg, disabled, active) => {
+    const b = document.createElement("button");
+    b.className = "pb" + (active?" on":"");
+    b.textContent = lbl; b.disabled = disabled;
+    b.onclick = () => { PAGE = pg; renderTable(); window.scrollTo(0,0); };
+    return b;
+  };
+  bar.appendChild(mkBtn("◀", PAGE-1, PAGE===1, false));
   let pages = [];
-  if(totalPages<=maxBtns){
-    for(let p=1;p<=totalPages;p++) pages.push(p);
-  } else {
-    pages=[1,2];
-    if(currentPage>4) pages.push("...");
-    for(let p=Math.max(3,currentPage-1);p<=Math.min(totalPages-2,currentPage+1);p++) pages.push(p);
-    if(currentPage<totalPages-3) pages.push("...");
-    pages.push(totalPages-1,totalPages);
-    pages=[...new Set(pages)];
+  if (tp <= 9) { for(let p=1;p<=tp;p++) pages.push(p); }
+  else {
+    pages = [1,2];
+    if (PAGE > 4) pages.push("…");
+    for (let p=Math.max(3,PAGE-1);p<=Math.min(tp-2,PAGE+1);p++) pages.push(p);
+    if (PAGE < tp-3) pages.push("…");
+    pages.push(tp-1,tp);
+    pages = [...new Set(pages)];
   }
-
-  pages.forEach(p=>{
-    if(p==="..."){
-      const span=document.createElement("span");
-      span.textContent="…";span.style.padding="5px 6px";span.style.color="var(--muted)";
-      bar.appendChild(span);
-    } else {
-      const btn=document.createElement("button");
-      btn.className="page-btn"+(p===currentPage?" active":"");
-      btn.textContent=p.toLocaleString();
-      btn.onclick=()=>{currentPage=p;renderTable();};
-      bar.appendChild(btn);
-    }
+  pages.forEach(p => {
+    if (p === "…") {
+      const s = document.createElement("span");
+      s.textContent = "…"; s.style.cssText = "padding:4px 5px;color:var(--muted);";
+      bar.appendChild(s);
+    } else { bar.appendChild(mkBtn(p, p, false, p===PAGE)); }
   });
-
-  const nextBtn=document.createElement("button");
-  nextBtn.className="page-btn";
-  nextBtn.textContent="Next ▶";
-  nextBtn.disabled=currentPage===totalPages;
-  nextBtn.onclick=()=>{currentPage++;renderTable();};
-  bar.appendChild(nextBtn);
-
-  const info=document.createElement("span");
-  info.id="pageInfo";
-  info.textContent=`Total: ${allRecords.length.toLocaleString()} records`;
+  bar.appendChild(mkBtn("▶", PAGE+1, PAGE===tp, false));
+  const info = document.createElement("span");
+  info.style.cssText = "font-size:.78rem;color:var(--muted);margin-left:8px;";
+  info.textContent = `${ALL.length.toLocaleString()} total records`;
   bar.appendChild(info);
 }
 
-// ---- ROW SELECTION ----
-function toggleRow(idx, chk) {
-  if(chk.checked) selectedRows.add(idx); else selectedRows.delete(idx);
-  const tr = chk.closest("tr");
-  tr.classList.toggle("selected", chk.checked);
-  updateSelectedCount();
+// ===== SELECTION =====
+function togRow(idx, chk) {
+  if (chk.checked) SELECTED.add(idx); else SELECTED.delete(idx);
+  chk.closest("tr").classList.toggle("sel", chk.checked);
+  updSelCount();
 }
-function toggleAllPage(chk) {
-  const start=(currentPage-1)*PAGE_SIZE;
-  const end=Math.min(start+PAGE_SIZE, allRecords.length);
-  for(let i=start;i<end;i++) {
-    if(chk.checked) selectedRows.add(i); else selectedRows.delete(i);
-  }
+function togAll(chk) {
+  const s=(PAGE-1)*PAGE_SIZE, e=Math.min(s+PAGE_SIZE,ALL.length);
+  for(let i=s;i<e;i++) { if(chk.checked) SELECTED.add(i); else SELECTED.delete(i); }
   renderTable();
 }
-function selectAll() { for(let i=0;i<allRecords.length;i++) selectedRows.add(i); renderTable(); }
-function deselectAll() { selectedRows.clear(); renderTable(); }
-function updateSelectedCount() {
-  document.getElementById("selectedCount").textContent = `${selectedRows.size.toLocaleString()} rows selected`;
-}
+function selAll()  { for(let i=0;i<ALL.length;i++) SELECTED.add(i);   renderTable(); }
+function deselAll(){ SELECTED.clear(); renderTable(); }
+function updSelCount() { document.getElementById("selCount").textContent = `${SELECTED.size.toLocaleString()} rows selected`; }
 
-// ---- ANALYSIS MODALS ----
-function openAnalysis(type) {
-  if(allRecords.length===0){ setStatus("⚠️ No data loaded. Please run a search or load demo data first.", "error"); return; }
-  document.getElementById("codingSelectionInfo").textContent =
-    `${selectedRows.size||allRecords.length} record(s) selected for analysis`;
-  document.getElementById("modal-"+type).classList.add("open");
+// ===== MODALS =====
+function openM(id) {
+  if (!ALL.length) { setStatus("⚠️ Load data first.", "err"); return; }
+  document.getElementById("codeSelInfo") &&
+    (document.getElementById("codeSelInfo").textContent =
+      `${SELECTED.size || ALL.length} record(s) in scope`);
+  document.getElementById(id).classList.add("open");
 }
-function closeModal(id) { document.getElementById(id).classList.remove("open"); }
+function closeM(id) { document.getElementById(id).classList.remove("open"); }
+document.querySelectorAll(".ov").forEach(o => o.addEventListener("click", e => { if(e.target===o) o.classList.remove("open"); }));
 
-// Close on overlay click
-document.querySelectorAll(".modal-overlay").forEach(overlay => {
-  overlay.addEventListener("click", e => { if(e.target===overlay) overlay.classList.remove("open"); });
-});
-
-// ---- CODING ----
-function addCode(){
-  const inp=document.getElementById("newCodeInput");
-  const colorSel=document.getElementById("codeColor");
-  const label=inp.value.trim();
-  if(!label) return;
-  const bg=colorSel.value;
-  const txt=colorSel.options[colorSel.selectedIndex].dataset.txt||"#333";
-  codes.push({label,bg,txt});
-  renderCodeList();
-  inp.value="";
-  document.getElementById("codeSnippetList").textContent = codes.map(c=>`"${c.label}"`).join(",");
+// ===== CODING =====
+function addCode() {
+  const lbl = document.getElementById("codeInp").value.trim(); if (!lbl) return;
+  const cv  = document.getElementById("codeCol").value.split("|");
+  CODES.push({ lbl, bg: cv[0], txt: cv[1] });
+  renderCodes(); document.getElementById("codeInp").value = "";
 }
-function renderCodeList(){
-  const list=document.getElementById("codeList");
-  list.innerHTML="";
-  codes.forEach((c,i)=>{
-    const tag=document.createElement("span");
-    tag.className="topic-tag";
-    tag.style.background=c.bg;tag.style.color=c.txt;
-    tag.innerHTML=`${c.label} <button onclick="removeCode(${i})" style="background:none;border:none;cursor:pointer;color:${c.txt};font-size:0.85rem;padding:0 0 0 4px;">×</button>`;
-    list.appendChild(tag);
+function renderCodes() {
+  const el = document.getElementById("codeList"); el.innerHTML = "";
+  CODES.forEach((c,i) => {
+    const s = document.createElement("span"); s.className = "ttag";
+    s.style.cssText = `background:${c.bg};color:${c.txt};`;
+    s.innerHTML = `${c.lbl} <button onclick="rmCode(${i})" style="background:none;border:none;cursor:pointer;color:${c.txt};">×</button>`;
+    el.appendChild(s);
   });
 }
-function removeCode(i){codes.splice(i,1);renderCodeList();}
-function applyCoding(){
-  const memo=document.getElementById("codingMemo").value;
-  document.getElementById("memoSnippet").textContent=memo.replace(/"/g,'\"');
-  const targets = selectedRows.size>0 ? [...selectedRows] : allRecords.map((_,i)=>i);
-  targets.forEach(idx=>{ codedRows[idx]=codes.map(c=>c.label); });
-  closeModal("modal-coding");
-  renderTable();
-  setStatus(`✅ Applied ${codes.length} code(s) to ${targets.length} record(s).`, "success");
+function rmCode(i) { CODES.splice(i,1); renderCodes(); }
+function applyCodes() {
+  const tgts = SELECTED.size ? [...SELECTED] : ALL.map((_,i)=>i);
+  tgts.forEach(i => { CODED[i] = CODES.map(c=>c.lbl); });
+  closeM("m-code"); renderTable();
+  setStatus(`✅ Applied ${CODES.length} code(s) to ${tgts.length} record(s).`, "ok");
 }
 
-// ---- EXPORT ----
-function exportCSV(){
-  if(!allRecords.length){setStatus("No data to export.","error");return;}
-  const headers=["#","url","domain","timestamp","mime","status","languages","length","digest","filename","codes"];
-  const rows=allRecords.map((r,i)=>{
-    const domain=(() => { try { return new URL(r.url).hostname; } catch { return r.urlkey||""; }})();
-    return [i+1,`"${r.url||""}"`,domain,r.timestamp||"",r.mime||"",r.status||"",r.languages||"",r.length||"",r.digest||"",`"${r.filename||""}"`,`"${(codedRows[i]||[]).join("|")}"`].join(",");
+// ===== PYTHON SCRIPT =====
+function showPyScript() { openM("m-py"); }
+function genPyScript(pattern, crawl, fromTS, toTS, mime, stat, match, limit) {
+  const script = `import requests, json, time
+from pathlib import Path
+
+CRAWL    = "${crawl}"
+PATTERN  = "${pattern}"
+MATCH    = "${match}"
+FROM_TS  = "${fromTS}"
+TO_TS    = "${toTS}"
+MIME     = "${mime}"
+STATUS   = "${stat}"
+LIMIT    = ${limit}
+PAGE_SZ  = 50
+BASE     = f"https://index.commoncrawl.org/{CRAWL}-index"
+
+all_rows, page = [], 0
+while len(all_rows) < LIMIT:
+    params = {"url": PATTERN, "output": "json",
+              "matchType": MATCH, "pageSize": PAGE_SZ, "page": page}
+    if FROM_TS: params["from"] = FROM_TS
+    if TO_TS:   params["to"]   = TO_TS
+    if MIME:    params["filter"] = f"mime:{MIME}"
+    if STATUS:  params["filter"] = f"statuscode:{STATUS}"
+
+    try:
+        r = requests.get(BASE, params=params, timeout=120)
+        if r.status_code != 200:
+            print(f"HTTP {r.status_code} on page {page}, stopping.")
+            break
+        lines = [x for x in r.text.splitlines() if x.strip()]
+        if not lines:
+            print(f"No results on page {page}, done.")
+            break
+        rows = [json.loads(x) for x in lines]
+        all_rows.extend(rows)
+        print(f"Page {page}: +{len(rows)} rows  (total: {len(all_rows)})")
+        if len(rows) < PAGE_SZ:
+            break
+        page += 1
+        time.sleep(0.5)  # be polite to the API
+    except Exception as e:
+        print(f"Error: {e}")
+        break
+
+result = all_rows[:LIMIT]
+Path("commoncrawl_export.json").write_text(
+    json.dumps(result, indent=2), encoding="utf-8")
+print(f"Done — saved {len(result)} rows to commoncrawl_export.json")
+# Then load commoncrawl_export.json in the interface via "Get Python Script > Load local JSON"`;
+  document.getElementById("pyCode").textContent = script;
+}
+
+// ===== LOAD LOCAL JSON =====
+function loadLocalJSON(input) {
+  const file = input.files[0]; if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const data = JSON.parse(e.target.result);
+      ALL = Array.isArray(data) ? data : (data.records || []);
+      PAGE = 1; SELECTED.clear();
+      setStatus(`✅ Loaded <strong>${ALL.length.toLocaleString()}</strong> records from local JSON file.`, "ok");
+      renderTable(); document.getElementById("resCard").classList.add("show");
+      closeM("m-py");
+    } catch { setStatus("⚠️ Invalid JSON file.", "err"); }
+  };
+  reader.readAsText(file);
+}
+
+// ===== EXPORT =====
+function expCSV() {
+  if (!ALL.length) return;
+  const hdr = ["#","url","domain","timestamp","mime","status","languages","length","digest","filename","codes"];
+  const rows = ALL.map((r,i) => {
+    const dom = (() => { try { return new URL(r.url).hostname; } catch { return ""; } })();
+    return [i+1,`"${r.url||""}"`,dom,r.timestamp||"",r.mime||"",r.status||"",
+            r.languages||"",r.length||"",r.digest||"",`"${r.filename||""}"`,
+            `"${(CODED[i]||[]).join("|")}"`].join(",");
   });
-  const csv=[headers.join(","),...rows].join("\n");
-  downloadFile(csv,"commoncrawl_results.csv","text/csv");
+  dlFile([hdr.join(","),...rows].join("\n"), "commoncrawl_results.csv","text/csv");
 }
-function exportJSON(){
-  if(!allRecords.length){setStatus("No data to export.","error");return;}
-  const data=allRecords.map((r,i)=>({...r,codes:codedRows[i]||[]}));
-  downloadFile(JSON.stringify(data,null,2),"commoncrawl_results.json","application/json");
+function expJSON() {
+  if (!ALL.length) return;
+  dlFile(JSON.stringify(ALL.map((r,i)=>({...r,codes:CODED[i]||[]})),null,2),
+    "commoncrawl_results.json","application/json");
 }
-function exportTXT(){
-  if(!allRecords.length){setStatus("No data to export.","error");return;}
-  const urls=allRecords.map(r=>r.url).join("\n");
-  downloadFile(urls,"commoncrawl_urls.txt","text/plain");
+function expTXT() {
+  if (!ALL.length) return;
+  dlFile(ALL.map(r=>r.url).join("\n"), "commoncrawl_urls.txt","text/plain");
 }
-function downloadFile(content,filename,type){
-  const a=document.createElement("a");
-  a.href=URL.createObjectURL(new Blob([content],{type}));
-  a.download=filename; a.click();
+function dlFile(content, name, type) {
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([content],{type}));
+  a.download = name; a.click();
 }
 
-// ---- CLEAR ----
-function clearAll(){
-  allRecords=[];selectedRows.clear();codedRows={};codes=[];
-  document.getElementById("tableBody").innerHTML="";
-  document.getElementById("resultsCard").classList.remove("active");
-  document.getElementById("statusBar").style.display="none";
-  document.getElementById("keywordInput").value="";
-  document.getElementById("hashtagInput").value="";
-  document.getElementById("codeList").innerHTML="";
+// ===== CLEAR =====
+function clearAll() {
+  ALL=[]; SELECTED.clear(); CODED={}; CODES=[]; PAGE=1;
+  document.getElementById("tbody").innerHTML = "";
+  document.getElementById("resCard").classList.remove("show");
+  document.getElementById("statusBar").className = "";
+  document.getElementById("statusBar").innerHTML = "";
+  document.getElementById("kwIn").value = "";
+  document.getElementById("htIn").value = "";
+  document.getElementById("codeList").innerHTML = "";
 }
+
+// Pre-generate python script on load
+genPyScript("*nostalgia*","CC-MAIN-2025-13","","","","","exact",1000);
 </script>
-
-<footer style="margin-top:26px;background:#ffffff;border-top:1px solid #cfd8dc;padding:18px 24px;text-align:center;color:#546e7a;font-size:0.84rem;box-shadow:0 -1px 8px rgba(0,0,0,0.03);">
-  © 2026 Mayukh Mukhopadhyay · Licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" style="color:#1565c0;text-decoration:none;">CC BY-NC-ND 4.0</a>
-</footer>
-
 </body>
 </html>
