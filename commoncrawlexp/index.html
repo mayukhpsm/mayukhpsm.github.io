@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Common Crawl Explorer Research Interface</title>
+<title>Common Crawl Explorer — Research Interface</title>
 <style>
   :root {
     --primary: #1a237e;
@@ -207,10 +207,10 @@
 
 <!-- HEADER -->
 <header>
-  <div class="logo">ðŸ•¸ï¸</div>
+  <div class="logo">🕸️</div>
   <div>
     <h1>Common Crawl Explorer</h1>
-    <p>Research interface Â· CDX Index API Â· Amazon Open Data Â· Up to 1,000,000 records Â· Qualitative & NLP Analysis</p>
+    <p>Research interface · CDX Index API · Amazon Open Data · Up to 1,000,000 records · Qualitative & NLP Analysis</p>
   </div>
 </header>
 
@@ -218,7 +218,7 @@
 
   <!-- SEARCH PANEL -->
   <div class="search-card">
-    <h2>ðŸ” Search Parameters</h2>
+    <h2>🔍 Search Parameters</h2>
     <div class="search-row">
       <div class="field-group">
         <label>Keywords</label>
@@ -244,11 +244,11 @@
     </div>
     <div class="search-row" style="margin-top:14px;">
       <div class="field-group">
-        <label>ðŸ“… Timeline: Start (Monthâ€“Year)</label>
+        <label>📅 Timeline: Start (Month–Year)</label>
         <input type="month" id="dateFrom" value="2023-01" />
       </div>
       <div class="field-group">
-        <label>ðŸ“… Timeline: End (Monthâ€“Year)</label>
+        <label>📅 Timeline: End (Month–Year)</label>
         <input type="month" id="dateTo" value="2025-12" />
       </div>
       <div class="field-group">
@@ -286,9 +286,9 @@
       </div>
     </div>
     <div class="search-row" style="margin-top:18px; align-items:center;">
-      <button class="btn btn-primary" onclick="startSearch()">ðŸ”Ž Search Common Crawl</button>
-      <button class="btn btn-secondary" onclick="loadDemo()">ðŸ“¥ Load Demo Data</button>
-      <button class="btn btn-secondary" onclick="clearAll()">âœ• Clear</button>
+      <button class="btn btn-primary" onclick="startSearch()">🔎 Search Common Crawl</button>
+      <button class="btn btn-secondary" onclick="loadDemo()">📥 Load Demo Data</button>
+      <button class="btn btn-secondary" onclick="clearAll()">✕ Clear</button>
       <div class="hint" style="margin-left:auto;">API: <code>https://index.commoncrawl.org/CC-MAIN-{crawl}-index?url=...&output=json</code></div>
     </div>
   </div>
@@ -300,22 +300,22 @@
   <div class="results-card" id="resultsCard">
     <div class="results-header">
       <div>
-        <h3>ðŸ“„ Search Results</h3>
+        <h3>📄 Search Results</h3>
         <div class="results-meta" id="resultsMeta"></div>
       </div>
       <div style="display:flex;gap:8px;">
-        <button class="btn btn-secondary" style="font-size:0.82rem;padding:6px 14px;" onclick="selectAll()">â˜‘ Select All Page</button>
-        <button class="btn btn-secondary" style="font-size:0.82rem;padding:6px 14px;" onclick="deselectAll()">â˜ Deselect All</button>
+        <button class="btn btn-secondary" style="font-size:0.82rem;padding:6px 14px;" onclick="selectAll()">☑ Select All Page</button>
+        <button class="btn btn-secondary" style="font-size:0.82rem;padding:6px 14px;" onclick="deselectAll()">☐ Deselect All</button>
       </div>
     </div>
 
     <!-- ANALYSIS TOOLBAR -->
     <div class="analysis-bar">
-      <span>ðŸ§ª Analyse:</span>
-      <button class="btn-analysis" onclick="openAnalysis('coding')">ðŸ·ï¸ Qualitative Coding</button>
-      <button class="btn-analysis" onclick="openAnalysis('berttopic')">ðŸ¤– BERTopic Modelling</button>
-      <button class="btn-analysis" onclick="openAnalysis('lda')">ðŸ“Š LDA Topic Modelling</button>
-      <button class="btn-analysis" onclick="openAnalysis('sentiment')">ðŸ’¬ Context-Aware Sentiment</button>
+      <span>🧪 Analyse:</span>
+      <button class="btn-analysis" onclick="openAnalysis('coding')">🏷️ Qualitative Coding</button>
+      <button class="btn-analysis" onclick="openAnalysis('berttopic')">🤖 BERTopic Modelling</button>
+      <button class="btn-analysis" onclick="openAnalysis('lda')">📊 LDA Topic Modelling</button>
+      <button class="btn-analysis" onclick="openAnalysis('sentiment')">💬 Context-Aware Sentiment</button>
       <div id="selectedCount">0 rows selected</div>
     </div>
 
@@ -345,9 +345,9 @@
     <!-- EXPORT BAR -->
     <div class="export-bar">
       <span>Export:</span>
-      <button class="btn btn-secondary" style="font-size:0.8rem;padding:5px 14px;" onclick="exportCSV()">â¬‡ CSV</button>
-      <button class="btn btn-secondary" style="font-size:0.8rem;padding:5px 14px;" onclick="exportJSON()">â¬‡ JSON</button>
-      <button class="btn btn-secondary" style="font-size:0.8rem;padding:5px 14px;" onclick="exportTXT()">â¬‡ URLs (.txt)</button>
+      <button class="btn btn-secondary" style="font-size:0.8rem;padding:5px 14px;" onclick="exportCSV()">⬇ CSV</button>
+      <button class="btn btn-secondary" style="font-size:0.8rem;padding:5px 14px;" onclick="exportJSON()">⬇ JSON</button>
+      <button class="btn btn-secondary" style="font-size:0.8rem;padding:5px 14px;" onclick="exportTXT()">⬇ URLs (.txt)</button>
     </div>
 
     <!-- PAGINATION -->
@@ -363,8 +363,8 @@
 <div class="modal-overlay" id="modal-coding">
   <div class="modal">
     <div class="modal-header">
-      <h3>ðŸ·ï¸ Qualitative Coding Panel</h3>
-      <button class="modal-close" onclick="closeModal('modal-coding')">Ã—</button>
+      <h3>🏷️ Qualitative Coding Panel</h3>
+      <button class="modal-close" onclick="closeModal('modal-coding')">×</button>
     </div>
     <div class="modal-body">
       <div class="modal-section">
@@ -376,12 +376,12 @@
         <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;">
           <input type="text" id="newCodeInput" placeholder="Type a code label..." style="flex:1;min-width:180px;" />
           <select id="codeColor" style="width:110px;">
-            <option value="#e8f5e9" data-txt="#2e7d32">ðŸŸ¢ Green</option>
-            <option value="#e3f2fd" data-txt="#1565c0">ðŸ”µ Blue</option>
-            <option value="#fce4ec" data-txt="#c62828">ðŸ”´ Red</option>
-            <option value="#fff8e1" data-txt="#f57f17">ðŸŸ¡ Yellow</option>
-            <option value="#f3e5f5" data-txt="#6a1b9a">ðŸŸ£ Purple</option>
-            <option value="#e0f2f1" data-txt="#00695c">ðŸ©µ Teal</option>
+            <option value="#e8f5e9" data-txt="#2e7d32">🟢 Green</option>
+            <option value="#e3f2fd" data-txt="#1565c0">🔵 Blue</option>
+            <option value="#fce4ec" data-txt="#c62828">🔴 Red</option>
+            <option value="#fff8e1" data-txt="#f57f17">🟡 Yellow</option>
+            <option value="#f3e5f5" data-txt="#6a1b9a">🟣 Purple</option>
+            <option value="#e0f2f1" data-txt="#00695c">🩵 Teal</option>
           </select>
           <button class="btn btn-primary" onclick="addCode()" style="padding:7px 16px;">+ Add Code</button>
         </div>
@@ -394,7 +394,7 @@
       <div class="modal-section">
         <h4>Python Backend Script (run locally)</h4>
         <div class="code-snippet">
-# Qualitative Coding â€” Export for NVivo / QualCoder / ATLAS.ti
+# Qualitative Coding — Export for NVivo / QualCoder / ATLAS.ti
 import json, csv, datetime
 
 coded_records = []  # populate from your exported JSON
@@ -407,7 +407,7 @@ print("Exported coded dataset for QualCoder / NVivo import.")
         </div>
       </div>
       <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:16px;">
-        <button class="btn btn-primary" onclick="applyCoding()">âœ… Apply Codes to Selection</button>
+        <button class="btn btn-primary" onclick="applyCoding()">✅ Apply Codes to Selection</button>
         <button class="btn btn-secondary" onclick="closeModal('modal-coding')">Cancel</button>
       </div>
     </div>
@@ -418,8 +418,8 @@ print("Exported coded dataset for QualCoder / NVivo import.")
 <div class="modal-overlay" id="modal-berttopic">
   <div class="modal">
     <div class="modal-header">
-      <h3>ðŸ¤– BERTopic Topic Modelling</h3>
-      <button class="modal-close" onclick="closeModal('modal-berttopic')">Ã—</button>
+      <h3>🤖 BERTopic Topic Modelling</h3>
+      <button class="modal-close" onclick="closeModal('modal-berttopic')">×</button>
     </div>
     <div class="modal-body">
       <div class="modal-section">
@@ -504,8 +504,8 @@ topic_model.save("berttopic_commoncrawl_model")
 <div class="modal-overlay" id="modal-lda">
   <div class="modal">
     <div class="modal-header">
-      <h3>ðŸ“Š LDA Topic Modelling</h3>
-      <button class="modal-close" onclick="closeModal('modal-lda')">Ã—</button>
+      <h3>📊 LDA Topic Modelling</h3>
+      <button class="modal-close" onclick="closeModal('modal-lda')">×</button>
     </div>
     <div class="modal-body">
       <div class="modal-section">
@@ -592,13 +592,13 @@ print("Interactive LDA visualization saved.")
 <div class="modal-overlay" id="modal-sentiment">
   <div class="modal">
     <div class="modal-header">
-      <h3>ðŸ’¬ Context-Aware Sentiment Analysis</h3>
-      <button class="modal-close" onclick="closeModal('modal-sentiment')">Ã—</button>
+      <h3>💬 Context-Aware Sentiment Analysis</h3>
+      <button class="modal-close" onclick="closeModal('modal-sentiment')">×</button>
     </div>
     <div class="modal-body">
       <div class="modal-section">
         <h4>About Context-Aware Sentiment</h4>
-        <p>Context-aware sentiment analysis uses transformer-based models (RoBERTa, DeBERTa, DistilBERT) that understand negations, sarcasm, and nuanced expressions â€” going beyond simple positive/negative polarity scoring. Results include: Positive, Negative, Neutral, Mixed, plus an intensity score (0â€“1).</p>
+        <p>Context-aware sentiment analysis uses transformer-based models (RoBERTa, DeBERTa, DistilBERT) that understand negations, sarcasm, and nuanced expressions — going beyond simple positive/negative polarity scoring. Results include: Positive, Negative, Neutral, Mixed, plus an intensity score (0–1).</p>
       </div>
       <div class="modal-section">
         <h4>Configuration</h4>
@@ -744,7 +744,7 @@ async function startSearch() {
   const status = document.getElementById("statusFilter").value;
 
   let urlQuery = keyword || hashtag;
-  if (!urlQuery) { setStatus("âš ï¸ Please enter a keyword or hashtag/domain to search.", "error"); return; }
+  if (!urlQuery) { setStatus("⚠️ Please enter a keyword or hashtag/domain to search.", "error"); return; }
 
   // Build CDX query
   // For hashtag/domain use
@@ -785,7 +785,7 @@ async function startSearch() {
     });
 
     if (!response.ok) {
-      setStatus(`âš ï¸ API returned HTTP ${response.status}. Try adjusting your query, match type, or crawl. Common Crawl CDX may block browser CORS â€” use the demo data or run via backend.`, "error");
+      setStatus(`⚠️ API returned HTTP ${response.status}. Try adjusting your query, match type, or crawl. Common Crawl CDX may block browser CORS — use the demo data or run via backend.`, "error");
       return;
     }
 
@@ -797,16 +797,16 @@ async function startSearch() {
     }).filter(Boolean).slice(0, MAX_RECORDS);
 
     if (allRecords.length === 0) {
-      setStatus("â„¹ï¸ No records found for this query. Try broadening your search or switching to Demo Data.", "error");
+      setStatus("ℹ️ No records found for this query. Try broadening your search or switching to Demo Data.", "error");
       return;
     }
 
-    setStatus(`âœ… Found <strong>${allRecords.length.toLocaleString()}</strong> records from <strong>${crawl}</strong> | Timeline: ${dateFrom} â†’ ${dateTo}`, "success");
+    setStatus(`✅ Found <strong>${allRecords.length.toLocaleString()}</strong> records from <strong>${crawl}</strong> | Timeline: ${dateFrom} → ${dateTo}`, "success");
     renderTable();
     document.getElementById("resultsCard").classList.add("active");
 
   } catch(e) {
-    setStatus(`âš ï¸ CORS or network error (browsers cannot directly fetch CDX API on some crawls). Loading demo data instead. <br><small>${e.message}</small>`, "error");
+    setStatus(`⚠️ CORS or network error (browsers cannot directly fetch CDX API on some crawls). Loading demo data instead. <br><small>${e.message}</small>`, "error");
     loadDemo();
   }
 }
@@ -836,7 +836,7 @@ function loadDemo() {
   }
   currentPage = 1;
   selectedRows.clear();
-  setStatus(`âœ… Loaded <strong>${allRecords.length}</strong> demo records. This simulates real Common Crawl CDX index output.`, "success");
+  setStatus(`✅ Loaded <strong>${allRecords.length}</strong> demo records. This simulates real Common Crawl CDX index output.`, "success");
   renderTable();
   document.getElementById("resultsCard").classList.add("active");
 }
@@ -857,10 +857,10 @@ function renderTable() {
 
     const domain = (() => { try { return new URL(rec.url).hostname; } catch { return rec.urlkey||""; }})();
     const ts = rec.timestamp||"";
-    const dateStr = ts ? `${ts.substr(0,4)}-${ts.substr(4,2)}-${ts.substr(6,2)} ${ts.substr(8,2)}:${ts.substr(10,2)}` : "â€“";
-    const status = rec.status||"â€“";
+    const dateStr = ts ? `${ts.substr(0,4)}-${ts.substr(4,2)}-${ts.substr(6,2)} ${ts.substr(8,2)}:${ts.substr(10,2)}` : "–";
+    const status = rec.status||"–";
     const statusClass = status==="200"?"badge-200":status==="301"?"badge-301":status==="404"?"badge-404":"badge-other";
-    const isCoded = codedRows[globalIdx] ? `<span class="tag-coded">âœ“ ${codedRows[globalIdx].join(", ")}</span>` : "";
+    const isCoded = codedRows[globalIdx] ? `<span class="tag-coded">✓ ${codedRows[globalIdx].join(", ")}</span>` : "";
     const fname = rec.filename||"";
     const fnameShort = fname.length>40 ? "..."+fname.slice(-37) : fname;
 
@@ -870,11 +870,11 @@ function renderTable() {
       <td class="url-cell"><a href="${rec.url}" target="_blank" title="${rec.url}">${rec.url}</a></td>
       <td style="font-size:0.8rem;">${domain}</td>
       <td style="font-size:0.8rem;white-space:nowrap;">${dateStr}</td>
-      <td><span class="mime-badge">${(rec.mime||"â€“").replace("text/","")}</span></td>
+      <td><span class="mime-badge">${(rec.mime||"–").replace("text/","")}</span></td>
       <td><span class="badge ${statusClass}">${status}</span></td>
-      <td style="font-size:0.8rem;">${rec.languages||"â€“"}</td>
-      <td style="font-size:0.8rem;">${rec.length?Number(rec.length).toLocaleString():"â€“"}</td>
-      <td style="font-size:0.72rem;color:var(--muted);max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${rec.digest||""}">${rec.digest||"â€“"}</td>
+      <td style="font-size:0.8rem;">${rec.languages||"–"}</td>
+      <td style="font-size:0.8rem;">${rec.length?Number(rec.length).toLocaleString():"–"}</td>
+      <td style="font-size:0.72rem;color:var(--muted);max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${rec.digest||""}">${rec.digest||"–"}</td>
       <td style="font-size:0.72rem;color:var(--muted);max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${fname}">${fnameShort}</td>
       <td>${isCoded}</td>
     `;
@@ -883,7 +883,7 @@ function renderTable() {
 
   const totalPages = Math.ceil(allRecords.length/PAGE_SIZE);
   document.getElementById("resultsMeta").textContent =
-    `Showing records ${start+1}â€“${end} of ${allRecords.length.toLocaleString()} total | Page ${currentPage} of ${totalPages.toLocaleString()} | 50 rows/page`;
+    `Showing records ${start+1}–${end} of ${allRecords.length.toLocaleString()} total | Page ${currentPage} of ${totalPages.toLocaleString()} | 50 rows/page`;
   renderPagination(totalPages);
   document.getElementById("selectAllChk").checked = false;
   updateSelectedCount();
@@ -897,7 +897,7 @@ function renderPagination(totalPages) {
 
   const prevBtn = document.createElement("button");
   prevBtn.className = "page-btn";
-  prevBtn.textContent = "â—€ Prev";
+  prevBtn.textContent = "◀ Prev";
   prevBtn.disabled = currentPage===1;
   prevBtn.onclick = () => { currentPage--; renderTable(); };
   bar.appendChild(prevBtn);
@@ -917,7 +917,7 @@ function renderPagination(totalPages) {
   pages.forEach(p=>{
     if(p==="..."){
       const span=document.createElement("span");
-      span.textContent="â€¦";span.style.padding="5px 6px";span.style.color="var(--muted)";
+      span.textContent="…";span.style.padding="5px 6px";span.style.color="var(--muted)";
       bar.appendChild(span);
     } else {
       const btn=document.createElement("button");
@@ -930,7 +930,7 @@ function renderPagination(totalPages) {
 
   const nextBtn=document.createElement("button");
   nextBtn.className="page-btn";
-  nextBtn.textContent="Next â–¶";
+  nextBtn.textContent="Next ▶";
   nextBtn.disabled=currentPage===totalPages;
   nextBtn.onclick=()=>{currentPage++;renderTable();};
   bar.appendChild(nextBtn);
@@ -964,7 +964,7 @@ function updateSelectedCount() {
 
 // ---- ANALYSIS MODALS ----
 function openAnalysis(type) {
-  if(allRecords.length===0){ setStatus("âš ï¸ No data loaded. Please run a search or load demo data first.", "error"); return; }
+  if(allRecords.length===0){ setStatus("⚠️ No data loaded. Please run a search or load demo data first.", "error"); return; }
   document.getElementById("codingSelectionInfo").textContent =
     `${selectedRows.size||allRecords.length} record(s) selected for analysis`;
   document.getElementById("modal-"+type).classList.add("open");
@@ -996,7 +996,7 @@ function renderCodeList(){
     const tag=document.createElement("span");
     tag.className="topic-tag";
     tag.style.background=c.bg;tag.style.color=c.txt;
-    tag.innerHTML=`${c.label} <button onclick="removeCode(${i})" style="background:none;border:none;cursor:pointer;color:${c.txt};font-size:0.85rem;padding:0 0 0 4px;">Ã—</button>`;
+    tag.innerHTML=`${c.label} <button onclick="removeCode(${i})" style="background:none;border:none;cursor:pointer;color:${c.txt};font-size:0.85rem;padding:0 0 0 4px;">×</button>`;
     list.appendChild(tag);
   });
 }
@@ -1008,7 +1008,7 @@ function applyCoding(){
   targets.forEach(idx=>{ codedRows[idx]=codes.map(c=>c.label); });
   closeModal("modal-coding");
   renderTable();
-  setStatus(`âœ… Applied ${codes.length} code(s) to ${targets.length} record(s).`, "success");
+  setStatus(`✅ Applied ${codes.length} code(s) to ${targets.length} record(s).`, "success");
 }
 
 // ---- EXPORT ----
