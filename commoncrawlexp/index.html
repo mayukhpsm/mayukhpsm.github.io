@@ -210,7 +210,7 @@
   <div class="logo">🕸️</div>
   <div>
     <h1>Common Crawl Explorer</h1>
-    <p>Research interface · CDX Index API · Amazon Open Data · Up to 1,000,000 records · Qualitative & NLP Analysis</p>
+    <p>Research interface · Common Crawl Index API + local backend fallback · Up to 1,000,000 records · Qualitative & NLP Analysis</p>
   </div>
 </header>
 
@@ -736,7 +736,7 @@ async function startSearch() {
   const keyword = document.getElementById("keywordInput").value.trim();
   const hashtag = document.getElementById("hashtagInput").value.trim();
   const matchType = document.getElementById("matchType").value;
-  const crawl = document.getElementById("crawlSelect").value;
+  const selectedCrawl = document.getElementById("crawlSelect").value;
   const dateFrom = document.getElementById("dateFrom").value;
   const dateTo = document.getElementById("dateTo").value;
   const limit = parseInt(document.getElementById("limitSelect").value);
@@ -744,73 +744,168 @@ async function startSearch() {
   const status = document.getElementById("statusFilter").value;
 
   let urlQuery = keyword || hashtag;
-  if (!urlQuery) { setStatus("⚠️ Please enter a keyword or hashtag/domain to search.", "error"); return; }
+  if (!urlQuery) {
+    setStatus("⚠️ Please enter a keyword or hashtag/domain to search.", "error");
+    return;
+  }
 
-  // Build CDX query
-  // For hashtag/domain use
   if (hashtag && hashtag.startsWith("#")) {
-    urlQuery = "*." + hashtag.replace("#","") + "*";
+    urlQuery = "*" + hashtag.replace("#", "") + "*";
   } else if (hashtag && hashtag.includes("*")) {
     urlQuery = hashtag;
   } else if (hashtag) {
     urlQuery = "*" + hashtag + "*";
   } else {
-    urlQuery = "*" + keyword.replace(/ /g,"+") + "*";
+    urlQuery = "*" + keyword.replace(/\s+/g, "*") + "*";
   }
 
-  const fromTS = dateFrom ? dateFrom.replace("-","") + "01000000" : "";
-  const toTS = dateTo ? dateTo.replace("-","") + "28235959" : "";
+  const fromTS = dateFrom ? dateFrom.replace("-", "") + "01000000" : "";
+  const toTS = dateTo ? dateTo.replace("-", "") + "31235959" : "";
+  const crawlsInRange = (dateFrom && dateTo) ? getCrawlsInRange(dateFrom, dateTo) : [selectedCrawl];
+  const crawlCandidates = crawlsInRange.length ? crawlsInRange : [selectedCrawl];
 
-  let params = new URLSearchParams({
-    url: urlQuery,
-    output: "json",
-    limit: Math.min(limit, 100000).toString(),
-    matchType: matchType
-  });
-  if (fromTS) params.append("from", fromTS);
-  if (toTS) params.append("to", toTS);
-  if (mime) params.append("filter", "mime:" + mime);
-  if (status) params.append("filter", "statuscode:" + status);
-
-  const apiURL = `https://index.commoncrawl.org/${crawl}-index?${params.toString()}`;
-
-  setStatus(`<span class="loading-spinner"></span> Querying Common Crawl CDX API... <code style="font-size:0.75rem;word-break:break-all;">${apiURL}</code>`);
   allRecords = [];
   currentPage = 1;
   selectedRows.clear();
 
+  setStatus(`<span class="loading-spinner"></span> Checking index availability and trying smaller paged queries across ${crawlCandidates.length} crawl(s)...`);
+
   try {
-    const response = await fetch(apiURL, {
-      headers: { "Accept": "application/json" }
-    });
+    const infoResp = await fetch('https://index.commoncrawl.org/collinfo.json');
+    if (!infoResp.ok) throw new Error('Could not load collinfo.json');
+    const collinfo = await infoResp.json();
+    const available = new Set(collinfo.map(c => c.id));
 
-    if (!response.ok) {
-      setStatus(`⚠️ API returned HTTP ${response.status}. Try adjusting your query, match type, or crawl. Common Crawl CDX may block browser CORS — use the demo data or run via backend.`, "error");
+    const usableCrawls = crawlCandidates.filter(c => available.has(c));
+    if (!usableCrawls.length) {
+      throw new Error('No valid crawl index found for selected timeline');
+    }
+
+    const targetPages = Math.max(1, Math.ceil(Math.min(limit, MAX_RECORDS) / PAGE_SIZE));
+    const records = [];
+
+    for (const crawl of usableCrawls) {
+      for (let page = 0; page < targetPages; page++) {
+        if (records.length >= Math.min(limit, MAX_RECORDS)) break;
+        const params = new URLSearchParams({
+          url: urlQuery,
+          output: 'json',
+          pageSize: '50',
+          page: String(page),
+          matchType: matchType
+        });
+        if (fromTS) params.append('from', fromTS);
+        if (toTS) params.append('to', toTS);
+        if (mime) params.append('filter', 'mime:' + mime);
+        if (status) params.append('filter', 'status:' + status);
+
+        const apiURL = `https://index.commoncrawl.org/${crawl}-index?${params.toString()}`;
+
+        try {
+          const response = await fetch(apiURL, { headers: { 'Accept': 'application/json' } });
+          if (!response.ok) {
+            if (response.status === 504 || response.status === 502 || response.status === 500) break;
+            continue;
+          }
+          const text = await response.text();
+          const lines = text.trim().split('\n').filter(Boolean);
+          if (!lines.length) break;
+          const parsed = lines.map(line => { try { return JSON.parse(line); } catch { return null; } }).filter(Boolean);
+          records.push(...parsed);
+          if (parsed.length < 50) break;
+        } catch (err) {
+          break;
+        }
+      }
+      if (records.length) break;
+    }
+
+    allRecords = dedupeRecords(records).slice(0, Math.min(limit, MAX_RECORDS));
+
+    if (!allRecords.length) {
+      setStatus(`⚠️ Browser-side querying did not return usable records. Use the built-in backend workaround below, or load demo data.`, 'error');
+      showBackendHelp(urlQuery, crawlCandidates, fromTS, toTS, mime, status, matchType, limit);
       return;
     }
 
-    const text = await response.text();
-    const lines = text.trim().split("\n").filter(Boolean);
-
-    allRecords = lines.map((line, i) => {
-      try { return JSON.parse(line); } catch { return null; }
-    }).filter(Boolean).slice(0, MAX_RECORDS);
-
-    if (allRecords.length === 0) {
-      setStatus("ℹ️ No records found for this query. Try broadening your search or switching to Demo Data.", "error");
-      return;
-    }
-
-    setStatus(`✅ Found <strong>${allRecords.length.toLocaleString()}</strong> records from <strong>${crawl}</strong> | Timeline: ${dateFrom} → ${dateTo}`, "success");
+    setStatus(`✅ Found <strong>${allRecords.length.toLocaleString()}</strong> records using paged CDX queries and crawl fallback.`, 'success');
     renderTable();
-    document.getElementById("resultsCard").classList.add("active");
+    document.getElementById('resultsCard').classList.add('active');
 
-  } catch(e) {
-    setStatus(`⚠️ CORS or network error (browsers cannot directly fetch CDX API on some crawls). Loading demo data instead. <br><small>${e.message}</small>`, "error");
-    loadDemo();
+  } catch (e) {
+    setStatus(`⚠️ Direct browser queries failed. A local backend or offline index workflow is more reliable for Common Crawl at scale.`, 'error');
+    showBackendHelp(urlQuery, crawlCandidates, fromTS, toTS, mime, status, matchType, limit);
   }
 }
 
+function dedupeRecords(records) {
+  const seen = new Set();
+  return records.filter(r => {
+    const key = [r.url || '', r.timestamp || '', r.digest || '', r.filename || '', r.offset || ''].join('|');
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+function showBackendHelp(urlQuery, crawlCandidates, fromTS, toTS, mime, status, matchType, limit) {
+  const crawl = crawlCandidates[0] || 'CC-MAIN-2025-13';
+  const filters = [];
+  if (mime) filters.push(`params.append("filter", "mime:${mime}")`);
+  if (status) filters.push(`params.append("filter", "status:${status}")`);
+  const code = `import requests, json
+from pathlib import Path
+
+crawl = "${crawl}"
+base = f"https://index.commoncrawl.org/{crawl}-index"
+limit = ${Math.min(limit, MAX_RECORDS)}
+page_size = 50
+all_rows = []
+page = 0
+
+while len(all_rows) < limit:
+    params = {
+        "url": "${urlQuery}",
+        "output": "json",
+        "page": page,
+        "pageSize": page_size,
+        "matchType": "${matchType}"
+    }
+    ${fromTS ? `params["from"] = "${fromTS}"` : ''}
+    ${toTS ? `params["to"] = "${toTS}"` : ''}
+    ${filters.join('
+    ')}
+
+    r = requests.get(base, params=params, timeout=120)
+    if r.status_code != 200:
+        break
+
+    lines = [x for x in r.text.splitlines() if x.strip()]
+    if not lines:
+        break
+
+    rows = [json.loads(x) for x in lines]
+    all_rows.extend(rows)
+    if len(rows) < page_size:
+        break
+    page += 1
+
+Path("commoncrawl_export.json").write_text(json.dumps(all_rows[:limit], indent=2), encoding="utf-8")
+print(f"Saved {len(all_rows[:limit])} rows to commoncrawl_export.json")`;
+
+  const htmlBlock = `
+    <div style="margin-top:12px;padding:14px 16px;border:1px solid #ffcc80;background:#fff8e1;border-radius:8px;">
+      <div style="font-weight:700;color:#e65100;margin-bottom:8px;">Reliable workaround</div>
+      <div style="font-size:0.84rem;color:#5d4037;line-height:1.55;">Run the Python snippet below locally or through a lightweight backend endpoint, then load the exported JSON/CSV into this interface. This avoids fragile browser-to-CDX calls and 504 errors on the public index.</div>
+      <textarea style="width:100%;margin-top:10px;min-height:260px;border:1px solid #d7ccc8;border-radius:6px;padding:10px;font-family:monospace;font-size:0.8rem;">${code}</textarea>
+    </div>`;
+
+  const bar = document.getElementById('statusBar');
+  bar.innerHTML += htmlBlock;
+  loadDemo();
+}
+
+// ---- DEMO DATA ----
 // ---- DEMO DATA ----
 function loadDemo() {
   allRecords = [];
@@ -1049,5 +1144,10 @@ function clearAll(){
   document.getElementById("codeList").innerHTML="";
 }
 </script>
+
+<footer style="margin-top:26px;background:#ffffff;border-top:1px solid #cfd8dc;padding:18px 24px;text-align:center;color:#546e7a;font-size:0.84rem;box-shadow:0 -1px 8px rgba(0,0,0,0.03);">
+  © 2026 Mayukh Mukhopadhyay · Licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" style="color:#1565c0;text-decoration:none;">CC BY-NC-ND 4.0</a>
+</footer>
+
 </body>
 </html>
