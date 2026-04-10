@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Organizational Silence — Revise & Resubmit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Patrick+Hand&family=Kalam:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+/* ===================== TOKENS ===================== */
+:root, [data-theme="light"] {
+  --bg: #f5f0e8;
+  --surface: #faf7f0;
+  --surface2: #fff;
+  --board: #f8f4ea;
+  --border: #d4cbb8;
+  --divider: #e2ddd0;
+  --text: #2c2416;
+  --muted: #6b5e45;
+  --faint: #b0a48a;
+  --ink: #1a1008;
+  --accent: #2563a8;
+  --accent2: #c0392b;
+  --accent3: #1e8449;
+  --accent4: #7d3c98;
+  --accent5: #d35400;
+  --chalk: #f8f4ea;
+  --marker-blue: #1a56db;
+  --marker-red: #c0392b;
+  --marker-green: #1e8449;
+  --marker-orange: #d35400;
+  --marker-purple: #7d3c98;
+  --shadow: 0 2px 8px rgba(44,36,22,0.10);
+  --shadow-lg: 0 8px 32px rgba(44,36,22,0.13);
+  --font-hand: 'Caveat', 'Kalam', cursive;
+  --font-body: 'Patrick Hand', 'Kalam', cursive;
+  --transition: 200ms cubic-bezier(0.16,1,0.3,1);
+  --radius: 0.75rem;
+  --radius-sm: 0.4rem;
+}
+[data-theme="dark"] {
+  --bg: #111008;
+  --surface: #1a1810;
+  --surface2: #221f14;
+  --board: #181510;
+  --border: #3a3420;
+  --divider: #2a2518;
+  --text: #ede8d8;
+  --muted: #b8ad94;
+  --faint: #6b6045;
+  --ink: #f5f0e8;
+  --accent: #5b9cf6;
+  --accent2: #e87070;
+  --accent3: #52c28a;
+  --accent4: #bb8ee8;
+  --accent5: #f39c12;
+  --chalk: #d4cbb8;
+  --marker-blue: #5b9cf6;
+  --marker-red: #e87070;
+  --marker-green: #52c28a;
+  --marker-orange: #f39c12;
+  --marker-purple: #bb8ee8;
+  --shadow: 0 2px 8px rgba(0,0,0,0.4);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.5);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  font-size: clamp(1rem, 0.9rem + 0.5vw, 1.2rem);
+  line-height: 1.65;
+  min-height: 100dvh;
+  transition: background var(--transition), color var(--transition);
+}
+
+/* ===================== HEADER ===================== */
+.site-header {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--surface);
+  border-bottom: 2px solid var(--border);
+  box-shadow: var(--shadow);
+  padding: 0.75rem 1.5rem;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 0.5rem;
+}
+.logo-wrap { display: flex; align-items: center; gap: 0.6rem; }
+.logo-svg { flex-shrink: 0; }
+.brand-name {
+  font-family: var(--font-hand);
+  font-size: clamp(1.1rem, 1rem + 1vw, 1.5rem);
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: -0.02em;
+}
+.brand-sub {
+  font-family: var(--font-hand);
+  font-size: 0.85rem;
+  color: var(--muted);
+  display: block;
+  margin-top: -4px;
+}
+.toggle-btn {
+  background: var(--surface2);
+  border: 2px solid var(--border);
+  border-radius: 2rem;
+  padding: 0.4rem 1rem;
+  font-family: var(--font-hand);
+  font-size: 0.95rem;
+  color: var(--text);
+  cursor: pointer;
+  display: flex; align-items: center; gap: 0.4rem;
+  transition: background var(--transition), border-color var(--transition);
+}
+.toggle-btn:hover { background: var(--divider); }
+
+/* ===================== HERO BOARD ===================== */
+.hero-board {
+  background: var(--board);
+  border: 3px solid var(--border);
+  border-radius: 1.2rem;
+  margin: 2rem auto;
+  max-width: 900px;
+  padding: 2.5rem 2rem 2rem;
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  overflow: hidden;
+}
+.hero-board::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    0deg, transparent, transparent 38px, var(--divider) 38px, var(--divider) 39px
+  );
+  opacity: 0.35;
+  pointer-events: none;
+}
+.hero-tag {
+  font-family: var(--font-hand);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--marker-red);
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+  position: relative;
+}
+.hero-title {
+  font-family: var(--font-hand);
+  font-size: clamp(1.8rem, 2vw + 1rem, 3rem);
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.15;
+  position: relative;
+  margin-bottom: 0.5rem;
+}
+.hero-title .underline-squiggle {
+  position: relative; display: inline-block;
+}
+.hero-title .underline-squiggle::after {
+  content: '';
+  position: absolute;
+  left: 0; bottom: -4px;
+  width: 100%; height: 6px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='8'%3E%3Cpath d='M0 6 Q5 2 10 6 Q15 10 20 6 Q25 2 30 6 Q35 10 40 6' stroke='%23c0392b' stroke-width='2.2' fill='none'/%3E%3C/svg%3E") repeat-x left center;
+}
+.hero-authors {
+  font-family: var(--font-hand);
+  font-size: 1rem;
+  color: var(--muted);
+  margin-bottom: 0.3rem;
+}
+.hero-journal {
+  display: inline-block;
+  background: var(--marker-blue);
+  color: #fff;
+  font-family: var(--font-hand);
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 0.15em 0.7em;
+  border-radius: 999px;
+  margin-bottom: 1rem;
+  letter-spacing: 0.03em;
+}
+.hero-intro {
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  color: var(--muted);
+  max-width: 65ch;
+  position: relative;
+}
+.tape-strip {
+  display: inline-block;
+  background: rgba(255,230,100,0.55);
+  border-radius: 3px;
+  padding: 0.05em 0.4em;
+  position: relative;
+  font-style: italic;
+}
+
+/* ===================== NAV TABS ===================== */
+.nav-tabs {
+  max-width: 900px; margin: 0 auto 1rem;
+  display: flex; flex-wrap: wrap; gap: 0.5rem;
+  padding: 0 1rem;
+}
+.tab-btn {
+  font-family: var(--font-hand);
+  font-size: 0.92rem;
+  font-weight: 700;
+  padding: 0.45em 1.1em;
+  border: 2px solid var(--border);
+  border-radius: 2rem;
+  background: var(--surface);
+  color: var(--muted);
+  cursor: pointer;
+  transition: all var(--transition);
+}
+.tab-btn:hover, .tab-btn.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow);
+}
+
+/* ===================== SECTIONS ===================== */
+.main-content { max-width: 900px; margin: 0 auto; padding: 0 1rem 3rem; }
+.section-panel {
+  display: none;
+  animation: fadeIn 0.3s ease;
+}
+.section-panel.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+/* ===================== WHITEBOARD CARDS ===================== */
+.wb-card {
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem 1.5rem 1.2rem;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow);
+  position: relative;
+  transition: box-shadow var(--transition), transform var(--transition);
+}
+.wb-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-2px); }
+.wb-card::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    0deg, transparent, transparent 33px, var(--divider) 33px, var(--divider) 34px
+  );
+  border-radius: var(--radius);
+  opacity: 0.2;
+  pointer-events: none;
+}
+.card-heading {
+  font-family: var(--font-hand);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 0.7rem;
+  display: flex; align-items: center; gap: 0.5rem;
+  position: relative;
+}
+.card-body { font-family: var(--font-body); font-size: 1rem; color: var(--muted); position: relative; }
+.card-body p { margin-bottom: 0.6rem; max-width: 70ch; }
+
+/* ===================== FLOW DIAGRAM ===================== */
+.flow-wrap {
+  overflow-x: auto;
+  padding: 0.5rem 0 1rem;
+}
+.flow-row {
+  display: flex; align-items: center; gap: 0; flex-wrap: nowrap;
+  min-width: 520px;
+}
+.flow-box {
+  flex: 1; min-width: 90px;
+  background: var(--surface2);
+  border: 2.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.6rem 0.7rem;
+  font-family: var(--font-hand);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--ink);
+  text-align: center;
+  position: relative;
+  transition: background var(--transition);
+}
+.flow-box.red { border-color: var(--marker-red); color: var(--marker-red); }
+.flow-box.blue { border-color: var(--marker-blue); color: var(--marker-blue); }
+.flow-box.green { border-color: var(--marker-green); color: var(--marker-green); }
+.flow-box.orange { border-color: var(--marker-orange); color: var(--marker-orange); }
+.flow-box.purple { border-color: var(--marker-purple); color: var(--marker-purple); }
+.flow-arrow {
+  font-size: 1.5rem;
+  color: var(--faint);
+  padding: 0 0.3rem;
+  flex-shrink: 0;
+}
+
+/* ===================== ICON LABELS ===================== */
+.pill-tag {
+  display: inline-flex; align-items: center; gap: 0.3em;
+  font-family: var(--font-hand); font-size: 0.85rem; font-weight: 700;
+  padding: 0.2em 0.75em;
+  border-radius: 999px;
+  margin: 0.2em 0.2em 0.2em 0;
+}
+.pill-red { background: rgba(192,57,43,0.12); color: var(--marker-red); border: 1.5px solid rgba(192,57,43,0.3); }
+.pill-blue { background: rgba(37,99,168,0.12); color: var(--marker-blue); border: 1.5px solid rgba(37,99,168,0.3); }
+.pill-green { background: rgba(30,132,73,0.12); color: var(--marker-green); border: 1.5px solid rgba(30,132,73,0.3); }
+.pill-orange { background: rgba(211,84,0,0.12); color: var(--marker-orange); border: 1.5px solid rgba(211,84,0,0.3); }
+.pill-purple { background: rgba(125,60,152,0.12); color: var(--marker-purple); border: 1.5px solid rgba(125,60,152,0.3); }
+
+/* ===================== BELIEF LIST ===================== */
+.belief-list { list-style: none; padding: 0; margin-top: 0.7rem; }
+.belief-list li {
+  display: flex; align-items: flex-start; gap: 0.7rem;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--muted);
+  margin-bottom: 0.8rem;
+  padding: 0.7rem 1rem;
+  background: var(--surface2);
+  border-radius: var(--radius-sm);
+  border-left: 4px solid var(--border);
+  transition: border-color var(--transition);
+  position: relative;
+}
+.belief-list li:hover { border-left-color: var(--accent); }
+.belief-icon { font-size: 1.4rem; flex-shrink: 0; }
+
+/* ===================== CONSEQUENCE GRID ===================== */
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+  margin-top: 0.8rem;
+}
+.consequence-card {
+  background: var(--surface2);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 1rem 1.1rem;
+  font-family: var(--font-body);
+  position: relative;
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.consequence-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+.consequence-card .c-icon { font-size: 1.8rem; margin-bottom: 0.4rem; }
+.consequence-card .c-title {
+  font-family: var(--font-hand);
+  font-size: 1.1rem; font-weight: 700;
+  color: var(--ink); margin-bottom: 0.3rem;
+}
+.consequence-card .c-body { font-size: 0.93rem; color: var(--muted); }
+
+/* ===================== QUOTE CARD ===================== */
+.quote-card {
+  background: var(--surface2);
+  border: none;
+  border-left: 5px solid var(--marker-red);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  padding: 1.2rem 1.4rem;
+  margin: 1.5rem 0;
+  box-shadow: var(--shadow);
+  position: relative;
+}
+.quote-card::before {
+  content: '"';
+  font-family: var(--font-hand);
+  font-size: 4rem;
+  color: var(--marker-red);
+  opacity: 0.2;
+  position: absolute;
+  top: -0.2rem; left: 0.5rem;
+  line-height: 1;
+}
+.quote-text {
+  font-family: var(--font-hand);
+  font-size: 1.15rem;
+  font-style: italic;
+  color: var(--ink);
+  line-height: 1.5;
+}
+.quote-attr { font-size: 0.85rem; color: var(--muted); margin-top: 0.5rem; }
+
+/* ===================== STICKY NOTE ===================== */
+.sticky-wrap { display: flex; flex-wrap: wrap; gap: 1rem; margin: 1rem 0; }
+.sticky {
+  flex: 1; min-width: 160px;
+  padding: 1rem 1rem 1.5rem;
+  border-radius: 2px 2px 2px 18px;
+  font-family: var(--font-hand);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #2c2416;
+  box-shadow: 3px 4px 10px rgba(44,36,22,0.18);
+  position: relative;
+  transition: transform var(--transition);
+  cursor: default;
+}
+.sticky:hover { transform: rotate(-1.5deg) scale(1.04); }
+.sticky.y { background: #fef08a; }
+.sticky.p { background: #fca5a5; }
+.sticky.b { background: #93c5fd; }
+.sticky.g { background: #86efac; }
+.sticky.o { background: #fdba74; }
+.sticky .s-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.6; display: block; margin-bottom: 0.3em; }
+
+/* ===================== PROPOSITION BOXES ===================== */
+.prop-box {
+  background: var(--surface2);
+  border: 2px dashed var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.9rem 1.1rem;
+  margin-bottom: 0.8rem;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--muted);
+  position: relative;
+}
+.prop-label {
+  font-family: var(--font-hand);
+  font-size: 0.8rem; font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--marker-blue);
+  margin-bottom: 0.3rem;
+}
+
+/* ===================== SECTION HEADINGS ===================== */
+.section-h {
+  font-family: var(--font-hand);
+  font-size: clamp(1.5rem, 2vw + 0.8rem, 2rem);
+  font-weight: 700;
+  color: var(--ink);
+  margin: 2rem 0 1rem;
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.section-h span.line {
+  flex: 1; height: 2.5px;
+  background: repeating-linear-gradient(90deg, var(--border) 0 8px, transparent 8px 14px);
+  margin-left: 0.5rem;
+}
+
+/* ===================== PROGRESS BAR VISUAL ===================== */
+.bar-visual { margin: 1rem 0; }
+.bar-item { margin-bottom: 0.7rem; }
+.bar-label { font-family: var(--font-hand); font-size: 0.95rem; font-weight: 600; color: var(--muted); margin-bottom: 0.2rem; }
+.bar-track { background: var(--divider); border-radius: 999px; height: 16px; overflow: hidden; }
+.bar-fill {
+  height: 100%; border-radius: 999px;
+  transition: width 1.2s cubic-bezier(0.16,1,0.3,1);
+  width: 0;
+  display: flex; align-items: center; justify-content: flex-end; padding-right: 6px;
+  font-family: var(--font-hand); font-size: 0.75rem; color: #fff; font-weight: 700;
+}
+.bar-fill.blue { background: var(--marker-blue); }
+.bar-fill.red { background: var(--marker-red); }
+.bar-fill.green { background: var(--marker-green); }
+.bar-fill.orange { background: var(--marker-orange); }
+.bar-fill.purple { background: var(--marker-purple); }
+
+/* ===================== FOOTER ===================== */
+footer {
+  background: var(--surface);
+  border-top: 2px solid var(--border);
+  padding: 1.5rem 1rem;
+  text-align: center;
+  font-family: var(--font-hand);
+  font-size: 0.92rem;
+  color: var(--muted);
+  margin-top: 3rem;
+}
+footer strong { color: var(--accent); }
+footer .footer-links { margin: 0.5rem 0; }
+footer .footer-links a {
+  color: var(--accent);
+  text-decoration: none;
+  margin: 0 0.5rem;
+  font-weight: 600;
+}
+footer .footer-links a:hover { text-decoration: underline; }
+
+/* ===================== RESPONSIVE ===================== */
+@media (max-width: 600px) {
+  .hero-board { padding: 1.5rem 1rem; }
+  .flow-row { min-width: 420px; }
+  .nav-tabs { justify-content: center; }
+  .grid-2 { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="logo-wrap">
+    <svg class="logo-svg" width="38" height="38" viewBox="0 0 38 38" fill="none" aria-label="Revise and Resubmit logo">
+      <rect width="38" height="38" rx="8" fill="currentColor" opacity="0.08"/>
+      <path d="M7 28 Q10 18 19 14 Q28 10 31 20 Q34 30 24 31 Q14 32 10 26" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      <path d="M24 31 L27 34 L22 33" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="15" cy="20" r="1.5" fill="currentColor"/>
+      <circle cx="20" cy="17" r="1.5" fill="currentColor"/>
+      <circle cx="25" cy="20" r="1.5" fill="currentColor"/>
+    </svg>
+    <div>
+      <span class="brand-name">Revise &amp; Resubmit</span>
+      <span class="brand-sub">🎙️ Weekend Classics</span>
+    </div>
+  </div>
+  <button class="toggle-btn" id="themeToggle" aria-label="Toggle dark mode">
+    <span id="themeIcon">🌙</span> <span id="themeLabel">Dark Mode</span>
+  </button>
+</header>
+
+<!-- HERO BOARD -->
+<div class="hero-board" style="margin:2rem auto;max-width:900px;padding:2.5rem 2rem 2rem;">
+  <div class="hero-tag">📚 Academy of Management Review · FT50 · Oct 2000</div>
+  <h1 class="hero-title">
+    Organizational <span class="underline-squiggle">Silence</span><br>
+    <span style="font-size:0.7em;color:var(--muted);">A Barrier to Change &amp; Development in a Pluralistic World</span>
+  </h1>
+  <div class="hero-authors">✍️ Elizabeth Wolfe Morrison &amp; Frances J. Milliken · NYU Stern</div>
+  <span class="hero-journal">📖 Academy of Management Review — FT50 Journal</span>
+  <p class="hero-intro">
+    What happens when <span class="tape-strip">everyone knows the truth</span> but nobody says a word? 
+    This landmark 2000 paper names it, maps it, and reveals why silence 
+    can quietly <em>destroy</em> organizations from the inside out. 🔇
+  </p>
+</div>
+
+<!-- NAV TABS -->
+<nav class="nav-tabs" aria-label="Sections">
+  <button class="tab-btn active" onclick="switchTab('overview', this)">🗺️ Overview</button>
+  <button class="tab-btn" onclick="switchTab('causes', this)">🔍 Root Causes</button>
+  <button class="tab-btn" onclick="switchTab('model', this)">📐 The Model</button>
+  <button class="tab-btn" onclick="switchTab('consequences', this)">⚡ Consequences</button>
+  <button class="tab-btn" onclick="switchTab('propositions', this)">💡 Key Propositions</button>
+  <button class="tab-btn" onclick="switchTab('so-what', this)">🎯 So What?</button>
+</nav>
+
+<!-- MAIN CONTENT -->
+<main class="main-content">
+
+  <!-- OVERVIEW PANEL -->
+  <div class="section-panel active" id="overview">
+    <h2 class="section-h">🗺️ The Big Picture <span class="line"></span></h2>
+
+    <div class="quote-card">
+      <p class="quote-text">Imagine an organization where the CEO has no clothes. Everyone can see it. But no one ever mentions this — except behind closed doors, in hushed whispers.</p>
+      <div class="quote-attr">— Morrison &amp; Milliken, 2000 (paraphrased opening)</div>
+    </div>
+
+    <div class="wb-card">
+      <div class="card-heading">🤫 What is Organizational Silence?</div>
+      <div class="card-body">
+        <p>It's <strong>not</strong> just one quiet employee. It's a <em>collective phenomenon</em> — when employees <strong>en masse</strong> choose to withhold information, opinions, and concerns about real problems in their organization.</p>
+        <p>Think of it as an unwritten rule that spreads through a workplace: <span class="tape-strip">"Speaking up is not worth it here."</span></p>
+        <div style="margin-top:1rem;">
+          <span class="pill-tag pill-red">🔕 Collective</span>
+          <span class="pill-tag pill-blue">🏢 Organizational-level</span>
+          <span class="pill-tag pill-orange">⚠️ Systemic</span>
+          <span class="pill-tag pill-green">🌍 Context-driven</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="wb-card">
+      <div class="card-heading">🆚 Silence vs. Individual Choice</div>
+      <div class="card-body">
+        <p>Prior research focused on <em>why one person</em> speaks up or stays quiet. This paper is different — it asks why <strong>whole organizations</strong> learn to stay silent.</p>
+        <p>The forces that make one brave soul speak up are <em>completely different</em> from the forces that keep the rest silent. 🔑</p>
+      </div>
+    </div>
+
+    <h2 class="section-h">📊 The Scale of the Problem <span class="line"></span></h2>
+    <div class="wb-card">
+      <div class="card-heading">📉 Real Numbers, Real Fear</div>
+      <div class="bar-visual" id="barVisual">
+        <div class="bar-item">
+          <div class="bar-label">👷 Employees afraid to speak up at work (Ryan &amp; Oestreich, 1991)</div>
+          <div class="bar-track"><div class="bar-fill blue" data-target="70">70%</div></div>
+        </div>
+        <div class="bar-item">
+          <div class="bar-label">🏭 Orgs that actively encourage open opinions (Industry Week, 1991)</div>
+          <div class="bar-track"><div class="bar-fill red" data-target="29">29%</div></div>
+        </div>
+        <div class="bar-item">
+          <div class="bar-label">😶 Employees who feel speaking up makes a difference</div>
+          <div class="bar-track"><div class="bar-fill orange" data-target="35">~35%</div></div>
+        </div>
+      </div>
+      <div class="card-body" style="margin-top:0.5rem;"><p style="font-size:0.9rem;">These statistics were from <em>before</em> Slack, before remote work, before "psychological safety" became a buzzword. The authors saw it all coming. 👀</p></div>
+    </div>
+
+    <div class="sticky-wrap">
+      <div class="sticky y"><span class="s-label">Key Idea</span>🔇 Silence ≠ Agreement</div>
+      <div class="sticky p"><span class="s-label">Key Idea</span>😰 Fear ≠ Cowardice</div>
+      <div class="sticky b"><span class="s-label">Key Idea</span>🏗️ Silence is Manufactured</div>
+      <div class="sticky g"><span class="s-label">Key Idea</span>🌍 Pluralism Needs Voice</div>
+      <div class="sticky o"><span class="s-label">Key Idea</span>📉 Silence Kills Change</div>
+    </div>
+  </div>
+
+  <!-- CAUSES PANEL -->
+  <div class="section-panel" id="causes">
+    <h2 class="section-h">🔍 Where Does Silence Come From? <span class="line"></span></h2>
+
+    <div class="wb-card">
+      <div class="card-heading">😰 Root Cause #1 — Managers Fear Negative Feedback</div>
+      <div class="card-body">
+        <p>Top managers often feel <strong>threatened</strong> by bad news — especially from below. Feedback from subordinates is seen as less credible and more threatening to their power and authority.</p>
+        <p>So, consciously or not, they send signals: <span class="tape-strip">"Don't bring me problems."</span> And the organization learns to comply. 🤐</p>
+      </div>
+    </div>
+
+    <div class="wb-card">
+      <div class="card-heading">🧠 Root Cause #2 — Three Dangerous Implicit Beliefs</div>
+      <div class="card-body">
+        <ul class="belief-list">
+          <li>
+            <span class="belief-icon">💰</span>
+            <div><strong>Belief 1:</strong> "Employees are self-interested and untrustworthy." — Rooted in economic Theory X thinking. Managers act on this belief without even realizing it. Employees sense this distrust and stop sharing.</div>
+          </li>
+          <li>
+            <span class="belief-icon">👑</span>
+            <div><strong>Belief 2:</strong> "Management knows best." — A top-down assumption that those in power have all the answers, and those below just need to execute. Input from below is seen as irrelevant or threatening.</div>
+          </li>
+          <li>
+            <span class="belief-icon">🤝</span>
+            <div><strong>Belief 3:</strong> "Unity and agreement are healthy; dissent is dangerous." — The unitary view of organizations. Disagreement is seen as a problem to be managed, not a resource to be used. Innovation dies here. 💀</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <h2 class="section-h">🏗️ Structural Consequences of These Beliefs <span class="line"></span></h2>
+    <div class="wb-card">
+      <div class="card-heading">🔒 What Gets Built?</div>
+      <div class="card-body">
+        <p>These beliefs don't just stay in managers' heads — they shape the physical architecture of organizations:</p>
+        <ul class="belief-list">
+          <li><span class="belief-icon">🏛️</span><div><strong>Centralized decision-making:</strong> Real authority stays at the top. Task forces and committees exist for show. Participation is theatre, not reality.</div></li>
+          <li><span class="belief-icon">🚫</span><div><strong>No upward feedback channels:</strong> Surveys, suggestion boxes, and town halls are either missing or performative. Why ask if you don't want to hear the answer?</div></li>
+          <li><span class="belief-icon">😠</span><div><strong>Hostile reactions to input:</strong> Managers visibly discount, dismiss, or punish messengers of bad news — even unconsciously. The "MUM Effect" in action.</div></li>
+          <li><span class="belief-icon">👀</span><div><strong>No informal feedback-seeking:</strong> Managers only talk to people who'll confirm what they already think. Confirmation bias at scale. 🔄</div></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="wb-card">
+      <div class="card-heading">🌐 Who Is Most at Risk? Contextual Factors</div>
+      <div class="card-body">
+        <div class="grid-2">
+          <div class="consequence-card">
+            <div class="c-icon">📊</div>
+            <div class="c-title">Finance-Heavy Top Teams</div>
+            <div class="c-body">Orgs led by finance/economics-trained executives are more likely to hold Theory X beliefs about employees.</div>
+          </div>
+          <div class="consequence-card">
+            <div class="c-icon">⏳</div>
+            <div class="c-title">Long-Tenured Management</div>
+            <div class="c-body">The longer the same team is together, the more entrenched and unquestioned their shared assumptions become.</div>
+          </div>
+          <div class="consequence-card">
+            <div class="c-icon">🗼</div>
+            <div class="c-title">Tall Hierarchies</div>
+            <div class="c-body">Many organizational levels mean top managers are far removed from lower-level reality — and trust plummets.</div>
+          </div>
+          <div class="consequence-card">
+            <div class="c-icon">🏭</div>
+            <div class="c-title">Stable, Mature Industries</div>
+            <div class="c-body">In low-velocity environments, there's less pressure to listen. Volatile industries need employee ideas to survive.</div>
+          </div>
+          <div class="consequence-card">
+            <div class="c-icon">👥</div>
+            <div class="c-title">Demographic Dissimilarity</div>
+            <div class="c-body">When top management looks nothing like the broader workforce, distrust and silence deepen on both sides.</div>
+          </div>
+          <div class="consequence-card">
+            <div class="c-icon">🔗</div>
+            <div class="c-title">Contingent/Temp Workers</div>
+            <div class="c-body">Temporary staff are seen as especially self-interested and untrustworthy — further tightening control and silence.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODEL PANEL -->
+  <div class="section-panel" id="model">
+    <h2 class="section-h">📐 The Silence Model — How It Unfolds <span class="line"></span></h2>
+
+    <div class="wb-card">
+      <div class="card-heading">🔄 The Big Flow</div>
+      <div class="card-body">
+        <div class="flow-wrap">
+          <div class="flow-row">
+            <div class="flow-box red">😰 Mgr Fear of Feedback</div>
+            <div class="flow-arrow">+</div>
+            <div class="flow-box orange">🧠 Implicit Beliefs</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-box blue">🏗️ Structures &amp; Practices</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-box purple">🌫️ Climate of Silence</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-box green">📉 Organizational Silence</div>
+          </div>
+        </div>
+        <p style="margin-top:0.8rem;font-size:0.9rem;">This isn't a one-time event — it's a self-reinforcing loop. Silence validates the manager's fear. Fear strengthens the structure. The structure deepens the climate. 🔁</p>
+      </div>
+    </div>
+
+    <h2 class="section-h">🌫️ The Climate of Silence <span class="line"></span></h2>
+    <div class="wb-card">
+      <div class="card-heading">🤔 What Makes a "Climate"?</div>
+      <div class="card-body">
+        <p>A <strong>climate of silence</strong> is a set of <em>shared beliefs</em> among employees — not individual fear, but a group understanding that:</p>
+        <div class="sticky-wrap" style="margin:0.8rem 0;">
+          <div class="sticky p" style="min-width:140px;"><span class="s-label">Belief A</span>"Speaking up is futile here."</div>
+          <div class="sticky b" style="min-width:140px;"><span class="s-label">Belief B</span>"Voicing concerns is dangerous."</div>
+        </div>
+        <p>These beliefs don't just exist in people's private thoughts — they spread through <strong>collective sensemaking</strong>.</p>
+      </div>
+    </div>
+
+    <div class="wb-card">
+      <div class="card-heading">🕸️ How Does the Climate Spread? Collective Sensemaking</div>
+      <div class="card-body">
+        <p>Employees watch each other, share stories, and collectively interpret the signals management sends. This is called <strong>collective sensemaking</strong> — social meaning-making in real time.</p>
+        <ul class="belief-list">
+          <li><span class="belief-icon">👫</span><div><strong>Similarity:</strong> Homogeneous workgroups converge on shared perceptions faster — social contagion is stronger.</div></li>
+          <li><span class="belief-icon">🏠</span><div><strong>Stability:</strong> Stable workforces have more time to talk, compare notes, and solidify shared beliefs.</div></li>
+          <li><span class="belief-icon">🔗</span><div><strong>Interdependence:</strong> When people must work together closely, they communicate more — and shared perceptions form faster.</div></li>
+          <li><span class="belief-icon">🕸️</span><div><strong>Dense social networks:</strong> Strong, dense informal networks spread information (and fear) from person to person at speed.</div></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="wb-card">
+      <div class="card-heading">⚠️ The Sensemaking Goes Wrong — Distortions</div>
+      <div class="card-body">
+        <p>Here's the scary part: the collective sensemaking process <em>systematically distorts reality</em> toward more fear, not less.</p>
+        <ul class="belief-list">
+          <li><span class="belief-icon">📡</span><div><strong>Secondhand signals:</strong> People learn about the risks of speaking up vicariously — from colleagues' stories — not firsthand. These secondhand accounts tend to exaggerate danger.</div></li>
+          <li><span class="belief-icon">🔗</span><div><strong>False connections:</strong> If someone speaks up and then gets passed over for promotion, people link the two events — even if they're unrelated. The grapevine does the rest.</div></li>
+          <li><span class="belief-icon">📣</span><div><strong>Overgeneralization:</strong> Silence about <em>specific</em> issues spreads to <em>everything</em>. Soon no one shares anything — even mildly positive suggestions.</div></li>
+          <li><span class="belief-icon">🔄</span><div><strong>Self-perpetuating:</strong> Seeing others stay silent reinforces the belief that silence is the only safe choice. A perfect loop. 🔁</div></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONSEQUENCES PANEL -->
+  <div class="section-panel" id="consequences">
+    <h2 class="section-h">⚡ What Does Silence Actually Do? <span class="line"></span></h2>
+
+    <div class="wb-card">
+      <div class="card-heading">🧩 Two Types of Damage</div>
+      <div class="card-body">
+        <div class="grid-2">
+          <div class="consequence-card" style="border-left:4px solid var(--marker-blue);">
+            <div class="c-icon">🏢</div>
+            <div class="c-title" style="color:var(--marker-blue);">Organizational Damage</div>
+            <div class="c-body">Corrupts decision-making, blocks change, prevents learning, and turns diversity from an asset into a liability.</div>
+          </div>
+          <div class="consequence-card" style="border-left:4px solid var(--marker-red);">
+            <div class="c-icon">🧍</div>
+            <div class="c-title" style="color:var(--marker-red);">Human Damage</div>
+            <div class="c-body">Causes employees to feel unvalued, powerless, and stuck — leading to disengagement, stress, and even sabotage.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="section-h">🏢 Organizational-Level Consequences <span class="line"></span></h2>
+    <div class="grid-2" style="margin-bottom:1.5rem;">
+      <div class="consequence-card">
+        <div class="c-icon">🎯</div>
+        <div class="c-title">Poor Decision Quality</div>
+        <div class="c-body">Without multiple perspectives, decisions are made on incomplete information. Bad ideas don't get challenged. Great ideas never surface. 🪣</div>
+      </div>
+      <div class="consequence-card">
+        <div class="c-icon">🚧</div>
+        <div class="c-title">Change is Blocked</div>
+        <div class="c-body">Change requires honest assessment of what's broken. Silence means the organization can't detect or correct its own errors. It drifts — and drifts further. 📉</div>
+      </div>
+      <div class="consequence-card">
+        <div class="c-icon">🚫</div>
+        <div class="c-title">No Double-Loop Learning</div>
+        <div class="c-body">Argyris's concept: organizations can't question their own underlying assumptions if no one surfaces problems. They keep doing the wrong things, just more efficiently. 🔁</div>
+      </div>
+      <div class="consequence-card">
+        <div class="c-icon">🌍</div>
+        <div class="c-title">Pluralism Becomes Hollow</div>
+        <div class="c-body">You can hire the most diverse team in the world — but if no one feels safe speaking their truth, diversity is just for show. 🎭</div>
+      </div>
+      <div class="consequence-card">
+        <div class="c-icon">🧐</div>
+        <div class="c-title">False Consensus at the Top</div>
+        <div class="c-body">Managers interpret silence as agreement. They believe things are fine — and even brag about team alignment — while real problems compound in the shadows. 👤</div>
+      </div>
+    </div>
+
+    <h2 class="section-h">🧍 Human-Level Consequences <span class="line"></span></h2>
+    <div class="grid-2" style="margin-bottom:1.5rem;">
+      <div class="consequence-card">
+        <div class="c-icon">💔</div>
+        <div class="c-title">Feeling Unvalued</div>
+        <div class="c-body">When you can't speak, you feel invisible. Perceived organizational support drops. Commitment and trust erode. People start mentally checking out. 🪄</div>
+      </div>
+      <div class="consequence-card">
+        <div class="c-icon">🎮</div>
+        <div class="c-title">Loss of Control</div>
+        <div class="c-body">Human beings need agency. When voice is denied, the sense of control vanishes — leading to stress, withdrawal, and in some cases, destructive behaviour. 💥</div>
+      </div>
+      <div class="consequence-card">
+        <div class="c-icon">🧠</div>
+        <div class="c-title">Cognitive Dissonance</div>
+        <div class="c-body">Knowing the truth but being unable to say it creates a painful internal conflict. You can't change your belief. You can't change your behaviour. You just... suffer. 😶</div>
+      </div>
+      <div class="consequence-card">
+        <div class="c-icon">🎭</div>
+        <div class="c-title">Worse for Marginalized Groups</div>
+        <div class="c-body">Employees from underrepresented backgrounds feel these effects most acutely. Silence magnifies existing inequity — making organizational discrimination systemic, even if unintentional. ⚠️</div>
+      </div>
+    </div>
+
+    <div class="quote-card">
+      <p class="quote-text">"If you experience fear every day, it drags you down and you become cowardly. After my suggestions were ignored, the quality of my work was still there, but I wasn't."</p>
+      <div class="quote-attr">— Employee quoted by Ryan &amp; Oestreich (1991), cited in Morrison &amp; Milliken (2000)</div>
+    </div>
+  </div>
+
+  <!-- PROPOSITIONS PANEL -->
+  <div class="section-panel" id="propositions">
+    <h2 class="section-h">💡 The 13 Propositions <span class="line"></span></h2>
+    <div class="wb-card">
+      <div class="card-body" style="margin-bottom:0.8rem;"><p>Morrison and Milliken offer 13 testable propositions — here they are, decoded in plain language: 📋</p></div>
+
+      <div class="prop-box"><div class="prop-label">📌 Proposition 1</div>Silence is more likely when top management is dominated by people with economics or finance training — they hold stronger Theory X beliefs about workers.</div>
+      <div class="prop-box"><div class="prop-label">📌 Proposition 2</div>The longer the same top team has been together, the stronger their shared silence-creating beliefs become.</div>
+      <div class="prop-box"><div class="prop-label">📌 Proposition 3</div>High power distance + collectivistic cultures in top management = stronger belief that "the boss knows best" and dissent should be suppressed.</div>
+      <div class="prop-box"><div class="prop-label">📌 Proposition 4</div>The greater the demographic gap between top management and employees below, the more distrust — and the more silence.</div>
+      <div class="prop-box"><div class="prop-label">📌 Proposition 5</div>Orgs focused heavily on cost control or operating in scarce resource environments are more likely to punish dissent and value compliance.</div>
+      <div class="prop-box"><div class="prop-label">📌 Proposition 6</div>Stable, mature industries breed more silence. Dynamic environments <em>need</em> employee ideas to survive — so they're forced to listen.</div>
+      <div class="prop-box"><div class="prop-label">📌 Proposition 7</div>Tall hierarchies (many levels) and bringing in outside senior hires create distance between top and bottom — fueling distrust and silence.</div>
+      <div class="prop-box"><div class="prop-label">📌 Proposition 8</div>Heavy use of contingent/temp workers deepens beliefs that employees are self-interested and unreliable.</div>
+      <div class="prop-box"><div class="prop-label">📌 Proposition 9</div>Those beliefs lead to centralized decision-making and the removal of upward feedback channels.</div>
+      <div class="prop-box"><div class="prop-label">📌 Proposition 10</div>Those beliefs also lead managers to <em>reject</em> employee input and <em>stop seeking</em> informal feedback from below.</div>
+      <div class="prop-box"><div class="prop-label">📌 Proposition 11</div>Structural silence-creators are most powerful when employees interact closely among themselves — enabling fast social contagion of the silence norm.</div>
+      <div class="prop-box"><div class="prop-label">📌 Proposition 12</div>Interaction among employees is amplified by: similarity, workforce stability, workflow interdependence, and dense/strong informal networks.</div>
+      <div class="prop-box"><div class="prop-label">📌 Proposition 13</div>A climate of silence is stronger when there's high demographic dissimilarity between top management and the people they lead.</div>
+    </div>
+  </div>
+
+  <!-- SO WHAT PANEL -->
+  <div class="section-panel" id="so-what">
+    <h2 class="section-h">🎯 Why Does This Paper Still Matter? <span class="line"></span></h2>
+
+    <div class="wb-card">
+      <div class="card-heading">📅 Written in 2000. Relevant in 2026.</div>
+      <div class="card-body">
+        <p>This paper was written before Slack, before DEI strategies became standard, before "psychological safety" appeared in every HR deck, before the Great Resignation exposed just how many people had been quietly leaving — emotionally — for years before they physically walked out the door.</p>
+        <p>Morrison and Milliken <em>saw all of this coming</em>. Or rather — they saw it already <strong>there</strong>, hiding in plain sight. 👁️</p>
+      </div>
+    </div>
+
+    <div class="wb-card">
+      <div class="card-heading">⚠️ The Hidden Trap — Why Silence Persists</div>
+      <div class="card-body">
+        <ul class="belief-list">
+          <li><span class="belief-icon">🕵️</span><div>The dynamics that create silence are <strong>invisible</strong>. Nobody calls it "organizational silence." It just feels like "how things are around here."</div></li>
+          <li><span class="belief-icon">🔄</span><div>These cycles are <strong>self-reinforcing</strong>. Once trust is broken, it's nearly impossible to rebuild — employees will be cynical about any attempt to change the culture.</div></li>
+          <li><span class="belief-icon">🔝</span><div>Breaking silence may require <strong>top management change</strong> — and possibly significant turnover at multiple levels throughout the organization.</div></li>
+          <li><span class="belief-icon">😶</span><div>Even <em>the fact that silence exists</em> is often undiscussable. The silence is silenced. 🤯</div></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="wb-card">
+      <div class="card-heading">🌍 And in a Pluralistic World?</div>
+      <div class="card-body">
+        <p>The paper makes a powerful argument: <strong>diversity without voice is decoration</strong>. A pluralistic organization — one that truly values different perspectives, backgrounds, and experiences — simply cannot function if the system is designed to silence those differences.</p>
+        <p>You can hire the most diverse team on earth. But if the climate teaches them that speaking up is dangerous, then all you have is a diverse group of people performing unity. 🎭</p>
+        <p style="margin-top:0.8rem;font-style:italic;color:var(--accent);">🎙️ "The question isn't whether your organization has diverse voices. The question is whether it has a system that can actually hear them."</p>
+      </div>
+    </div>
+
+    <div class="wb-card">
+      <div class="card-heading">🎙️ The Podcast Question to Sit With...</div>
+      <div class="card-body">
+        <div class="quote-card" style="margin:0.5rem 0;">
+          <p class="quote-text">When an organization becomes quiet — is it becoming peaceful... or is it becoming afraid? ❓</p>
+          <div class="quote-attr">— Revise &amp; Resubmit, Weekend Classics</div>
+        </div>
+        <p style="margin-top:0.8rem;">That's the question Morrison and Milliken leave us with, twenty-five years later. And it's a question worth asking — not just about the organizations we study, but the ones we work in, lead, and build every day. 🌱</p>
+      </div>
+    </div>
+
+    <div class="wb-card">
+      <div class="card-heading">📚 Paper At a Glance</div>
+      <div class="card-body">
+        <ul class="belief-list">
+          <li><span class="belief-icon">📝</span><div><strong>Title:</strong> Organizational Silence: A Barrier to Change and Development in a Pluralistic World</div></li>
+          <li><span class="belief-icon">✍️</span><div><strong>Authors:</strong> Elizabeth Wolfe Morrison &amp; Frances J. Milliken (NYU Stern)</div></li>
+          <li><span class="belief-icon">📖</span><div><strong>Journal:</strong> Academy of Management Review — Vol. 25, No. 4, pp. 706–725</div></li>
+          <li><span class="belief-icon">📅</span><div><strong>Published:</strong> October 1, 2000 | Publisher: Academy of Management</div></li>
+          <li><span class="belief-icon">🏆</span><div><strong>Status:</strong> FT50 listed journal — one of the most cited management papers of its era</div></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <p>🎙️ This explainer is part of the <strong>Weekend Classics</strong> series on <strong>Revise and Resubmit — The Mayukh Show</strong></p>
+  <div class="footer-links">
+    🎧 <a href="https://creators.spotify.com/pod/profile/mayukh-mukhopadhyay2" target="_blank" rel="noopener noreferrer">Spotify</a>
+    📺 <a href="https://www.youtube.com/@WeekendResearcher" target="_blank" rel="noopener noreferrer">YouTube: Weekend Researcher</a>
+    🎵 <a href="https://music.amazon.in/podcasts/f64c70fc-f70b-498e-87f3-669152e83730/revise-and-resubmit---the-mayukh-show" target="_blank" rel="noopener noreferrer">Amazon Prime Music</a>
+    🍎 <a href="https://podcasts.apple.com/us/podcast/revise-and-resubmit-the-mayukh-show/id1770883122" target="_blank" rel="noopener noreferrer">Apple Podcast</a>
+  </div>
+  <p style="margin-top:0.5rem;font-size:0.82rem;">
+    Heartfelt thanks to <strong>Elizabeth Wolfe Morrison</strong> &amp; <strong>Frances J. Milliken</strong> for this enduring work, and to the <strong>Academy of Management</strong> for publishing it. 🙏
+  </p>
+  <p style="margin-top:0.5rem;font-size:0.8rem;color:var(--faint);">© 2026 <a href="https://mayukhmukhopadhyay.com/reviseandresubmit/" target="_blank" rel="noopener noreferrer">Revise and Resubmit — The Mayukh Show.</a> All rights reserved.</p>
+</footer>
+
+<script>
+// THEME TOGGLE
+(function(){
+  const html = document.documentElement;
+  const btn = document.getElementById('themeToggle');
+  const icon = document.getElementById('themeIcon');
+  const label = document.getElementById('themeLabel');
+  let dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  function apply(){
+    html.setAttribute('data-theme', dark ? 'dark' : 'light');
+    icon.textContent = dark ? '☀️' : '🌙';
+    label.textContent = dark ? 'Light Mode' : 'Dark Mode';
+  }
+  apply();
+  btn.addEventListener('click', ()=>{ dark = !dark; apply(); });
+})();
+
+// TAB SWITCHER
+function switchTab(id, btn) {
+  document.querySelectorAll('.section-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+  // Trigger bars if overview
+  if (id === 'overview') animateBars();
+}
+
+// ANIMATE BARS
+function animateBars() {
+  document.querySelectorAll('.bar-fill').forEach(el => {
+    const target = el.getAttribute('data-target');
+    setTimeout(() => { el.style.width = target + '%'; }, 200);
+  });
+}
+// Initial bar animation
+window.addEventListener('load', () => { setTimeout(animateBars, 400); });
+</script>
+</body>
+</html>
