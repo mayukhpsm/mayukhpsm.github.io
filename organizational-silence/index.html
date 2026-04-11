@@ -921,6 +921,268 @@ footer .footer-links a:hover { text-decoration: underline; }
   </div>
 </main>
 
+
+<!-- ===================== AUDIO PLAYER ===================== -->
+<section class="audio-player-wrap" aria-label="Listen to this episode">
+  <div class="audio-player-card">
+    <div class="audio-player-header">
+      <span class="audio-player-icon">🎙️</span>
+      <div>
+        <div class="audio-player-title">Listen to This Episode</div>
+        <div class="audio-player-sub">Organizational Silence — Weekend Classics · Revise &amp; Resubmit</div>
+      </div>
+    </div>
+    <audio id="mainAudio" preload="metadata">
+      <source src="orgsci.mp3" type="audio/mpeg">
+      <source src="org-silence.m4a" type="audio/mp4">
+      Your browser does not support the audio element.
+    </audio>
+    <div class="audio-controls">
+      <button class="ap-btn" id="apRewind" title="Rewind 10s" aria-label="Rewind 10 seconds">⏮ 10s</button>
+      <button class="ap-btn ap-play" id="apPlay" title="Play / Pause" aria-label="Play">▶</button>
+      <button class="ap-btn" id="apForward" title="Forward 10s" aria-label="Forward 10 seconds">10s ⏭</button>
+      <button class="ap-btn ap-loop" id="apLoop" title="Toggle loop" aria-label="Loop off">🔁</button>
+    </div>
+    <div class="audio-progress-wrap" title="Seek">
+      <span class="ap-time" id="apCurrent">0:00</span>
+      <div class="ap-progress-bar" id="apProgressBar" role="slider" aria-label="Audio progress" tabindex="0">
+        <div class="ap-progress-fill" id="apProgressFill"></div>
+        <div class="ap-thumb" id="apThumb"></div>
+      </div>
+      <span class="ap-time" id="apDuration">0:00</span>
+    </div>
+    <div class="audio-volume-wrap">
+      <span class="ap-vol-icon">🔊</span>
+      <input type="range" class="ap-volume" id="apVolume" min="0" max="1" step="0.05" value="1" aria-label="Volume">
+    </div>
+  </div>
+</section>
+
+<style>
+.audio-player-wrap {
+  max-width: 760px;
+  margin: 2.5rem auto 0;
+  padding: 0 1rem;
+}
+.audio-player-card {
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  padding: 1.5rem 1.75rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  transition: background var(--transition), border-color var(--transition);
+}
+.audio-player-header {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+.audio-player-icon {
+  font-size: 2rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.audio-player-title {
+  font-family: var(--font-hand);
+  font-size: clamp(1.05rem, 1rem + 0.5vw, 1.3rem);
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1.2;
+}
+.audio-player-sub {
+  font-size: 0.82rem;
+  color: var(--muted);
+  margin-top: 0.15rem;
+  font-family: var(--font-body);
+}
+/* Controls row */
+.audio-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+.ap-btn {
+  background: var(--surface2);
+  border: 2px solid var(--border);
+  border-radius: 2rem;
+  padding: 0.45rem 1.1rem;
+  font-family: var(--font-hand);
+  font-size: 0.95rem;
+  color: var(--text);
+  cursor: pointer;
+  transition: background var(--transition), border-color var(--transition), color var(--transition);
+  white-space: nowrap;
+}
+.ap-btn:hover { background: var(--divider); border-color: var(--accent); }
+.ap-play {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+  font-size: 1.1rem;
+  padding: 0.5rem 1.6rem;
+  min-width: 80px;
+}
+.ap-play:hover { opacity: 0.88; background: var(--accent); }
+.ap-loop.active { background: var(--accent3); color: #fff; border-color: var(--accent3); }
+/* Progress */
+.audio-progress-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.ap-time {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  color: var(--muted);
+  min-width: 36px;
+  text-align: center;
+  flex-shrink: 0;
+}
+.ap-progress-bar {
+  flex: 1;
+  height: 8px;
+  background: var(--divider);
+  border-radius: 99px;
+  position: relative;
+  cursor: pointer;
+  overflow: visible;
+}
+.ap-progress-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 99px;
+  width: 0%;
+  transition: width 0.2s linear;
+  pointer-events: none;
+}
+.ap-thumb {
+  position: absolute;
+  top: 50%;
+  left: 0%;
+  transform: translate(-50%, -50%);
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid var(--surface);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.25);
+  pointer-events: none;
+  transition: left 0.2s linear;
+}
+/* Volume */
+.audio-volume-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.ap-vol-icon { font-size: 1rem; }
+.ap-volume {
+  flex: 1;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: 99px;
+  background: var(--divider);
+  outline: none;
+  cursor: pointer;
+  max-width: 180px;
+}
+.ap-volume::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid var(--surface);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  cursor: pointer;
+}
+.ap-volume::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid var(--surface);
+  cursor: pointer;
+}
+/* Responsive */
+@media (max-width: 480px) {
+  .audio-player-card { padding: 1.1rem 1rem 1rem; }
+  .ap-play { padding: 0.5rem 1.1rem; }
+  .audio-volume-wrap { justify-content: flex-start; }
+  .ap-volume { max-width: 140px; }
+}
+</style>
+
+<script>
+(function(){
+  const audio = document.getElementById('mainAudio');
+  const playBtn = document.getElementById('apPlay');
+  const loopBtn = document.getElementById('apLoop');
+  const fill = document.getElementById('apProgressFill');
+  const thumb = document.getElementById('apThumb');
+  const bar = document.getElementById('apProgressBar');
+  const curEl = document.getElementById('apCurrent');
+  const durEl = document.getElementById('apDuration');
+  const volSlider = document.getElementById('apVolume');
+
+  function fmt(s){ const m=Math.floor(s/60),sec=Math.floor(s%60); return m+':'+(sec<10?'0':'')+sec; }
+
+  audio.addEventListener('loadedmetadata', ()=>{ durEl.textContent = fmt(audio.duration||0); });
+  audio.addEventListener('timeupdate', ()=>{
+    const pct = audio.duration ? (audio.currentTime/audio.duration)*100 : 0;
+    fill.style.width = pct+'%';
+    thumb.style.left = pct+'%';
+    curEl.textContent = fmt(audio.currentTime);
+  });
+  audio.addEventListener('ended', ()=>{ playBtn.textContent = '▶'; });
+
+  playBtn.addEventListener('click', ()=>{
+    if(audio.paused){ audio.play(); playBtn.textContent = '⏸'; }
+    else { audio.pause(); playBtn.textContent = '▶'; }
+  });
+
+  document.getElementById('apRewind').addEventListener('click', ()=>{ audio.currentTime = Math.max(0, audio.currentTime-10); });
+  document.getElementById('apForward').addEventListener('click', ()=>{ audio.currentTime = Math.min(audio.duration||0, audio.currentTime+10); });
+
+  loopBtn.addEventListener('click', ()=>{
+    audio.loop = !audio.loop;
+    loopBtn.classList.toggle('active', audio.loop);
+    loopBtn.title = audio.loop ? 'Loop on' : 'Loop off';
+  });
+
+  // Seek on progress bar click/drag
+  let seeking = false;
+  function seek(e){
+    const rect = bar.getBoundingClientRect();
+    const x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
+    const pct = Math.min(Math.max(x / rect.width, 0), 1);
+    if(audio.duration) audio.currentTime = pct * audio.duration;
+  }
+  bar.addEventListener('mousedown', (e)=>{ seeking=true; seek(e); });
+  bar.addEventListener('touchstart', (e)=>{ seeking=true; seek(e); }, {passive:true});
+  window.addEventListener('mousemove', (e)=>{ if(seeking) seek(e); });
+  window.addEventListener('touchmove', (e)=>{ if(seeking) seek(e); }, {passive:true});
+  window.addEventListener('mouseup', ()=>{ seeking=false; });
+  window.addEventListener('touchend', ()=>{ seeking=false; });
+
+  // Keyboard seek on progress bar
+  bar.addEventListener('keydown', (e)=>{
+    if(e.key==='ArrowRight') audio.currentTime = Math.min(audio.duration||0, audio.currentTime+5);
+    if(e.key==='ArrowLeft') audio.currentTime = Math.max(0, audio.currentTime-5);
+  });
+
+  // Volume
+  volSlider.addEventListener('input', ()=>{ audio.volume = volSlider.value; });
+})();
+</script>
+
+
 <!-- FOOTER -->
 <footer>
   <p>🎙️ This explainer is part of the <strong>Weekend Classics</strong> series on <strong>Revise and Resubmit — The Mayukh Show</strong></p>
