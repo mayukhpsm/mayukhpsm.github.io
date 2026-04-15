@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title> gupta-et-al-2013 | VSSER-2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Patrick+Hand&family=Kalam&display=swap" rel="stylesheet">
+<style>
+/* ===================== TOKENS ===================== */
+:root, [data-theme="light"] {
+  --bg: #f5f0e8;
+  --surface: #faf7f0;
+  --surface2: #fff;
+  --board: #f8f4ea;
+  --border: #d4cbb8;
+  --divider: #e2ddd0;
+  --text: #2c2416;
+  --muted: #6b5e45;
+  --faint: #b0a48a;
+  --ink: #1a1008;
+  --accent: #2563a8;
+  --accent2: #c0392b;
+  --accent3: #1e8449;
+  --accent4: #7d3c98;
+  --accent5: #d35400;
+  --chalk: #f8f4ea;
+  --marker-blue: #1a56db;
+  --marker-red: #c0392b;
+  --marker-green: #1e8449;
+  --marker-orange: #d35400;
+  --marker-purple: #7d3c98;
+  --shadow: 0 2px 8px rgba(44,36,22,0.10);
+  --shadow-lg: 0 8px 32px rgba(44,36,22,0.13);
+  --font-hand: 'Caveat', 'Kalam', cursive;
+  --font-body: 'Patrick Hand', 'Kalam', cursive;
+  --transition: 200ms cubic-bezier(0.16,1,0.3,1);
+  --radius: 0.75rem;
+  --radius-sm: 0.4rem;
+}
+[data-theme="dark"] {
+  --bg: #111008;
+  --surface: #1a1810;
+  --surface2: #221f14;
+  --board: #181510;
+  --border: #3a3420;
+  --divider: #2a2518;
+  --text: #ede8d8;
+  --muted: #b8ad94;
+  --faint: #6b6045;
+  --ink: #f5f0e8;
+  --accent: #5b9cf6;
+  --accent2: #e87070;
+  --accent3: #52c28a;
+  --accent4: #bb8ee8;
+  --accent5: #f39c12;
+  --chalk: #d4cbb8;
+  --marker-blue: #5b9cf6;
+  --marker-red: #e87070;
+  --marker-green: #52c28a;
+  --marker-orange: #f39c12;
+  --marker-purple: #bb8ee8;
+  --shadow: 0 2px 8px rgba(0,0,0,0.4);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.5);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  font-size: clamp(1rem, 0.9rem + 0.5vw, 1.2rem);
+  line-height: 1.65;
+  min-height: 100dvh;
+  transition: background var(--transition), color var(--transition);
+}
+
+/* ===================== HEADER ===================== */
+.site-header {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--surface);
+  border-bottom: 2px solid var(--border);
+  box-shadow: var(--shadow);
+  padding: 0.75rem 1.5rem;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 0.5rem;
+}
+.logo-wrap { display: flex; align-items: center; gap: 0.6rem; }
+.brand-name {
+  font-family: var(--font-hand);
+  font-size: clamp(1.1rem, 1rem + 1vw, 1.5rem);
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: -0.02em;
+}
+.brand-sub {
+  font-family: var(--font-hand);
+  font-size: 0.85rem;
+  color: var(--muted);
+  display: block;
+  margin-top: -4px;
+}
+.toggle-btn {
+  background: var(--surface2);
+  border: 2px solid var(--border);
+  border-radius: 2rem;
+  padding: 0.4rem 1rem;
+  font-family: var(--font-hand);
+  font-size: 0.95rem;
+  color: var(--text);
+  cursor: pointer;
+  display: flex; align-items: center; gap: 0.4rem;
+  transition: background var(--transition), border-color var(--transition);
+}
+.toggle-btn:hover { background: var(--divider); }
+
+/* ===================== HERO ===================== */
+.hero-board {
+  background: var(--board);
+  border-bottom: 2px solid var(--border);
+  padding: 3rem 1.5rem 2.5rem;
+  text-align: center;
+}
+.hero-label {
+  display: inline-block;
+  background: var(--accent4);
+  color: #fff;
+  font-family: var(--font-hand);
+  font-size: 0.85rem;
+  border-radius: 2rem;
+  padding: 0.25rem 1rem;
+  margin-bottom: 1rem;
+  letter-spacing: 0.04em;
+}
+.hero-title {
+  font-family: var(--font-hand);
+  font-size: clamp(1.6rem, 1.2rem + 2.5vw, 2.8rem);
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.2;
+  max-width: 800px;
+  margin: 0 auto 1rem;
+}
+.hero-title span { color: var(--accent4); }
+.hero-meta {
+  font-size: 0.9rem;
+  color: var(--muted);
+  max-width: 640px;
+  margin: 0 auto 1.5rem;
+}
+.hero-meta strong { color: var(--text); }
+.hero-badges {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem;
+  margin-top: 1rem;
+}
+.badge {
+  background: var(--surface2);
+  border: 1.5px solid var(--border);
+  border-radius: 2rem;
+  padding: 0.3rem 0.9rem;
+  font-size: 0.82rem;
+  color: var(--muted);
+  font-family: var(--font-hand);
+}
+.badge.ft50 { background: var(--accent4); color: #fff; border-color: var(--accent4); font-weight: 700; }
+
+/* ===================== MAIN LAYOUT ===================== */
+main {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 2rem 1rem 3rem;
+}
+
+/* ===================== TABS ===================== */
+.tabs-wrap {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.75rem;
+  border-bottom: 2px solid var(--border);
+  padding-bottom: 0.5rem;
+  overflow-x: auto;
+}
+.tab-btn {
+  background: transparent;
+  border: 1.5px solid transparent;
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  padding: 0.45rem 1.1rem;
+  font-family: var(--font-hand);
+  font-size: 0.97rem;
+  color: var(--muted);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all var(--transition);
+}
+.tab-btn:hover { color: var(--text); background: var(--divider); }
+.tab-btn.active {
+  color: var(--accent);
+  background: var(--surface);
+  border-color: var(--border);
+  border-bottom-color: var(--surface);
+  font-weight: 700;
+}
+.section-panel { display: none; }
+.section-panel.active { display: block; }
+
+/* ===================== CARDS ===================== */
+.card {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.4rem 1.6rem;
+  margin-bottom: 1.4rem;
+  box-shadow: var(--shadow);
+}
+.card-title {
+  font-family: var(--font-hand);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 0.6rem;
+  display: flex; align-items: center; gap: 0.4rem;
+}
+.card p { margin-bottom: 0.7rem; }
+.card p:last-child { margin-bottom: 0; }
+
+/* ===================== HIGHLIGHT BOXES ===================== */
+.highlight {
+  border-left: 4px solid var(--accent4);
+  background: var(--surface2);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 0.9rem 1.2rem;
+  margin: 1rem 0;
+  font-size: 0.97rem;
+}
+.highlight.green { border-color: var(--accent3); }
+.highlight.red { border-color: var(--accent2); }
+.highlight.orange { border-color: var(--accent5); }
+.highlight.blue { border-color: var(--accent); }
+
+/* ===================== QUOTE ===================== */
+.pull-quote {
+  border: 2px dashed var(--border);
+  border-radius: var(--radius);
+  padding: 1.2rem 1.5rem;
+  margin: 1.4rem 0;
+  font-family: var(--font-hand);
+  font-size: clamp(1rem, 0.9rem + 0.4vw, 1.2rem);
+  color: var(--ink);
+  text-align: center;
+  background: var(--board);
+}
+
+/* ===================== DEFINITION LIST ===================== */
+.def-list { list-style: none; padding: 0; }
+.def-list li {
+  padding: 0.7rem 0;
+  border-bottom: 1px solid var(--divider);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.7rem;
+  align-items: start;
+}
+.def-list li:last-child { border-bottom: none; }
+.def-tag {
+  background: var(--accent4);
+  color: #fff;
+  border-radius: var(--radius-sm);
+  padding: 0.15rem 0.6rem;
+  font-size: 0.8rem;
+  font-family: var(--font-hand);
+  white-space: nowrap;
+  margin-top: 0.25rem;
+}
+.def-tag.blue { background: var(--accent); }
+.def-tag.green { background: var(--accent3); }
+.def-tag.orange { background: var(--accent5); }
+.def-tag.red { background: var(--accent2); }
+
+/* ===================== HYPO CARDS ===================== */
+.hypo-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+@media (max-width: 560px) { .hypo-grid { grid-template-columns: 1fr; } }
+.hypo-card {
+  background: var(--surface2);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem 1.1rem;
+}
+.hypo-card h4 {
+  font-family: var(--font-hand);
+  font-size: 1rem;
+  color: var(--accent4);
+  margin-bottom: 0.4rem;
+}
+.hypo-card.blue h4 { color: var(--accent); }
+
+/* ===================== RESULTS TABLE ===================== */
+.results-table-wrap { overflow-x: auto; margin: 1rem 0; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+  font-family: var(--font-body);
+}
+th {
+  background: var(--accent4);
+  color: #fff;
+  padding: 0.6rem 0.9rem;
+  text-align: left;
+  font-family: var(--font-hand);
+}
+th.blue-th { background: var(--accent); }
+td {
+  padding: 0.55rem 0.9rem;
+  border-bottom: 1px solid var(--divider);
+  vertical-align: top;
+}
+tr:last-child td { border-bottom: none; }
+tr:nth-child(even) td { background: var(--surface2); }
+.win { color: var(--accent3); font-weight: 700; }
+.lose { color: var(--accent2); }
+
+/* ===================== INSIGHT STRIP ===================== */
+.insight-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin: 1.2rem 0;
+}
+.insight-box {
+  background: var(--surface2);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem;
+  text-align: center;
+}
+.insight-icon { font-size: 2rem; display: block; margin-bottom: 0.4rem; }
+.insight-label { font-size: 0.82rem; color: var(--muted); }
+.insight-val {
+  font-family: var(--font-hand);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--accent);
+  display: block;
+  margin: 0.2rem 0 0.1rem;
+}
+
+/* ===================== STEP LIST ===================== */
+.step-list { list-style: none; padding: 0; counter-reset: steps; }
+.step-list li {
+  counter-increment: steps;
+  display: flex; gap: 0.9rem;
+  padding: 0.8rem 0;
+  border-bottom: 1px solid var(--divider);
+  align-items: flex-start;
+}
+.step-list li:last-child { border-bottom: none; }
+.step-num {
+  background: var(--accent);
+  color: #fff;
+  border-radius: 50%;
+  min-width: 2rem;
+  height: 2rem;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-hand);
+  font-weight: 700;
+  font-size: 0.95rem;
+  flex-shrink: 0;
+}
+
+/* ===================== PAPER META ===================== */
+.paper-meta-list { list-style: none; padding: 0; }
+.paper-meta-list li {
+  display: flex; gap: 0.6rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--divider);
+  font-size: 0.92rem;
+}
+.paper-meta-list li:last-child { border-bottom: none; }
+.pm-label {
+  font-weight: 700;
+  color: var(--muted);
+  min-width: 110px;
+  flex-shrink: 0;
+}
+
+/* ===================== AUDIO PLAYER ===================== */
+.audio-player-wrap {
+  max-width: 860px;
+  margin: 2.5rem auto 0;
+  padding: 0 1rem;
+}
+.audio-player-card {
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  padding: 1.5rem 1.75rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  transition: background var(--transition), border-color var(--transition);
+}
+.audio-player-header {
+  display: flex; align-items: center; gap: 0.85rem;
+}
+.audio-player-icon { font-size: 2rem; line-height: 1; flex-shrink: 0; }
+.audio-player-title {
+  font-family: var(--font-hand);
+  font-size: clamp(1.05rem, 1rem + 0.5vw, 1.3rem);
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1.2;
+}
+.audio-player-sub { font-size: 0.82rem; color: var(--muted); margin-top: 0.15rem; }
+.audio-controls {
+  display: flex; align-items: center; justify-content: center;
+  gap: 0.75rem; flex-wrap: wrap;
+}
+.ap-btn {
+  background: var(--surface2);
+  border: 2px solid var(--border);
+  border-radius: 2rem;
+  padding: 0.45rem 1.1rem;
+  font-family: var(--font-hand);
+  font-size: 0.95rem;
+  color: var(--text);
+  cursor: pointer;
+  transition: background var(--transition), border-color var(--transition);
+  white-space: nowrap;
+}
+.ap-btn:hover { background: var(--divider); border-color: var(--accent); }
+.ap-play {
+  background: var(--accent); color: #fff; border-color: var(--accent);
+  font-size: 1.1rem; padding: 0.5rem 1.6rem; min-width: 80px;
+}
+.ap-play:hover { opacity: 0.88; background: var(--accent); }
+.ap-loop.active { background: var(--accent3); color: #fff; border-color: var(--accent3); }
+.audio-progress-wrap { display: flex; align-items: center; gap: 0.6rem; }
+.ap-time { font-size: 0.8rem; color: var(--muted); min-width: 36px; text-align: center; flex-shrink: 0; }
+.ap-progress-bar {
+  flex: 1; height: 8px; background: var(--divider);
+  border-radius: 99px; position: relative; cursor: pointer; overflow: visible;
+}
+.ap-progress-fill {
+  height: 100%; background: var(--accent); border-radius: 99px; width: 0%;
+  transition: width 0.2s linear; pointer-events: none;
+}
+.ap-thumb {
+  position: absolute; top: 50%; left: 0%;
+  transform: translate(-50%, -50%);
+  width: 16px; height: 16px; border-radius: 50%;
+  background: var(--accent); border: 2px solid var(--surface);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.25); pointer-events: none;
+  transition: left 0.2s linear;
+}
+.audio-volume-wrap { display: flex; align-items: center; gap: 0.5rem; }
+.ap-vol-icon { font-size: 1rem; }
+.ap-volume {
+  flex: 1; -webkit-appearance: none; appearance: none;
+  height: 6px; border-radius: 99px; background: var(--divider);
+  outline: none; cursor: pointer; max-width: 180px;
+}
+.ap-volume::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%;
+  background: var(--accent); border: 2px solid var(--surface);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2); cursor: pointer;
+}
+.ap-volume::-moz-range-thumb {
+  width: 14px; height: 14px; border-radius: 50%;
+  background: var(--accent); border: 2px solid var(--surface); cursor: pointer;
+}
+@media (max-width: 480px) {
+  .audio-player-card { padding: 1.1rem 1rem 1rem; }
+  .ap-play { padding: 0.5rem 1.1rem; }
+  .ap-volume { max-width: 140px; }
+}
+
+/* ===================== FOOTER ===================== */
+footer {
+  background: var(--surface);
+  border-top: 2px solid var(--border);
+  text-align: center;
+  padding: 1.8rem 1.5rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin-top: 3rem;
+}
+.footer-links {
+  display: flex; flex-wrap: wrap; justify-content: center;
+  gap: 0.75rem 1.5rem;
+  margin: 0.75rem 0;
+  font-size: 0.92rem;
+}
+.footer-links a, footer a { color: var(--accent); text-decoration: none; }
+.footer-links a:hover, footer a:hover { text-decoration: underline; }
+.vsser-note {
+  margin-top: 0.75rem;
+  font-size: 0.85rem;
+  color: var(--faint);
+  border-top: 1px solid var(--divider);
+  padding-top: 0.75rem;
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="logo-wrap">
+    <svg class="logo-svg" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="36" height="36" rx="8" fill="var(--accent)"/>
+      <text x="18" y="25" font-size="18" text-anchor="middle" fill="white" font-family="serif" font-weight="bold">PE</text>
+    </svg>
+    <div>
+      <span class="brand-name">VSSER-2026</span>
+      <span class="brand-sub">Paper Explainer</span>
+    </div>
+  </div>
+  <button class="toggle-btn" id="themeToggle" aria-label="Toggle theme">
+    <span id="themeIcon">🌙</span>
+    <span id="themeLabel">Dark Mode</span>
+  </button>
+</header>
+
+<!-- HERO -->
+<section class="hero-board">
+  <div class="hero-label">🎓 Context in Entrepreneurship Research · VSSER-2026</div>
+  <h1 class="hero-title">Differences Between Men and Women in Opportunity Evaluation as a Function of Gender Stereotypes and Stereotype Activation <span> <br>(Do Gender Stereotypes Shape Who Sees Business Opportunities?)</span></h1>
+  <p class="hero-meta">
+    <strong>Gupta, Turban &amp; Pareek (2013)</strong> · Entrepreneurship Theory &amp; Practice · Baylor University / Wiley<br>
+    DOI: 10.1111/j.1540-6520.2012.00512.x
+  </p>
+  <div class="hero-badges">
+    <span class="badge">🔬 Experimental Study</span>
+    <span class="badge">🇮🇳 India Sample</span>
+    <span class="badge">👩‍💼 Gender &amp; Entrepreneurship</span>
+    <span class="badge ft50">⭐ FT50 Journal</span>
+    <span class="badge">📅 Published 2013</span>
+  </div>
+</section>
+
+<!-- AUDIO PLAYER -->
+<div class="audio-player-wrap">
+  <div class="audio-player-card">
+    <div class="audio-player-header">
+      <span class="audio-player-icon">🎙️</span>
+      <div>
+        <div class="audio-player-title">Listen to an AI-Assisted Podcast</div>
+        <div class="audio-player-sub">Gender Stereotypes &amp; Opportunity Evaluation · Context in Entrepreneurship Research · VSSER-2026</div>
+      </div>
+    </div>
+    <audio id="mainAudio" preload="metadata">
+      <source src="vsser26-gupta-2013.mp3" type="audio/mpeg">
+      <source src="gupta-turban-pareek-2013.m4a" type="audio/mp4">
+      Your browser does not support the audio element.
+    </audio>
+    <div class="audio-controls">
+      <button class="ap-btn" id="apRewind" title="Rewind 10s">⏮ 10s</button>
+      <button class="ap-btn ap-play" id="apPlay" aria-label="Play">▶</button>
+      <button class="ap-btn" id="apForward" title="Forward 10s">10s ⏭</button>
+      <button class="ap-btn ap-loop" id="apLoop" title="Toggle loop">🔁</button>
+    </div>
+    <div class="audio-progress-wrap">
+      <span class="ap-time" id="apCurrent">0:00</span>
+      <div class="ap-progress-bar" id="apProgressBar" role="slider" aria-label="Audio progress" tabindex="0">
+        <div class="ap-progress-fill" id="apProgressFill"></div>
+        <div class="ap-thumb" id="apThumb"></div>
+      </div>
+      <span class="ap-time" id="apDuration">0:00</span>
+    </div>
+    <div class="audio-volume-wrap">
+      <span class="ap-vol-icon">🔊</span>
+      <input type="range" class="ap-volume" id="apVolume" min="0" max="1" step="0.05" value="1" aria-label="Volume">
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<main>
+  <!-- TABS -->
+  <nav class="tabs-wrap" role="tablist" aria-label="Sections">
+    <button class="tab-btn active" onclick="switchTab('overview', this)" role="tab">📋 Overview</button>
+    <button class="tab-btn" onclick="switchTab('deep', this)" role="tab">🔬 Deep Dive</button>
+    <button class="tab-btn" onclick="switchTab('results', this)" role="tab">📊 Results</button>
+    <button class="tab-btn" onclick="switchTab('practitioner', this)" role="tab">🏢 For Practitioners</button>
+    <button class="tab-btn" onclick="switchTab('meta', this)" role="tab">📚 Paper Info</button>
+  </nav>
+
+  <!-- ===== OVERVIEW ===== -->
+  <div id="overview" class="section-panel active">
+
+    <div class="card">
+      <div class="card-title">🗺️ The Big Picture</div>
+      <p>Imagine two equally capable people sitting in the same room, reading the same article about what makes a good entrepreneur. One person walks away feeling energised. The other walks away feeling like entrepreneurship is not really for them.</p>
+      <p>Same information. Completely different reactions. Why?</p>
+      <p>This paper's answer is both simple and unsettling: <strong>it depends on the words used to describe entrepreneurship</strong>, and whether those words match or clash with the gender of the reader.</p>
+    </div>
+
+    <div class="pull-quote">
+      🔑 "The words we use to describe entrepreneurship are not neutral. They carry invisible gender signals, and those signals shape who believes they can succeed."
+    </div>
+
+    <div class="card">
+      <div class="card-title">🧩 What Is This Paper About?</div>
+      <p>Gupta, Turban, and Pareek ran a clever experiment with 429 business students in India. They gave different groups of students different news articles, each linking entrepreneurship with either <strong>masculine traits</strong> (aggressive, risk-taking, autonomous) or <strong>feminine traits</strong> (caring, humble, relationship-building).</p>
+      <p>Some articles were <strong>subtle</strong> (just described the traits, no gender mentioned), while others were <strong>blatant</strong> (explicitly linked those traits to masculinity or femininity and gave gender-specific examples).</p>
+      <p>Then they asked everyone to evaluate the same business opportunity. The result? The language used in the article dramatically shifted how men and women rated the opportunity, in patterns that were almost mirror images of each other. 🪞</p>
+    </div>
+
+    <div class="insight-strip">
+      <div class="insight-box">
+        <span class="insight-icon">👥</span>
+        <span class="insight-val">429</span>
+        <span class="insight-label">Students surveyed</span>
+      </div>
+      <div class="insight-box">
+        <span class="insight-icon">🧪</span>
+        <span class="insight-val">6</span>
+        <span class="insight-label">Experimental conditions</span>
+      </div>
+      <div class="insight-box">
+        <span class="insight-icon">🇮🇳</span>
+        <span class="insight-val">India</span>
+        <span class="insight-label">First test of feminine SAT in non-Western context</span>
+      </div>
+      <div class="insight-box">
+        <span class="insight-icon">📰</span>
+        <span class="insight-val">ETP</span>
+        <span class="insight-label">Entrepreneurship Theory &amp; Practice (FT50)</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🤔 Why Does It Matter?</div>
+      <p>Prior research had established that men, on average, rate business opportunities more favourably than women. The easy explanation was that this difference was biological or deeply psychological. This paper challenges that directly. It says: <strong>this gap is at least partly situational</strong>.</p>
+      <p>Change the framing of entrepreneurship, and women's confidence in evaluating opportunities rises. That has massive implications for classrooms, media, startup culture, and policy. 🌍</p>
+    </div>
+
+  </div>
+
+  <!-- ===== DEEP DIVE ===== -->
+  <div id="deep" class="section-panel">
+
+    <div class="card">
+      <div class="card-title">📖 The Key Theory: Stereotype Activation Theory (SAT)</div>
+      <p>Stereotype Activation Theory is the engine driving this paper. It says that when stereotypical information about a group is made cognitively available, it influences how people think and behave — but the <em>way</em> it is presented matters as much as the content itself.</p>
+      <ul class="def-list">
+        <li><span class="def-tag blue">Subtle</span><span>Traits are described without labelling them as masculine or feminine. The stereotype enters the mind quietly, like background music. Result: people tend to <strong>assimilate</strong> — they think and act in line with the stereotype.</span></li>
+        <li><span class="def-tag red">Blatant</span><span>Traits are explicitly labelled as masculine or feminine, with examples. The stereotype hits people in the face. Result: people tend to <strong>react against</strong> the stereotype — a phenomenon called psychological reactance.</span></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🧠 Why Subtle vs. Blatant Produces Opposite Effects</div>
+      <p>When you subtly tell someone "great entrepreneurs are assertive and autonomous," a man reads this and unconsciously thinks: "That sounds like me." His confidence rises. A woman reads it and may unconsciously absorb the implicit signal that entrepreneurship is not her territory. Her evaluation drops.</p>
+      <p>But flip the switch to blatant. Now the article says "these are masculine traits, typical of male entrepreneurs." The man relaxes — the flattery feels hollow. The woman fires up. She perceives this as a challenge to her freedom, and psychological reactance kicks in. She pushes back and rates the opportunity higher. 💪</p>
+      <div class="highlight blue">
+        <strong>Key insight:</strong> The same stereotype can either boost or suppress performance depending on how explicitly it is stated. Subtle = assimilation. Blatant = reactance.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📐 The Two Hypotheses</div>
+      <div class="hypo-grid">
+        <div class="hypo-card">
+          <h4>Hypothesis 1 — Masculine Stereotype 💼</h4>
+          <p><strong>H1a:</strong> Men rate opportunity higher when the masculine stereotype is subtle (vs. blatant).</p>
+          <p><strong>H1b:</strong> Women rate opportunity higher when the masculine stereotype is blatant (vs. subtle).</p>
+        </div>
+        <div class="hypo-card blue">
+          <h4>Hypothesis 2 — Feminine Stereotype 🌸</h4>
+          <p><strong>H2a:</strong> Women rate opportunity higher when the feminine stereotype is subtle (vs. blatant).</p>
+          <p><strong>H2b:</strong> Men rate opportunity higher when the feminine stereotype is blatant (vs. subtle).</p>
+        </div>
+      </div>
+      <p style="margin-top:0.5rem;">Together these form a <strong>3-way interaction</strong>: gender × stereotype content × manner of activation. It is the same logical structure, but running in perfectly opposite directions for masculine and feminine stereotypes. 🔄</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🇮🇳 Why India? The Cultural Angle</div>
+      <p>Most prior stereotype activation research was done in Western countries and focused almost exclusively on masculine stereotypes. India offered two important advantages.</p>
+      <p>First, India has a relatively high rate of women entrepreneurs (~14%), providing visible feminine role models in business — which makes it culturally plausible to link entrepreneurship with feminine traits. Second, Indian culture tends to view personal attributes as more flexible and changeable than Western "essentialist" cultures, making people more open to associating typically male-coded domains with feminine qualities.</p>
+      <div class="highlight green">
+        The India context allowed the researchers to test, for the first time, whether feminine stereotypes could be successfully activated in an entrepreneurial setting — something previous U.S. studies had failed to achieve.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🧪 How the Experiment Worked</div>
+      <ol class="step-list">
+        <li><span class="step-num">1</span><span>Students were randomly assigned to one of 6 conditions: subtle masculine, blatant masculine, subtle feminine, blatant feminine, control (no stereotype), or gender-neutral.</span></li>
+        <li><span class="step-num">2</span><span>Each group read a one-page fictitious news article tailored to their condition. The articles were adapted from validated U.S. instruments with Indian names (e.g., Dhirubhai Ambani, Ekta Kapoor) as examples.</span></li>
+        <li><span class="step-num">3</span><span>Participants answered a comprehension check. Only those who understood the manipulation correctly (n=298, ~70%) were included in the analysis.</span></li>
+        <li><span class="step-num">4</span><span>All participants then read the same ambiguous business opportunity scenario (a fictitious venture by "Jaspreet Ahluwalia") and rated it on a 3-item, 5-point Likert scale.</span></li>
+        <li><span class="step-num">5</span><span>Statistical analysis: a 2×2×2 ANOVA testing the three-way interaction between gender, stereotype content, and activation manner.</span></li>
+      </ol>
+    </div>
+
+  </div>
+
+  <!-- ===== RESULTS ===== -->
+  <div id="results" class="section-panel">
+
+    <div class="card">
+      <div class="card-title">📊 What the Numbers Said</div>
+      <p>The core finding was a significant <strong>3-way interaction</strong> (F = 10.92, p &lt; .01), confirming that gender, stereotype content, and manner of presentation collectively shaped opportunity evaluations.</p>
+    </div>
+
+    <div class="results-table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Condition</th>
+            <th>Men (mean)</th>
+            <th>Women (mean)</th>
+            <th>Pattern</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Subtle Masculine</td>
+            <td class="win">4.03</td>
+            <td class="lose">3.57</td>
+            <td>Men higher ✅ (H1a: not significant)</td>
+          </tr>
+          <tr>
+            <td>Blatant Masculine</td>
+            <td>4.08</td>
+            <td class="win">3.95</td>
+            <td>Women higher ✅ H1b supported</td>
+          </tr>
+          <tr>
+            <td>Subtle Feminine</td>
+            <td class="lose">3.43</td>
+            <td class="win">3.88</td>
+            <td>Women higher ✅ H2a supported</td>
+          </tr>
+          <tr>
+            <td>Blatant Feminine</td>
+            <td class="win">3.83</td>
+            <td class="lose">3.42</td>
+            <td>Men higher ✅ H2b supported</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🔍 Breaking Down the Findings</div>
+      <div class="highlight green">
+        <strong>Feminine Stereotype: Full support (both H2a and H2b).</strong> Women rated the opportunity significantly higher when feminine traits were subtly activated (3.88 vs 3.42, t = 2.21, p &lt; .05). Men rated it significantly higher when feminine traits were blatantly activated (3.83 vs 3.43, t = 2.65, p &lt; .05). The reactance effect worked perfectly for both genders.
+      </div>
+      <div class="highlight orange" style="margin-top:0.8rem;">
+        <strong>Masculine Stereotype: Partial support (only H1b).</strong> Women correctly showed reactance — they rated higher under blatant activation (3.95 vs 3.57, t = 2.68, p &lt; .05). But men did NOT show the expected dip under blatant activation. Their scores were nearly identical (4.03 subtle vs 4.08 blatant). H1a was not supported.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🤷 Why Did H1a Fail?</div>
+      <p>The authors offer a nuanced cultural explanation. In relational societies like India, where responsibility to family and community takes precedence over individual achievement, men may not feel that masculine stereotypes grant them an unfair advantage. So when the masculine stereotype was blatantly presented, Indian men did not feel the anxiety of living up to a high bar — they simply stayed confident regardless of framing.</p>
+      <div class="highlight red">
+        This is a genuinely interesting boundary condition. The reactance mechanism may be culturally conditioned — it fires differently depending on how much a person feels individually entitled by a positive stereotype.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">💡 The Central Implication</div>
+      <p>The gender gap in opportunity evaluation is not fixed. It is <strong>situationally constructed</strong>. Simply changing the language used to describe entrepreneurship — without altering any objective facts about the opportunity itself — can raise or lower women's (and men's) confidence. Language is infrastructure. 🏗️</p>
+      <div class="pull-quote">
+        🎯 "Differences between men and women in opportunity evaluation can be alleviated — possibly eliminated — by changing the language associated with entrepreneurship."
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ===== PRACTITIONER ===== -->
+  <div id="practitioner" class="section-panel">
+
+    <div class="card">
+      <div class="card-title">🏢 What This Means for Organisations</div>
+      <p>This paper is not just for academics. Its findings are directly actionable for anyone involved in hiring, training, investing, or teaching entrepreneurship.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📣 For Startup Ecosystems &amp; Accelerators</div>
+      <p>How you describe your programme matters. If your application page, your pitch deck templates, and your mentors all use language like "aggressive growth," "take no prisoners," and "bold disruption," you are subtly activating a masculine stereotype. Women in your pipeline will unconsciously feel less aligned with the opportunity, even if no one says anything explicitly gendered.</p>
+      <div class="highlight green">
+        <strong>Action:</strong> Audit the language of your communications. Introduce role models and success stories that feature traits like building relationships, community impact, and care — without labelling them as feminine. Subtle positive framing for all genders builds a more inclusive pipeline.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🎓 For Business Schools &amp; Educators</div>
+      <p>The paper explicitly calls out classrooms, books, and case studies as key sites of stereotype reinforcement. Most entrepreneurship cases feature men. Most "heroic founder" narratives are masculine. These are not neutral pedagogical choices — they carry an invisible curriculum that shapes who feels they belong in entrepreneurship.</p>
+      <div class="highlight blue">
+        <strong>Action:</strong> Deliberately diversify your case library. Include female entrepreneurs not as diversity tokens, but as primary protagonists in complex business decisions. The effect on women's confidence is real and measurable.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">💸 For Investors</div>
+      <p>Investors who only look for founders who embody "aggressive, risk-taking, autonomous" qualities are not running a neutral filter. They are running a gendered one. This bias is often invisible because it feels like a preference for "the right founder profile."</p>
+      <div class="highlight orange">
+        <strong>Action:</strong> Revisit your investment thesis language and pitch evaluation criteria. Traits like "builds strong networks," "deeply customer-empathetic," and "resilient under pressure" describe equally strong founders — and use language that does not subtly disadvantage women before they even get in the room.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📱 For Media &amp; Content Creators</div>
+      <p>Every Forbes profile of a "self-made disruptor," every podcast intro describing a founder as a "savage competitor," every startup documentary framing success as conquest — these are pieces of stereotype activation content operating at massive scale.</p>
+      <p>The paper shows that this language shapes who evaluates opportunities as worth pursuing. Media shapes the pipeline before investors or accelerators ever see it. The responsibility is significant. 📺</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">⚠️ A Note on Complexity</div>
+      <p>The findings also contain a warning. Blatant positive framing can backfire. If you over-explicitly tell women "entrepreneurship is for women too!" it can trigger reactance in men. The subtlety of the intervention matters. This is not about swapping masculine words for feminine words — it is about broadening the vocabulary of entrepreneurship so that it does not signal exclusion to anyone.</p>
+      <div class="highlight red">
+        <strong>Watch out for:</strong> Performative diversity messaging that loudly and blatantly targets underrepresented groups. Such interventions can trigger backlash from majority groups while providing only short-term boosts for the intended audience.
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ===== PAPER META ===== -->
+  <div id="meta" class="section-panel">
+
+    <div class="card">
+      <div class="card-title">📚 Paper Details</div>
+      <ul class="paper-meta-list">
+        <li><span class="pm-label">Title</span><span>Differences Between Men and Women in Opportunity Evaluation as a Function of Gender Stereotypes and Stereotype Activation</span></li>
+        <li><span class="pm-label">Authors</span><span>Vishal K. Gupta · Daniel B. Turban · Ashish Pareek</span></li>
+        <li><span class="pm-label">Journal</span><span>Entrepreneurship Theory and Practice (© 2012 Baylor University)</span></li>
+        <li><span class="pm-label">Volume/Issue</span><span>Vol. 37, No. 4, pp. 771–788</span></li>
+        <li><span class="pm-label">Published</span><span>July 2013 (online 2012)</span></li>
+        <li><span class="pm-label">DOI</span><span><a href="https://doi.org/10.1111/j.1540-6520.2012.00512.x" target="_blank" rel="noopener noreferrer">10.1111/j.1540-6520.2012.00512.x</a></span></li>
+        <li><span class="pm-label">FT50 Status</span><span>⭐ Yes — Entrepreneurship Theory &amp; Practice is listed in the Financial Times Top 50 journals</span></li>
+        <li><span class="pm-label">Key Theory</span><span>Stereotype Activation Theory (SAT) — Wheeler &amp; Petty, 2001</span></li>
+        <li><span class="pm-label">Method</span><span>2×2×2 factorial experiment; ANOVA; n=298 (filtered from 429)</span></li>
+        <li><span class="pm-label">Setting</span><span>Large public university, western India</span></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title">👨‍🎓 About the Authors</div>
+      <ul class="def-list">
+        <li><span class="def-tag blue">Gupta</span><span><strong>Vishal K. Gupta</strong> — Professor of Strategy, State University of New York (Binghamton). Lead author and VSSER-2026 spearhead. His research examines gender, leadership, and entrepreneurship across cultural contexts.</span></li>
+        <li><span class="def-tag green">Turban</span><span><strong>Daniel B. Turban</strong> — Professor and Department Chair, University of Missouri. Expert in organisational behaviour and stereotype threat in professional settings.</span></li>
+        <li><span class="def-tag orange">Pareek</span><span><strong>Ashish Pareek</strong> — Assistant Professor, Maharshi Dayanand Saraswati University, Ajmer, India. Provided deep familiarity with the Indian cultural and entrepreneurial context for this study.</span></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🚧 Limitations &amp; Future Directions</div>
+      <p>The authors are refreshingly candid about what their study cannot tell us.</p>
+      <ul class="def-list">
+        <li><span class="def-tag red">Single Country</span><span>Testing in India alone means we cannot yet generalise to other cultures. The feminine stereotype activation may not work in Western societies where entrepreneurship is more rigidly coded as masculine.</span></li>
+        <li><span class="def-tag red">Time Lag</span><span>Participants evaluated the opportunity immediately after reading the article. Real-world stereotype effects may accumulate over days or weeks and could be stronger.</span></li>
+        <li><span class="def-tag red">Single Source</span><span>Real people are exposed to stereotypes from many simultaneous sources — TV, social media, conversations. A single news article is a thin approximation of that complexity.</span></li>
+        <li><span class="def-tag orange">Student Sample</span><span>Business students are a relevant but not fully representative group. Actual entrepreneurs in diverse industries may respond differently.</span></li>
+      </ul>
+    </div>
+
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <p>🎙️ This explainer is part of the <strong>Context in Entrepreneurship Research</strong> series on <strong>VSSER-2026</strong></p>
+  <div class="footer-links">
+    🎧 <a href="https://open.spotify.com/show/1FSNMlJzYxvlPswFdyCZx1?si=f0ed71dfbbc94b8c" target="_blank" rel="noopener noreferrer">Spotify</a>
+    📺 <a href="https://www.youtube.com/@WeekendResearcher" target="_blank" rel="noopener noreferrer">YouTube: Weekend Researcher</a>
+    🎵 <a href="https://music.amazon.in/podcasts/f64c70fc-f70b-498e-87f3-669152e83730/revise-and-resubmit---the-mayukh-show" target="_blank" rel="noopener noreferrer">Amazon Prime Music</a>
+    🍎 <a href="https://podcasts.apple.com/us/podcast/revise-and-resubmit-the-mayukh-show/id1770883122" target="_blank" rel="noopener noreferrer">Apple Podcast</a>
+  </div>
+  <p style="margin-top:0.5rem;font-size:0.82rem;">
+    Heartfelt thanks to <strong>Vishal K. Gupta</strong>, <strong>Daniel B. Turban</strong>, and <strong>Ashish Pareek</strong> for this important work, and to <strong>Baylor University / John Wiley &amp; Sons Ltd.</strong> for publishing it in <strong>Entrepreneurship Theory &amp; Practice</strong>, a prestigious <strong>FT50</strong> journal. 🙏
+  </p>
+  <div class="vsser-note">
+    📌 This is a reading material prepared in connection with <strong>VSSER-2026</strong>, spearheaded by <strong>Professor Vishal K. Gupta and Dr Athina Skiadopoulou </strong>.<br>
+    © 2026 <a href="https://mayukhmukhopadhyay.com/reviseandresubmit/" target="_blank" rel="noopener noreferrer">Revise and Resubmit — The Mayukh Show.</a> (CC BY-NC-ND).
+  </div>
+</footer>
+
+<script>
+// THEME TOGGLE
+(function(){
+  const html = document.documentElement;
+  const btn = document.getElementById('themeToggle');
+  const icon = document.getElementById('themeIcon');
+  const label = document.getElementById('themeLabel');
+  let dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  function apply(){
+    html.setAttribute('data-theme', dark ? 'dark' : 'light');
+    icon.textContent = dark ? '☀️' : '🌙';
+    label.textContent = dark ? 'Light Mode' : 'Dark Mode';
+  }
+  apply();
+  btn.addEventListener('click', ()=>{ dark = !dark; apply(); });
+})();
+
+// TAB SWITCHER
+function switchTab(id, btn) {
+  document.querySelectorAll('.section-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+}
+
+// AUDIO PLAYER
+(function(){
+  const audio = document.getElementById('mainAudio');
+  const playBtn = document.getElementById('apPlay');
+  const loopBtn = document.getElementById('apLoop');
+  const fill = document.getElementById('apProgressFill');
+  const thumb = document.getElementById('apThumb');
+  const bar = document.getElementById('apProgressBar');
+  const curEl = document.getElementById('apCurrent');
+  const durEl = document.getElementById('apDuration');
+  const volSlider = document.getElementById('apVolume');
+
+  function fmt(s){ const m=Math.floor(s/60),sec=Math.floor(s%60); return m+':'+(sec<10?'0':'')+sec; }
+
+  audio.addEventListener('loadedmetadata', ()=>{ durEl.textContent = fmt(audio.duration||0); });
+  audio.addEventListener('timeupdate', ()=>{
+    const pct = audio.duration ? (audio.currentTime/audio.duration)*100 : 0;
+    fill.style.width = pct+'%';
+    thumb.style.left = pct+'%';
+    curEl.textContent = fmt(audio.currentTime);
+  });
+  audio.addEventListener('ended', ()=>{ playBtn.textContent = '▶'; });
+
+  playBtn.addEventListener('click', ()=>{
+    if(audio.paused){ audio.play(); playBtn.textContent = '⏸'; }
+    else { audio.pause(); playBtn.textContent = '▶'; }
+  });
+  document.getElementById('apRewind').addEventListener('click', ()=>{ audio.currentTime = Math.max(0, audio.currentTime-10); });
+  document.getElementById('apForward').addEventListener('click', ()=>{ audio.currentTime = Math.min(audio.duration||0, audio.currentTime+10); });
+
+  loopBtn.addEventListener('click', ()=>{
+    audio.loop = !audio.loop;
+    loopBtn.classList.toggle('active', audio.loop);
+    loopBtn.title = audio.loop ? 'Loop on' : 'Loop off';
+  });
+
+  let seeking = false;
+  function seek(e){
+    const rect = bar.getBoundingClientRect();
+    const x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
+    const pct = Math.min(Math.max(x / rect.width, 0), 1);
+    if(audio.duration) audio.currentTime = pct * audio.duration;
+  }
+  bar.addEventListener('mousedown', (e)=>{ seeking=true; seek(e); });
+  bar.addEventListener('touchstart', (e)=>{ seeking=true; seek(e); }, {passive:true});
+  window.addEventListener('mousemove', (e)=>{ if(seeking) seek(e); });
+  window.addEventListener('touchmove', (e)=>{ if(seeking) seek(e); }, {passive:true});
+  window.addEventListener('mouseup', ()=>{ seeking=false; });
+  window.addEventListener('touchend', ()=>{ seeking=false; });
+  bar.addEventListener('keydown', (e)=>{
+    if(e.key==='ArrowRight') audio.currentTime = Math.min(audio.duration||0, audio.currentTime+5);
+    if(e.key==='ArrowLeft') audio.currentTime = Math.max(0, audio.currentTime-5);
+  });
+  volSlider.addEventListener('input', ()=>{ audio.volume = volSlider.value; });
+})();
+</script>
+</body>
+</html>
