@@ -611,7 +611,7 @@ footer {
       <div class="card-title">🧩 What Is This Paper About?</div>
       <p>Gupta, Turban, and Pareek ran a clever experiment with 429 business students in India. They gave different groups of students different news articles, each linking entrepreneurship with either <strong>masculine traits</strong> (aggressive, risk-taking, autonomous) or <strong>feminine traits</strong> (caring, humble, relationship-building).</p>
       <p>Some articles were <strong>subtle</strong> (just described the traits, no gender mentioned), while others were <strong>blatant</strong> (explicitly linked those traits to masculinity or femininity and gave gender-specific examples).</p>
-      <p>Then they asked everyone to evaluate the same business opportunity. The result? The language used in the article dramatically shifted how men and women rated the opportunity, in patterns that were almost mirror images of each other. 🪞</p>
+      <p>Then they asked everyone to evaluate the same business opportunity. The result? The language used in the article dramatically shifted how men and women rated the opportunity, in patterns that were almost mirror images of each other. </p>
     </div>
 
     <div class="insight-strip">
@@ -915,60 +915,105 @@ function switchTab(id, btn) {
 }
 
 // AUDIO PLAYER
-(function(){
-  const audio = document.getElementById('mainAudio');
-  const playBtn = document.getElementById('apPlay');
-  const loopBtn = document.getElementById('apLoop');
-  const fill = document.getElementById('apProgressFill');
-  const thumb = document.getElementById('apThumb');
-  const bar = document.getElementById('apProgressBar');
-  const curEl = document.getElementById('apCurrent');
-  const durEl = document.getElementById('apDuration');
-  const volSlider = document.getElementById('apVolume');
+function initAudioPlayer() {
+  var audio = document.getElementById('mainAudio');
+  var playBtn = document.getElementById('apPlay');
+  var loopBtn = document.getElementById('apLoop');
+  var fill = document.getElementById('apProgressFill');
+  var thumb = document.getElementById('apThumb');
+  var bar = document.getElementById('apProgressBar');
+  var curEl = document.getElementById('apCurrent');
+  var durEl = document.getElementById('apDuration');
+  var volSlider = document.getElementById('apVolume');
 
-  function fmt(s){ const m=Math.floor(s/60),sec=Math.floor(s%60); return m+':'+(sec<10?'0':'')+sec; }
+  if (!audio || !playBtn) return;
 
-  audio.addEventListener('loadedmetadata', ()=>{ durEl.textContent = fmt(audio.duration||0); });
-  audio.addEventListener('timeupdate', ()=>{
-    const pct = audio.duration ? (audio.currentTime/audio.duration)*100 : 0;
-    fill.style.width = pct+'%';
-    thumb.style.left = pct+'%';
+  audio.load();
+
+  function fmt(s) {
+    var m = Math.floor(s / 60), sec = Math.floor(s % 60);
+    return m + ':' + (sec < 10 ? '0' : '') + sec;
+  }
+
+  function updateProgress() {
+    var pct = audio.duration ? (audio.currentTime / audio.duration) * 100 : 0;
+    fill.style.width = pct + '%';
+    thumb.style.left = pct + '%';
     curEl.textContent = fmt(audio.currentTime);
-  });
-  audio.addEventListener('ended', ()=>{ playBtn.textContent = '▶'; });
+  }
 
-  playBtn.addEventListener('click', ()=>{
-    if(audio.paused){ audio.play(); playBtn.textContent = '⏸'; }
-    else { audio.pause(); playBtn.textContent = '▶'; }
+  audio.addEventListener('loadedmetadata', function() {
+    durEl.textContent = fmt(audio.duration || 0);
   });
-  document.getElementById('apRewind').addEventListener('click', ()=>{ audio.currentTime = Math.max(0, audio.currentTime-10); });
-  document.getElementById('apForward').addEventListener('click', ()=>{ audio.currentTime = Math.min(audio.duration||0, audio.currentTime+10); });
+  audio.addEventListener('durationchange', function() {
+    if (audio.duration && isFinite(audio.duration)) durEl.textContent = fmt(audio.duration);
+  });
+  audio.addEventListener('timeupdate', updateProgress);
+  audio.addEventListener('ended', function() {
+    playBtn.textContent = '\u25B6';
+  });
+  audio.addEventListener('error', function(e) {
+    playBtn.textContent = '\u25B6';
+    console.warn('Audio error:', e);
+  });
 
-  loopBtn.addEventListener('click', ()=>{
+  playBtn.addEventListener('click', function() {
+    if (audio.paused) {
+      var p = audio.play();
+      if (p !== undefined) {
+        p.then(function() {
+          playBtn.textContent = '\u23F8';
+        }).catch(function(err) {
+          console.warn('Play failed:', err);
+          playBtn.textContent = '\u25B6';
+        });
+      } else {
+        playBtn.textContent = '\u23F8';
+      }
+    } else {
+      audio.pause();
+      playBtn.textContent = '\u25B6';
+    }
+  });
+
+  document.getElementById('apRewind').addEventListener('click', function() {
+    audio.currentTime = Math.max(0, audio.currentTime - 10);
+  });
+  document.getElementById('apForward').addEventListener('click', function() {
+    audio.currentTime = Math.min(audio.duration || 0, audio.currentTime + 10);
+  });
+
+  loopBtn.addEventListener('click', function() {
     audio.loop = !audio.loop;
     loopBtn.classList.toggle('active', audio.loop);
     loopBtn.title = audio.loop ? 'Loop on' : 'Loop off';
   });
 
-  let seeking = false;
-  function seek(e){
-    const rect = bar.getBoundingClientRect();
-    const x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
-    const pct = Math.min(Math.max(x / rect.width, 0), 1);
-    if(audio.duration) audio.currentTime = pct * audio.duration;
+  var seeking = false;
+  function seek(e) {
+    var rect = bar.getBoundingClientRect();
+    var x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
+    var pct = Math.min(Math.max(x / rect.width, 0), 1);
+    if (audio.duration && isFinite(audio.duration)) audio.currentTime = pct * audio.duration;
   }
-  bar.addEventListener('mousedown', (e)=>{ seeking=true; seek(e); });
-  bar.addEventListener('touchstart', (e)=>{ seeking=true; seek(e); }, {passive:true});
-  window.addEventListener('mousemove', (e)=>{ if(seeking) seek(e); });
-  window.addEventListener('touchmove', (e)=>{ if(seeking) seek(e); }, {passive:true});
-  window.addEventListener('mouseup', ()=>{ seeking=false; });
-  window.addEventListener('touchend', ()=>{ seeking=false; });
-  bar.addEventListener('keydown', (e)=>{
-    if(e.key==='ArrowRight') audio.currentTime = Math.min(audio.duration||0, audio.currentTime+5);
-    if(e.key==='ArrowLeft') audio.currentTime = Math.max(0, audio.currentTime-5);
+  bar.addEventListener('mousedown', function(e) { seeking = true; seek(e); });
+  bar.addEventListener('touchstart', function(e) { seeking = true; seek(e); }, { passive: true });
+  window.addEventListener('mousemove', function(e) { if (seeking) seek(e); });
+  window.addEventListener('touchmove', function(e) { if (seeking) seek(e); }, { passive: true });
+  window.addEventListener('mouseup', function() { seeking = false; });
+  window.addEventListener('touchend', function() { seeking = false; });
+  bar.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight') audio.currentTime = Math.min(audio.duration || 0, audio.currentTime + 5);
+    if (e.key === 'ArrowLeft') audio.currentTime = Math.max(0, audio.currentTime - 5);
   });
-  volSlider.addEventListener('input', ()=>{ audio.volume = volSlider.value; });
-})();
+  volSlider.addEventListener('input', function() { audio.volume = volSlider.value; });
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initAudioPlayer);
+} else {
+  initAudioPlayer();
+}
 </script>
 </body>
 </html>
