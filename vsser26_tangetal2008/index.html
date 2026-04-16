@@ -1,1 +1,555 @@
-abc
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tang et al. 2008 | VSSER-2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Patrick+Hand&family=Kalam&display=swap" rel="stylesheet">
+<style>
+:root,[data-theme="light"]{
+  --bg:#f5f0e8;--surface:#faf7f0;--surface2:#fff;--board:#f8f4ea;
+  --border:#d4cbb8;--divider:#e2ddd0;--text:#2c2416;--muted:#6b5e45;
+  --faint:#b0a48a;--ink:#1a1008;--accent:#2563a8;--accent2:#c0392b;
+  --accent3:#1e8449;--accent4:#7d3c98;--accent5:#d35400;
+  --shadow:0 2px 8px rgba(44,36,22,0.10);--shadow-lg:0 8px 32px rgba(44,36,22,0.13);
+  --font-hand:'Caveat','Kalam',cursive;--font-body:'Patrick Hand','Kalam',cursive;
+  --transition:200ms cubic-bezier(0.16,1,0.3,1);--radius:0.75rem;--radius-sm:0.4rem;
+}
+[data-theme="dark"]{
+  --bg:#111008;--surface:#1a1810;--surface2:#221f14;--board:#181510;
+  --border:#3a3420;--divider:#2a2518;--text:#ede8d8;--muted:#b8ad94;
+  --faint:#6b6045;--ink:#f5f0e8;--accent:#5b9cf6;--accent2:#e87070;
+  --accent3:#52c28a;--accent4:#bb8ee8;--accent5:#f39c12;
+  --shadow:0 2px 8px rgba(0,0,0,0.4);--shadow-lg:0 8px 32px rgba(0,0,0,0.5);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--font-body);background:var(--bg);color:var(--text);font-size:clamp(1rem,0.9rem + 0.5vw,1.2rem);line-height:1.65;min-height:100dvh;transition:background var(--transition),color var(--transition);}
+.site-header{position:sticky;top:0;z-index:100;background:var(--surface);border-bottom:2px solid var(--border);box-shadow:var(--shadow);padding:0.75rem 1.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.5rem;}
+.logo-wrap{display:flex;align-items:center;gap:0.6rem;}
+.brand-name{font-family:var(--font-hand);font-size:clamp(1.1rem,1rem + 1vw,1.5rem);font-weight:700;color:var(--accent);letter-spacing:-0.02em;}
+.brand-sub{font-family:var(--font-hand);font-size:0.85rem;color:var(--muted);display:block;margin-top:-4px;}
+.toggle-btn{background:var(--surface2);border:2px solid var(--border);border-radius:2rem;padding:0.4rem 1rem;font-family:var(--font-hand);font-size:0.95rem;color:var(--text);cursor:pointer;display:flex;align-items:center;gap:0.4rem;transition:background var(--transition),border-color var(--transition);}
+.toggle-btn:hover{background:var(--divider);}
+.hero-board{background:var(--board);border-bottom:2px solid var(--border);padding:3rem 1.5rem 2.5rem;text-align:center;}
+.hero-label{display:inline-block;background:var(--accent5);color:#fff;font-family:var(--font-hand);font-size:0.85rem;border-radius:2rem;padding:0.25rem 1rem;margin-bottom:1rem;letter-spacing:0.04em;}
+.hero-title{font-family:var(--font-hand);font-size:clamp(1.6rem,1.2rem + 2.5vw,2.8rem);font-weight:700;color:var(--ink);line-height:1.2;max-width:800px;margin:0 auto 1rem;}
+.hero-title span{color:var(--accent5);}
+.hero-meta{font-size:0.9rem;color:var(--muted);max-width:640px;margin:0 auto 1.5rem;}
+.hero-meta strong{color:var(--text);}
+.hero-badges{display:flex;flex-wrap:wrap;justify-content:center;gap:0.5rem;margin-top:1rem;}
+.badge{background:var(--surface2);border:1.5px solid var(--border);border-radius:2rem;padding:0.3rem 0.9rem;font-size:0.82rem;color:var(--muted);font-family:var(--font-hand);}
+.badge.ft50{background:var(--accent4);color:#fff;border-color:var(--accent4);font-weight:700;}
+.badge.orange{background:var(--accent5);color:#fff;border-color:var(--accent5);}
+main{max-width:860px;margin:0 auto;padding:2rem 1rem 3rem;}
+.tabs-wrap{display:flex;gap:0.4rem;flex-wrap:wrap;margin-bottom:1.75rem;border-bottom:2px solid var(--border);padding-bottom:0.5rem;overflow-x:auto;}
+.tab-btn{background:transparent;border:1.5px solid transparent;border-radius:var(--radius-sm) var(--radius-sm) 0 0;padding:0.45rem 1.1rem;font-family:var(--font-hand);font-size:0.97rem;color:var(--muted);cursor:pointer;white-space:nowrap;transition:all var(--transition);}
+.tab-btn:hover{color:var(--text);background:var(--divider);}
+.tab-btn.active{color:var(--accent5);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface);font-weight:700;}
+.section-panel{display:none;}
+.section-panel.active{display:block;}
+.card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:1.4rem 1.6rem;margin-bottom:1.4rem;box-shadow:var(--shadow);}
+.card-title{font-family:var(--font-hand);font-size:1.15rem;font-weight:700;color:var(--accent5);margin-bottom:0.6rem;display:flex;align-items:center;gap:0.4rem;}
+.card p{margin-bottom:0.7rem;}
+.card p:last-child{margin-bottom:0;}
+.highlight{border-left:4px solid var(--accent5);background:var(--surface2);border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:0.9rem 1.2rem;margin:1rem 0;font-size:0.97rem;}
+.highlight.green{border-color:var(--accent3);}
+.highlight.red{border-color:var(--accent2);}
+.highlight.blue{border-color:var(--accent);}
+.highlight.purple{border-color:var(--accent4);}
+.pull-quote{border:2px dashed var(--border);border-radius:var(--radius);padding:1.2rem 1.5rem;margin:1.4rem 0;font-family:var(--font-hand);font-size:clamp(1rem,0.9rem + 0.4vw,1.2rem);color:var(--ink);text-align:center;background:var(--board);}
+.def-list{list-style:none;padding:0;}
+.def-list li{padding:0.7rem 0;border-bottom:1px solid var(--divider);display:grid;grid-template-columns:auto 1fr;gap:0.7rem;align-items:start;}
+.def-list li:last-child{border-bottom:none;}
+.def-tag{background:var(--accent5);color:#fff;border-radius:var(--radius-sm);padding:0.15rem 0.6rem;font-size:0.8rem;font-family:var(--font-hand);white-space:nowrap;margin-top:0.25rem;}
+.def-tag.blue{background:var(--accent);}
+.def-tag.green{background:var(--accent3);}
+.def-tag.red{background:var(--accent2);}
+.def-tag.purple{background:var(--accent4);}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1rem 0;}
+@media(max-width:560px){.two-col{grid-template-columns:1fr;}}
+.col-card{background:var(--surface2);border:1.5px solid var(--border);border-radius:var(--radius);padding:1rem 1.1rem;}
+.col-card h4{font-family:var(--font-hand);font-size:1rem;margin-bottom:0.4rem;}
+.col-card.orange h4{color:var(--accent5);}
+.col-card.blue h4{color:var(--accent);}
+.col-card.green h4{color:var(--accent3);}
+.col-card.red h4{color:var(--accent2);}
+.results-table-wrap{overflow-x:auto;margin:1rem 0;}
+table{width:100%;border-collapse:collapse;font-size:0.92rem;font-family:var(--font-body);}
+th{background:var(--accent5);color:#fff;padding:0.6rem 0.9rem;text-align:left;font-family:var(--font-hand);}
+th.blue{background:var(--accent);}
+td{padding:0.55rem 0.9rem;border-bottom:1px solid var(--divider);vertical-align:top;}
+tr:last-child td{border-bottom:none;}
+tr:nth-child(even) td{background:var(--surface2);}
+.win{color:var(--accent3);font-weight:700;}
+.lose{color:var(--accent2);}
+.insight-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin:1.2rem 0;}
+.insight-box{background:var(--surface2);border:1.5px solid var(--border);border-radius:var(--radius);padding:1rem;text-align:center;}
+.insight-icon{font-size:2rem;display:block;margin-bottom:0.4rem;}
+.insight-label{font-size:0.82rem;color:var(--muted);}
+.insight-val{font-family:var(--font-hand);font-size:1.1rem;font-weight:700;color:var(--accent5);display:block;margin:0.2rem 0 0.1rem;}
+.step-list{list-style:none;padding:0;}
+.step-list li{display:flex;gap:0.9rem;padding:0.8rem 0;border-bottom:1px solid var(--divider);align-items:flex-start;}
+.step-list li:last-child{border-bottom:none;}
+.step-num{background:var(--accent5);color:#fff;border-radius:50%;min-width:2rem;height:2rem;display:flex;align-items:center;justify-content:center;font-family:var(--font-hand);font-weight:700;font-size:0.95rem;flex-shrink:0;}
+.paper-meta-list{list-style:none;padding:0;}
+.paper-meta-list li{display:flex;gap:0.6rem;padding:0.5rem 0;border-bottom:1px solid var(--divider);font-size:0.92rem;}
+.paper-meta-list li:last-child{border-bottom:none;}
+.pm-label{font-weight:700;color:var(--muted);min-width:110px;flex-shrink:0;}
+/* AUDIO PLAYER */
+.audio-player-wrap{max-width:860px;margin:2.5rem auto 0;padding:0 1rem;}
+.audio-player-card{background:var(--surface);border:2px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-lg);padding:1.5rem 1.75rem 1.25rem;display:flex;flex-direction:column;gap:1rem;}
+.audio-player-header{display:flex;align-items:center;gap:0.85rem;}
+.audio-player-icon{font-size:2rem;line-height:1;flex-shrink:0;}
+.audio-player-title{font-family:var(--font-hand);font-size:clamp(1.05rem,1rem + 0.5vw,1.3rem);font-weight:700;color:var(--accent);line-height:1.2;}
+.audio-player-sub{font-size:0.82rem;color:var(--muted);margin-top:0.15rem;}
+.audio-controls{display:flex;align-items:center;justify-content:center;gap:0.75rem;flex-wrap:wrap;}
+.ap-btn{background:var(--surface2);border:2px solid var(--border);border-radius:2rem;padding:0.45rem 1.1rem;font-family:var(--font-hand);font-size:0.95rem;color:var(--text);cursor:pointer;transition:background var(--transition),border-color var(--transition);white-space:nowrap;}
+.ap-btn:hover{background:var(--divider);border-color:var(--accent);}
+.ap-play{background:var(--accent);color:#fff;border-color:var(--accent);font-size:1.1rem;padding:0.5rem 1.6rem;min-width:80px;}
+.ap-play:hover{opacity:0.88;}
+.ap-loop.active{background:var(--accent3);color:#fff;border-color:var(--accent3);}
+.audio-progress-wrap{display:flex;align-items:center;gap:0.6rem;}
+.ap-time{font-size:0.8rem;color:var(--muted);min-width:36px;text-align:center;flex-shrink:0;}
+.ap-progress-bar{flex:1;height:8px;background:var(--divider);border-radius:99px;position:relative;cursor:pointer;overflow:visible;}
+.ap-progress-fill{height:100%;background:var(--accent);border-radius:99px;width:0%;transition:width 0.2s linear;pointer-events:none;}
+.ap-thumb{position:absolute;top:50%;left:0%;transform:translate(-50%,-50%);width:16px;height:16px;border-radius:50%;background:var(--accent);border:2px solid var(--surface);box-shadow:0 1px 4px rgba(0,0,0,0.25);pointer-events:none;transition:left 0.2s linear;}
+.audio-volume-wrap{display:flex;align-items:center;gap:0.5rem;}
+.ap-vol-icon{font-size:1rem;}
+.ap-volume{flex:1;-webkit-appearance:none;appearance:none;height:6px;border-radius:99px;background:var(--divider);outline:none;cursor:pointer;max-width:180px;}
+.ap-volume::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--accent);border:2px solid var(--surface);box-shadow:0 1px 3px rgba(0,0,0,0.2);cursor:pointer;}
+.ap-volume::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:var(--accent);border:2px solid var(--surface);cursor:pointer;}
+@media(max-width:480px){.audio-player-card{padding:1.1rem 1rem 1rem;}.ap-play{padding:0.5rem 1.1rem;}.ap-volume{max-width:140px;}}
+footer{background:var(--surface);border-top:2px solid var(--border);text-align:center;padding:1.8rem 1.5rem;font-size:0.9rem;color:var(--muted);margin-top:3rem;}
+.footer-links{display:flex;flex-wrap:wrap;justify-content:center;gap:0.75rem 1.5rem;margin:0.75rem 0;font-size:0.92rem;}
+.footer-links a,footer a{color:var(--accent);text-decoration:none;}
+.footer-links a:hover,footer a:hover{text-decoration:underline;}
+.vsser-note{margin-top:0.75rem;font-size:0.85rem;color:var(--faint);border-top:1px solid var(--divider);padding-top:0.75rem;}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="logo-wrap">
+    <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="36" height="36" rx="8" fill="var(--accent)"/>
+      <text x="18" y="25" font-size="18" text-anchor="middle" fill="white" font-family="serif" font-weight="bold">PE</text>
+    </svg>
+    <div>
+      <span class="brand-name">VSSER-2026</span>
+      <span class="brand-sub">Paper Explainer</span>
+    </div>
+  </div>
+  <button class="toggle-btn" id="themeToggle" aria-label="Toggle theme">
+    <span id="themeIcon">&#127769;</span>
+    <span id="themeLabel">Dark Mode</span>
+  </button>
+</header>
+
+<section class="hero-board">
+  <div class="hero-label">&#127979; VSSER-2026 &middot; Context in Entrepreneurship Research</div>
+  <h1 class="hero-title">Exploring an Inverted U-Shape Relationship between Entrepreneurial Orientation and Performance in Chinese Ventures<span> <br>(Too Much of a Good Thing? When Entrepreneurial Drive Starts Hurting Firm Performance)</span></h1>
+  <p class="hero-meta">
+    <strong>Tang, Tang, Marino, Zhang & Li (2008)</strong> &middot; Entrepreneurship Theory & Practice &middot; &copy; 2008 Baylor University / Wiley<br>
+    DOI: 10.1111/j.1540-6520.2007.00223.x
+  </p>
+  <div class="hero-badges">
+    <span class="badge">&#128202; Two-Study Empirical Design</span>
+    <span class="badge">&#127758; China Context</span>
+    <span class="badge orange">&#128200; Curvilinear Relationship</span>
+    <span class="badge ft50">&#11088; FT50 Journal</span>
+    <span class="badge">&#128197; Published January 2008</span>
+  </div>
+</section>
+
+<div class="audio-player-wrap">
+  <div class="audio-player-card">
+    <div class="audio-player-header">
+      <span class="audio-player-icon">&#127897;&#65039;</span>
+      <div>
+        <div class="audio-player-title">Listen to an AI-Assisted Podcast</div>
+        <div class="audio-player-sub">EO & Performance in China &middot; Tang et al. 2008 &middot; Context in Entrepreneurship Research &middot; VSSER-2026 </div>
+      </div>
+    </div>
+    <audio id="mainAudio" preload="metadata">
+      <source src="vsser26-tang-2008.mp3" type="audio/mpeg">
+      <source src="vsser26-tang-2008.m4a" type="audio/mp4">
+      Your browser does not support the audio element.
+    </audio>
+    <div class="audio-controls">
+      <button class="ap-btn" id="apRewind" title="Rewind 10s">&#9198; 10s</button>
+      <button class="ap-btn ap-play" id="apPlay" aria-label="Play">&#9654;</button>
+      <button class="ap-btn" id="apForward" title="Forward 10s">10s &#9197;</button>
+      <button class="ap-btn ap-loop" id="apLoop" title="Toggle loop">&#128257;</button>
+    </div>
+    <div class="audio-progress-wrap">
+      <span class="ap-time" id="apCurrent">0:00</span>
+      <div class="ap-progress-bar" id="apProgressBar" role="slider" aria-label="Audio progress" tabindex="0">
+        <div class="ap-progress-fill" id="apProgressFill"></div>
+        <div class="ap-thumb" id="apThumb"></div>
+      </div>
+      <span class="ap-time" id="apDuration">0:00</span>
+    </div>
+    <div class="audio-volume-wrap">
+      <span class="ap-vol-icon">&#128266;</span>
+      <input type="range" class="ap-volume" id="apVolume" min="0" max="1" step="0.05" value="1" aria-label="Volume">
+    </div>
+  </div>
+</div>
+
+<main>
+  <nav class="tabs-wrap" role="tablist" aria-label="Sections">
+    <button class="tab-btn active" onclick="switchTab('overview',this)" role="tab">&#128203; Overview</button>
+    <button class="tab-btn" onclick="switchTab('theory',this)" role="tab">&#128270; Theory & Hypothesis</button>
+    <button class="tab-btn" onclick="switchTab('results',this)" role="tab">&#128202; Results</button>
+    <button class="tab-btn" onclick="switchTab('practitioner',this)" role="tab">&#127970; For Practitioners</button>
+    <button class="tab-btn" onclick="switchTab('meta',this)" role="tab">&#128218; Paper Info</button>
+  </nav>
+
+  <!-- OVERVIEW -->
+  <div id="overview" class="section-panel active">
+    <div class="card">
+      <div class="card-title">&#128506; The Big Picture</div>
+      <p>For decades, the conventional wisdom in entrepreneurship research has been elegantly simple: more entrepreneurial orientation (EO) is better. Innovate more, take more risks, chase more opportunities before competitors do, and your firm will outperform. The empirical record in the United States largely backed this up. EO was treated almost like an unambiguous strategic virtue.</p>
+      <p>Tang, Tang, Marino, Zhang, and Li look at that comfortable assumption and say: <strong>not so fast</strong>. What if the relationship between entrepreneurial drive and performance is not a straight upward line, but an inverted U? What if there is a point at which more EO actually starts hurting you? &#127939;</p>
+    </div>
+
+    <div class="pull-quote">
+      &#128161; "Too much entrepreneurial orientation may be as dangerous as too little. In China, the sweet spot is in the middle &mdash; and the context explains why."
+    </div>
+
+    <div class="card">
+      <div class="card-title">&#129300; What Is This Paper About?</div>
+      <p>The authors test whether the EO-performance relationship in Chinese ventures is curvilinear (inverted U-shaped) rather than the positive linear relationship found in Western studies. They use <strong>two independent studies</strong> with different Chinese samples and different performance measures (one perceptual, one objective) to see if the same pattern holds across both.</p>
+      <p>The paper is also a methodological statement: if a finding replicates across two distinct datasets, two different performance metrics, and two independent analytical approaches, it is much harder to dismiss as a data artefact. &#128203;</p>
+    </div>
+
+    <div class="insight-strip">
+      <div class="insight-box">
+        <span class="insight-icon">&#127758;</span>
+        <span class="insight-val">2 Studies</span>
+        <span class="insight-label">Study 1: N=185 firms (Northern China); Study 2: N=164 firms</span>
+      </div>
+      <div class="insight-box">
+        <span class="insight-icon">&#128200;</span>
+        <span class="insight-val">Inverted U</span>
+        <span class="insight-label">Curvilinear EO-performance relationship confirmed in both studies</span>
+      </div>
+      <div class="insight-box">
+        <span class="insight-icon">&#127981;</span>
+        <span class="insight-val">Transition Economy</span>
+        <span class="insight-label">Socialist + capitalist systems coexisting in China create unique constraints</span>
+      </div>
+      <div class="insight-box">
+        <span class="insight-icon">&#11088;</span>
+        <span class="insight-val">FT50</span>
+        <span class="insight-label">ETP &mdash; Entrepreneurship Theory & Practice</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">&#128161; Why Does It Matter?</div>
+      <p>Most EO research had been conducted in the United States or other developed economies. Applying those findings as universal truths to emerging markets is a mistake this paper explicitly corrects. China in the mid-2000s was a fascinating and extreme case: a transition economy where socialist planning and market capitalism coexisted in active tension, where government controlled financing and resource distribution, and where most entrepreneurs lacked the guanxi networks and management experience that high-EO strategies urgently require.</p>
+      <p>The result is a paper that speaks simultaneously to strategy scholars, emerging market researchers, and practitioners operating in any context that diverges from the idealized Western market economy. &#127760;</p>
+    </div>
+  </div>
+
+  <!-- THEORY -->
+  <div id="theory" class="section-panel">
+    <div class="card">
+      <div class="card-title">&#128218; What Is Entrepreneurial Orientation (EO)?</div>
+      <p>EO is a firm-level strategic construct first articulated by Danny Miller (1983). It describes how a firm chooses to compete, capturing three simultaneous dimensions:</p>
+      <ul class="def-list">
+        <li><span class="def-tag orange">Innovativeness</span><span>The firm actively pursues R&D, technological leadership, and new product or service development rather than relying on tried-and-true offerings.</span></li>
+        <li><span class="def-tag blue">Proactiveness</span><span>The firm initiates actions ahead of competitors, pursues emerging market opportunities first, and is not merely reactive to what others do.</span></li>
+        <li><span class="def-tag green">Risk-Taking</span><span>Top managers willingly commit resources to uncertain projects, bold strategies, and ventures with unpredictable outcomes rather than preferring cautious incremental behaviour.</span></li>
+      </ul>
+      <div class="highlight blue">
+        <strong>Key rule:</strong> All three must be present simultaneously for a firm to be truly considered "entrepreneurially oriented" (Miller, 1983). EO is not a menu to pick from &mdash; it is a package deal.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">&#128302; The Hypothesis: An Inverted U in China</div>
+      <p>The dominant assumption in EO research is a simple positive linear relationship: EO goes up, performance goes up. Tang et al. challenge this. They propose that in China specifically, the relationship follows an inverted U shape. Performance rises as EO increases from low to moderate levels, but then <strong>turns downward as EO continues into high territory</strong>.</p>
+      <div class="highlight">
+        <strong>The one hypothesis:</strong> The relationship between EO and firm performance is curvilinear (inverse U-shaped), with the best performance occurring at an intermediate level of EO.
+      </div>
+      <p style="margin-top:0.9rem;">Why would this be? The authors identify five interlocking reasons, grouped into two institutional and three organizational factors unique to China's context.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">&#127981; Institutional Factors: Why High EO Backfires in China</div>
+      <div class="two-col">
+        <div class="col-card orange">
+          <h4>&#9878; Dual System Stress</h4>
+          <p>China operates under the simultaneous and contradictory logic of socialist administration and market capitalism. High-EO firms that pursue aggressive innovation and risk-taking must navigate this ideological tension. The confusion and compliance costs are real. Firms that push too hard into entrepreneurial territory can be blindsided by the constraining functions of the socialist system they are inadvertently running against.</p>
+        </div>
+        <div class="col-card red">
+          <h4>&#128178; Government Controls Resources</h4>
+          <p>In China, the central government controls financing, bank loans, materials distribution, and investment approvals. High-EO is a resource-hungry strategy &mdash; innovation, risk-taking, and proactive market pursuit all require sustained capital. But without government connections, entrepreneurial firms face extreme capital scarcity. Commercial banks are heavily regulated. Venture capital barely exists. High EO without adequate capital is a recipe for collapse. &#128565;</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">&#129309; Organizational Factors: Three Internal Constraints</div>
+      <ul class="def-list">
+        <li><span class="def-tag orange">Guanxi Gaps</span><span><strong>Guanxi</strong> (relational networks) are the lifeblood of Chinese business. High-EO strategies require rapid resource mobilisation, trust-based partnerships, and political connections. But most Chinese entrepreneurial firms are still in the early stages of building these networks. Without them, risky and innovative projects become fatally exposed &mdash; there is no safety net of relationships to call on when things go wrong. &#129309;</span></li>
+        <li><span class="def-tag blue">Inexperienced Management</span><span>China's transition economy means few senior managers have lived experience competing in a market-based system. High-EO firms that launch into risky projects require sophisticated leadership to guide and protect those ventures. Without experienced human capital at the top, the entrepreneurial posture produces ambitious projects with no one competent enough to land them. &#128104;&#8205;&#128188;</span></li>
+        <li><span class="def-tag green">Low Role Formalization</span><span>Entrepreneurial firms need <strong>role formalization</strong> &mdash; clear assignment of responsibilities to specific people &mdash; to execute complex strategies effectively. Chinese firms generally score low on formalization. Without it, high-EO firms pursue opportunities proactively but cannot convert that proactiveness into organized action. The strategy is there; the organizational scaffolding to execute it is not. &#127959;&#65039;</span></li>
+      </ul>
+    </div>
+
+    <div class="pull-quote">
+      &#9888;&#65039; "For firms at the high end of the EO continuum, EO may impact performance negatively by inhibiting firms' capability to immediately adapt to the complications of their institutional environment."
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div id="results" class="section-panel">
+    <div class="card">
+      <div class="card-title">&#128202; Study 1: Subjective Performance (N = 185 firms)</div>
+      <p>Firms from four Northern Chinese provinces (Shandong, Inner Mongolia, Hebei, Tianjin) were surveyed. EO was measured using the validated 8-item Covin-Slevin scale. Performance was a CEO-rated 4-item scale relative to principal competitors on sales growth, market share, profit growth, and overall performance.</p>
+      <div class="results-table-wrap">
+        <table>
+          <thead><tr><th>Model</th><th>What Was Added</th><th>Effect</th><th>R&#178; Change</th></tr></thead>
+          <tbody>
+            <tr><td>Model 1</td><td>Controls only (location, size, industry)</td><td>Firm size <100 employees significant (&#946; = &#8722;.27)</td><td>R&#178; = .17</td></tr>
+            <tr><td>Model 2</td><td>+ Linear EO term</td><td class="win">EO positively significant (&#946; = .27, p<.001)</td><td>+6%</td></tr>
+            <tr><td>Model 3</td><td>+ Squared EO term</td><td class="lose">EO&#178; negatively significant (&#946; = &#8722;.13, p<.10)</td><td>+1% &#10003;</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="highlight green">
+        <strong>Result:</strong> The inverted U is confirmed. EO has a significant positive effect up to a saturation point, then a significant negative effect beyond it. The squared term is small but meaningful in the context of curvilinear research.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">&#128202; Study 2: Objective Performance (N = 164 firms)</div>
+      <p>A different sample, surveyed online, combined with <strong>archival stock market data</strong> from the Shenzhen Securities Information Company. Performance was measured as logged sales volume (lgsales) &mdash; a harder, more objective test than self-reported perceptions. Industry environmental effects (munificence, instability, complexity) were calculated from public data to control for sector-level variation and reduce common method bias.</p>
+      <div class="results-table-wrap">
+        <table>
+          <thead><tr><th>Model</th><th>What Was Added</th><th>Effect</th><th>R&#178; Change</th></tr></thead>
+          <tbody>
+            <tr><td>Model 1</td><td>Controls: industry effects + firm size</td><td>Firm size strongly positive (&#946; = .54, p<.001)</td><td>R&#178; = .38</td></tr>
+            <tr><td>Model 2</td><td>+ Linear EO term</td><td class="lose">EO negative (&#946; = &#8722;.19, p<.01)</td><td>+3%</td></tr>
+            <tr><td>Model 3</td><td>+ Squared EO term</td><td class="lose">EO&#178; negative (&#946; = &#8722;.17, p<.05)</td><td>+2% &#10003;</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="highlight">
+        <strong>Interesting twist:</strong> In Study 2, the <em>linear</em> EO term is negative. This is because objective sales data include very small firms where any EO at all is a resource drain. The squared term still confirms the inverted U, and the curvilinear dip is steeper in Study 2 than Study 1 &mdash; the penalty for excess EO is even more pronounced when measured objectively. &#128565;
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">&#129488; What the Replication Means</div>
+      <p>The authors designed Study 2 specifically to stress-test Study 1. Different sample. Different data source. Different performance measure. Different controls. Yet both studies point to the same inverted U. This constructive replication is the paper's most powerful methodological contribution. It rules out scale artefacts, same-source bias, and sampling quirks as explanations for the finding.</p>
+      <div class="highlight green">
+        <strong>Bottom line:</strong> The curvilinear EO-performance relationship in China is not a statistical accident. It is a robust empirical pattern confirmed across subjective and objective performance metrics, two independent samples, and multiple analytical specifications.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">&#128270; The Bonus Finding: EO Scale Dimensionality</div>
+      <p>The authors ran the EO scale in China expecting the standard three-factor structure (innovativeness, proactiveness, risk-taking). Instead, they found <strong>two factors</strong> in both samples &mdash; innovativeness and risk-taking emerged as distinct, while proactiveness items loaded under both.</p>
+      <p>This raises a genuinely important methodological question: is the Western EO scale universally valid? The items were developed in and for U.S. firms. Some items may measure the <em>outcomes</em> of entrepreneurial orientation rather than the strategic posture itself. The authors call for rigorous revalidation of the EO scale for emerging market contexts. &#128300;</p>
+      <div class="highlight purple">
+        <strong>Implication for researchers:</strong> If you are applying the standard EO scale in a non-Western context, treat its psychometric properties as an open question, not a settled fact. Run your own confirmatory factor analysis. The construct may not travel as cleanly as assumed.
+      </div>
+    </div>
+  </div>
+
+  <!-- PRACTITIONER -->
+  <div id="practitioner" class="section-panel">
+    <div class="card">
+      <div class="card-title">&#127970; What This Means for Organisations</div>
+      <p>This is an empirical paper with immediate strategic relevance for anyone managing, advising, investing in, or building firms in emerging markets. The central message is direct: <strong>calibrate your entrepreneurial ambition to your context</strong>. "More entrepreneurial" is not always better. In resource-constrained, institutionally turbulent environments, excessive EO can destroy the performance it is supposed to create.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">&#128205; For Founders and CEOs in Emerging Markets</div>
+      <p>The Goldilocks principle applies to entrepreneurial orientation: not too little, not too much. Firms that remain entirely non-entrepreneurial miss opportunities in dynamic markets. But firms that race to the highest possible level of EO in environments where capital is scarce, networks are immature, and formalization is low are taking on more risk than their organizational infrastructure can absorb.</p>
+      <div class="highlight">
+        <strong>Action:</strong> Audit whether your entrepreneurial ambitions are outpacing your organizational readiness. Ask three questions: (1) Do we have the guanxi networks to back up risky projects? (2) Does our management team have genuine market-economy experience? (3) Are roles and responsibilities formalized enough to execute complex, multi-front strategies? If the answer to any is no, dial back the EO intensity before scaling it up.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">&#128200; For Investors and VCs Operating in Emerging Markets</div>
+      <p>The instinct to back the most boldly entrepreneurial founder in the room may be well-calibrated for Silicon Valley. In China, India, Southeast Asia, or Sub-Saharan Africa, it may be exactly wrong. The most aggressively innovative and risk-taking founder in an emerging market may be the one most likely to outrun their institutional context.</p>
+      <div class="highlight green">
+        <strong>Action:</strong> When evaluating portfolio candidates in transition or emerging economies, add context-fit scoring to your standard EO assessment. Ask: Does this firm's entrepreneurial posture match its access to capital, its network density, its management quality, and its regulatory environment? Founders who demonstrate contextually calibrated ambition &mdash; high EO within the constraints of their institutional reality &mdash; may outperform the uncalibrated high-EO "visionary." &#128302;
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">&#127891; For Strategy Educators and MBA Faculty</div>
+      <p>This paper is a valuable corrective to the "entrepreneurship is always good" narrative that dominates many business school programmes. The EO construct, the linear-positive assumption, and the standard Covin-Slevin measurement scale were all built in and validated for developed market contexts. Teaching these as universal tools is intellectually incomplete.</p>
+      <div class="highlight blue">
+        <strong>Action:</strong> When teaching EO, contextualize it. Pair the standard EO-performance literature with this paper and ask students to identify the institutional conditions under which the linear relationship holds versus breaks down. This inverted U finding is also a fantastic entry point for teaching about transition economies, institutional theory, and the limits of Western management theory's portability.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">&#127758; For Policymakers in Transition Economies</div>
+      <p>The Chinese government's control of capital, combined with its tolerance (and sometimes encouragement) of entrepreneurial activity, creates a structural trap for high-EO firms. Policy environments that celebrate entrepreneurship rhetorically but constrain access to financing, formalization support, and regulatory predictability may inadvertently punish exactly the firms they claim to champion.</p>
+      <div class="highlight red">
+        <strong>Watch out for:</strong> Entrepreneurship promotion policies that focus exclusively on stimulating entrepreneurial attitudes while neglecting the institutional infrastructure &mdash; capital access, network development, management capability programmes &mdash; needed to make those attitudes survivable at high intensity.
+      </div>
+    </div>
+  </div>
+
+  <!-- META -->
+  <div id="meta" class="section-panel">
+    <div class="card">
+      <div class="card-title">&#128218; Paper Details</div>
+      <ul class="paper-meta-list">
+        <li><span class="pm-label">Title</span><span>Exploring an Inverted U-Shape Relationship Between Entrepreneurial Orientation and Performance in Chinese Ventures</span></li>
+        <li><span class="pm-label">Authors</span><span>Jintong Tang &middot; Zhi Tang &middot; Louis D. Marino &middot; Yuli Zhang &middot; Qianwen Li</span></li>
+        <li><span class="pm-label">Journal</span><span>Entrepreneurship Theory and Practice (&copy; 2008 Baylor University / Wiley)</span></li>
+        <li><span class="pm-label">Volume/Pages</span><span>Vol. 32, No. 1, pp. 219&ndash;239</span></li>
+        <li><span class="pm-label">Published</span><span>January 2008</span></li>
+        <li><span class="pm-label">DOI</span><span><a href="https://doi.org/10.1111/j.1540-6520.2007.00223.x" target="_blank" rel="noopener noreferrer">10.1111/j.1540-6520.2007.00223.x</a></span></li>
+        <li><span class="pm-label">FT50 Status</span><span>&#11088; Yes &mdash; Entrepreneurship Theory & Practice is listed in the Financial Times Top 50 journals</span></li>
+        <li><span class="pm-label">Method</span><span>Two-study design; hierarchical regression; CFA for scale validation; subjective + objective performance measures</span></li>
+        <li><span class="pm-label">Setting</span><span>Northern China (Shandong, Hebei, Inner Mongolia, Tianjin) &mdash; transition economy context</span></li>
+        <li><span class="pm-label">Key Constructs</span><span>Entrepreneurial Orientation (EO); Firm Performance (subjective 4-item scale; objective log-sales); Guanxi; Role Formalization; Human Capital</span></li>
+        <li><span class="pm-label">Key Theories</span><span>Institutional Theory (North, Scott); Resource Dependence Theory (Pfeffer & Salancik); Human Capital Theory (Becker); EO Literature (Miller 1983; Covin & Slevin 1989; Lumpkin & Dess 1996)</span></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title">&#128104;&#8205;&#127979; About the Authors</div>
+      <ul class="def-list">
+        <li><span class="def-tag orange">J. Tang</span><span><strong>Jintong Tang</strong> &mdash; (Corresponding author) Assistant Professor, Saint Louis University. Lead author on EO and entrepreneurial cognition in emerging market contexts.</span></li>
+        <li><span class="def-tag blue">Z. Tang</span><span><strong>Zhi Tang</strong> &mdash; Assistant Professor, Rochester Institute of Technology. Research focus on strategy and performance in transition economies.</span></li>
+        <li><span class="def-tag green">Marino</span><span><strong>Louis D. Marino</strong> &mdash; Associate Professor, University of Alabama. Co-developer of the validated cross-cultural EO scale (Kreiser, Marino & Weaver, 2002) that this study employs.</span></li>
+        <li><span class="def-tag purple">Zhang</span><span><strong>Yuli Zhang</strong> &mdash; Professor and Associate Dean, Business School, Nankai University, Tianjin, China. Critical local institutional knowledge and data access.</span></li>
+        <li><span class="def-tag red">Li</span><span><strong>Qianwen Li</strong> &mdash; Professor, Nanjing Audit University, Nanjing, China. Co-investigator on Chinese firm data collection.</span></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title">&#128683; Limitations and Future Directions</div>
+      <ul class="def-list">
+        <li><span class="def-tag red">No Causality</span><span>Cross-sectional design means the study cannot establish that EO causes performance outcomes. It shows a correlation pattern. Longitudinal data are needed to test whether EO changes precede performance changes or vice versa.</span></li>
+        <li><span class="def-tag red">One Region</span><span>Both samples are from Northern China. Southern China &mdash; particularly Guangdong and Shenzhen &mdash; represents a different pattern of economic development, institutional environment, and entrepreneurial culture. Generalizability within China is limited.</span></li>
+        <li><span class="def-tag orange">Optimal Level Unclear</span><span>The paper confirms the inverted U but cannot pinpoint precisely where the optimal EO level lies on the scale, or how quickly performance deteriorates past that point. The rate of decline was steeper in Study 2 than Study 1, suggesting context moderates even the shape of the curve.</span></li>
+        <li><span class="def-tag blue">EO Scale Validity</span><span>The emergence of a two-factor structure (innovativeness + risk-taking) rather than the expected three-factor structure is unresolved. The paper flags this as a priority for future research &mdash; a full psychometric revalidation of the EO scale in emerging market contexts.</span></li>
+        <li><span class="def-tag purple">Other Emerging Markets</span><span>Do the same dynamics operate in India, Brazil, Nigeria, Vietnam? Institutional theory suggests the China-specific explanation (dual-system stress, government resource control) may not translate directly. Replication across diverse emerging economies is strongly needed.</span></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title">&#128203; The Framework at a Glance</div>
+      <div class="results-table-wrap">
+        <table>
+          <thead><tr><th>EO Level</th><th>Performance Prediction</th><th>Dominant Mechanism</th></tr></thead>
+          <tbody>
+            <tr><td>Low EO</td><td class="lose">Below potential &mdash; not competing aggressively</td><td>Missed opportunities; insufficient market responsiveness</td></tr>
+            <tr><td>Moderate EO</td><td class="win">Optimal performance &#10003;</td><td>Benefits of innovativeness and proactiveness without outpacing institutional and organizational capacity</td></tr>
+            <tr><td>High EO</td><td class="lose">Declining performance</td><td>Capital starvation; guanxi gaps; inexperienced management; low formalization; dual-system confusion</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <p>&#127897;&#65039; This explainer is part of the <strong>Context in Entrepreneurship Research</strong> series on <strong>VSSER-2026</strong></p>
+  <div class="footer-links">
+    &#127911; <a href="https://open.spotify.com/show/1FSNMlJzYxvlPswFdyCZx1?si=f0ed71dfbbc94b8c" target="_blank" rel="noopener noreferrer">Spotify</a>
+    &#128250; <a href="https://www.youtube.com/@WeekendResearcher" target="_blank" rel="noopener noreferrer">YouTube: Weekend Researcher</a>
+    &#127925; <a href="https://music.amazon.in/podcasts/f64c70fc-f70b-498e-87f3-669152e83730/revise-and-resubmit---the-mayukh-show" target="_blank" rel="noopener noreferrer">Amazon Prime Music</a>
+    &#127822; <a href="https://podcasts.apple.com/us/podcast/revise-and-resubmit-the-mayukh-show/id1770883122" target="_blank" rel="noopener noreferrer">Apple Podcast</a>
+  </div>
+  <p style="margin-top:0.5rem;font-size:0.82rem;">
+    Heartfelt thanks to <strong>Jintong Tang, Zhi Tang, Louis D. Marino, Yuli Zhang,</strong> and <strong>Qianwen Li</strong> for this important work, and to <strong>Baylor University / John Wiley & Sons Ltd.</strong> for publishing it in <strong>Entrepreneurship Theory & Practice</strong>, a prestigious <strong>FT50</strong> journal. &#128591;
+  </p>
+  <div class="vsser-note">
+    &#128204; This is a reading material prepared in connection with <strong>VSSER-2026</strong>, spearheaded by <strong>Professor Vishal K. Gupta and Dr Athina Skiadopoulou</strong>.<br>
+    &copy; 2026 <a href="https://mayukhmukhopadhyay.com/reviseandresubmit/" target="_blank" rel="noopener noreferrer">Revise and Resubmit &mdash; The Mayukh Show.</a> (CC BY-NC-ND).
+  </div>
+</footer>
+
+<script>
+(function(){
+  var htmlEl = document.documentElement;
+  var btn = document.getElementById('themeToggle');
+  var icon = document.getElementById('themeIcon');
+  var label = document.getElementById('themeLabel');
+  var dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  function apply(){
+    htmlEl.setAttribute('data-theme', dark ? 'dark' : 'light');
+    icon.textContent = dark ? '☀️' : '🌙';
+    label.textContent = dark ? 'Light Mode' : 'Dark Mode';
+  }
+  apply();
+  btn.addEventListener('click', function(){ dark = !dark; apply(); });
+})();
+
+function switchTab(id, btn) {
+  document.querySelectorAll('.section-panel').forEach(function(p){ p.classList.remove('active'); });
+  document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+}
+
+function initAudioPlayer(){
+  var audio = document.getElementById('mainAudio');
+  var playBtn = document.getElementById('apPlay');
+  var loopBtn = document.getElementById('apLoop');
+  var fill = document.getElementById('apProgressFill');
+  var thumb = document.getElementById('apThumb');
+  var bar = document.getElementById('apProgressBar');
+  var curEl = document.getElementById('apCurrent');
+  var durEl = document.getElementById('apDuration');
+  var volSlider = document.getElementById('apVolume');
+  if(!audio||!playBtn) return;
+  audio.load();
+  function fmt(s){var m=Math.floor(s/60),sec=Math.floor(s%60);return m+':'+(sec<10?'0':'')+sec;}
+  audio.addEventListener('loadedmetadata',function(){durEl.textContent=fmt(audio.duration||0);});
+  audio.addEventListener('durationchange',function(){if(audio.duration&&isFinite(audio.duration))durEl.textContent=fmt(audio.duration);});
+  audio.addEventListener('timeupdate',function(){
+    var pct=audio.duration?(audio.currentTime/audio.duration)*100:0;
+    fill.style.width=pct+'%';thumb.style.left=pct+'%';curEl.textContent=fmt(audio.currentTime);
+  });
+  audio.addEventListener('ended',function(){playBtn.textContent='▶';});
+  playBtn.addEventListener('click',function(){
+    if(audio.paused){
+      var p=audio.play();
+      if(p!==undefined){p.then(function(){playBtn.textContent='⏸';}).catch(function(){playBtn.textContent='▶';});}
+      else{playBtn.textContent='⏸';}
+    }else{audio.pause();playBtn.textContent='▶';}
+  });
+  document.getElementById('apRewind').addEventListener('click',function(){audio.currentTime=Math.max(0,audio.currentTime-10);});
+  document.getElementById('apForward').addEventListener('click',function(){audio.currentTime=Math.min(audio.duration||0,audio.currentTime+10);});
+  loopBtn.addEventListener('click',function(){
+    audio.loop=!audio.loop;loopBtn.classList.toggle('active',audio.loop);
+    loopBtn.title=audio.loop?'Loop on':'Loop off';
+  });
+  var seeking=false;
+  function seek(e){var rect=bar.getBoundingClientRect(),x=(e.touches?e.touches[0].clientX:e.clientX)-rect.left,pct=Math.min(Math.max(x/rect.width,0),1);if(audio.duration&&isFinite(audio.duration))audio.currentTime=pct*audio.duration;}
+  bar.addEventListener('mousedown',function(e){seeking=true;seek(e);});
+  bar.addEventListener('touchstart',function(e){seeking=true;seek(e);},{passive:true});
+  window.addEventListener('mousemove',function(e){if(seeking)seek(e);});
+  window.addEventListener('touchmove',function(e){if(seeking)seek(e);},{passive:true});
+  window.addEventListener('mouseup',function(){seeking=false;});
+  window.addEventListener('touchend',function(){seeking=false;});
+  bar.addEventListener('keydown',function(e){
+    if(e.key==='ArrowRight')audio.currentTime=Math.min(audio.duration||0,audio.currentTime+5);
+    if(e.key==='ArrowLeft')audio.currentTime=Math.max(0,audio.currentTime-5);
+  });
+  volSlider.addEventListener('input',function(){audio.volume=volSlider.value;});
+}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',initAudioPlayer);}else{initAudioPlayer();}
+</script>
+</body>
+</html>
