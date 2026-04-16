@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>welter-2011 | VSSER-2026 </title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Patrick+Hand&family=Kalam&display=swap" rel="stylesheet">
+<style>
+:root, [data-theme="light"] {
+  --bg: #f5f0e8; --surface: #faf7f0; --surface2: #fff; --board: #f8f4ea;
+  --border: #d4cbb8; --divider: #e2ddd0; --text: #2c2416; --muted: #6b5e45;
+  --faint: #b0a48a; --ink: #1a1008; --accent: #2563a8; --accent2: #c0392b;
+  --accent3: #1e8449; --accent4: #7d3c98; --accent5: #d35400; --chalk: #f8f4ea;
+  --shadow: 0 2px 8px rgba(44,36,22,0.10); --shadow-lg: 0 8px 32px rgba(44,36,22,0.13);
+  --font-hand: 'Caveat','Kalam',cursive; --font-body: 'Patrick Hand','Kalam',cursive;
+  --transition: 200ms cubic-bezier(0.16,1,0.3,1); --radius: 0.75rem; --radius-sm: 0.4rem;
+}
+[data-theme="dark"] {
+  --bg: #111008; --surface: #1a1810; --surface2: #221f14; --board: #181510;
+  --border: #3a3420; --divider: #2a2518; --text: #ede8d8; --muted: #b8ad94;
+  --faint: #6b6045; --ink: #f5f0e8; --accent: #5b9cf6; --accent2: #e87070;
+  --accent3: #52c28a; --accent4: #bb8ee8; --accent5: #f39c12; --chalk: #d4cbb8;
+  --shadow: 0 2px 8px rgba(0,0,0,0.4); --shadow-lg: 0 8px 32px rgba(0,0,0,0.5);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--font-body);background:var(--bg);color:var(--text);font-size:clamp(1rem,0.9rem + 0.5vw,1.2rem);line-height:1.65;min-height:100dvh;transition:background var(--transition),color var(--transition);}
+.site-header{position:sticky;top:0;z-index:100;background:var(--surface);border-bottom:2px solid var(--border);box-shadow:var(--shadow);padding:0.75rem 1.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.5rem;}
+.logo-wrap{display:flex;align-items:center;gap:0.6rem;}
+.brand-name{font-family:var(--font-hand);font-size:clamp(1.1rem,1rem + 1vw,1.5rem);font-weight:700;color:var(--accent);letter-spacing:-0.02em;}
+.brand-sub{font-family:var(--font-hand);font-size:0.85rem;color:var(--muted);display:block;margin-top:-4px;}
+.toggle-btn{background:var(--surface2);border:2px solid var(--border);border-radius:2rem;padding:0.4rem 1rem;font-family:var(--font-hand);font-size:0.95rem;color:var(--text);cursor:pointer;display:flex;align-items:center;gap:0.4rem;transition:background var(--transition),border-color var(--transition);}
+.toggle-btn:hover{background:var(--divider);}
+.hero-board{background:var(--board);border-bottom:2px solid var(--border);padding:3rem 1.5rem 2.5rem;text-align:center;}
+.hero-label{display:inline-block;background:var(--accent3);color:#fff;font-family:var(--font-hand);font-size:0.85rem;border-radius:2rem;padding:0.25rem 1rem;margin-bottom:1rem;letter-spacing:0.04em;}
+.hero-title{font-family:var(--font-hand);font-size:clamp(1.6rem,1.2rem + 2.5vw,2.8rem);font-weight:700;color:var(--ink);line-height:1.2;max-width:800px;margin:0 auto 1rem;}
+.hero-title span{color:var(--accent3);}
+.hero-meta{font-size:0.9rem;color:var(--muted);max-width:640px;margin:0 auto 1.5rem;}
+.hero-meta strong{color:var(--text);}
+.hero-badges{display:flex;flex-wrap:wrap;justify-content:center;gap:0.5rem;margin-top:1rem;}
+.badge{background:var(--surface2);border:1.5px solid var(--border);border-radius:2rem;padding:0.3rem 0.9rem;font-size:0.82rem;color:var(--muted);font-family:var(--font-hand);}
+.badge.ft50{background:var(--accent4);color:#fff;border-color:var(--accent4);font-weight:700;}
+.badge.green{background:var(--accent3);color:#fff;border-color:var(--accent3);}
+main{max-width:860px;margin:0 auto;padding:2rem 1rem 3rem;}
+.tabs-wrap{display:flex;gap:0.4rem;flex-wrap:wrap;margin-bottom:1.75rem;border-bottom:2px solid var(--border);padding-bottom:0.5rem;overflow-x:auto;}
+.tab-btn{background:transparent;border:1.5px solid transparent;border-radius:var(--radius-sm) var(--radius-sm) 0 0;padding:0.45rem 1.1rem;font-family:var(--font-hand);font-size:0.97rem;color:var(--muted);cursor:pointer;white-space:nowrap;transition:all var(--transition);}
+.tab-btn:hover{color:var(--text);background:var(--divider);}
+.tab-btn.active{color:var(--accent);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface);font-weight:700;}
+.section-panel{display:none;}
+.section-panel.active{display:block;}
+.card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:1.4rem 1.6rem;margin-bottom:1.4rem;box-shadow:var(--shadow);}
+.card-title{font-family:var(--font-hand);font-size:1.15rem;font-weight:700;color:var(--accent);margin-bottom:0.6rem;display:flex;align-items:center;gap:0.4rem;}
+.card p{margin-bottom:0.7rem;}
+.card p:last-child{margin-bottom:0;}
+.highlight{border-left:4px solid var(--accent4);background:var(--surface2);border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:0.9rem 1.2rem;margin:1rem 0;font-size:0.97rem;}
+.highlight.green{border-color:var(--accent3);}
+.highlight.red{border-color:var(--accent2);}
+.highlight.orange{border-color:var(--accent5);}
+.highlight.blue{border-color:var(--accent);}
+.pull-quote{border:2px dashed var(--border);border-radius:var(--radius);padding:1.2rem 1.5rem;margin:1.4rem 0;font-family:var(--font-hand);font-size:clamp(1rem,0.9rem + 0.4vw,1.2rem);color:var(--ink);text-align:center;background:var(--board);}
+.def-list{list-style:none;padding:0;}
+.def-list li{padding:0.7rem 0;border-bottom:1px solid var(--divider);display:grid;grid-template-columns:auto 1fr;gap:0.7rem;align-items:start;}
+.def-list li:last-child{border-bottom:none;}
+.def-tag{background:var(--accent4);color:#fff;border-radius:var(--radius-sm);padding:0.15rem 0.6rem;font-size:0.8rem;font-family:var(--font-hand);white-space:nowrap;margin-top:0.25rem;}
+.def-tag.blue{background:var(--accent);}
+.def-tag.green{background:var(--accent3);}
+.def-tag.orange{background:var(--accent5);}
+.def-tag.red{background:var(--accent2);}
+.context-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1rem 0;}
+@media(max-width:560px){.context-grid{grid-template-columns:1fr;}}
+.context-card{background:var(--surface2);border:1.5px solid var(--border);border-radius:var(--radius);padding:1rem 1.1rem;}
+.context-card h4{font-family:var(--font-hand);font-size:1rem;margin-bottom:0.4rem;}
+.context-card.blue h4{color:var(--accent);}
+.context-card.green h4{color:var(--accent3);}
+.context-card.orange h4{color:var(--accent5);}
+.context-card.purple h4{color:var(--accent4);}
+.results-table-wrap{overflow-x:auto;margin:1rem 0;}
+table{width:100%;border-collapse:collapse;font-size:0.92rem;font-family:var(--font-body);}
+th{background:var(--accent3);color:#fff;padding:0.6rem 0.9rem;text-align:left;font-family:var(--font-hand);}
+td{padding:0.55rem 0.9rem;border-bottom:1px solid var(--divider);vertical-align:top;}
+tr:last-child td{border-bottom:none;}
+tr:nth-child(even) td{background:var(--surface2);}
+.insight-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin:1.2rem 0;}
+.insight-box{background:var(--surface2);border:1.5px solid var(--border);border-radius:var(--radius);padding:1rem;text-align:center;}
+.insight-icon{font-size:2rem;display:block;margin-bottom:0.4rem;}
+.insight-label{font-size:0.82rem;color:var(--muted);}
+.insight-val{font-family:var(--font-hand);font-size:1.1rem;font-weight:700;color:var(--accent3);display:block;margin:0.2rem 0 0.1rem;}
+.step-list{list-style:none;padding:0;counter-reset:steps;}
+.step-list li{display:flex;gap:0.9rem;padding:0.8rem 0;border-bottom:1px solid var(--divider);align-items:flex-start;}
+.step-list li:last-child{border-bottom:none;}
+.step-num{background:var(--accent3);color:#fff;border-radius:50%;min-width:2rem;height:2rem;display:flex;align-items:center;justify-content:center;font-family:var(--font-hand);font-weight:700;font-size:0.95rem;flex-shrink:0;}
+.paper-meta-list{list-style:none;padding:0;}
+.paper-meta-list li{display:flex;gap:0.6rem;padding:0.5rem 0;border-bottom:1px solid var(--divider);font-size:0.92rem;}
+.paper-meta-list li:last-child{border-bottom:none;}
+.pm-label{font-weight:700;color:var(--muted);min-width:110px;flex-shrink:0;}
+.audio-player-wrap{max-width:860px;margin:2.5rem auto 0;padding:0 1rem;}
+.audio-player-card{background:var(--surface);border:2px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-lg);padding:1.5rem 1.75rem 1.25rem;display:flex;flex-direction:column;gap:1rem;transition:background var(--transition),border-color var(--transition);}
+.audio-player-header{display:flex;align-items:center;gap:0.85rem;}
+.audio-player-icon{font-size:2rem;line-height:1;flex-shrink:0;}
+.audio-player-title{font-family:var(--font-hand);font-size:clamp(1.05rem,1rem + 0.5vw,1.3rem);font-weight:700;color:var(--accent);line-height:1.2;}
+.audio-player-sub{font-size:0.82rem;color:var(--muted);margin-top:0.15rem;}
+.audio-controls{display:flex;align-items:center;justify-content:center;gap:0.75rem;flex-wrap:wrap;}
+.ap-btn{background:var(--surface2);border:2px solid var(--border);border-radius:2rem;padding:0.45rem 1.1rem;font-family:var(--font-hand);font-size:0.95rem;color:var(--text);cursor:pointer;transition:background var(--transition),border-color var(--transition);white-space:nowrap;}
+.ap-btn:hover{background:var(--divider);border-color:var(--accent);}
+.ap-play{background:var(--accent);color:#fff;border-color:var(--accent);font-size:1.1rem;padding:0.5rem 1.6rem;min-width:80px;}
+.ap-play:hover{opacity:0.88;background:var(--accent);}
+.ap-loop.active{background:var(--accent3);color:#fff;border-color:var(--accent3);}
+.audio-progress-wrap{display:flex;align-items:center;gap:0.6rem;}
+.ap-time{font-size:0.8rem;color:var(--muted);min-width:36px;text-align:center;flex-shrink:0;}
+.ap-progress-bar{flex:1;height:8px;background:var(--divider);border-radius:99px;position:relative;cursor:pointer;overflow:visible;}
+.ap-progress-fill{height:100%;background:var(--accent);border-radius:99px;width:0%;transition:width 0.2s linear;pointer-events:none;}
+.ap-thumb{position:absolute;top:50%;left:0%;transform:translate(-50%,-50%);width:16px;height:16px;border-radius:50%;background:var(--accent);border:2px solid var(--surface);box-shadow:0 1px 4px rgba(0,0,0,0.25);pointer-events:none;transition:left 0.2s linear;}
+.audio-volume-wrap{display:flex;align-items:center;gap:0.5rem;}
+.ap-vol-icon{font-size:1rem;}
+.ap-volume{flex:1;-webkit-appearance:none;appearance:none;height:6px;border-radius:99px;background:var(--divider);outline:none;cursor:pointer;max-width:180px;}
+.ap-volume::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--accent);border:2px solid var(--surface);box-shadow:0 1px 3px rgba(0,0,0,0.2);cursor:pointer;}
+.ap-volume::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:var(--accent);border:2px solid var(--surface);cursor:pointer;}
+@media(max-width:480px){.audio-player-card{padding:1.1rem 1rem 1rem;}.ap-play{padding:0.5rem 1.1rem;}.ap-volume{max-width:140px;}}
+footer{background:var(--surface);border-top:2px solid var(--border);text-align:center;padding:1.8rem 1.5rem;font-size:0.9rem;color:var(--muted);margin-top:3rem;}
+.footer-links{display:flex;flex-wrap:wrap;justify-content:center;gap:0.75rem 1.5rem;margin:0.75rem 0;font-size:0.92rem;}
+.footer-links a,footer a{color:var(--accent);text-decoration:none;}
+.footer-links a:hover,footer a:hover{text-decoration:underline;}
+.vsser-note{margin-top:0.75rem;font-size:0.85rem;color:var(--faint);border-top:1px solid var(--divider);padding-top:0.75rem;}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="logo-wrap">
+    <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="36" height="36" rx="8" fill="var(--accent)"/>
+      <text x="18" y="25" font-size="18" text-anchor="middle" fill="white" font-family="serif" font-weight="bold">PE</text>
+    </svg>
+    <div>
+      <span class="brand-name">VSSER-2026</span>
+      <span class="brand-sub">Paper Explainer</span>
+    </div>
+  </div>
+  <button class="toggle-btn" id="themeToggle" aria-label="Toggle theme">
+    <span id="themeIcon">🌙</span>
+    <span id="themeLabel">Dark Mode</span>
+  </button>
+</header>
+
+<section class="hero-board">
+  <div class="hero-label">🎓 Paper Explainer · VSSER-2026 · Context in Entrepreneurship Research</div>
+  <h1 class="hero-title">Contextualizing Entrepreneurship—Conceptual Challenges and Ways Forward <span> <br>(Where, When, and Who: Why Context Is Everything in Entrepreneurship)</span></h1>
+  <p class="hero-meta">
+    <strong>Friederike Welter (2011)</strong> · Entrepreneurship Theory &amp; Practice · © 2010 Baylor University / Wiley<br>
+    DOI: 10.1111/j.1540-6520.2010.00427.x
+  </p>
+  <div class="hero-badges">
+    <span class="badge">📐 Conceptual Paper</span>
+    <span class="badge">🌍 Multi-Country Examples</span>
+    <span class="badge green">🗺️ Context &amp; Embeddedness</span>
+    <span class="badge ft50">⭐ FT50 Journal</span>
+    <span class="badge">📅 Published January 2011</span>
+  </div>
+</section>
+
+<div class="audio-player-wrap">
+  <div class="audio-player-card">
+    <div class="audio-player-header">
+      <span class="audio-player-icon">🎙️</span>
+      <div>
+        <div class="audio-player-title">Listen to an AI-Assisted Podcast</div>
+        <div class="audio-player-sub">Contextualizing Entrepreneurship · Welter 2011 · Context in Entrepreneurship Research · VSSER-2026</div>
+      </div>
+    </div>
+    <audio id="mainAudio" preload="metadata">
+      <source src="vsser26-welter-2011.mp3" type="audio/mpeg">
+      <source src="vsser26-welter-2011.m4a" type="audio/mp4">
+      Your browser does not support the audio element.
+    </audio>
+    <div class="audio-controls">
+      <button class="ap-btn" id="apRewind" title="Rewind 10s">&#9198; 10s</button>
+      <button class="ap-btn ap-play" id="apPlay" aria-label="Play">&#9654;</button>
+      <button class="ap-btn" id="apForward" title="Forward 10s">10s &#9197;</button>
+      <button class="ap-btn ap-loop" id="apLoop" title="Toggle loop">&#128257;</button>
+    </div>
+    <div class="audio-progress-wrap">
+      <span class="ap-time" id="apCurrent">0:00</span>
+      <div class="ap-progress-bar" id="apProgressBar" role="slider" aria-label="Audio progress" tabindex="0">
+        <div class="ap-progress-fill" id="apProgressFill"></div>
+        <div class="ap-thumb" id="apThumb"></div>
+      </div>
+      <span class="ap-time" id="apDuration">0:00</span>
+    </div>
+    <div class="audio-volume-wrap">
+      <span class="ap-vol-icon">&#128266;</span>
+      <input type="range" class="ap-volume" id="apVolume" min="0" max="1" step="0.05" value="1" aria-label="Volume">
+    </div>
+  </div>
+</div>
+
+<main>
+  <nav class="tabs-wrap" role="tablist" aria-label="Sections">
+    <button class="tab-btn active" onclick="switchTab('overview',this)" role="tab">&#128203; Overview</button>
+    <button class="tab-btn" onclick="switchTab('contexts',this)" role="tab">&#127757; The Four Contexts</button>
+    <button class="tab-btn" onclick="switchTab('theory',this)" role="tab">&#128270; Theory &amp; Challenges</button>
+    <button class="tab-btn" onclick="switchTab('practitioner',this)" role="tab">&#127970; For Practitioners</button>
+    <button class="tab-btn" onclick="switchTab('meta',this)" role="tab">&#128218; Paper Info</button>
+  </nav>
+
+  <!-- OVERVIEW -->
+  <div id="overview" class="section-panel active">
+    <div class="card">
+      <div class="card-title">&#128506; The Big Picture</div>
+      <p>Picture two entrepreneurs. One is a young woman in rural Uzbekistan who starts a gold embroidery business from home after her father's death. The other is a consultant in Odessa, Ukraine, who builds a thriving firm selling "full service" packages to navigate absurdly complicated government regulations. In most standard entrepreneurship research, these would be filed away as low-growth female businesses or niche service firms. But look at the context around them, and everything changes. 🌍</p>
+      <p>That is the argument Friederike Welter makes in this landmark paper. She is not asking what type of person becomes an entrepreneur. She is asking: <strong>what surrounds that person, and how does that surrounding shape, enable, and sometimes imprison their entrepreneurial choices?</strong></p>
+    </div>
+
+    <div class="pull-quote">
+      &#128273; "Context is important for understanding <em>when</em>, <em>how</em>, and <em>why</em> entrepreneurship happens — and <em>who</em> becomes involved."
+    </div>
+
+    <div class="card">
+      <div class="card-title">&#129300; What Is This Paper About?</div>
+      <p>Welter's paper is a conceptual contribution — it does not run an experiment or analyse a dataset. Instead, it maps the terrain. It asks: what do we mean by "context," how many kinds of context are there, how do they influence entrepreneurship, and what are the hardest theoretical challenges researchers face in taking context seriously?</p>
+      <p>The paper argues that most entrepreneurship research has focused obsessively on the individual entrepreneur — their traits, cognitions, intentions, and decisions. Context, when it appears at all, is treated as a backdrop or a control variable. Welter says that is backwards. Context is not scenery. It is the stage, the script, the lighting, and sometimes the entire cast. 🎭</p>
+    </div>
+
+    <div class="insight-strip">
+      <div class="insight-box">
+        <span class="insight-icon">🏗️</span>
+        <span class="insight-val">4 Types</span>
+        <span class="insight-label">of context mapped: social, spatial, institutional, business</span>
+      </div>
+      <div class="insight-box">
+        <span class="insight-icon">🔁</span>
+        <span class="insight-val">2-Way</span>
+        <span class="insight-label">Context shapes entrepreneurship AND entrepreneurship reshapes context</span>
+      </div>
+      <div class="insight-box">
+        <span class="insight-icon">⏳</span>
+        <span class="insight-val">When + Where</span>
+        <span class="insight-label">Temporal and spatial dimensions are equally critical</span>
+      </div>
+      <div class="insight-box">
+        <span class="insight-icon">⭐</span>
+        <span class="insight-val">FT50</span>
+        <span class="insight-label">ETP — Entrepreneurship Theory &amp; Practice</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">&#128161; Why Does It Still Matter?</div>
+      <p>When this paper was published in 2011, the dominant image of an entrepreneur was still the Silicon Valley founder — a solo visionary who spots an opportunity and attacks the market. Welter's paper was a quiet demolition of that myth. Entrepreneurs in post-Soviet transition economies, women in rural villages, ethnic minority traders in London neighborhoods — they are all entrepreneurs, and their paths look nothing like the Silicon Valley story because their context is completely different.</p>
+      <p>In an era of increasing interest in inclusive entrepreneurship, Global South perspectives, and the social embeddedness of business, this paper is more relevant than ever. 🌱</p>
+    </div>
+  </div>
+
+  <!-- FOUR CONTEXTS -->
+  <div id="contexts" class="section-panel">
+    <div class="card">
+      <div class="card-title">&#127757; What Is "Context"? A Lens AND a Variable</div>
+      <p>Welter draws on Gary Johns' (2006) distinction between two ways of thinking about context in research. <strong>Omnibus context</strong> is the wide-angle lens — it asks who, what, when, where, and why. <strong>Discrete context</strong> is the zoom lens — it isolates specific variables like regulatory environment or network density. Most entrepreneurship research uses discrete context (just one variable at a time). Welter argues we urgently need the omnibus view.</p>
+      <div class="highlight blue">
+        <strong>Core definition:</strong> Context is not just where something happens. It is the circumstances, traditions, relationships, rules, history, and geography that simultaneously open doors and close them for entrepreneurs.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">&#128101; The Social Context: Networks, Households, and Family</div>
+      <p>The social context is the human web around the entrepreneur. It includes formal networks (business contacts, investors) and informal ones (family, friends, community). Welter highlights two important dimensions that often get collapsed into one.</p>
+      <ul class="def-list">
+        <li><span class="def-tag blue">Networks</span><span>Social ties provide financial capital, information, emotional support, and access to employees and clients. They are especially critical for overcoming the "liabilities of newness" — the disadvantages of being new and unknown in a market.</span></li>
+        <li><span class="def-tag green">Household &amp; Family</span><span>This goes beyond professional networks. The family household is an economic unit in itself — decisions about which business to start, what resources to commit, and whether to keep going are deeply intertwined with family dynamics, gender roles, and household income needs. The Uzbek embroidery woman and the Belarusian border trader are both examples of household-embedded entrepreneurship.</span></li>
+      </ul>
+      <div class="highlight orange">
+        <strong>Dark side:</strong> Over-embeddedness is real. Too-close social ties can become control mechanisms. Closed local networks can block outside knowledge. The same family that supports an entrepreneur can also imprison her in a home-based sector with no growth prospects.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">&#127968; The Spatial Context: Place, Geography, and Community</div>
+      <p>Entrepreneurship is not just socially bound — it is geographically bound. Where you are determines what opportunities you can see and reach. Welter distinguishes between different scales of spatial context, from local neighborhoods to countries.</p>
+      <ul class="def-list">
+        <li><span class="def-tag purple">Community</span><span>Community entrepreneurship sees the founding of ventures as a collective, place-based act — not just an individual one. Heritage entrepreneurship, tribal entrepreneurship, and neighborhood revival businesses are all examples where place is not just the setting but the purpose.</span></li>
+        <li><span class="def-tag blue">Gender &amp; Space</span><span>Women entrepreneurs often face gendered spatial constraints. Starting a home-based business is frequently not a free choice — it is the only option available given social norms about where women can be and what they can do. The home simultaneously enables and limits the venture.</span></li>
+        <li><span class="def-tag orange">The "Spirit of Gnosjö"</span><span>The Swedish industrial district of Gnosjö is a famous example where business, social, and spatial contexts fuse into a distinctive local identity — a "spirit" that makes the community entrepreneurial in a self-reinforcing way. Spatial proximity creates dense social networks which create a culture of enterprise which attracts more businesses. 🔄</span></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title">&#127981; The Institutional Context: Rules Formal and Informal</div>
+      <p>Drawing on Douglass North's foundational framework, Welter identifies two layers of institutions that govern entrepreneurial behavior.</p>
+      <div class="context-grid">
+        <div class="context-card blue">
+          <h4>&#128221; Formal Institutions</h4>
+          <p>Laws, regulations, property rights, market entry rules. These create or destroy opportunity fields almost overnight. The legalisation of private enterprise in post-Soviet Central Europe was perhaps the most dramatic example in modern history — a single regulatory change created millions of entrepreneurial opportunities that had simply not existed before.</p>
+        </div>
+        <div class="context-card green">
+          <h4>&#129309; Informal Institutions</h4>
+          <p>Social norms, cultural attitudes, gender roles, religious values, trust networks. These are slower-moving and often invisible, but equally powerful. In a society where women are expected to remain home, the entire range of viable ventures for female entrepreneurs shifts — regardless of what the law formally permits.</p>
+        </div>
+      </div>
+      <div class="highlight green" style="margin-top:0.8rem;">
+        <strong>Key insight — the Ukraine consultant story:</strong> When a government creates excessively complex regulations, it simultaneously creates demand for entrepreneurs who can navigate those regulations. Institutional weakness is not just a barrier — it can be an opportunity field. But those opportunities are temporal: as institutions improve, those niches disappear. ⏳
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">&#9200; The Temporal Context: When Matters as Much as Where</div>
+      <p>History shapes what is possible today. Path dependency — the idea that current behavior is constrained by historical choices and accumulated norms — helps explain why entrepreneurs in post-Soviet countries still rely on informal connections and circumvent official channels even decades after formal market reforms. The habits of the Soviet "economy of favours" outlasted the Soviet state itself.</p>
+      <p>Welter stresses that context is not static. The same spatial and institutional context looked completely different in 1995, 2005, and 2015 in Ukraine. Any theory of context that ignores this temporal dynamism will misread what entrepreneurs are actually responding to. 📅</p>
+    </div>
+  </div>
+
+  <!-- THEORY & CHALLENGES -->
+  <div id="theory" class="section-panel">
+    <div class="card">
+      <div class="card-title">&#129488; Two Core Theoretical Challenges</div>
+      <p>The heart of Welter's paper is its identification of two distinct and equally difficult theoretical tasks for researchers who want to take context seriously.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">&#127919; Challenge 1: Contextualising Entrepreneurship Theory</div>
+      <p>The first challenge is making existing entrepreneurship theory more sensitive to context. Most theory in the field was built in and for Western, developed, market-economy settings and then exported everywhere as if it were universal. Contextualising theory means acknowledging <strong>situational boundaries</strong> (which "where" contexts a theory applies to) and <strong>temporal boundaries</strong> (which historical moment a theory applies to).</p>
+      <ul class="def-list">
+        <li><span class="def-tag blue">Issue 1</span><span>Context has both bright and dark sides simultaneously. Networks enable AND constrain. Geography opens doors AND closes them. Any theory that captures only one side will produce misleading predictions.</span></li>
+        <li><span class="def-tag orange">Issue 2</span><span>Contexts cut across levels of analysis — individual, firm, community, nation. Any theory that operates at only one level will miss cross-level effects. The Ukrainian consultant's success is a macro-institutional story and a micro-cognitive story at the same time.</span></li>
+        <li><span class="def-tag red">Issue 3</span><span>Researchers have mental barriers to shifting perspective. Surveys and interviews collect individual perceptions. Narrative methods rely on individual storytelling. This makes it structurally hard to capture the multi-context, multi-level reality that Welter describes.</span></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title">&#128302; Challenge 2: Theorising Context (Building Theories OF Context)</div>
+      <p>The second and harder challenge is to build theories that explain context itself — not just how context affects entrepreneurship, but how entrepreneurship affects context and how the two co-evolve over time. Most research still assumes a one-way relationship: context shapes entrepreneurs. Welter argues the relationship is recursive and bidirectional. 🔁</p>
+      <div class="highlight green">
+        <strong>Bottom-up context change:</strong> The Uzbek embroidery sisters became mentors and trainers for unemployed girls in their region. Over time, they did not just respond to their institutional and societal context — they began to slowly rewrite it, contributing to new role models for female entrepreneurship in rural Uzbekistan.
+      </div>
+      <p style="margin-top:0.9rem;">Welter proposes three possible theoretical building blocks for "theories of context":</p>
+      <ul class="def-list">
+        <li><span class="def-tag blue">Multi-layered Embeddedness</span><span>Draws on economic sociology and geography. Recognises social, political, cultural, cognitive, and spatial layers of embeddedness simultaneously. Research on women's entrepreneurship and ethnic entrepreneurship offers some of the most developed versions of this.</span></li>
+        <li><span class="def-tag green">Path Dependency</span><span>From institutional theory. Explains how history constrains present options. Why do post-Soviet entrepreneurs still rely on blat (connections) even when formal markets exist? Because those pathways were deeply learned and persist well beyond the institutions that created them.</span></li>
+        <li><span class="def-tag purple">Institutional Entrepreneurship</span><span>Perhaps the most promising overarching theory. It captures both top-down effects (how institutions shape entrepreneurs) and bottom-up processes (how entrepreneurs reshape institutions), bridging the gap that most theories leave open.</span></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title">&#128203; Ways Forward: What Researchers Should Do</div>
+      <ol class="step-list">
+        <li><span class="step-num">1</span><span><strong>Go interdisciplinary.</strong> Entrepreneurship cannot build one theory for all contexts. It needs to work with anthropology, sociology, economic geography — disciplines that have the conceptual tools for understanding context richness.</span></li>
+        <li><span class="step-num">2</span><span><strong>Embrace qualitative methods.</strong> The dominance of quantitative methods in entrepreneurship research partly produces the context blindspot. Multi-context analysis requires methods that can capture diversity and depth.</span></li>
+        <li><span class="step-num">3</span><span><strong>Acknowledge recursive links.</strong> Theories must model the two-way street between entrepreneurship and context, not just context-to-entrepreneur causation.</span></li>
+        <li><span class="step-num">4</span><span><strong>Include temporal and historical context.</strong> What was true in 1995 in Ukraine is not true in 2010. Theory and research designs must account for change over time.</span></li>
+        <li><span class="step-num">5</span><span><strong>Rethink the unit of analysis.</strong> The individual entrepreneur may not be the right unit. Households, communities, and regions may be more appropriate units for contextualised entrepreneurship.</span></li>
+      </ol>
+    </div>
+
+    <div class="pull-quote">
+      &#127758; "Entrepreneurship researchers have to acknowledge that entrepreneurship happens in various contexts — and that they themselves bring their own context to the research site."
+    </div>
+  </div>
+
+  <!-- PRACTITIONER -->
+  <div id="practitioner" class="section-panel">
+    <div class="card">
+      <div class="card-title">&#127970; Why Practitioners Should Read This Paper</div>
+      <p>This is a theory paper, but it speaks directly to anyone who designs programmes, policies, or investments to support entrepreneurship. The central message is stark: <strong>transplanting solutions across contexts without understanding the context is the most common and most costly mistake in entrepreneurship support.</strong></p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">&#128081; For Policymakers and Development Agencies</div>
+      <p>The standard toolkit for promoting entrepreneurship — microfinance, business training, mentorship programmes, regulatory simplification — was largely developed in Western, market-economy settings. When exported to transition economies, rural communities, or societies with strong traditional gender roles, it often fails. Not because the tools are wrong in principle, but because the context makes them operate differently.</p>
+      <div class="highlight blue">
+        <strong>Action:</strong> Before designing any entrepreneurship support intervention, map the context: What are the informal institutional norms? What do spatial constraints look like for different groups? What household dynamics shape who can participate? Context mapping should precede programme design, not follow it.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">&#128200; For Investors and Accelerators</div>
+      <p>Venture capital and accelerator models built for San Francisco or London carry implicit contextual assumptions: about legal infrastructure, about what "failure" means culturally, about the relationship between work and family, about who has the freedom to move cities or work 80-hour weeks. These assumptions do not travel.</p>
+      <div class="highlight orange">
+        <strong>Action:</strong> When evaluating entrepreneurs from different contexts, resist applying a single "founder profile." An entrepreneur operating in a high-uncertainty institutional environment who has survived regulatory volatility, built informal trust networks, and pivoted multiple times is demonstrating extraordinary context-sensitive capability — even if their pitch deck looks nothing like what you expected.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">&#128105; For Diversity and Inclusion Practitioners</div>
+      <p>Welter's analysis of gender and spatial context is a powerful corrective to simplistic inclusion narratives. Women do not just face individual barriers — they face contextually constructed ones. A woman who starts a home-based food business in a conservative rural community may be maximising her realistic opportunity set, not "lacking ambition." The context defines the horizon of what is visible and viable.</p>
+      <div class="highlight green">
+        <strong>Action:</strong> Inclusion work that focuses only on mindset change ("she just needs more confidence") misses the structural and contextual causes of entrepreneurial divergence between groups. Address the context — the spatial constraints, the institutional norms, the household dynamics — not just the individual.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">&#9888; The Dark Side Warning</div>
+      <p>Welter is explicit that context can be a liability just as often as it is an asset. Close communities create over-embeddedness. Strong local identities can become exclusionary. Dense trust networks can freeze out newcomers and outside knowledge. The same institutional context that empowers one group of entrepreneurs can imprison another.</p>
+      <div class="highlight red">
+        <strong>Watch out for:</strong> Romanticising "local" or "community" entrepreneurship without also looking at who is excluded from those communities and who pays the cost of the over-embedded social structures that sustain them.
+      </div>
+    </div>
+  </div>
+
+  <!-- PAPER META -->
+  <div id="meta" class="section-panel">
+    <div class="card">
+      <div class="card-title">&#128218; Paper Details</div>
+      <ul class="paper-meta-list">
+        <li><span class="pm-label">Title</span><span>Contextualizing Entrepreneurship — Conceptual Challenges and Ways Forward</span></li>
+        <li><span class="pm-label">Author</span><span>Friederike Welter</span></li>
+        <li><span class="pm-label">Journal</span><span>Entrepreneurship Theory and Practice (© 2010 Baylor University / Wiley)</span></li>
+        <li><span class="pm-label">Published</span><span>January 2011 (online 2010)</span></li>
+        <li><span class="pm-label">Pages</span><span>165–184</span></li>
+        <li><span class="pm-label">DOI</span><span><a href="https://doi.org/10.1111/j.1540-6520.2010.00427.x" target="_blank" rel="noopener noreferrer">10.1111/j.1540-6520.2010.00427.x</a></span></li>
+        <li><span class="pm-label">FT50 Status</span><span>⭐ Yes — Entrepreneurship Theory &amp; Practice is listed in the Financial Times Top 50 journals</span></li>
+        <li><span class="pm-label">Type</span><span>Conceptual / Review paper — no primary data collection; draws on international examples from existing literature</span></li>
+        <li><span class="pm-label">Key Frameworks</span><span>Johns (2006) context lens; North (1990) institutional theory; Whetten (1989) who-where-when; Granovetter embeddedness; Dopfer et al. micro-meso-macro</span></li>
+        <li><span class="pm-label">Geographic Focus</span><span>Post-Soviet transition economies (Ukraine, Belarus, Uzbekistan, Russia), Sweden (Gnosjö), UK/US (ethnic neighborhoods)</span></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title">&#128104;&#8205;&#127979; About the Author</div>
+      <ul class="def-list">
+        <li><span class="def-tag green">Welter</span><span><strong>Friederike Welter</strong> — At the time of publication: Professor of Entrepreneurship at Jönköping International Business School (JIBS), Sweden, and TeliaSonera Professor at Stockholm School of Economics in Riga, Latvia. She is one of the most cited scholars in contextual entrepreneurship research and a leading voice on gender, transition economies, and the social embeddedness of entrepreneurial activity. This paper is widely regarded as a foundational text in the contextual turn in entrepreneurship research.</span></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title">&#128203; The Framework at a Glance</div>
+      <div class="results-table-wrap">
+        <table>
+          <thead>
+            <tr><th>Context Type</th><th>What It Covers</th><th>Example from Paper</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Social</strong></td><td>Networks, household, family, community ties</td><td>Belarusian border trader sustained by family supply chain across Lithuania</td></tr>
+            <tr><td><strong>Spatial</strong></td><td>Geography, neighborhoods, place identity, home vs. public space</td><td>"Spirit of Gnosjö" industrial district; home-based businesses limiting women's ventures</td></tr>
+            <tr><td><strong>Institutional</strong></td><td>Formal rules (law, regulation) and informal norms (culture, gender roles, trust)</td><td>Ukraine consultant capitalising on regulatory gaps; Uzbek women constrained by mahalla traditions</td></tr>
+            <tr><td><strong>Temporal/Historical</strong></td><td>Path dependency, change over time, legacy of previous eras</td><td>Soviet "economy of favours" persisting into post-transition informal networks</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">&#128683; Limitations and What Comes Next</div>
+      <ul class="def-list">
+        <li><span class="def-tag orange">Methodological Gap</span><span>Welter explicitly acknowledges that the paper does not address methodological challenges in contextualising research — unit of analysis, sampling, multilevel modelling. This is left as future work.</span></li>
+        <li><span class="def-tag red">Business Context Excluded</span><span>The paper deliberately leaves out the business context (industry and market dynamics) to focus on underexplored contexts. This means the framework is incomplete without incorporating industry-level effects.</span></li>
+        <li><span class="def-tag red">No Integrative Theory</span><span>The paper calls for "theories of context" but does not itself deliver one. It is a map of the problem, not a solution. Subsequent literature (including Welter's own later work) takes up this challenge.</span></li>
+        <li><span class="def-tag blue">Transition Economy Bias</span><span>Most illustrative examples come from post-Soviet countries. While illuminating, this may create its own contextual bias in how the framework is understood and applied.</span></li>
+      </ul>
+    </div>
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <p>&#127897;&#65039; This explainer is part of the <strong>Context in Entrepreneurship Research</strong> series on <strong>VSSER-2026</strong></p>
+  <div class="footer-links">
+    &#127911; <a href="https://open.spotify.com/show/1FSNMlJzYxvlPswFdyCZx1?si=f0ed71dfbbc94b8c" target="_blank" rel="noopener noreferrer">Spotify</a>
+    &#128250; <a href="https://www.youtube.com/@WeekendResearcher" target="_blank" rel="noopener noreferrer">YouTube: Weekend Researcher</a>
+    &#127925; <a href="https://music.amazon.in/podcasts/f64c70fc-f70b-498e-87f3-669152e83730/revise-and-resubmit---the-mayukh-show" target="_blank" rel="noopener noreferrer">Amazon Prime Music</a>
+    &#63743; <a href="https://podcasts.apple.com/us/podcast/revise-and-resubmit-the-mayukh-show/id1770883122" target="_blank" rel="noopener noreferrer">Apple Podcast</a>
+  </div>
+  <p style="margin-top:0.5rem;font-size:0.82rem;">
+    Heartfelt thanks to <strong>Friederike Welter</strong> for this foundational work, and to <strong>Baylor University / John Wiley &amp; Sons Ltd.</strong> for publishing it in <strong>Entrepreneurship Theory &amp; Practice</strong>, a prestigious <strong>FT50</strong> journal. &#128591;
+  </p>
+  <div class="vsser-note">
+    &#128204; This is a reading material prepared in connection with <strong>VSSER-2026</strong>, spearheaded by <strong>Professor Vishal K. Gupta and Dr Athina Skiadopoulou</strong>. <br>
+    &copy; 2026 <a href="https://mayukhmukhopadhyay.com/reviseandresubmit/" target="_blank" rel="noopener noreferrer">Revise and Resubmit — The Mayukh Show.</a>  (CC BY-NC-ND).
+  </div>
+</footer>
+
+<script>
+(function(){
+  const html = document.documentElement;
+  const btn = document.getElementById('themeToggle');
+  const icon = document.getElementById('themeIcon');
+  const label = document.getElementById('themeLabel');
+  let dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  function apply(){
+    html.setAttribute('data-theme', dark ? 'dark' : 'light');
+    icon.textContent = dark ? '☀️' : '🌙';
+    label.textContent = dark ? 'Light Mode' : 'Dark Mode';
+  }
+  apply();
+  btn.addEventListener('click', function(){ dark = !dark; apply(); });
+})();
+
+function switchTab(id, btn) {
+  document.querySelectorAll('.section-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+}
+
+function initAudioPlayer() {
+  var audio = document.getElementById('mainAudio');
+  var playBtn = document.getElementById('apPlay');
+  var loopBtn = document.getElementById('apLoop');
+  var fill = document.getElementById('apProgressFill');
+  var thumb = document.getElementById('apThumb');
+  var bar = document.getElementById('apProgressBar');
+  var curEl = document.getElementById('apCurrent');
+  var durEl = document.getElementById('apDuration');
+  var volSlider = document.getElementById('apVolume');
+  if (!audio || !playBtn) return;
+  audio.load();
+  function fmt(s) { var m=Math.floor(s/60),sec=Math.floor(s%60); return m+':'+(sec<10?'0':'')+sec; }
+  audio.addEventListener('loadedmetadata', function(){ durEl.textContent = fmt(audio.duration||0); });
+  audio.addEventListener('durationchange', function(){ if(audio.duration&&isFinite(audio.duration)) durEl.textContent=fmt(audio.duration); });
+  audio.addEventListener('timeupdate', function(){
+    var pct = audio.duration ? (audio.currentTime/audio.duration)*100 : 0;
+    fill.style.width = pct+'%'; thumb.style.left = pct+'%';
+    curEl.textContent = fmt(audio.currentTime);
+  });
+  audio.addEventListener('ended', function(){ playBtn.textContent = '▶'; });
+  playBtn.addEventListener('click', function(){
+    if(audio.paused){
+      var p = audio.play();
+      if(p!==undefined){ p.then(function(){ playBtn.textContent='⏸'; }).catch(function(){ playBtn.textContent='▶'; }); }
+      else { playBtn.textContent='⏸'; }
+    } else { audio.pause(); playBtn.textContent='▶'; }
+  });
+  document.getElementById('apRewind').addEventListener('click', function(){ audio.currentTime=Math.max(0,audio.currentTime-10); });
+  document.getElementById('apForward').addEventListener('click', function(){ audio.currentTime=Math.min(audio.duration||0,audio.currentTime+10); });
+  loopBtn.addEventListener('click', function(){
+    audio.loop=!audio.loop;
+    loopBtn.classList.toggle('active',audio.loop);
+    loopBtn.title=audio.loop?'Loop on':'Loop off';
+  });
+  var seeking=false;
+  function seek(e){ var rect=bar.getBoundingClientRect(),x=(e.touches?e.touches[0].clientX:e.clientX)-rect.left,pct=Math.min(Math.max(x/rect.width,0),1); if(audio.duration&&isFinite(audio.duration)) audio.currentTime=pct*audio.duration; }
+  bar.addEventListener('mousedown',function(e){seeking=true;seek(e);});
+  bar.addEventListener('touchstart',function(e){seeking=true;seek(e);},{passive:true});
+  window.addEventListener('mousemove',function(e){if(seeking)seek(e);});
+  window.addEventListener('touchmove',function(e){if(seeking)seek(e);},{passive:true});
+  window.addEventListener('mouseup',function(){seeking=false;});
+  window.addEventListener('touchend',function(){seeking=false;});
+  bar.addEventListener('keydown',function(e){
+    if(e.key==='ArrowRight') audio.currentTime=Math.min(audio.duration||0,audio.currentTime+5);
+    if(e.key==='ArrowLeft') audio.currentTime=Math.max(0,audio.currentTime-5);
+  });
+  volSlider.addEventListener('input',function(){ audio.volume=volSlider.value; });
+}
+if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded',initAudioPlayer); } else { initAudioPlayer(); }
+</script>
+</body>
+</html>
