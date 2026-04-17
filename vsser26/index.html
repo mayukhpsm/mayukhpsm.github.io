@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VSSER-2026|Paper Explainers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Patrick+Hand&family=Kalam&display=swap" rel="stylesheet">
+<style>
+:root,[data-theme="light"]{
+  --bg:#f5f0e8;--surface:#faf7f0;--surface2:#fff;--board:#f8f4ea;
+  --border:#d4cbb8;--divider:#e2ddd0;--text:#2c2416;--muted:#6b5e45;
+  --faint:#b0a48a;--ink:#1a1008;
+  --accent:#2563a8;--accent2:#c0392b;--accent3:#1e8449;
+  --accent4:#7d3c98;--accent5:#d35400;--accent6:#0e7490;
+  --shadow:0 2px 8px rgba(44,36,22,0.10);--shadow-lg:0 8px 32px rgba(44,36,22,0.14);
+  --font-hand:'Caveat','Kalam',cursive;--font-body:'Patrick Hand','Kalam',cursive;
+  --transition:200ms cubic-bezier(0.16,1,0.3,1);--radius:0.75rem;--radius-sm:0.4rem;
+}
+[data-theme="dark"]{
+  --bg:#111008;--surface:#1a1810;--surface2:#221f14;--board:#181510;
+  --border:#3a3420;--divider:#2a2518;--text:#ede8d8;--muted:#b8ad94;
+  --faint:#6b6045;--ink:#f5f0e8;
+  --accent:#5b9cf6;--accent2:#e87070;--accent3:#52c28a;
+  --accent4:#bb8ee8;--accent5:#f39c12;--accent6:#22d3ee;
+  --shadow:0 2px 8px rgba(0,0,0,0.4);--shadow-lg:0 8px 32px rgba(0,0,0,0.5);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--font-body);background:var(--bg);color:var(--text);font-size:clamp(0.97rem,0.9rem + 0.4vw,1.15rem);line-height:1.65;min-height:100dvh;transition:background var(--transition),color var(--transition);}
+
+/* HEADER */
+.site-header{position:sticky;top:0;z-index:100;background:var(--surface);border-bottom:2px solid var(--border);box-shadow:var(--shadow);padding:0.75rem 1.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.5rem;}
+.logo-wrap{display:flex;align-items:center;gap:0.6rem;}
+.brand-name{font-family:var(--font-hand);font-size:clamp(1.1rem,1rem + 1vw,1.5rem);font-weight:700;color:var(--accent);letter-spacing:-0.02em;}
+.brand-sub{font-family:var(--font-hand);font-size:0.85rem;color:var(--muted);display:block;margin-top:-4px;}
+.toggle-btn{background:var(--surface2);border:2px solid var(--border);border-radius:2rem;padding:0.4rem 1rem;font-family:var(--font-hand);font-size:0.95rem;color:var(--text);cursor:pointer;display:flex;align-items:center;gap:0.4rem;transition:background var(--transition),border-color var(--transition);}
+.toggle-btn:hover{background:var(--divider);}
+
+/* HERO */
+.hero-board{background:var(--board);border-bottom:2px solid var(--border);padding:3rem 1.5rem 2.5rem;text-align:center;}
+.hero-label{display:inline-block;background:var(--accent);color:#fff;font-family:var(--font-hand);font-size:0.85rem;border-radius:2rem;padding:0.25rem 1.1rem;margin-bottom:1rem;letter-spacing:0.05em;}
+.hero-title{font-family:var(--font-hand);font-size:clamp(1.8rem,1.3rem + 2.5vw,3rem);font-weight:700;color:var(--ink);line-height:1.18;max-width:820px;margin:0 auto 0.9rem;}
+.hero-title span{color:var(--accent);}
+.hero-desc{font-size:clamp(0.95rem,0.9rem + 0.3vw,1.1rem);color:var(--muted);max-width:660px;margin:0 auto 1.5rem;line-height:1.7;}
+.hero-desc strong{color:var(--text);}
+.hero-badges{display:flex;flex-wrap:wrap;justify-content:center;gap:0.5rem;}
+.badge{background:var(--surface2);border:1.5px solid var(--border);border-radius:2rem;padding:0.28rem 0.9rem;font-size:0.8rem;color:var(--muted);font-family:var(--font-hand);}
+.badge.accent{background:var(--accent);color:#fff;border-color:var(--accent);}
+
+/* MAIN */
+main{max-width:900px;margin:0 auto;padding:2.5rem 1rem 4rem;}
+
+/* SECTION BLOCK */
+.section-block{margin-bottom:3rem;}
+.section-header{display:flex;align-items:center;gap:0.75rem;margin-bottom:1.2rem;padding-bottom:0.6rem;border-bottom:2px solid var(--border);}
+.section-icon{font-size:1.7rem;line-height:1;flex-shrink:0;}
+.section-title-wrap{}
+.section-title{font-family:var(--font-hand);font-size:clamp(1.15rem,1rem + 0.8vw,1.45rem);font-weight:700;color:var(--ink);line-height:1.2;}
+.section-host{font-family:var(--font-hand);font-size:0.88rem;color:var(--muted);margin-top:0.1rem;}
+.section-host span{font-weight:700;color:var(--text);}
+
+/* PAPER CARD */
+.paper-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:1.1rem 1.3rem;margin-bottom:0.85rem;box-shadow:var(--shadow);display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;transition:box-shadow var(--transition),border-color var(--transition);}
+.paper-card:hover{box-shadow:var(--shadow-lg);border-color:var(--faint);}
+.paper-body{flex:1;min-width:0;}
+.paper-authors{font-family:var(--font-hand);font-size:0.82rem;color:var(--muted);margin-bottom:0.2rem;display:flex;align-items:center;gap:0.4rem;flex-wrap:wrap;}
+.paper-title{font-family:var(--font-hand);font-size:clamp(0.97rem,0.9rem + 0.35vw,1.08rem);font-weight:700;color:var(--ink);line-height:1.35;margin-bottom:0.3rem;}
+.paper-journal{font-size:0.8rem;color:var(--muted);font-style:italic;display:flex;align-items:center;gap:0.4rem;flex-wrap:wrap;}
+.journal-badge{background:var(--surface2);border:1px solid var(--border);border-radius:99px;padding:0.1rem 0.55rem;font-size:0.75rem;font-style:normal;font-family:var(--font-hand);color:var(--muted);white-space:nowrap;}
+.journal-badge.ft50{background:var(--accent4);color:#fff;border-color:var(--accent4);}
+.journal-badge.abdca{background:var(--accent6);color:#fff;border-color:var(--accent6);}
+.journal-badge.abdc-b{background:var(--accent3);color:#fff;border-color:var(--accent3);}
+.journal-badge.book{background:#78350f;color:#fff;border-color:#78350f;}
+
+/* LINK BUTTON */
+.paper-action{display:flex;flex-direction:column;align-items:flex-end;gap:0.5rem;flex-shrink:0;}
+.explainer-btn{display:inline-flex;align-items:center;gap:0.35rem;background:var(--accent);color:#fff;border:none;border-radius:2rem;padding:0.45rem 1.1rem;font-family:var(--font-hand);font-size:0.88rem;font-weight:700;cursor:pointer;text-decoration:none;white-space:nowrap;transition:opacity var(--transition),transform var(--transition);}
+.explainer-btn:hover{opacity:0.88;transform:translateY(-1px);}
+.coming-soon-btn{display:inline-flex;align-items:center;gap:0.35rem;background:var(--surface2);color:var(--faint);border:1.5px dashed var(--border);border-radius:2rem;padding:0.42rem 1rem;font-family:var(--font-hand);font-size:0.85rem;cursor:default;white-space:nowrap;}
+.year-chip{font-family:var(--font-hand);font-size:0.75rem;color:var(--faint);text-align:right;}
+
+/* PROGRESS BAR */
+.progress-wrap{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:1.1rem 1.4rem;margin-bottom:2.5rem;box-shadow:var(--shadow);}
+.progress-label{font-family:var(--font-hand);font-size:0.95rem;color:var(--muted);margin-bottom:0.6rem;display:flex;justify-content:space-between;}
+.progress-label span{color:var(--accent);font-weight:700;}
+.progress-bar-bg{background:var(--divider);border-radius:99px;height:10px;overflow:hidden;}
+.progress-bar-fill{background:var(--accent3);height:100%;border-radius:99px;width:20%;}
+.progress-chips{display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:0.7rem;}
+.p-chip{background:var(--surface2);border:1.5px solid var(--border);border-radius:2rem;padding:0.2rem 0.7rem;font-family:var(--font-hand);font-size:0.78rem;color:var(--muted);}
+.p-chip.done{background:var(--accent3);color:#fff;border-color:var(--accent3);}
+
+/* DIVIDER */
+.section-divider{border:none;border-top:1px dashed var(--border);margin:0.5rem 0 2rem;}
+
+/* FOOTER */
+footer{background:var(--surface);border-top:2px solid var(--border);text-align:center;padding:1.8rem 1.5rem;font-size:0.9rem;color:var(--muted);margin-top:2rem;}
+.footer-links{display:flex;flex-wrap:wrap;justify-content:center;gap:0.75rem 1.5rem;margin:0.75rem 0;font-size:0.92rem;}
+.footer-links a,footer a{color:var(--accent);text-decoration:none;}
+.footer-links a:hover,footer a:hover{text-decoration:underline;}
+.vsser-note{margin-top:0.75rem;font-size:0.85rem;color:var(--faint);border-top:1px solid var(--divider);padding-top:0.75rem;}
+
+@media(max-width:520px){
+  .paper-card{flex-direction:column;}
+  .paper-action{flex-direction:row;align-items:center;width:100%;}
+  .year-chip{display:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="logo-wrap">
+    <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="36" height="36" rx="8" fill="var(--accent)"/>
+      <text x="18" y="25" font-size="18" text-anchor="middle" fill="white" font-family="serif" font-weight="bold">PE</text>
+    </svg>
+    <div>
+      <span class="brand-name">VSSER-2026</span>
+      <span class="brand-sub">Paper Explainers</span>
+    </div>
+  </div>
+  <button class="toggle-btn" id="themeToggle" aria-label="Toggle theme">
+    <span id="themeIcon">&#127769;</span>
+    <span id="themeLabel">Dark Mode</span>
+  </button>
+</header>
+
+<!-- HERO -->
+<section class="hero-board">
+  <div class="hero-label">&#127979; VSSER-2026 &middot; Paper Explainers</div>
+  <h1 class="hero-title"><span>VSSER-2026</span> Paper Explainers</h1>
+  <p class="hero-desc">
+    Welcome to the companion reading portal for <strong>VSSER-2026</strong>, spearheaded by <strong>Professor Vishal K. Gupta and and Dr Athina Skiadopoulou</strong>. Each paper in the official reading list has a dedicated explainer &mdash; a richly annotated, audio-accompanied deep-dive. Papers are organised section-wise as per the reading list. New explainers are added as the seminar series progresses.
+  </p>
+  <div class="hero-badges">
+    <span class="badge accent">&#128218; 5 Sections</span>
+    <span class="badge">&#128196; 20 Papers</span>
+    <span class="badge">&#9989; 4 Explainers Live</span>
+    <span class="badge">&#127897;&#65039; Audio + Deep-Dives</span>
+    <span class="badge">&#128204; Updated Ongoing</span>
+  </div>
+</section>
+
+<main>
+
+  <!-- PROGRESS -->
+  <div class="progress-wrap">
+    <div class="progress-label">
+      Explainer Progress &mdash; <span>4 of 20 papers live</span>
+    </div>
+    <div class="progress-bar-bg"><div class="progress-bar-fill"></div></div>
+    <div class="progress-chips">
+      <span class="p-chip done">&#9989; Tang et al. 2008</span>
+      <span class="p-chip done">&#9989; Gupta et al. 2013</span>
+      <span class="p-chip done">&#9989; Welter 2011</span>
+      <span class="p-chip done">&#9989; Zahra et al. 2014</span>
+      <span class="p-chip">&#9200; Khurana et al. 2021</span>
+      <span class="p-chip">&#9200; Smith et al. 2021</span>
+      <span class="p-chip">&#9200; Rietveld &amp; Hoogendoorn 2022</span>
+      <span class="p-chip">&#9200; Goktan et al. 2018</span>
+      <span class="p-chip">&#9200; Donaldson et al. 2025</span>
+      <span class="p-chip">&#9200; Balodi et al. 2026</span>
+      <span class="p-chip">&#9200; + 10 more</span>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- SECTION 1: CONTEXT IN ENTREPRENEURSHIP RESEARCH   -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="section-block">
+    <div class="section-header">
+      <span class="section-icon">&#127758;</span>
+      <div class="section-title-wrap">
+        <div class="section-title">Context in Entrepreneurship Research</div>
+        <div class="section-host">Special Lecture by <span>Shaker Zahra</span></div>
+      </div>
+    </div>
+
+    <!-- Zahra et al. 2014 -->
+    <div class="paper-card">
+      <div class="paper-body">
+        <div class="paper-authors">&#128104;&#8205;&#127979; Zahra, S. A., Wright, M., &amp; Abdelgawad, S. G.</div>
+        <div class="paper-title">Contextualization and the advancement of entrepreneurship research</div>
+        <div class="paper-journal">
+          <span><em>International Small Business Journal</em>, 32(5), 479&ndash;500 &middot; 2014</span>
+          <span class="journal-badge abdca">ABDC-A</span>
+        </div>
+      </div>
+      <div class="paper-action">
+        <a class="explainer-btn" href="https://mayukhpsm.github.io/vsser26_zahraetal2014/" target="_blank" rel="noopener noreferrer">&#128214; Read Explainer</a>
+        <span class="year-chip">2014</span>
+      </div>
+    </div>
+
+    <!-- Welter 2011 -->
+    <div class="paper-card">
+      <div class="paper-body">
+        <div class="paper-authors">&#128104;&#8205;&#127979; Welter, F.</div>
+        <div class="paper-title">Contextualizing entrepreneurship &mdash; conceptual challenges and ways forward</div>
+        <div class="paper-journal">
+          <span><em>Entrepreneurship Theory and Practice</em>, 35(1), 165&ndash;184 &middot; 2011</span>
+          <span class="journal-badge ft50">&#11088; FT50</span>
+        </div>
+      </div>
+      <div class="paper-action">
+        <a class="explainer-btn" href="https://mayukhpsm.github.io/vsser26_welter2011/" target="_blank" rel="noopener noreferrer">&#128214; Read Explainer</a>
+        <span class="year-chip">2011</span>
+      </div>
+    </div>
+
+    <!-- Gupta et al. 2013 -->
+    <div class="paper-card">
+      <div class="paper-body">
+        <div class="paper-authors">&#128104;&#8205;&#127979; Gupta, V. K., Turban, D. B., &amp; Pareek, A.</div>
+        <div class="paper-title">Differences between men and women in opportunity evaluation as a function of gender stereotypes and stereotype activation</div>
+        <div class="paper-journal">
+          <span><em>Entrepreneurship Theory and Practice</em>, 37(4), 771&ndash;788 &middot; 2013</span>
+          <span class="journal-badge ft50">&#11088; FT50</span>
+        </div>
+      </div>
+      <div class="paper-action">
+        <a class="explainer-btn" href="https://mayukhpsm.github.io/vsser26_guptaetal2013/" target="_blank" rel="noopener noreferrer">&#128214; Read Explainer</a>
+        <span class="year-chip">2013</span>
+      </div>
+    </div>
+
+    <!-- Tang et al. 2008 -->
+    <div class="paper-card">
+      <div class="paper-body">
+        <div class="paper-authors">&#128104;&#8205;&#127979; Tang, J., Tang, Z., Marino, L. D., Zhang, Y., &amp; Li, Q.</div>
+        <div class="paper-title">Exploring an inverted U-shape relationship between entrepreneurial orientation and performance in Chinese ventures</div>
+        <div class="paper-journal">
+          <span><em>Entrepreneurship Theory and Practice</em>, 32(1), 219&ndash;239 &middot; 2008</span>
+          <span class="journal-badge ft50">&#11088; FT50</span>
+        </div>
+      </div>
+      <div class="paper-action">
+        <a class="explainer-btn" href="https://mayukhpsm.github.io/vsser26_tangetal2008/" target="_blank" rel="noopener noreferrer">&#128214; Read Explainer</a>
+        <span class="year-chip">2008</span>
+      </div>
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- SECTION 2: RELIGION AND ENTREPRENEURSHIP -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="section-block">
+    <div class="section-header">
+      <span class="section-icon">&#9995;</span>
+      <div class="section-title-wrap">
+        <div class="section-title">Religion and Entrepreneurship</div>
+        <div class="section-host">Special Lecture by <span>Devkamal Dutta</span></div>
+      </div>
+    </div>
+
+    <!-- Khurana et al. 2021 -->
+    <div class="paper-card">
+      <div class="paper-body">
+        <div class="paper-authors">&#128104;&#8205;&#127979; Khurana, I., Ghura, A. S., &amp; Dutta, D. K.</div>
+        <div class="paper-title">The influence of religion on the humane orientation of entrepreneurs</div>
+        <div class="paper-journal">
+          <span><em>Journal of Small Business Management</em>, 59(3), 417&ndash;442 &middot; 2021</span>
+          <span class="journal-badge abdca">ABDC-A</span>
+        </div>
+      </div>
+      <div class="paper-action">
+        <span class="coming-soon-btn">&#9200; Coming Soon</span>
+        <span class="year-chip">2021</span>
+      </div>
+    </div>
+
+    <!-- Smith et al. 2021 -->
+    <div class="paper-card">
+      <div class="paper-body">
+        <div class="paper-authors">&#128104;&#8205;&#127979; Smith, B. R., McMullen, J. S., &amp; Cardon, M. S.</div>
+        <div class="paper-title">Toward a theological turn in entrepreneurship: How religion could enable transformative research in our field</div>
+        <div class="paper-journal">
+          <span><em>Journal of Business Venturing</em>, 36(5), 1&ndash;9 &middot; 2021</span>
+          <span class="journal-badge ft50">&#11088; FT50</span>
+        </div>
+      </div>
+      <div class="paper-action">
+        <span class="coming-soon-btn">&#9200; Coming Soon</span>
+        <span class="year-chip">2021</span>
+      </div>
+    </div>
+
+    <!-- Rietveld & Hoogendoorn 2022 -->
+    <div class="paper-card">
+      <div class="paper-body">
+        <div class="paper-authors">&#128104;&#8205;&#127979; Rietveld, C. A., &amp; Hoogendoorn, B.</div>
+        <div class="paper-title">The mediating role of values in the relationship between religion and entrepreneurship</div>
+        <div class="paper-journal">
+          <span><em>Small Business Economics</em>, 58(3), 1309&ndash;1335 &middot; 2022</span>
+          <span class="journal-badge abdca">ABDC-A</span>
+        </div>
+      </div>
+      <div class="paper-action">
+        <span class="coming-soon-btn">&#9200; Coming Soon</span>
+        <span class="year-chip">2022</span>
+      </div>
+    </div>
+
+    <!-- Goktan et al. 2018 -->
+    <div class="paper-card">
+      <div class="paper-body">
+        <div class="paper-authors">&#128104;&#8205;&#127979; Goktan, B., Gupta, V. K., Budak, G., &amp; Markin, E.</div>
+        <div class="paper-title">Behind the green line: An examination of female entrepreneurial activity in the Muslim world</div>
+        <div class="paper-journal">
+          <span>In <em>Contextual Embeddedness of Women&#x27;s Entrepreneurship</em>, pp. 3&ndash;17 &middot; Routledge &middot; 2018</span>
+          <span class="journal-badge book">&#128218; Book Chapter</span>
+        </div>
+      </div>
+      <div class="paper-action">
+        <span class="coming-soon-btn">&#9200; Coming Soon</span>
+        <span class="year-chip">2018</span>
+      </div>
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 3: ENTREPRENEURIAL ECOSYSTEM       -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="section-block">
+    <div class="section-header">
+      <span class="section-icon">&#127981;</span>
+      <div class="section-title-wrap">
+        <div class="section-title">Entrepreneurial Ecosystem</div>
+        <div class="section-host">Special Lecture by <span>Christina Theodoraki</span></div>
+      </div>
+    </div>
+
+    <!-- Donaldson et al. 2025 -->
+    <div class="paper-card">
+      <div class="paper-body">
+        <div class="paper-authors">&#128104;&#8205;&#127979; Donaldson, C., Villagrasa, J., &amp; Theodoraki, C.</div>
+        <div class="paper-title">Inside-out and outside-in: How entrepreneurial ecosystems can build legitimacy through signaling</div>
+        <div class="paper-journal">
+          <span><em>Journal of Small Business Management</em>, 63(4), 1552&ndash;1593 &middot; 2025</span>
+          <span class="journal-badge abdca">ABDC-A</span>
+        </div>
+      </div>
+      <div class="paper-action">
+        <span class="coming-soon-btn">&#9200; Coming Soon</span>
+        <span class="year-chip">2025</span>
+      </div>
+    </div>
+
+    <!-- Balodi et al. 2026 -->
+    <div class="paper-card">
+      <div class="paper-body">
+        <div class="paper-authors">&#128104;&#8205;&#127979; Balodi, K. C., Kattuman, P., Theodoraki, C., &amp; Roshan, R.</div>
+        <div class="paper-title">Entrepreneurial dynamism and entrepreneurial ecosystem in emerging economies: the role of infrastructure</div>
+        <div class="paper-journal">
+          <span><em>Industrial and Corporate Change</em>, dtag014 &middot; 2026</span>
+          <span class="journal-badge abdca">ABDC-A</span>
+        </div>
+      </div>
+      <div class="paper-action">
+        <span class="coming-soon-btn">&#9200; Coming Soon</span>
+        <span class="year-chip">2026</span>
+      </div>
+    </div>
+
+    <!-- Queissner et al. 2025 -->
+    <div class="paper-card">
+      <div class="paper-body">
+        <div class="paper-authors">&#128104;&#8205;&#127979; Queissner, M., Stolz, L., &amp; Weiss, M.</div>
+        <div class="paper-title">A meta-analysis of entrepreneurial ecosystem elements and entrepreneurial activity</div>
+        <div class="paper-journal">
+          <span><em>Small Business Economics</em>, 64(4), 1817&ndash;1847 &middot; 2025</span>
+          <span class="journal-badge abdca">ABDC-A</span>
+        </div>
+      </div>
+      <div class="paper-action">
+        <span class="coming-soon-btn">&#9200; Coming Soon</span>
+        <span class="year-chip">2025</span>
+      </div>
+    </div>
+
+    <!-- Hechavarria & Ingram 2019 -->
+    <div class="paper-card">
+      <div class="paper-body">
+        <div class="paper-authors">&#128104;&#8205;&#127979; Hechavarr&#237;a, D. M., &amp; Ingram, A. E.</div>
+        <div class="paper-title">Entrepreneurial ecosystem conditions and gendered national-level entrepreneurial activity: a 14-year panel study of GEM</div>
+        <div class="paper-journal">
+          <span><em>Small Business Economics</em>, 53(2), 431&ndash;458 &middot; 2019</span>
+          <span class="journal-badge abdca">ABDC-A</span>
+        </div>
+      </div>
+      <div class="paper-action">
+        <span class="coming-soon-btn">&#9200; Coming Soon</span>
+        <span class="year-chip">2019</span>
+      </div>
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 4: GENDER AND ENTREPRENEURSHIP     -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="section-block">
+    <div class="section-header">
+      <span class="section-icon">&#9877;&#65039;</span>
+      <div class="section-title-wrap">
+        <div class="section-title">Gender and Entrepreneurship</div>
+        <div class="section-host">Special Lecture by <span>Susan Marlow</span></div>
+      </div>
+    </div>
+
+    <!-- Marlow & McAdam 2012 -->
+    <div class="paper-card">
+      <div class="paper-body">
+        <div class="paper-authors">&#128104;&#8205;&#127979; Marlow, S., &amp; McAdam, M.</div>
+        <div class="paper-title">Analyzing the influence of gender upon high-technology venturing within the context of business incubation</div>
+        <div class="paper-journal">
+          <span><em>Entrepreneurship Theory and Practice</em>, 36(4), 655&ndash;676 &middot; 2012</span>
+          <span class="journal-badge ft50">&#11088; FT50</span>
+        </div>
+      </div>
+      <div class="paper-action">
+        <span class="coming-soon-btn">&#9200; Coming Soon</span>
+        <span class="year-chip">2012</span>
+      </div>
+    </div>
+
+    <!-- Treanor & Marlow 2025 -->
+    <div class="paper-card">
+      <div class="paper-body">
+        <div class="paper-authors">&#128104;&#8205;&#127979; Treanor, L., &amp; Marlow, S.</div>
+        <div class="paper-title">A nudge in the right direction? Gender-informed support by female business-incubation managers for female STEM-entrepreneurs</div>
+        <div class="paper-journal">
+          <span><em>Entrepreneurship &amp; Regional Development</em>, 37(1&ndash;2), 92&ndash;112 &middot; 2025</span>
+          <span class="journal-badge abdca">ABDC-A</span>
+        </div>
+      </div>
+      <div class="paper-action">
+        <span class="coming-soon-btn">&#9200; Coming Soon</span>
+        <span class="year-chip">2025</span>
+      </div>
+    </div>
+
+    <!-- Gupta et al. 2019 -->
+    <div class="paper-card">
+      <div class="paper-body">
+        <div class="paper-authors">&#128104;&#8205;&#127979; Gupta, V. K., Wieland, A. M., &amp; Turban, D. B.</div>
+        <div class="paper-title">Gender characterizations in entrepreneurship: A multi-level investigation of sex-role stereotypes about high-growth, commercial, and social entrepreneurs</div>
+        <div class="paper-journal">
+          <span><em>Journal of Small Business Management</em>, 57(1), 131&ndash;153 &middot; 2019</span>
+          <span class="journal-badge abdca">ABDC-A</span>
+        </div>
+      </div>
+      <div class="paper-action">
+        <span class="coming-soon-btn">&#9200; Coming Soon</span>
+        <span class="year-chip">2019</span>
+      </div>
+    </div>
+
+    <!-- Ahl 2007 -->
+    <div class="paper-card">
+      <div class="paper-body">
+        <div class="paper-authors">&#128104;&#8205;&#127979; Ahl, H.</div>
+        <div class="paper-title">Sex business in the toy store: A narrative analysis of a teaching case</div>
+        <div class="paper-journal">
+          <span><em>Journal of Business Venturing</em>, 22(5), 673&ndash;693 &middot; 2007</span>
+          <span class="journal-badge ft50">&#11088; FT50</span>
+        </div>
+      </div>
+      <div class="paper-action">
+        <span class="coming-soon-btn">&#9200; Coming Soon</span>
+        <span class="year-chip">2007</span>
+      </div>
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 5: HISTORY AND ENTREPRENEURSHIP    -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="section-block">
+    <div class="section-header">
+      <span class="section-icon">&#128336;</span>
+      <div class="section-title-wrap">
+        <div class="section-title">History and Entrepreneurship</div>
+        <div class="section-host">Special Lecture by <span>Patrick Murphy</span></div>
+      </div>
+    </div>
+
+    <!-- Wadhwani & Lubinski 2025 -->
+    <div class="paper-card">
+      <div class="paper-body">
+        <div class="paper-authors">&#128104;&#8205;&#127979; Wadhwani, R. D., &amp; Lubinski, C.</div>
+        <div class="paper-title">Hype: Marker and maker of entrepreneurial culture</div>
+        <div class="paper-journal">
+          <span><em>Journal of Business Venturing</em>, 40(2), 1&ndash;15 &middot; 2025</span>
+          <span class="journal-badge ft50">&#11088; FT50</span>
+        </div>
+      </div>
+      <div class="paper-action">
+        <span class="coming-soon-btn">&#9200; Coming Soon</span>
+        <span class="year-chip">2025</span>
+      </div>
+    </div>
+
+    <!-- Lubinski & Gartner 2020 -->
+    <div class="paper-card">
+      <div class="paper-body">
+        <div class="paper-authors">&#128104;&#8205;&#127979; Lubinski, C., &amp; Gartner, W. B.</div>
+        <div class="paper-title">History as a source and method for family business research</div>
+        <div class="paper-journal">
+          <span>In Calabr&#242;, A. (Ed.), <em>A Research Agenda for Family Business</em>, pp. 29&ndash;59 &middot; Edward Elgar &middot; 2020</span>
+          <span class="journal-badge book">&#128218; Book Chapter</span>
+        </div>
+      </div>
+      <div class="paper-action">
+        <span class="coming-soon-btn">&#9200; Coming Soon</span>
+        <span class="year-chip">2020</span>
+      </div>
+    </div>
+
+    <!-- Murphy 2009 -->
+    <div class="paper-card">
+      <div class="paper-body">
+        <div class="paper-authors">&#128104;&#8205;&#127979; Murphy, P. J.</div>
+        <div class="paper-title">Entrepreneurship theory and the poverty of historicism</div>
+        <div class="paper-journal">
+          <span><em>Journal of Management History</em>, 15(2), 109&ndash;133 &middot; 2009</span>
+          <span class="journal-badge">ABDC-B</span>
+        </div>
+      </div>
+      <div class="paper-action">
+        <span class="coming-soon-btn">&#9200; Coming Soon</span>
+        <span class="year-chip">2009</span>
+      </div>
+    </div>
+
+    <!-- Hollow 2020 -->
+    <div class="paper-card">
+      <div class="paper-body">
+        <div class="paper-authors">&#128104;&#8205;&#127979; Hollow, M.</div>
+        <div class="paper-title">Historicizing entrepreneurial networks</div>
+        <div class="paper-journal">
+          <span><em>Strategic Entrepreneurship Journal</em>, 14(1), 66&ndash;88 &middot; 2020</span>
+          <span class="journal-badge ft50">&#11088; FT50</span>
+        </div>
+      </div>
+      <div class="paper-action">
+        <span class="coming-soon-btn">&#9200; Coming Soon</span>
+        <span class="year-chip">2020</span>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <p>&#127897;&#65039; This portal is part of the <strong>Paper Explainer</strong> series on <strong>VSSER-2026</strong></p>
+  <div class="footer-links">
+    &#127911; <a href="https://open.spotify.com/show/1FSNMlJzYxvlPswFdyCZx1?si=f0ed71dfbbc94b8c" target="_blank" rel="noopener noreferrer">Spotify</a>
+    &#128250; <a href="https://www.youtube.com/@WeekendResearcher" target="_blank" rel="noopener noreferrer">YouTube: Weekend Researcher</a>
+    &#127925; <a href="https://music.amazon.in/podcasts/f64c70fc-f70b-498e-87f3-669152e83730/revise-and-resubmit---the-mayukh-show" target="_blank" rel="noopener noreferrer">Amazon Prime Music</a>
+    &#127822; <a href="https://podcasts.apple.com/us/podcast/revise-and-resubmit-the-mayukh-show/id1770883122" target="_blank" rel="noopener noreferrer">Apple Podcast</a>
+  </div>
+  <p style="margin-top:0.5rem;font-size:0.82rem;">
+    Heartfelt thanks to all the authors whose work features in this reading list, and to <strong>Professor Vishal K. Gupta and Dr Athina Skiadopoulou</strong> for curating and spearheading <strong>VSSER-2026</strong>. &#128591;
+  </p>
+  <div class="vsser-note">
+    &#128204; This portal has been prepared in connection with <strong>VSSER-2026</strong>, spearheaded by <strong>Professor Vishal K. Gupta and Dr Athina Skiadopoulou</strong>. Series: <em>Seminar in Entrepreneurship Research</em>.<br>
+    &copy; 2026 <a href="https://mayukhmukhopadhyay.com/reviseandresubmit/" target="_blank" rel="noopener noreferrer">Revise and Resubmit &mdash; The Mayukh Show.</a> (CC BY-NC-ND).
+  </div>
+</footer>
+
+<script>
+(function(){
+  var htmlEl = document.documentElement;
+  var btn = document.getElementById('themeToggle');
+  var icon = document.getElementById('themeIcon');
+  var label = document.getElementById('themeLabel');
+  var dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  function apply(){
+    htmlEl.setAttribute('data-theme', dark ? 'dark' : 'light');
+    icon.textContent = dark ? '☀️' : '🌙';
+    label.textContent = dark ? 'Light Mode' : 'Dark Mode';
+  }
+  apply();
+  btn.addEventListener('click', function(){ dark = !dark; apply(); });
+})();
+</script>
+</body>
+</html>
