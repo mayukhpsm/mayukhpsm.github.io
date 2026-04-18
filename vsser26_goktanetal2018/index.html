@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Goktan et al. 2018 | VSSER-2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Patrick+Hand&family=Kalam&display=swap" rel="stylesheet">
+<style>
+:root,[data-theme="light"]{
+  --bg:#f7f1e7;--surface:#fcf8f1;--surface2:#fffdf9;--board:#f5ede0;
+  --border:#dec9aa;--divider:#ecdcc5;--text:#3a2417;--muted:#7a5a43;
+  --faint:#ab8a70;--ink:#28180f;
+  --accent:#a65a3a;--accent2:#c9832b;--accent3:#6d7f3f;
+  --accent4:#7e5d99;--accent5:#b23a48;
+  --shadow:0 2px 8px rgba(58,36,23,0.10);--shadow-lg:0 8px 32px rgba(58,36,23,0.13);
+  --font-hand:'Caveat','Kalam',cursive;--font-body:'Patrick Hand','Kalam',cursive;
+  --transition:200ms cubic-bezier(0.16,1,0.3,1);--radius:0.75rem;--radius-sm:0.4rem;
+}
+[data-theme="dark"]{
+  --bg:#140e09;--surface:#1c140f;--surface2:#261b14;--board:#17100b;
+  --border:#4b3727;--divider:#302216;--text:#f5e8da;--muted:#d2b395;
+  --faint:#9c7d62;--ink:#fff4ea;
+  --accent:#e08b63;--accent2:#f0b353;--accent3:#a8c06d;
+  --accent4:#bda0d8;--accent5:#ef6a79;
+  --shadow:0 2px 8px rgba(0,0,0,0.45);--shadow-lg:0 8px 32px rgba(0,0,0,0.55);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--font-body);background:var(--bg);color:var(--text);font-size:clamp(1rem,0.9rem + 0.5vw,1.2rem);line-height:1.65;min-height:100dvh;transition:background var(--transition),color var(--transition);}
+.site-header{position:sticky;top:0;z-index:100;background:var(--surface);border-bottom:2px solid var(--border);box-shadow:var(--shadow);padding:0.75rem 1.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.5rem;}
+.logo-wrap{display:flex;align-items:center;gap:0.6rem;}.brand-name{font-family:var(--font-hand);font-size:clamp(1.1rem,1rem + 1vw,1.5rem);font-weight:700;color:var(--accent);letter-spacing:-0.02em;}.brand-sub{font-family:var(--font-hand);font-size:0.85rem;color:var(--muted);display:block;margin-top:-4px;}
+.toggle-btn{background:var(--surface2);border:2px solid var(--border);border-radius:2rem;padding:0.4rem 1rem;font-family:var(--font-hand);font-size:0.95rem;color:var(--text);cursor:pointer;display:flex;align-items:center;gap:0.4rem;transition:background var(--transition),border-color var(--transition);} .toggle-btn:hover{background:var(--divider);}
+.hero-board{background:linear-gradient(180deg,var(--board),var(--surface));border-bottom:2px solid var(--border);padding:3rem 1.5rem 2.5rem;text-align:center;}
+.hero-label{display:inline-block;background:var(--accent);color:#fff;font-family:var(--font-hand);font-size:0.85rem;border-radius:2rem;padding:0.25rem 1rem;margin-bottom:1rem;letter-spacing:0.04em;}
+.hero-title{font-family:var(--font-hand);font-size:clamp(1.6rem,1.2rem + 2.5vw,2.8rem);font-weight:700;color:var(--ink);line-height:1.2;max-width:860px;margin:0 auto 1rem;}
+.hero-title span{color:var(--accent2);} .hero-meta{font-size:0.9rem;color:var(--muted);max-width:760px;margin:0 auto 1.5rem;} .hero-meta strong{color:var(--text);}
+.hero-badges{display:flex;flex-wrap:wrap;justify-content:center;gap:0.5rem;margin-top:1rem;}
+.badge{background:var(--surface2);border:1.5px solid var(--border);border-radius:2rem;padding:0.3rem 0.9rem;font-size:0.82rem;color:var(--muted);font-family:var(--font-hand);} .badge.book{background:var(--accent4);color:#fff;border-color:var(--accent4);font-weight:700;} .badge.gold{background:var(--accent2);color:#fff;border-color:var(--accent2);}
+main{max-width:860px;margin:0 auto;padding:2rem 1rem 3rem;}
+.tabs-wrap{display:flex;gap:0.4rem;flex-wrap:wrap;margin-bottom:1.75rem;border-bottom:2px solid var(--border);padding-bottom:0.5rem;overflow-x:auto;}
+.tab-btn{background:transparent;border:1.5px solid transparent;border-radius:var(--radius-sm) var(--radius-sm) 0 0;padding:0.45rem 1.1rem;font-family:var(--font-hand);font-size:0.97rem;color:var(--muted);cursor:pointer;white-space:nowrap;transition:all var(--transition);} .tab-btn:hover{color:var(--text);background:var(--divider);} .tab-btn.active{color:var(--accent);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface);font-weight:700;}
+.section-panel{display:none;} .section-panel.active{display:block;}
+.card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:1.4rem 1.6rem;margin-bottom:1.4rem;box-shadow:var(--shadow);} .card-title{font-family:var(--font-hand);font-size:1.15rem;font-weight:700;color:var(--accent);margin-bottom:0.6rem;display:flex;align-items:center;gap:0.4rem;} .card p{margin-bottom:0.7rem;} .card p:last-child{margin-bottom:0;}
+.highlight{border-left:4px solid var(--accent);background:var(--surface2);border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:0.9rem 1.2rem;margin:1rem 0;font-size:0.97rem;} .highlight.green{border-color:var(--accent3);} .highlight.gold{border-color:var(--accent2);} .highlight.pink{border-color:var(--accent5);} .highlight.purple{border-color:var(--accent4);}
+.pull-quote{border:2px dashed var(--border);border-radius:var(--radius);padding:1.2rem 1.5rem;margin:1.4rem 0;font-family:var(--font-hand);font-size:clamp(1rem,0.9rem + 0.4vw,1.2rem);color:var(--ink);text-align:center;background:var(--board);}
+.def-list{list-style:none;padding:0;} .def-list li{padding:0.7rem 0;border-bottom:1px solid var(--divider);display:grid;grid-template-columns:auto 1fr;gap:0.7rem;align-items:start;} .def-list li:last-child{border-bottom:none;}
+.def-tag{background:var(--accent);color:#fff;border-radius:var(--radius-sm);padding:0.15rem 0.6rem;font-size:0.8rem;font-family:var(--font-hand);white-space:nowrap;margin-top:0.25rem;} .def-tag.green{background:var(--accent3);} .def-tag.purple{background:var(--accent4);} .def-tag.gold{background:var(--accent2);} .def-tag.pink{background:var(--accent5);} .def-tag.brown{background:#8b5e3c;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1rem 0;} .three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;margin:1rem 0;} @media(max-width:700px){.three-col,.two-col{grid-template-columns:1fr;}}
+.col-card{background:var(--surface2);border:1.5px solid var(--border);border-radius:var(--radius);padding:1rem 1.1rem;} .col-card h4{font-family:var(--font-hand);font-size:1rem;margin-bottom:0.4rem;} .col-card.terracotta h4{color:var(--accent);} .col-card.gold h4{color:var(--accent2);} .col-card.green h4{color:var(--accent3);} .col-card.purple h4{color:var(--accent4);} .col-card.pink h4{color:var(--accent5);}
+.results-table-wrap{overflow-x:auto;margin:1rem 0;} table{width:100%;border-collapse:collapse;font-size:0.92rem;font-family:var(--font-body);} th{background:var(--accent);color:#fff;padding:0.6rem 0.9rem;text-align:left;font-family:var(--font-hand);} td{padding:0.55rem 0.9rem;border-bottom:1px solid var(--divider);vertical-align:top;} tr:last-child td{border-bottom:none;} tr:nth-child(even) td{background:var(--surface2);}
+.insight-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin:1.2rem 0;} .insight-box{background:var(--surface2);border:1.5px solid var(--border);border-radius:var(--radius);padding:1rem;text-align:center;} .insight-icon{font-size:2rem;display:block;margin-bottom:0.4rem;} .insight-label{font-size:0.82rem;color:var(--muted);} .insight-val{font-family:var(--font-hand);font-size:1.1rem;font-weight:700;color:var(--accent);display:block;margin:0.2rem 0 0.1rem;}
+.paper-meta-list{list-style:none;padding:0;} .paper-meta-list li{display:flex;gap:0.6rem;padding:0.5rem 0;border-bottom:1px solid var(--divider);font-size:0.92rem;} .paper-meta-list li:last-child{border-bottom:none;} .pm-label{font-weight:700;color:var(--muted);min-width:140px;flex-shrink:0;}
+.author-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem;} @media(max-width:700px){.author-grid{grid-template-columns:1fr;}} .author-card{background:var(--surface2);border:1.5px solid var(--border);border-radius:var(--radius);padding:1rem 1.1rem;} .author-card h4{font-family:var(--font-hand);font-size:1.05rem;color:var(--accent);margin-bottom:0.4rem;}
+footer{background:var(--surface);border-top:2px solid var(--border);text-align:center;padding:1.8rem 1.5rem;font-size:0.9rem;color:var(--muted);margin-top:3rem;} .footer-links{display:flex;flex-wrap:wrap;justify-content:center;gap:0.75rem 1.5rem;margin:0.75rem 0;font-size:0.92rem;} .footer-links a,footer a{color:var(--accent);text-decoration:none;} .footer-links a:hover,footer a:hover{text-decoration:underline;} .vsser-note{margin-top:0.75rem;font-size:0.85rem;color:var(--faint);border-top:1px solid var(--divider);padding-top:0.75rem;}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="logo-wrap">
+  <a href="https://mayukhpsm.github.io/vsser26/" class="brand-link" aria-label="Return to home">
+    <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="36" height="36" rx="8" fill="var(--accent)"/><text x="18" y="25" font-size="18" text-anchor="middle" fill="white" font-family="serif" font-weight="bold">PE</text></svg></a>
+    <div><span class="brand-name">VSSER-2026</span><span class="brand-sub">Paper Explainer</span></div>
+  </div>
+  <button class="toggle-btn" id="themeToggle"><span id="themeIcon">🌙</span><span id="themeLabel">Dark Mode</span></button>
+</header>
+<section class="hero-board">
+  <div class="hero-label">📚 Book Chapter · 🙏 Religion &amp; Entrepreneurship · VSSER-2026</div>
+  <h1 class="hero-title">Behind the green line: An examination of female entrepreneurial activity in the Muslim world <span><br>(Female Entrepreneurship in the Muslim World)</span></h1>
+  <p class="hero-meta"><strong>Banu Goktan, Vishal K. Gupta, Gönül Budak &amp; Erik Markin (2018)</strong><br>Book Title: <em>Contextual Embeddedness of Women's Entrepreneurship</em><br><span>Edited by: Shumaila Yousafzi, Adam Lindgreen, Saadat Saeed, Colette Henry</span></p>
+  <div class="hero-badges">
+    <span class="badge book">📖 Book Chapter</span>
+    <span class="badge">🌍 ISBN: 9781315574042</span>
+    <span class="badge">📘 Routledge Imprint</span>
+    <span class="badge gold">⚖️ DOI: 10.4324/9781315574042</span>
+    <span class="badge">📅 Published 2018, Chapter 1, 15 pages</span>
+  </div>
+</section>
+<div id="audio-player-wrap" style="max-width:860px;margin:2rem auto 0;padding:0 1rem;">
+  <div style="background:var(--surface);border:2px solid var(--border);border-radius:0.75rem;box-shadow:0 8px 32px rgba(58,36,23,0.13);padding:1.4rem 1.6rem 1.2rem;display:flex;flex-direction:column;gap:0.9rem;">
+    <div style="display:flex;align-items:center;gap:0.85rem;">
+      <span style="font-size:2rem;line-height:1;flex-shrink:0;">🎙️</span>
+      <div>
+        <div style="font-family:var(--font-hand);font-size:clamp(1rem,0.95rem + 0.4vw,1.25rem);font-weight:700;color:var(--accent);line-height:1.25;">Listen to an AI-Assisted Podcast</div>
+        <div style="font-size:0.82rem;color:var(--muted);margin-top:0.15rem;">👩 Women entrepreneurship · Goktan et al. 2018· VSSER-2026</div>
+      </div>
+    </div>
+    <audio id="rr-audio" preload="metadata">
+      <source src="vsser26_goktanetal2018.mp3" type="audio/mpeg">
+      <source src="vsser26_goktanetal2018.m4a" type="audio/mp4">
+      Your browser does not support the audio element.
+    </audio>
+    <div style="display:flex;align-items:center;justify-content:center;gap:0.65rem;flex-wrap:wrap;">
+      <button onclick="rrRewind()" style="background:var(--surface2);border:2px solid var(--border);border-radius:2rem;padding:0.42rem 1rem;font-family:var(--font-hand);font-size:0.92rem;color:var(--text);cursor:pointer;">⏮ 10s</button>
+      <button id="rr-play" onclick="rrToggle()" style="background:var(--accent);color:#fff;border:none;border-radius:2rem;padding:0.5rem 1.6rem;font-family:var(--font-hand);font-size:1.1rem;font-weight:700;cursor:pointer;min-width:72px;">▶</button>
+      <button onclick="rrForward()" style="background:var(--surface2);border:2px solid var(--border);border-radius:2rem;padding:0.42rem 1rem;font-family:var(--font-hand);font-size:0.92rem;color:var(--text);cursor:pointer;">10s ⏭</button>
+      <button id="rr-loop" onclick="rrLoop()" title="Toggle loop" style="background:var(--surface2);border:2px solid var(--border);border-radius:2rem;padding:0.42rem 1rem;font-family:var(--font-hand);font-size:0.92rem;color:var(--muted);cursor:pointer;">🔁</button>
+    </div>
+    <div style="display:flex;align-items:center;gap:0.6rem;">
+      <span id="rr-cur" style="font-size:0.8rem;color:var(--muted);min-width:36px;text-align:center;flex-shrink:0;">0:00</span>
+      <div id="rr-bar" onclick="rrSeek(event)" style="flex:1;height:9px;background:var(--divider);border-radius:99px;position:relative;cursor:pointer;overflow:visible;">
+        <div id="rr-fill" style="height:100%;background:var(--accent);border-radius:99px;width:0%;pointer-events:none;"></div>
+        <div id="rr-thumb" style="position:absolute;top:50%;left:0%;transform:translate(-50%,-50%);width:16px;height:16px;border-radius:50%;background:var(--accent);border:2px solid var(--surface);box-shadow:0 1px 4px rgba(0,0,0,0.25);pointer-events:none;"></div>
+      </div>
+      <span id="rr-dur" style="font-size:0.8rem;color:var(--muted);min-width:36px;text-align:center;flex-shrink:0;">0:00</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:0.5rem;">
+      <span style="font-size:1rem;">🔊</span>
+      <input type="range" id="rr-vol" min="0" max="1" step="0.05" value="1" oninput="rrVol(this.value)" style="flex:1;max-width:180px;-webkit-appearance:none;appearance:none;height:6px;border-radius:99px;background:var(--divider);outline:none;cursor:pointer;">
+    </div>
+  </div>
+</div>
+<main>
+  <nav class="tabs-wrap" role="tablist" aria-label="Sections">
+    <button class="tab-btn active" onclick="switchTab('overview',this)">📋 Overview</button>
+    <button class="tab-btn" onclick="switchTab('argument',this)">🧭 Argument</button>
+    <button class="tab-btn" onclick="switchTab('method',this)">🧪 Method</button>
+    <button class="tab-btn" onclick="switchTab('findings',this)">📊 Findings</button>
+    <button class="tab-btn" onclick="switchTab('implications',this)">💡 Implications</button>
+    <button class="tab-btn" onclick="switchTab('meta',this)">📚 Chapter Info</button>
+  </nav>
+
+  <div id="overview" class="section-panel active">
+    <div class="card">
+      <div class="card-title">🧭 What This Chapter Is About</div>
+      <p>This chapter examines a widely repeated assumption: that Muslim-majority societies are systematically less supportive of women’s entrepreneurship. The authors ask whether that assumption actually holds when we look at country-level data on female entrepreneurial activity.</p>
+      <p>The chapter also asks a second question that matters a lot for policy: does secularism make a difference? In particular, it compares Muslim-majority countries and looks closely at Turkey as a constitutionally secular Muslim-majority case.</p>
+    </div>
+    <div class="pull-quote">💡 Main idea: the chapter challenges simple stereotypes about Islam and women’s entrepreneurship by putting them against comparative evidence.</div>
+    <div class="card">
+      <div class="card-title">🌍 Why This Matters</div>
+      <p>Public debates often treat Islam as naturally hostile to women’s economic agency. This chapter argues that the reality is more complicated. It shows that the relationship between religion, gender, and entrepreneurship is indirect, context-dependent, and shaped by law, culture, institutions, education, and social norms.</p>
+      <div class="highlight gold"><strong>Easy takeaway:</strong> female entrepreneurship in Muslim societies cannot be explained by religion alone.</div>
+    </div>
+    <div class="insight-strip">
+      <div class="insight-box"><span class="insight-icon">👩</span><span class="insight-val">Women first</span><span class="insight-label">Focus on female early-stage entrepreneurial activity</span></div>
+      <div class="insight-box"><span class="insight-icon">🌍</span><span class="insight-val">Comparative lens</span><span class="insight-label">Muslim vs non-Muslim; secular vs non-secular; Turkey vs others</span></div>
+      <div class="insight-box"><span class="insight-icon">📚</span><span class="insight-val">Book chapter</span><span class="insight-label">Not part of FT50 or ABDC lists</span></div>
+      <div class="insight-box"><span class="insight-icon">🏛️</span><span class="insight-val">Policy relevance</span><span class="insight-label">Important for gender policy, law, and ecosystem design</span></div>
+    </div>
+  </div>
+
+  <div id="argument" class="section-panel">
+    <div class="card">
+      <div class="card-title">🧭 The Core Argument</div>
+      <p>The authors begin by noting that entrepreneurship research on women has often been Western in focus. They push the conversation into Muslim societies, where gender roles, legal systems, religious interpretation, and political structures interact in complex ways.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">📚 What They Say About Islam</div>
+      <p>The chapter argues that Islam is frequently oversimplified in both academic and popular discourse. It stresses that Islam is not a single uniform social reality, and that many restrictions on women in Muslim societies come not from sacred text alone but from historical, cultural, patriarchal, and institutional interpretations.</p>
+      <div class="highlight green"><strong>Important nuance:</strong> the chapter does not present Islam as inherently anti-business or inherently anti-women. It distinguishes core teachings from the ways societies interpret and implement them.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">🧱 The Three Hypotheses</div>
+      <div class="three-col">
+        <div class="col-card terracotta"><h4>H1</h4><p>Female entrepreneurship will be lower in Muslim-majority societies.</p></div>
+        <div class="col-card gold"><h4>H2</h4><p>Female entrepreneurship will be higher in secular Muslim-majority societies than in Sharia or mixed systems.</p></div>
+        <div class="col-card green"><h4>H3</h4><p>Female entrepreneurship will be higher in Turkey than in non-secular Muslim-majority countries.</p></div>
+      </div>
+      <div class="highlight pink"><strong>Why Turkey matters:</strong> it is used as a distinctive case because of its long constitutional secularism, reform history, and formal commitment to gender equality.</div>
+    </div>
+  </div>
+
+  <div id="method" class="section-panel">
+    <div class="card">
+      <div class="card-title">🧪 How the Study Was Done</div>
+      <p>The chapter uses data from the <strong>Global Entrepreneurship Monitor (GEM)</strong>, specifically the adult population survey measure of <strong>female total early-stage entrepreneurial activity (FTEA)</strong> for women aged 18 to 64. The authors examine selected years between 2001 and 2015, using 2006, 2008, 2010, and 2015 for their analyses.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">📍 Country Grouping Strategy</div>
+      <ul class="def-list">
+        <li><span class="def-tag">Muslim-majority</span><span>Countries where more than 50 percent of the population identifies as Muslim.</span></li>
+        <li><span class="def-tag gold">Secular vs non-secular</span><span>Muslim-majority countries categorized as secular, Sharia-based, or mixed systems.</span></li>
+        <li><span class="def-tag green">Turkey focus</span><span>Turkey treated as a special comparison case within Muslim-majority contexts.</span></li>
+        <li><span class="def-tag purple">Analysis</span><span>t-tests and, where possible, Welch’s t-tests to compare mean FTEA across groups.</span></li>
+      </ul>
+      <div class="highlight"><strong>Method in one line:</strong> the chapter tests broad claims about Islam and women’s entrepreneurship using comparative country-level data rather than relying only on cultural assumptions.</div>
+    </div>
+  </div>
+
+  <div id="findings" class="section-panel">
+    <div class="card">
+      <div class="card-title">📊 Main Results</div>
+      <p>The most important result is that the three hypotheses are <strong>not supported</strong> in the expected way. The study does not find a consistent significant difference in female entrepreneurial activity between Muslim-majority and non-Muslim countries, between secular and non-secular Muslim-majority countries, or between Turkey and non-secular Muslim-majority countries.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">📈 What the Results Mean</div>
+      <div class="results-table-wrap">
+        <table>
+          <thead><tr><th>Question</th><th>Expectation</th><th>What the chapter found</th></tr></thead>
+          <tbody>
+            <tr><td>Muslim vs non-Muslim countries</td><td>Muslim-majority countries would have lower female entrepreneurship</td><td>No consistent significant difference across the years examined</td></tr>
+            <tr><td>Secular vs non-secular Muslim countries</td><td>Secular systems would show higher female entrepreneurship</td><td>No significant difference found</td></tr>
+            <tr><td>Turkey vs non-secular Muslim countries</td><td>Turkey would show higher female entrepreneurship</td><td>No significant difference found</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="highlight green"><strong>Bottom line:</strong> the chapter does not support the easy narrative that Islam by itself depresses female entrepreneurship.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">🧠 The Bigger Interpretation</div>
+      <p>The authors say these results should make scholars and policymakers cautious. Religion’s effect on entrepreneurship is likely indirect and mediated by other forces such as culture, social values, education, networks, political systems, and gender expectations.</p>
+      <div class="two-col">
+        <div class="col-card gold"><h4>What the chapter challenges</h4><p>The assumption that Muslim societies are automatically less entrepreneurial for women.</p></div>
+        <div class="col-card pink"><h4>What the chapter opens up</h4><p>A richer research agenda on culture, values, law, and gender-role expectations.</p></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">🏛️ Especially Important for Policy</div>
+      <p>If aggregate female entrepreneurship rates do not differ as expected, then policy should not stop at religion-based explanations. It should look at access to finance, childcare, education, mobility, legal rights, social stigma, network access, and the structure of opportunities available to women.</p>
+    </div>
+  </div>
+
+  <div id="implications" class="section-panel">
+    <div class="card">
+      <div class="card-title">💡 For Academic Audience</div>
+      <ul class="def-list">
+        <li><span class="def-tag">Theory</span><span>The chapter pushes entrepreneurship research beyond Western settings and beyond simplistic religious determinism.</span></li>
+        <li><span class="def-tag gold">Mechanisms</span><span>It points toward mediators such as cultural values, patriarchal norms, and gender-role expectations.</span></li>
+        <li><span class="def-tag purple">Research design</span><span>It shows the value of combining comparative data with context-sensitive interpretation.</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">🏛️ For Policy Makers</div>
+      <ul class="def-list">
+        <li><span class="def-tag green">Do not essentialize</span><span>Policies should not assume religion alone explains women’s entrepreneurial outcomes.</span></li>
+        <li><span class="def-tag pink">Target barriers</span><span>Focus on legal rights, childcare, mobility, training, networks, and finance.</span></li>
+        <li><span class="def-tag gold">Watch structure, not just rate</span><span>Even if rates look similar, women may still be concentrated in smaller, lower-growth, or more constrained business forms.</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">🏢 For Industry Practitioners</div>
+      <ul class="def-list">
+        <li><span class="def-tag">Ecosystem builders</span><span>Do not rely on stereotypes about markets in Muslim societies. Real constraints are often institutional and operational.</span></li>
+        <li><span class="def-tag green">Investors and incubators</span><span>Support design should account for work-family pressures, mobility restrictions, and access asymmetries.</span></li>
+        <li><span class="def-tag purple">Corporate and NGO partners</span><span>Programs for women founders need local social legitimacy as well as financial and training support.</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">⚠️ Limits of the Chapter</div>
+      <ul class="def-list">
+        <li><span class="def-tag brown">Dataset coverage</span><span>GEM covers only a subset of countries, and secular Muslim-majority cases were especially limited.</span></li>
+        <li><span class="def-tag gold">Macro-level measure</span><span>The chapter studies country-level affiliation, not individual religiosity or interpretation of Islam.</span></li>
+        <li><span class="def-tag pink">Rate, not structure</span><span>It studies how much female entrepreneurship exists, not what types of businesses women run or what goals they pursue.</span></li>
+      </ul>
+      <div class="highlight purple"><strong>Future research:</strong> the chapter explicitly calls for work on culture, values, religiosity, and gender-role expectations as mediators.</div>
+    </div>
+  </div>
+
+  <div id="meta" class="section-panel">
+    <div class="card">
+      <div class="card-title">📚 Chapter Details</div>
+      <ul class="paper-meta-list">
+        <li><span class="pm-label">Chapter title</span><span>Behind the green line: An examination of female entrepreneurial activity in the Muslim world</span></li>
+        <li><span class="pm-label">Authors</span><span>Banu Goktan · Vishal K. Gupta · Gönül Budak · Erik Markin</span></li>
+        <li><span class="pm-label">Type</span><span>Book chapter</span></li>
+        <li><span class="pm-label">Status</span><span>First Chapter of "Contextual Embeddedness of Women's Entrepreneurship"</span></li>
+        <li><span class="pm-label">Book DOI</span><span><a href="https://doi.org/10.4324/9781315574042" target="_blank" rel="noopener noreferrer">10.4324/9781315574042</a></span></li>
+        <li><span class="pm-label">Book ISBN</span><span>9781315574042</span></li>
+        <li><span class="pm-label">Data source</span><span>Global Entrepreneurship Monitor (GEM)</span></li>
+        <li><span class="pm-label">Focus</span><span>Female total early-stage entrepreneurial activity in Muslim-majority and comparison countries</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">👩‍🏫 About the Authors</div>
+      <div class="author-grid">
+        <div class="author-card"><h4>Banu Goktan</h4><p>Goktan is one of the chapter’s lead authors and contributes to the analysis of women’s entrepreneurship, institutional context, and the Muslim-world setting.</p></div>
+        <div class="author-card"><h4>Vishal K. Gupta</h4><p>Gupta is a well-known entrepreneurship scholar whose work often bridges culture, gender, cognition, and context in entrepreneurship research.</p></div>
+        <div class="author-card"><h4>Gönül Budak</h4><p>Budak contributes to the chapter’s contextual and comparative understanding of Turkey, Islam, and gendered institutional settings.</p></div>
+        <div class="author-card"><h4>Erik Markin</h4><p>Markin contributes to the chapter’s empirical and conceptual framing of entrepreneurship in relation to social and institutional environments.</p></div>
+      </div>
+      <div class="highlight"><strong>Why this author team matters:</strong> the chapter combines entrepreneurship theory with gender analysis, institutional thinking, and regional expertise.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">🧾 Why This Chapter Fits the Series</div>
+      <p>This chapter is especially useful for the Religion and Entrepreneurship series because it pushes back against civilizational stereotypes and asks for better evidence. It also connects religion with policy, women’s empowerment, and institutional design in a direct and usable way.</p>
+    </div>
+  </div>
+</main>
+<footer>
+  <p>🎙️ This explainer is part of the <strong>Religion and Entrepreneurship</strong> series on <strong>VSSER-2026</strong></p>
+  <div class="footer-links">
+    🎧 <a href="https://open.spotify.com/show/1FSNMlJzYxvlPswFdyCZx1?si=f0ed71dfbbc94b8c" target="_blank" rel="noopener noreferrer">Spotify</a>
+    📺 <a href="https://www.youtube.com/@WeekendResearcher" target="_blank" rel="noopener noreferrer">YouTube: Weekend Researcher</a>
+    🎵 <a href="https://music.amazon.in/podcasts/f64c70fc-f70b-498e-87f3-669152e83730/revise-and-resubmit---the-mayukh-show" target="_blank" rel="noopener noreferrer">Amazon Prime Music</a>
+    &#127822; <a href="https://podcasts.apple.com/us/podcast/revise-and-resubmit-the-mayukh-show/id1770883122" target="_blank" rel="noopener noreferrer">Apple Podcast</a>
+  </div>
+  <p style="margin-top:0.5rem;font-size:0.82rem;">Heartfelt thanks to <strong>Banu Goktan, Vishal K. Gupta, Gönül Budak,</strong> and <strong>Erik Markin</strong> for this contribution. 🙏</p>
+  <div class="vsser-note">    
+  &#128204; This portal has been prepared by <strong><a href="https://mayukhmukhopadhyay.com/aboutme/" target="_blank" rel="noopener noreferrer">Mayukh Mukhopadhyay</a> </strong> in connection with <strong>VSSER-2026</strong>, spearheaded by <strong><a href="https://culverhouse.ua.edu/people/vishal-gupta/" target="_blank" rel="noopener noreferrer">Professor Vishal K. Gupta</a></strong> and <strong><a href="https://www.linkedin.com/in/athina-skiadopoulou-3931b3193/" target="_blank" rel="noopener noreferrer">Dr Athina Skiadopoulou</a></strong>. Series: <em>Seminar in Entrepreneurship Research</em>.<br>
+    &copy; 2026 <a href="https://mayukhmukhopadhyay.com/reviseandresubmit/" target="_blank" rel="noopener noreferrer">Revise and Resubmit &mdash; The Mayukh Show.</a> (CC BY-NC-ND).
+</footer>
+<script>
+(function(){var htmlEl=document.documentElement;var btn=document.getElementById('themeToggle');var icon=document.getElementById('themeIcon');var label=document.getElementById('themeLabel');var dark=window.matchMedia('(prefers-color-scheme: dark)').matches;function apply(){htmlEl.setAttribute('data-theme',dark?'dark':'light');icon.textContent=dark?'☀️':'🌙';label.textContent=dark?'Light Mode':'Dark Mode';}apply();btn.addEventListener('click',function(){dark=!dark;apply();});})();
+function switchTab(id,btn){document.querySelectorAll('.section-panel').forEach(function(p){p.classList.remove('active');});document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});document.getElementById(id).classList.add('active');btn.classList.add('active');btn.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});}
+(function(){var au=document.getElementById('rr-audio');var playBtn=document.getElementById('rr-play');var loopBtn=document.getElementById('rr-loop');var fill=document.getElementById('rr-fill');var thumb=document.getElementById('rr-thumb');var cur=document.getElementById('rr-cur');var dur=document.getElementById('rr-dur');function fmt(s){var m=Math.floor(s/60),sc=Math.floor(s%60);return m+':'+(sc<10?'0':'')+sc;}au.addEventListener('loadedmetadata',function(){dur.textContent=fmt(au.duration||0);});au.addEventListener('durationchange',function(){if(au.duration&&isFinite(au.duration))dur.textContent=fmt(au.duration);});au.addEventListener('timeupdate',function(){var p=au.duration?(au.currentTime/au.duration)*100:0;fill.style.width=p+'%';thumb.style.left=p+'%';cur.textContent=fmt(au.currentTime);});au.addEventListener('ended',function(){playBtn.textContent='▶';});window.rrToggle=function(){if(au.paused){var pr=au.play();if(pr!==undefined){pr.then(function(){playBtn.textContent='⏸';}).catch(function(){playBtn.textContent='▶';});}else{playBtn.textContent='⏸';}}else{au.pause();playBtn.textContent='▶';}};window.rrRewind=function(){au.currentTime=Math.max(0,au.currentTime-10);};window.rrForward=function(){au.currentTime=Math.min(au.duration||0,au.currentTime+10);};window.rrLoop=function(){au.loop=!au.loop;loopBtn.style.background=au.loop?'var(--accent3)':'var(--surface2)';loopBtn.style.color=au.loop?'#fff':'var(--muted)';loopBtn.style.borderColor=au.loop?'var(--accent3)':'var(--border)';};window.rrSeek=function(e){var bar=document.getElementById('rr-bar');var rect=bar.getBoundingClientRect();var p=Math.min(Math.max((e.clientX-rect.left)/rect.width,0),1);if(au.duration&&isFinite(au.duration))au.currentTime=p*au.duration;};window.rrVol=function(v){au.volume=v;};var seeking=false;var bar=document.getElementById('rr-bar');bar.addEventListener('mousedown',function(e){seeking=true;rrSeek(e);});window.addEventListener('mousemove',function(e){if(seeking)rrSeek(e);});window.addEventListener('mouseup',function(){seeking=false;});bar.addEventListener('touchstart',function(e){seeking=true;var t=e.touches[0];rrSeek({clientX:t.clientX});},{passive:true});window.addEventListener('touchmove',function(e){if(seeking){var t=e.touches[0];rrSeek({clientX:t.clientX});}},{passive:true});window.addEventListener('touchend',function(){seeking=false;});})();
+</script>
+</body>
+</html>
