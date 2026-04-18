@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smith et al. 2021 | VSSER-2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Patrick+Hand&family=Kalam&display=swap" rel="stylesheet">
+<style>
+:root,[data-theme="light"]{
+  --bg:#f5f0e8;--surface:#faf7f0;--surface2:#fff;--board:#f8f4ea;
+  --border:#d4cbb8;--divider:#e2ddd0;--text:#2c2416;--muted:#6b5e45;
+  --faint:#b0a48a;--ink:#1a1008;
+  --accent:#2563a8;--accent2:#c0392b;--accent3:#1e8449;
+  --accent4:#7d3c98;--accent5:#d97706;
+  --shadow:0 2px 8px rgba(44,36,22,0.10);--shadow-lg:0 8px 32px rgba(44,36,22,0.13);
+  --font-hand:'Caveat','Kalam',cursive;--font-body:'Patrick Hand','Kalam',cursive;
+  --transition:200ms cubic-bezier(0.16,1,0.3,1);--radius:0.75rem;--radius-sm:0.4rem;
+}
+[data-theme="dark"]{
+  --bg:#120d08;--surface:#1a140f;--surface2:#241c15;--board:#18120d;
+  --border:#3d2e1f;--divider:#2a2118;--text:#f0e7dc;--muted:#d0b08a;
+  --faint:#84684c;--ink:#fff3e6;
+  --accent:#5b9cf6;--accent2:#e87070;--accent3:#52c28a;
+  --accent4:#bb8ee8;--accent5:#f59e0b;
+  --shadow:0 2px 8px rgba(0,0,0,0.45);--shadow-lg:0 8px 32px rgba(0,0,0,0.55);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--font-body);background:var(--bg);color:var(--text);font-size:clamp(1rem,0.9rem + 0.5vw,1.2rem);line-height:1.65;min-height:100dvh;transition:background var(--transition),color var(--transition);}
+.site-header{position:sticky;top:0;z-index:100;background:var(--surface);border-bottom:2px solid var(--border);box-shadow:var(--shadow);padding:0.75rem 1.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.5rem;}
+.logo-wrap{display:flex;align-items:center;gap:0.6rem;}
+.brand-name{font-family:var(--font-hand);font-size:clamp(1.1rem,1rem + 1vw,1.5rem);font-weight:700;color:var(--accent);letter-spacing:-0.02em;}
+.brand-sub{font-family:var(--font-hand);font-size:0.85rem;color:var(--muted);display:block;margin-top:-4px;}
+.toggle-btn{background:var(--surface2);border:2px solid var(--border);border-radius:2rem;padding:0.4rem 1rem;font-family:var(--font-hand);font-size:0.95rem;color:var(--text);cursor:pointer;display:flex;align-items:center;gap:0.4rem;transition:background var(--transition),border-color var(--transition);}
+.toggle-btn:hover{background:var(--divider);}
+.hero-board{background:var(--board);border-bottom:2px solid var(--border);padding:3rem 1.5rem 2.5rem;text-align:center;}
+.hero-label{display:inline-block;background:var(--accent5);color:#fff;font-family:var(--font-hand);font-size:0.85rem;border-radius:2rem;padding:0.25rem 1rem;margin-bottom:1rem;letter-spacing:0.04em;}
+.hero-title{font-family:var(--font-hand);font-size:clamp(1.6rem,1.2rem + 2.5vw,2.8rem);font-weight:700;color:var(--ink);line-height:1.2;max-width:860px;margin:0 auto 1rem;}
+.hero-title span{color:var(--accent5);}
+.hero-meta{font-size:0.9rem;color:var(--muted);max-width:700px;margin:0 auto 1.5rem;}
+.hero-meta strong{color:var(--text);}
+.hero-badges{display:flex;flex-wrap:wrap;justify-content:center;gap:0.5rem;margin-top:1rem;}
+.badge{background:var(--surface2);border:1.5px solid var(--border);border-radius:2rem;padding:0.3rem 0.9rem;font-size:0.82rem;color:var(--muted);font-family:var(--font-hand);}
+.badge.ft50{background:var(--accent4);color:#fff;border-color:var(--accent4);font-weight:700;}
+.badge.amber{background:var(--accent5);color:#fff;border-color:var(--accent5);}
+main{max-width:860px;margin:0 auto;padding:2rem 1rem 3rem;}
+.tabs-wrap{display:flex;gap:0.4rem;flex-wrap:wrap;margin-bottom:1.75rem;border-bottom:2px solid var(--border);padding-bottom:0.5rem;overflow-x:auto;}
+.tab-btn{background:transparent;border:1.5px solid transparent;border-radius:var(--radius-sm) var(--radius-sm) 0 0;padding:0.45rem 1.1rem;font-family:var(--font-hand);font-size:0.97rem;color:var(--muted);cursor:pointer;white-space:nowrap;transition:all var(--transition);}
+.tab-btn:hover{color:var(--text);background:var(--divider);}
+.tab-btn.active{color:var(--accent5);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface);font-weight:700;}
+.section-panel{display:none;}
+.section-panel.active{display:block;}
+.card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:1.4rem 1.6rem;margin-bottom:1.4rem;box-shadow:var(--shadow);}
+.card-title{font-family:var(--font-hand);font-size:1.15rem;font-weight:700;color:var(--accent5);margin-bottom:0.6rem;display:flex;align-items:center;gap:0.4rem;}
+.card p{margin-bottom:0.7rem;}
+.card p:last-child{margin-bottom:0;}
+.highlight{border-left:4px solid var(--accent5);background:var(--surface2);border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:0.9rem 1.2rem;margin:1rem 0;font-size:0.97rem;}
+.highlight.green{border-color:var(--accent3);}
+.highlight.red{border-color:var(--accent2);}
+.highlight.blue{border-color:var(--accent);}
+.highlight.purple{border-color:var(--accent4);}
+.pull-quote{border:2px dashed var(--border);border-radius:var(--radius);padding:1.2rem 1.5rem;margin:1.4rem 0;font-family:var(--font-hand);font-size:clamp(1rem,0.9rem + 0.4vw,1.2rem);color:var(--ink);text-align:center;background:var(--board);}
+.def-list{list-style:none;padding:0;}
+.def-list li{padding:0.7rem 0;border-bottom:1px solid var(--divider);display:grid;grid-template-columns:auto 1fr;gap:0.7rem;align-items:start;}
+.def-list li:last-child{border-bottom:none;}
+.def-tag{background:var(--accent5);color:#fff;border-radius:var(--radius-sm);padding:0.15rem 0.6rem;font-size:0.8rem;font-family:var(--font-hand);white-space:nowrap;margin-top:0.25rem;}
+.def-tag.blue{background:var(--accent);}.def-tag.green{background:var(--accent3);}.def-tag.red{background:var(--accent2);}.def-tag.purple{background:var(--accent4);}.def-tag.orange{background:#d35400;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1rem 0;}
+@media(max-width:560px){.two-col{grid-template-columns:1fr;}}
+.col-card{background:var(--surface2);border:1.5px solid var(--border);border-radius:var(--radius);padding:1rem 1.1rem;}
+.col-card h4{font-family:var(--font-hand);font-size:1rem;margin-bottom:0.4rem;}
+.col-card.amber h4{color:var(--accent5);}.col-card.blue h4{color:var(--accent);}.col-card.green h4{color:var(--accent3);}.col-card.red h4{color:var(--accent2);}.col-card.purple h4{color:var(--accent4);}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;margin:1rem 0;}
+@media(max-width:700px){.three-col{grid-template-columns:1fr;}}
+.results-table-wrap{overflow-x:auto;margin:1rem 0;}
+table{width:100%;border-collapse:collapse;font-size:0.92rem;font-family:var(--font-body);}
+th{background:var(--accent5);color:#fff;padding:0.6rem 0.9rem;text-align:left;font-family:var(--font-hand);}
+td{padding:0.55rem 0.9rem;border-bottom:1px solid var(--divider);vertical-align:top;}
+tr:last-child td{border-bottom:none;} tr:nth-child(even) td{background:var(--surface2);}
+.insight-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin:1.2rem 0;}
+.insight-box{background:var(--surface2);border:1.5px solid var(--border);border-radius:var(--radius);padding:1rem;text-align:center;}
+.insight-icon{font-size:2rem;display:block;margin-bottom:0.4rem;}
+.insight-label{font-size:0.82rem;color:var(--muted);}
+.insight-val{font-family:var(--font-hand);font-size:1.1rem;font-weight:700;color:var(--accent5);display:block;margin:0.2rem 0 0.1rem;}
+.step-list{list-style:none;padding:0;}
+.step-list li{display:flex;gap:0.9rem;padding:0.8rem 0;border-bottom:1px solid var(--divider);align-items:flex-start;}
+.step-list li:last-child{border-bottom:none;}
+.step-num{background:var(--accent5);color:#fff;border-radius:50%;min-width:2rem;height:2rem;display:flex;align-items:center;justify-content:center;font-family:var(--font-hand);font-weight:700;font-size:0.95rem;flex-shrink:0;}
+.paper-meta-list{list-style:none;padding:0;}
+.paper-meta-list li{display:flex;gap:0.6rem;padding:0.5rem 0;border-bottom:1px solid var(--divider);font-size:0.92rem;}
+.paper-meta-list li:last-child{border-bottom:none;}.pm-label{font-weight:700;color:var(--muted);min-width:130px;flex-shrink:0;}
+footer{background:var(--surface);border-top:2px solid var(--border);text-align:center;padding:1.8rem 1.5rem;font-size:0.9rem;color:var(--muted);margin-top:3rem;}
+.footer-links{display:flex;flex-wrap:wrap;justify-content:center;gap:0.75rem 1.5rem;margin:0.75rem 0;font-size:0.92rem;}
+.footer-links a,footer a{color:var(--accent);text-decoration:none;}.footer-links a:hover,footer a:hover{text-decoration:underline;}
+.vsser-note{margin-top:0.75rem;font-size:0.85rem;color:var(--faint);border-top:1px solid var(--divider);padding-top:0.75rem;}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="logo-wrap">
+  <a href="https://mayukhpsm.github.io/vsser26/" class="brand-link" aria-label="Return to home">
+    <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="36" height="36" rx="8" fill="var(--accent)"/><text x="18" y="25" font-size="18" text-anchor="middle" fill="white" font-family="serif" font-weight="bold">PE</text></svg></a>
+    <div><span class="brand-name">VSSER-2026</span><span class="brand-sub">Paper Explainer</span></div>
+  </div>
+  <button class="toggle-btn" id="themeToggle" aria-label="Toggle theme"><span id="themeIcon">🌙</span><span id="themeLabel">Dark Mode</span></button>
+</header>
+<section class="hero-board">
+  <div class="hero-label">🙏 Religion &amp; Entrepreneurship · VSSER-2026</div>
+  <h1 class="hero-title">Toward a theological turn in entrepreneurship: How religion could enable transformative research in our field<span> <br>(Beyond Profit, Toward Purpose — A Theological Turn in Entrepreneurship Research)</span></h1>
+  <p class="hero-meta"><strong>Smith, McMullen &amp; Cardon (2021)</strong> · Journal of Business Venturing · Elsevier<br>DOI: 10.1016/j.jbusvent.2021.106139</p>
+  <div class="hero-badges">
+    <span class="badge">📘 Editorial / Conceptual Essay</span>
+    <span class="badge amber">🙏 Religion as Theory</span>
+    <span class="badge">🔭 Transformative Research Agenda</span>
+    <span class="badge ft50">⭐ FT50 Journal</span>
+    <span class="badge">📅 Published 2021, Vol. 36, Issue 5</span>
+  </div>
+</section>
+
+<div id="audio-player-wrap" style="max-width:860px;margin:2rem auto 0;padding:0 1rem;">
+  <div style="background:var(--surface);border:2px solid var(--border);border-radius:0.75rem;box-shadow:0 8px 32px rgba(44,36,22,0.13);padding:1.4rem 1.6rem 1.2rem;display:flex;flex-direction:column;gap:0.9rem;">
+    <div style="display:flex;align-items:center;gap:0.85rem;">
+      <span style="font-size:2rem;line-height:1;flex-shrink:0;">🎙️</span>
+      <div>
+        <div style="font-family:var(--font-hand);font-size:clamp(1rem,0.95rem + 0.4vw,1.25rem);font-weight:700;color:var(--accent5);line-height:1.25;">Listen to an AI-Assisted Podcast</div>
+        <div style="font-size:0.82rem;color:var(--muted);margin-top:0.15rem;">Theological Turn &amp; Entrepreneurship · Smith et al. 2021 · Religion &amp; Entrepreneurship · VSSER-2026</div>
+      </div>
+    </div>
+    <audio id="rr-audio" preload="metadata">
+      <source src="vsser26-smithetal2021.mp3" type="audio/mpeg">
+      <source src="vsser26-smithetal2021.m4a" type="audio/mp4">
+      Your browser does not support the audio element.
+    </audio>
+    <div style="display:flex;align-items:center;justify-content:center;gap:0.65rem;flex-wrap:wrap;">
+      <button onclick="rrRewind()" style="background:var(--surface2);border:2px solid var(--border);border-radius:2rem;padding:0.42rem 1rem;font-family:var(--font-hand);font-size:0.92rem;color:var(--text);cursor:pointer;">⏮ 10s</button>
+      <button id="rr-play" onclick="rrToggle()" style="background:var(--accent5);color:#fff;border:none;border-radius:2rem;padding:0.5rem 1.6rem;font-family:var(--font-hand);font-size:1.1rem;font-weight:700;cursor:pointer;min-width:72px;">▶</button>
+      <button onclick="rrForward()" style="background:var(--surface2);border:2px solid var(--border);border-radius:2rem;padding:0.42rem 1rem;font-family:var(--font-hand);font-size:0.92rem;color:var(--text);cursor:pointer;">10s ⏭</button>
+      <button id="rr-loop" onclick="rrLoop()" title="Toggle loop" style="background:var(--surface2);border:2px solid var(--border);border-radius:2rem;padding:0.42rem 1rem;font-family:var(--font-hand);font-size:0.92rem;color:var(--muted);cursor:pointer;">🔁</button>
+    </div>
+    <div style="display:flex;align-items:center;gap:0.6rem;">
+      <span id="rr-cur" style="font-size:0.8rem;color:var(--muted);min-width:36px;text-align:center;flex-shrink:0;">0:00</span>
+      <div id="rr-bar" onclick="rrSeek(event)" style="flex:1;height:9px;background:var(--divider);border-radius:99px;position:relative;cursor:pointer;overflow:visible;">
+        <div id="rr-fill" style="height:100%;background:var(--accent5);border-radius:99px;width:0%;pointer-events:none;"></div>
+        <div id="rr-thumb" style="position:absolute;top:50%;left:0%;transform:translate(-50%,-50%);width:16px;height:16px;border-radius:50%;background:var(--accent5);border:2px solid var(--surface);box-shadow:0 1px 4px rgba(0,0,0,0.25);pointer-events:none;"></div>
+      </div>
+      <span id="rr-dur" style="font-size:0.8rem;color:var(--muted);min-width:36px;text-align:center;flex-shrink:0;">0:00</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:0.5rem;">
+      <span style="font-size:1rem;">🔊</span>
+      <input type="range" id="rr-vol" min="0" max="1" step="0.05" value="1" oninput="rrVol(this.value)"
+        style="flex:1;max-width:180px;-webkit-appearance:none;appearance:none;height:6px;border-radius:99px;background:var(--divider);outline:none;cursor:pointer;">
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  var au=document.getElementById('rr-audio');
+  var playBtn=document.getElementById('rr-play');
+  var loopBtn=document.getElementById('rr-loop');
+  var fill=document.getElementById('rr-fill');
+  var thumb=document.getElementById('rr-thumb');
+  var cur=document.getElementById('rr-cur');
+  var dur=document.getElementById('rr-dur');
+  function fmt(s){var m=Math.floor(s/60),sc=Math.floor(s%60);return m+':'+(sc<10?'0':'')+sc;}
+  au.addEventListener('loadedmetadata',function(){dur.textContent=fmt(au.duration||0);});
+  au.addEventListener('durationchange',function(){if(au.duration&&isFinite(au.duration))dur.textContent=fmt(au.duration);});
+  au.addEventListener('timeupdate',function(){
+    var p=au.duration?(au.currentTime/au.duration)*100:0;
+    fill.style.width=p+'%';thumb.style.left=p+'%';cur.textContent=fmt(au.currentTime);
+  });
+  au.addEventListener('ended',function(){playBtn.textContent='▶';});
+  window.rrToggle=function(){
+    if(au.paused){var pr=au.play();if(pr!==undefined){pr.then(function(){playBtn.textContent='⏸';}).catch(function(){playBtn.textContent='▶';});}else{playBtn.textContent='⏸';}}
+    else{au.pause();playBtn.textContent='▶';}
+  };
+  window.rrRewind=function(){au.currentTime=Math.max(0,au.currentTime-10);};
+  window.rrForward=function(){au.currentTime=Math.min(au.duration||0,au.currentTime+10);};
+  window.rrLoop=function(){
+    au.loop=!au.loop;
+    loopBtn.style.background=au.loop?'var(--accent3)':'var(--surface2)';
+    loopBtn.style.color=au.loop?'#fff':'var(--muted)';
+    loopBtn.style.borderColor=au.loop?'var(--accent3)':'var(--border)';
+  };
+  window.rrSeek=function(e){
+    var bar=document.getElementById('rr-bar');
+    var rect=bar.getBoundingClientRect();
+    var p=Math.min(Math.max((e.clientX-rect.left)/rect.width,0),1);
+    if(au.duration&&isFinite(au.duration))au.currentTime=p*au.duration;
+  };
+  window.rrVol=function(v){au.volume=v;};
+  var vol=document.getElementById('rr-vol');
+  vol.style.setProperty('background','var(--divider)');
+  var seeking=false;
+  var bar=document.getElementById('rr-bar');
+  bar.addEventListener('mousedown',function(e){seeking=true;rrSeek(e);});
+  window.addEventListener('mousemove',function(e){if(seeking)rrSeek(e);});
+  window.addEventListener('mouseup',function(){seeking=false;});
+  bar.addEventListener('touchstart',function(e){seeking=true;var t=e.touches[0];rrSeek({clientX:t.clientX});},{passive:true});
+  window.addEventListener('touchmove',function(e){if(seeking){var t=e.touches[0];rrSeek({clientX:t.clientX});}},{passive:true});
+  window.addEventListener('touchend',function(){seeking=false;});
+})();
+</script>
+
+<main>
+  <nav class="tabs-wrap" role="tablist" aria-label="Sections">
+    <button class="tab-btn active" onclick="switchTab('overview',this)" role="tab">📋 Overview</button>
+    <button class="tab-btn" onclick="switchTab('processes',this)" role="tab">⚙️ Processes</button>
+    <button class="tab-btn" onclick="switchTab('implications',this)" role="tab">💡 Implications</button>
+    <button class="tab-btn" onclick="switchTab('contexts',this)" role="tab">🌍 Contexts</button>
+    <button class="tab-btn" onclick="switchTab('agenda',this)" role="tab">🔭 Research Agenda</button>
+    <button class="tab-btn" onclick="switchTab('meta',this)" role="tab">📚 Paper Info</button>
+  </nav>
+
+  <div id="overview" class="section-panel active">
+    <div class="card">
+      <div class="card-title">🧭 The Core Claim</div>
+      <p>This paper argues that entrepreneurship research has become overly dependent on an economic paradigm built around self-interest, material gain, rational calculation, and methodological individualism. Smith, McMullen, and Cardon do not reject economics; instead, they argue the field now needs a complementary lens capable of explaining meaning, sacred purpose, altruism, identity, and nonmarket motives with equal seriousness.</p>
+      <p>That complementary lens is what the authors call a <strong>theological turn</strong>. In their formulation, religion should not be treated as a marginal control variable or a cultural afterthought. It can serve as a foundational explanatory framework that reshapes how scholars understand entrepreneurial action, opportunity evaluation, identity conflict, resilience, and context itself. 🙏</p>
+    </div>
+    <div class="pull-quote">💡 The paper’s real provocation is simple: if religion shapes what people value, fear, hope for, and see as sacred, then entrepreneurship theory is incomplete without it.</div>
+    <div class="card">
+      <div class="card-title">🧠 What the Paper Does</div>
+      <p>This is an editorial essay in <em>Journal of Business Venturing</em>, but it is far more than a commentary piece. It identifies four barriers that have kept religion outside mainstream entrepreneurship research, explains why those barriers are overstated, and then shows how a theological turn could transform both <strong>entrepreneurial processes</strong> and <strong>entrepreneurial contexts</strong>.</p>
+      <p>The paper also offers a broad research agenda. Rather than testing one hypothesis, it opens a new terrain of inquiry: who entrepreneurs are, why they act, which opportunities they notice, how they cope with failure, how religiously-inflected ecosystems emerge, and how legitimacy works when sacred and market logics interact.</p>
+    </div>
+    <div class="insight-strip">
+      <div class="insight-box"><span class="insight-icon">🙏</span><span class="insight-val">Theological Turn</span><span class="insight-label">Religion as a theoretical foundation, not just a background variable</span></div>
+      <div class="insight-box"><span class="insight-icon">⚙️</span><span class="insight-val">Processes</span><span class="insight-label">Goals, opportunity beliefs, identity, meaning, failure, resilience</span></div>
+      <div class="insight-box"><span class="insight-icon">🌍</span><span class="insight-val">Contexts</span><span class="insight-label">Institutional, spatial, temporal, and social religious contexts</span></div>
+      <div class="insight-box"><span class="insight-icon">⭐</span><span class="insight-val">FT50</span><span class="insight-label">Journal of Business Venturing is a Financial Times top-50 outlet</span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">🚧 Why Religion Was Ignored</div>
+      <ul class="def-list">
+        <li><span class="def-tag">Secularization</span><span>Many scholars assumed religion was declining globally and therefore becoming less relevant. The paper argues the opposite: religious affiliation remains widespread and socially consequential.</span></li>
+        <li><span class="def-tag blue">Personal Relevance</span><span>If religion is not central in the lives of researchers themselves, they may underestimate its salience in the lives of entrepreneurs and organizations.</span></li>
+        <li><span class="def-tag green">Measurement</span><span>Religion is often seen as too fuzzy or difficult to operationalize. The authors counter that established literatures in psychology, sociology, and economics of religion already provide strong measurement foundations.</span></li>
+        <li><span class="def-tag red">Sensitivity</span><span>Religion is often treated as too controversial or personal for rigorous study. The paper argues that sensitivity is not a reason for omission; it is precisely a reason for careful scholarship.</span></li>
+      </ul>
+      <div class="highlight blue"><strong>Bottom line:</strong> the neglect of religion is not evidence that religion is unimportant. It is evidence of a blind spot in the field’s dominant assumptions.</div>
+    </div>
+  </div>
+
+  <div id="processes" class="section-panel">
+    <div class="card">
+      <div class="card-title">⚙️ Theological Turn for Entrepreneurial Processes</div>
+      <p>The authors argue that religion can fundamentally reshape how scholars understand entrepreneurial processes. Instead of assuming that actors seek profit first and then perhaps attach meaning later, the paper suggests that entrepreneurs may begin with sacred purpose, calling, obligation, service, or transcendence — and only then translate those commitments into opportunity pursuit and organizational action.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">🎯 Goals and Opportunity Beliefs</div>
+      <p>Religion may alter what entrepreneurs perceive as desirable, legitimate, and worth pursuing. A faith-based logic can prioritize compassion, service, stewardship, or moral prohibition over pure market return, shifting which opportunities appear attractive in the first place.</p>
+      <div class="two-col">
+        <div class="col-card amber"><h4>What Changes</h4><p>Goals may be organized around sacred purpose, not just utility or growth. Opportunity evaluation can shift toward human impact, calling, or moral consistency rather than merely economic upside.</p></div>
+        <div class="col-card blue"><h4>Illustration</h4><p>The paper notes that Islamic banks avoid certain products for religious reasons. Such behavior looks irrational from a pure market lens but becomes coherent once a religious logic is taken seriously.</p></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">🌱 Meaning, Calling, and Persistence</div>
+      <p>One of the paper’s strongest arguments is that religion can deepen the meaning entrepreneurs attach to their work. If entrepreneurship is understood as service, vocation, or sacred calling, then commitment, perseverance, and resilience may operate differently than in conventional theories focused mainly on extrinsic rewards.</p>
+      <div class="highlight green"><strong>Key idea:</strong> setbacks may be interpreted differently when the venture is connected to a larger spiritual mission. What counts as “success” or “failure” may itself be redefined.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">🪞 Identity and Identity Conflict</div>
+      <p>The paper extends identity research by asking how entrepreneurs negotiate religious identity alongside venture identity. Founders may publicly foreground religion, privately embody it without explicit signaling, or experience deep tension between market expectations and faith commitments.</p>
+      <ul class="def-list">
+        <li><span class="def-tag purple">Identity Multiplicity</span><span>Entrepreneurs may carry personal, organizational, religious, and commercial identities simultaneously.</span></li>
+        <li><span class="def-tag orange">Visibility Choices</span><span>Some ventures openly market their religious identity; others express it only through internal values and practices.</span></li>
+        <li><span class="def-tag red">Conflict</span><span>Identity congruence is not guaranteed. Publicly embracing a faith identity may strengthen legitimacy in one audience and damage it in another.</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">💥 Failure, Loss, and Recovery</div>
+      <p>The paper suggests religion may influence how entrepreneurs interpret failure, assign blame, forgive themselves, and recover meaning after loss. A superordinate faith-based identity may soften the devastation of venture failure by anchoring the self in something larger than the firm.</p>
+      <div class="highlight purple"><strong>Research opportunity:</strong> religion may shape grief recovery, attribution, belonging, self-compassion, and even what counts as “defeat” when temporal horizons include afterlife or eternal meaning.</div>
+    </div>
+  </div>
+
+  <div id="implications" class="section-panel">
+    <div class="card">
+      <div class="card-title">💡 Why This Paper Has Real-World Stakes</div>
+      <p>This is a conceptual paper, but its implications are not abstract. If religion genuinely shapes who becomes an entrepreneur, what opportunities they pursue, how they handle failure, and what institutional contexts they build — then policymakers, educators, investors, and scientists all need to take that seriously. Ignoring religion does not make it go away; it just makes our frameworks less accurate.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🏢 For Practitioners</div>
+      <ul class="def-list">
+        <li><span class="def-tag">Founders</span><span>If your entrepreneurial motivation is rooted in faith, calling, or sacred purpose, you do not need to hide it or translate it entirely into market language to be taken seriously. This paper gives intellectual legitimacy to ventures built on religious vocation. Understanding how your faith shapes your goal hierarchy, opportunity choices, and resilience calculus can be a source of strategic self-awareness rather than a liability.</span></li>
+        <li><span class="def-tag blue">Investors</span><span>Faith-based entrepreneurial ecosystems are real, growing, and spatially concentrated. Investors who understand how religious networks mobilise capital, talent, and legitimacy — and how religious logic changes what counts as an acceptable return — will be better positioned to evaluate founders whose motivations include sacred purpose alongside financial goals.</span></li>
+        <li><span class="def-tag green">Accelerators &amp; Incubators</span><span>Programme design that assumes all founders are motivated primarily by profit and scale may be poorly fitted to founders operating from religious vocations. Offering coaching, mentorship, and frameworks that can hold both market logic and faith-based logic simultaneously will serve a wider and more diverse founder community.</span></li>
+        <li><span class="def-tag purple">Social Entrepreneurs</span><span>The paper shows that a significant proportion of social entrepreneurial activity is initiated by religious organisations or individuals acting from religious faith. Practitioners in this space should explicitly recognise the theological foundations of their work rather than translating them into purely secular language for legitimacy. That translation may actually weaken rather than strengthen the coherence and commitment of the venture.</span></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🏛️ For Policy Makers</div>
+      <ul class="def-list">
+        <li><span class="def-tag">Ecosystem Design</span><span>Faith-based entrepreneurial ecosystems — clusters of mega-churches, faith-driven accelerators, religiously affiliated universities, and patient faith-motivated capital — represent a distinct and largely unmapped tier of the entrepreneurial support infrastructure. Economic development policies that only map secular institutions miss this layer entirely. Policymakers designing regional entrepreneurship strategies should audit and engage faith-based institutional actors as legitimate ecosystem partners.</span></li>
+        <li><span class="def-tag blue">Inclusion Policy</span><span>Religion is one of the most consequential dimensions of identity in the Global South, the Middle East, sub-Saharan Africa, and much of Asia. Entrepreneurship promotion programmes exported from secular Western frameworks may systematically fail to resonate with populations whose entrepreneurial identity and motivation are deeply faith-embedded. Context-sensitive inclusion policy needs to take religious context as seriously as gender or class context.</span></li>
+        <li><span class="def-tag green">Social Enterprise &amp; Welfare</span><span>Many of the most effective welfare, rehabilitation, and community development initiatives worldwide are faith-initiated. The paper cites San Patrignano in Italy as an example. Policymakers who channel support exclusively through secular NGOs and government departments may be bypassing more embedded, trusted, and mission-committed faith-based operators. Public-private partnerships should explicitly include faith-based social enterprises as delivery partners.</span></li>
+        <li><span class="def-tag orange">Temporal Policy Horizons</span><span>Religious entrepreneurs often operate with longer, eschatological time horizons — building institutions meant to outlast individual lifetimes, even generations. Policy instruments calibrated to short electoral or investment cycles may be poorly matched to the patience and ambition of faith-motivated enterprises. Grant design, patient capital schemes, and community development funding should accommodate longer-horizon faith-motivated ventures.</span></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🔬 For Ethical Scientists &amp; Researchers</div>
+      <ul class="def-list">
+        <li><span class="def-tag">Positionality</span><span>The paper's "personal relevance hypothesis" is a challenge to every researcher: if religion is not important in your own life, you may be systematically underestimating its importance in the lives of your research subjects. Rigorous scholarship requires surfacing and interrogating that blind spot — not as a confession, but as a methodological discipline. Reflexivity about one's own secular or religious position is as important as any other form of researcher positionality statement.</span></li>
+        <li><span class="def-tag blue">Measurement Responsibility</span><span>The authors note that religion is a multi-dimensional construct requiring careful operationalisation. Researchers entering this space have a responsibility to measure religion rigorously — distinguishing religious identity, religiosity, religious practice, and theological orientation — rather than treating "religion" as a single crude categorical variable. Sloppy operationalisation produces misleading findings that can harm both the scholarly conversation and the communities being studied.</span></li>
+        <li><span class="def-tag green">Non-Advocacy Norm</span><span>The paper explicitly states it does not advocate for any religion or promote theological truth claims. Ethical researchers in this space must hold the same line: studying religion scientifically is not an endorsement of religion, nor is noting religion's dark sides (exclusion, discrimination, terrorism) an attack on faith. Both sacred and harmful dimensions of religious context must be reported honestly and without agenda.</span></li>
+        <li><span class="def-tag red">Representation</span><span>Most prior religion and entrepreneurship research comes from the Christian West. The paper points to Islamic banking, Jewish "repair the world" ethics, and Hindu and Buddhist entrepreneurship traditions — but these remain underexplored. Ethical researchers should resist the temptation to build universal frameworks from a narrow religious base. Comparative, cross-religious, and Global South-centred scholarship is urgently needed.</span></li>
+        <li><span class="def-tag purple">Harm Awareness</span><span>Religious contexts can enable exclusion, in-group favouritism, discrimination against LGBTQ+ founders, women entrepreneurs in conservative contexts, and individuals of minority faiths. Researchers must not romanticise religious entrepreneurial ecosystems. Ethical scholarship requires naming the constraining and potentially harmful dimensions of religious context alongside the enabling ones — with equal analytical seriousness.</span></li>
+      </ul>
+    </div>
+
+    <div class="pull-quote">🌍 "Religion potentially changes answers to the: who, what, where, how, and why research questions of entrepreneurship." — Smith, McMullen &amp; Cardon (2021)</div>
+  </div>
+
+  <div id="contexts" class="section-panel">
+    <div class="card">
+      <div class="card-title">🌍 Theological Turn for Contexts</div>
+      <p>The authors explicitly connect their paper to the context tradition in entrepreneurship associated with Welter and Zahra. They argue that religion can enrich entrepreneurship’s understanding of institutional, spatial, temporal, and social context by showing how sacred meaning systems actively structure opportunity, legitimacy, networks, and time horizons.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">🏛️ Institutional Context</div>
+      <p>Religious norms and organizations can shape the rules, meanings, and moral infrastructures within which entrepreneurship takes place. This is especially visible in social entrepreneurship, where religious commitments often motivate ventures serving the poor, marginalized, or excluded.</p>
+      <div class="highlight"><strong>Provocation:</strong> religion may function not merely as one logic among many, but as a <em>meta-logic</em> that permeates an institutional setting and reorders how other logics are interpreted.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">🗺️ Spatial Context</div>
+      <p>The paper shows that religious entrepreneurship is spatially embedded. Faith-based ecosystems can cluster around churches, universities, accelerators, investors, and community organizations, creating local opportunity structures that a purely economic explanation struggles to capture.</p>
+      <div class="two-col">
+        <div class="col-card amber"><h4>Examples</h4><p>San Patrignano in Italy, faith-based entrepreneurship activity in Cincinnati, and geographically rooted religious communities illustrate how place and faith intertwine.</p></div>
+        <div class="col-card red"><h4>Open Question</h4><p>Religion may enable ventures within one’s faith community while discouraging opportunities beyond it. That means geography and religious boundary-making may jointly shape entrepreneurial choice.</p></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">⏳ Temporal Context</div>
+      <p>Many religions orient adherents toward the hereafter, eternity, redemption, or ultimate destiny. The authors argue this future orientation can change how entrepreneurs and investors understand urgency, sacrifice, patience, and time horizons.</p>
+      <div class="highlight blue"><strong>Important extension:</strong> religion may connect past, present, and future in a way that stretches entrepreneurship theory beyond short-term market clocks to moral and eschatological horizons.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">🤝 Social Context</div>
+      <p>Religious social networks can supply legitimacy, capital, mentorship, labor, and trust. But the paper also cautions that religious diversity, intra-religious plurality, and exclusion of out-groups complicate any simple celebration of faith-based networks.</p>
+      <div class="three-col">
+        <div class="col-card green"><h4>Benefits</h4><p>Shared faith may accelerate trust, legitimacy, and resource mobilization.</p></div>
+        <div class="col-card purple"><h4>Complexity</h4><p>Different sects or internal variations can create heterogeneity inside a single religious category.</p></div>
+        <div class="col-card red"><h4>Risk</h4><p>Religion can also exclude, constrain, or delegitimize actors outside the dominant faith logic.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="agenda" class="section-panel">
+    <div class="card">
+      <div class="card-title">🔭 Transformative Research Agenda</div>
+      <p>The paper’s most lasting contribution may be its agenda-setting function. It frames religion not as a niche topic but as a route toward more transformative, relevant, and imaginative entrepreneurship research.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">✨ What the Theological Turn Enables</div>
+      <ol class="step-list">
+        <li><span class="step-num">1</span><span><strong>Alternative explanations.</strong> Theological reasoning expands the field beyond market logic and helps explain action rooted in sacred purpose, service, obligation, or moral prohibition.</span></li>
+        <li><span class="step-num">2</span><span><strong>New constructs.</strong> Concepts like surrendering, identity elasticity, elastic hybridity, sacred calling, and faith-based legitimacy become theoretically productive rather than peripheral.</span></li>
+        <li><span class="step-num">3</span><span><strong>Broader outcomes.</strong> Entrepreneurship can be studied in terms of flourishing, belonging, resilience, restoration, and meaning — not just growth or profit.</span></li>
+        <li><span class="step-num">4</span><span><strong>Richer contextualization.</strong> Religious institutional, spatial, temporal, and social contexts can be integrated into mainstream entrepreneurship theory.</span></li>
+        <li><span class="step-num">5</span><span><strong>A moonshot for the field.</strong> The authors explicitly position the theological turn as a route to transformative scholarship rather than incremental refinement.</span></li>
+      </ol>
+    </div>
+    <div class="card">
+      <div class="card-title">📌 Research Questions the Paper Opens</div>
+      <div class="results-table-wrap">
+        <table>
+          <thead><tr><th>Domain</th><th>Key Questions</th><th>Why It Matters</th></tr></thead>
+          <tbody>
+            <tr><td>Opportunity evaluation</td><td>How do religious values reshape desirability and feasibility judgments?</td><td>Challenges the assumption that profit is the default metric.</td></tr>
+            <tr><td>Identity</td><td>How do founders reconcile secular and religious identities over time?</td><td>Extends identity work into morally charged and controversial terrain.</td></tr>
+            <tr><td>Failure</td><td>How does faith affect attribution, recovery, forgiveness, and meaning after loss?</td><td>Could reshape entrepreneurial failure theory.</td></tr>
+            <tr><td>Context</td><td>When does a religious meta-logic enable or constrain entrepreneurial ecosystems?</td><td>Links theology directly to contextual theory.</td></tr>
+            <tr><td>Legitimacy</td><td>How does religion influence symbolic legitimacy across places and audiences?</td><td>Opens configurational and multi-level legitimacy research.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="pull-quote">🚀 The paper treats the theological turn as a possible “moonshot” for entrepreneurship research — a way to stretch its philosophical foundations, time horizons, and understanding of human purpose.</div>
+    <div class="card">
+      <div class="card-title">⚠️ Limits and Cautions</div>
+      <ul class="def-list">
+        <li><span class="def-tag red">Not advocacy</span><span>The authors explicitly state they are not promoting any religion or asking scholars to become more religious. Their argument is for analytical seriousness, not theological endorsement.</span></li>
+        <li><span class="def-tag blue">Conceptual, not empirical</span><span>This paper does not test hypotheses. Its value lies in agenda setting, boundary expansion, and theory provocation.</span></li>
+        <li><span class="def-tag green">Religion is not uniformly good</span><span>The paper recognizes that religious contexts can encourage service and compassion, but can also enable exclusion, prejudice, constraint, or conflict.</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="meta" class="section-panel">
+    <div class="card">
+      <div class="card-title">📚 Paper Details</div>
+      <ul class="paper-meta-list">
+        <li><span class="pm-label">Title</span><span>Toward a theological turn in entrepreneurship: How religion could enable transformative research in our field</span></li>
+        <li><span class="pm-label">Authors</span><span>Brett R. Smith · Jeffery S. McMullen · Melissa S. Cardon</span></li>
+        <li><span class="pm-label">Journal</span><span>Journal of Business Venturing · Elsevier</span></li>
+        <li><span class="pm-label">Journal Ranking</span><span>⭐ FT50 outlet</span></li>
+        <li><span class="pm-label">Volume / Article</span><span>Vol. 36(5) (2021), Article 106139</span></li>
+        <li><span class="pm-label">DOI</span><span><a href="https://doi.org/10.1016/j.jbusvent.2021.106139" target="_blank" rel="noopener noreferrer">10.1016/j.jbusvent.2021.106139</a></span></li>
+        <li><span class="pm-label">Article Type</span><span>Editorial / conceptual essay</span></li>
+        <li><span class="pm-label">Keywords</span><span>Religion; Entrepreneurial action; Social entrepreneurship; Identity; Entrepreneurial context; Theological turn; Entrepreneurship</span></li>
+        <li><span class="pm-label">Received</span><span>24 April 2021</span></li>
+        <li><span class="pm-label">Revised</span><span>28 June 2021</span></li>
+        <li><span class="pm-label">Accepted</span><span>30 June 2021</span></li>
+        <li><span class="pm-label">Funding Note</span><span>L.I.F.E. (Leading the Integration of Faith & Entrepreneurship) Research Lab at Miami University</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">👩‍🏫 About the Authors</div>
+      <ul class="def-list">
+        <li><span class="def-tag">Smith</span><span><strong>Brett R. Smith</strong> — Miami University (Ohio), Farmer School of Business. Corresponding author and a leading contributor to religion and entrepreneurship scholarship.</span></li>
+        <li><span class="def-tag blue">McMullen</span><span><strong>Jeffery S. McMullen</strong> — Indiana University, Kelley School of Business. Widely known for foundational work on entrepreneurial action, uncertainty, and process theorizing.</span></li>
+        <li><span class="def-tag purple">Cardon</span><span><strong>Melissa S. Cardon</strong> — University of Tennessee, Haslam College of Business. Highly cited scholar of entrepreneurial passion, identity, and emotions.</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">📝 Why This Paper Matters for VSSER</div>
+      <p>This paper works especially well in the “Religion and Entrepreneurship” stream because it does not simply add religion as another variable. It asks whether entrepreneurship research itself has been philosophically narrowed by overreliance on market reasoning and whether religion can reopen foundational questions about purpose, value, legitimacy, and human flourishing.</p>
+      <div class="highlight"><strong>Series fit:</strong> if Welter and Zahra ask us to contextualize entrepreneurship more seriously, Smith, McMullen, and Cardon ask us to theologicalize one particularly consequential context with equal seriousness.</div>
+    </div>
+  </div>
+</main>
+<footer>
+  <p>🎙️ This explainer is part of the <strong>Religion and Entrepreneurship</strong> series on <strong>VSSER-2026</strong></p>
+  <div class="footer-links">
+    🎧 <a href="https://open.spotify.com/show/1FSNMlJzYxvlPswFdyCZx1?si=f0ed71dfbbc94b8c" target="_blank" rel="noopener noreferrer">Spotify</a>
+    📺 <a href="https://www.youtube.com/@WeekendResearcher" target="_blank" rel="noopener noreferrer">YouTube: Weekend Researcher</a>
+    🎵 <a href="https://music.amazon.in/podcasts/f64c70fc-f70b-498e-87f3-669152e83730/revise-and-resubmit---the-mayukh-show" target="_blank" rel="noopener noreferrer">Amazon Prime Music</a>
+    &#127822; <a href="https://podcasts.apple.com/us/podcast/revise-and-resubmit-the-mayukh-show/id1770883122" target="_blank" rel="noopener noreferrer">Apple Podcast</a>
+  </div>
+  <p style="margin-top:0.5rem;font-size:0.82rem;">Heartfelt thanks to <strong>Brett R. Smith, Jeffery S. McMullen,</strong> and <strong>Melissa S. Cardon</strong> for this important contribution, and to <strong>Elsevier</strong> for publishing it in the <strong>Journal of Business Venturing</strong>, a leading <strong>FT50</strong> outlet in entrepreneurship research. 🙏</p>
+  <div class="vsser-note">📌 This is a reading material prepared in connection with <strong><a href="https://ent.aom.org/ent/discussion/accepting-applications-virtual-summer-school-in-entrepreneurship-research-vsser-2026-1#bm3eca6821-5ef0-4889-b5c7-5af5cda8dc4d" target="_blank" rel="noopener noreferrer">VSSER-2026</a></strong>, spearheaded by <strong><a href="https://culverhouse.ua.edu/people/vishal-gupta/" target="_blank" rel="noopener noreferrer">Professor Vishal K. Gupta</a></strong> and <strong><a href="https://www.linkedin.com/in/athina-skiadopoulou-3931b3193/" target="_blank" rel="noopener noreferrer">Dr Athina Skiadopoulou</a></strong>.<br>© 2026 <a href="https://mayukhmukhopadhyay.com/reviseandresubmit/" target="_blank" rel="noopener noreferrer">Revise and Resubmit — The Mayukh Show.</a>  (CC BY-NC-ND).</div>
+</footer>
+<script>
+(function(){var htmlEl=document.documentElement;var btn=document.getElementById('themeToggle');var icon=document.getElementById('themeIcon');var label=document.getElementById('themeLabel');var dark=window.matchMedia('(prefers-color-scheme: dark)').matches;function apply(){htmlEl.setAttribute('data-theme',dark?'dark':'light');icon.textContent=dark?'☀️':'🌙';label.textContent=dark?'Light Mode':'Dark Mode';}apply();btn.addEventListener('click',function(){dark=!dark;apply();});})();
+function switchTab(id,btn){document.querySelectorAll('.section-panel').forEach(function(p){p.classList.remove('active');});document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});document.getElementById(id).classList.add('active');btn.classList.add('active');btn.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});}
+</script>
+</body>
+</html>
