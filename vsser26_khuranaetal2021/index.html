@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Khurana et al. 2021 | VSSER-2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Patrick+Hand&family=Kalam&display=swap" rel="stylesheet">
+<style>
+:root,[data-theme="light"]{
+  --bg:#f5f0e8;--surface:#faf7f0;--surface2:#fff;--board:#f8f4ea;
+  --border:#d4cbb8;--divider:#e2ddd0;--text:#2c2416;--muted:#6b5e45;
+  --faint:#b0a48a;--ink:#1a1008;
+  --accent:#2563a8;--accent2:#c0392b;--accent3:#1e8449;
+  --accent4:#7d3c98;--accent5:#d97706;
+  --shadow:0 2px 8px rgba(44,36,22,0.10);--shadow-lg:0 8px 32px rgba(44,36,22,0.13);
+  --font-hand:'Caveat','Kalam',cursive;--font-body:'Patrick Hand','Kalam',cursive;
+  --transition:200ms cubic-bezier(0.16,1,0.3,1);--radius:0.75rem;--radius-sm:0.4rem;
+}
+[data-theme="dark"]{
+  --bg:#120d08;--surface:#1a140f;--surface2:#241c15;--board:#18120d;
+  --border:#3d2e1f;--divider:#2a2118;--text:#f0e7dc;--muted:#d0b08a;
+  --faint:#84684c;--ink:#fff3e6;
+  --accent:#5b9cf6;--accent2:#e87070;--accent3:#52c28a;
+  --accent4:#bb8ee8;--accent5:#f59e0b;
+  --shadow:0 2px 8px rgba(0,0,0,0.45);--shadow-lg:0 8px 32px rgba(0,0,0,0.55);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--font-body);background:var(--bg);color:var(--text);font-size:clamp(1rem,0.9rem + 0.5vw,1.2rem);line-height:1.65;min-height:100dvh;transition:background var(--transition),color var(--transition);}
+.site-header{position:sticky;top:0;z-index:100;background:var(--surface);border-bottom:2px solid var(--border);box-shadow:var(--shadow);padding:0.75rem 1.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.5rem;}
+.logo-wrap{display:flex;align-items:center;gap:0.6rem;}
+.brand-name{font-family:var(--font-hand);font-size:clamp(1.1rem,1rem + 1vw,1.5rem);font-weight:700;color:var(--accent);letter-spacing:-0.02em;}
+.brand-sub{font-family:var(--font-hand);font-size:0.85rem;color:var(--muted);display:block;margin-top:-4px;}
+.toggle-btn{background:var(--surface2);border:2px solid var(--border);border-radius:2rem;padding:0.4rem 1rem;font-family:var(--font-hand);font-size:0.95rem;color:var(--text);cursor:pointer;display:flex;align-items:center;gap:0.4rem;transition:background var(--transition),border-color var(--transition);}
+.toggle-btn:hover{background:var(--divider);}
+.hero-board{background:var(--board);border-bottom:2px solid var(--border);padding:3rem 1.5rem 2.5rem;text-align:center;}
+.hero-label{display:inline-block;background:var(--accent5);color:#fff;font-family:var(--font-hand);font-size:0.85rem;border-radius:2rem;padding:0.25rem 1rem;margin-bottom:1rem;letter-spacing:0.04em;}
+.hero-title{font-family:var(--font-hand);font-size:clamp(1.6rem,1.2rem + 2.5vw,2.8rem);font-weight:700;color:var(--ink);line-height:1.2;max-width:860px;margin:0 auto 1rem;}
+.hero-title span{color:var(--accent5);}
+.hero-meta{font-size:0.9rem;color:var(--muted);max-width:700px;margin:0 auto 1.5rem;}
+.hero-meta strong{color:var(--text);}
+.hero-badges{display:flex;flex-wrap:wrap;justify-content:center;gap:0.5rem;margin-top:1rem;}
+.badge{background:var(--surface2);border:1.5px solid var(--border);border-radius:2rem;padding:0.3rem 0.9rem;font-size:0.82rem;color:var(--muted);font-family:var(--font-hand);}
+.badge.abdc{background:var(--accent4);color:#fff;border-color:var(--accent4);font-weight:700;}
+.badge.amber{background:var(--accent5);color:#fff;border-color:var(--accent5);}
+main{max-width:860px;margin:0 auto;padding:2rem 1rem 3rem;}
+.tabs-wrap{display:flex;gap:0.4rem;flex-wrap:wrap;margin-bottom:1.75rem;border-bottom:2px solid var(--border);padding-bottom:0.5rem;overflow-x:auto;}
+.tab-btn{background:transparent;border:1.5px solid transparent;border-radius:var(--radius-sm) var(--radius-sm) 0 0;padding:0.45rem 1.1rem;font-family:var(--font-hand);font-size:0.97rem;color:var(--muted);cursor:pointer;white-space:nowrap;transition:all var(--transition);}
+.tab-btn:hover{color:var(--text);background:var(--divider);}
+.tab-btn.active{color:var(--accent5);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface);font-weight:700;}
+.section-panel{display:none;}
+.section-panel.active{display:block;}
+.card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:1.4rem 1.6rem;margin-bottom:1.4rem;box-shadow:var(--shadow);}
+.card-title{font-family:var(--font-hand);font-size:1.15rem;font-weight:700;color:var(--accent5);margin-bottom:0.6rem;display:flex;align-items:center;gap:0.4rem;}
+.card p{margin-bottom:0.7rem;}
+.card p:last-child{margin-bottom:0;}
+.highlight{border-left:4px solid var(--accent5);background:var(--surface2);border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:0.9rem 1.2rem;margin:1rem 0;font-size:0.97rem;}
+.highlight.green{border-color:var(--accent3);}
+.highlight.red{border-color:var(--accent2);}
+.highlight.blue{border-color:var(--accent);}
+.highlight.purple{border-color:var(--accent4);}
+.pull-quote{border:2px dashed var(--border);border-radius:var(--radius);padding:1.2rem 1.5rem;margin:1.4rem 0;font-family:var(--font-hand);font-size:clamp(1rem,0.9rem + 0.4vw,1.2rem);color:var(--ink);text-align:center;background:var(--board);}
+.def-list{list-style:none;padding:0;}
+.def-list li{padding:0.7rem 0;border-bottom:1px solid var(--divider);display:grid;grid-template-columns:auto 1fr;gap:0.7rem;align-items:start;}
+.def-list li:last-child{border-bottom:none;}
+.def-tag{background:var(--accent5);color:#fff;border-radius:var(--radius-sm);padding:0.15rem 0.6rem;font-size:0.8rem;font-family:var(--font-hand);white-space:nowrap;margin-top:0.25rem;}
+.def-tag.blue{background:var(--accent);}.def-tag.green{background:var(--accent3);}.def-tag.red{background:var(--accent2);}.def-tag.purple{background:var(--accent4);}.def-tag.orange{background:#d35400;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1rem 0;}
+@media(max-width:560px){.two-col{grid-template-columns:1fr;}}
+.col-card{background:var(--surface2);border:1.5px solid var(--border);border-radius:var(--radius);padding:1rem 1.1rem;}
+.col-card h4{font-family:var(--font-hand);font-size:1rem;margin-bottom:0.4rem;}
+.col-card.amber h4{color:var(--accent5);}.col-card.blue h4{color:var(--accent);}.col-card.green h4{color:var(--accent3);}.col-card.red h4{color:var(--accent2);}.col-card.purple h4{color:var(--accent4);}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;margin:1rem 0;}
+@media(max-width:700px){.three-col{grid-template-columns:1fr;}}
+.results-table-wrap{overflow-x:auto;margin:1rem 0;}
+table{width:100%;border-collapse:collapse;font-size:0.92rem;font-family:var(--font-body);}
+th{background:var(--accent5);color:#fff;padding:0.6rem 0.9rem;text-align:left;font-family:var(--font-hand);}
+td{padding:0.55rem 0.9rem;border-bottom:1px solid var(--divider);vertical-align:top;}
+tr:last-child td{border-bottom:none;} tr:nth-child(even) td{background:var(--surface2);}
+.insight-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin:1.2rem 0;}
+.insight-box{background:var(--surface2);border:1.5px solid var(--border);border-radius:var(--radius);padding:1rem;text-align:center;}
+.insight-icon{font-size:2rem;display:block;margin-bottom:0.4rem;}
+.insight-label{font-size:0.82rem;color:var(--muted);}
+.insight-val{font-family:var(--font-hand);font-size:1.1rem;font-weight:700;color:var(--accent5);display:block;margin:0.2rem 0 0.1rem;}
+.step-list{list-style:none;padding:0;}
+.step-list li{display:flex;gap:0.9rem;padding:0.8rem 0;border-bottom:1px solid var(--divider);align-items:flex-start;}
+.step-list li:last-child{border-bottom:none;}
+.step-num{background:var(--accent5);color:#fff;border-radius:50%;min-width:2rem;height:2rem;display:flex;align-items:center;justify-content:center;font-family:var(--font-hand);font-weight:700;font-size:0.95rem;flex-shrink:0;}
+.paper-meta-list{list-style:none;padding:0;}
+.paper-meta-list li{display:flex;gap:0.6rem;padding:0.5rem 0;border-bottom:1px solid var(--divider);font-size:0.92rem;}
+.paper-meta-list li:last-child{border-bottom:none;}.pm-label{font-weight:700;color:var(--muted);min-width:130px;flex-shrink:0;}
+footer{background:var(--surface);border-top:2px solid var(--border);text-align:center;padding:1.8rem 1.5rem;font-size:0.9rem;color:var(--muted);margin-top:3rem;}
+.footer-links{display:flex;flex-wrap:wrap;justify-content:center;gap:0.75rem 1.5rem;margin:0.75rem 0;font-size:0.92rem;}
+.footer-links a,footer a{color:var(--accent);text-decoration:none;}.footer-links a:hover,footer a:hover{text-decoration:underline;}
+.vsser-note{margin-top:0.75rem;font-size:0.85rem;color:var(--faint);border-top:1px solid var(--divider);padding-top:0.75rem;}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="logo-wrap">
+  <a href="https://mayukhpsm.github.io/vsser26/" class="brand-link" aria-label="Return to home">
+    <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="36" height="36" rx="8" fill="var(--accent)"/><text x="18" y="25" font-size="18" text-anchor="middle" fill="white" font-family="serif" font-weight="bold">PE</text></svg></a>
+    <div><span class="brand-name">VSSER-2026</span><span class="brand-sub">Paper Explainer</span></div>
+  </div>
+  <button class="toggle-btn" id="themeToggle" aria-label="Toggle theme"><span id="themeIcon">🌙</span><span id="themeLabel">Dark Mode</span></button>
+</header>
+<section class="hero-board">
+  <div class="hero-label">🙏 Religion &amp; Entrepreneurship · VSSER-2026</div>
+  <h1 class="hero-title">The influence of religion on the humane orientation of entrepreneurs<span><br>(How Religion Shapes Humane Entrepreneurship)</span></h1>
+  <p class="hero-meta"><strong>Khurana, Ghura &amp; Dutta (2021)</strong> · Journal of Small Business Management<br>DOI: 10.1080/00472778.2021.1890097</p>
+  <div class="hero-badges">
+    <span class="badge">📘 Qualitative Research Article</span>
+    <span class="badge amber">🇮🇳 India Context</span>
+    <span class="badge">🤝 Humane Entrepreneurship</span>
+    <span class="badge abdc">⭐ ABDC-A Journal</span>
+    <span class="badge">📅 Published 2021, Vol. 59, Issue 3</span>
+  </div>
+</section>
+<div id="audio-player-wrap" style="max-width:860px;margin:2rem auto 0;padding:0 1rem;">
+  <div style="background:var(--surface);border:2px solid var(--border);border-radius:0.75rem;box-shadow:0 8px 32px rgba(44,36,22,0.13);padding:1.4rem 1.6rem 1.2rem;display:flex;flex-direction:column;gap:0.9rem;">
+    <div style="display:flex;align-items:center;gap:0.85rem;">
+      <span style="font-size:2rem;line-height:1;flex-shrink:0;">🎙️</span>
+      <div>
+        <div style="font-family:var(--font-hand);font-size:clamp(1rem,0.95rem + 0.4vw,1.25rem);font-weight:700;color:var(--accent5);line-height:1.25;">Listen to an AI-Assisted Podcast</div>
+        <div style="font-size:0.82rem;color:var(--muted);margin-top:0.15rem;">Religion and Humane Entrepreneurship · Khurana et al. 2021 · VSSER-2026</div>
+      </div>
+    </div>
+    <audio id="rr-audio" preload="metadata">
+      <source src="khurana2021-humane-entrepreneurship.mp3" type="audio/mpeg">
+      <source src="khurana2021-humane-entrepreneurship.m4a" type="audio/mp4">
+      Your browser does not support the audio element.
+    </audio>
+    <div style="display:flex;align-items:center;justify-content:center;gap:0.65rem;flex-wrap:wrap;">
+      <button onclick="rrRewind()" style="background:var(--surface2);border:2px solid var(--border);border-radius:2rem;padding:0.42rem 1rem;font-family:var(--font-hand);font-size:0.92rem;color:var(--text);cursor:pointer;">⏮ 10s</button>
+      <button id="rr-play" onclick="rrToggle()" style="background:var(--accent5);color:#fff;border:none;border-radius:2rem;padding:0.5rem 1.6rem;font-family:var(--font-hand);font-size:1.1rem;font-weight:700;cursor:pointer;min-width:72px;">▶</button>
+      <button onclick="rrForward()" style="background:var(--surface2);border:2px solid var(--border);border-radius:2rem;padding:0.42rem 1rem;font-family:var(--font-hand);font-size:0.92rem;color:var(--text);cursor:pointer;">10s ⏭</button>
+      <button id="rr-loop" onclick="rrLoop()" title="Toggle loop" style="background:var(--surface2);border:2px solid var(--border);border-radius:2rem;padding:0.42rem 1rem;font-family:var(--font-hand);font-size:0.92rem;color:var(--muted);cursor:pointer;">🔁</button>
+    </div>
+    <div style="display:flex;align-items:center;gap:0.6rem;">
+      <span id="rr-cur" style="font-size:0.8rem;color:var(--muted);min-width:36px;text-align:center;flex-shrink:0;">0:00</span>
+      <div id="rr-bar" onclick="rrSeek(event)" style="flex:1;height:9px;background:var(--divider);border-radius:99px;position:relative;cursor:pointer;overflow:visible;">
+        <div id="rr-fill" style="height:100%;background:var(--accent5);border-radius:99px;width:0%;pointer-events:none;"></div>
+        <div id="rr-thumb" style="position:absolute;top:50%;left:0%;transform:translate(-50%,-50%);width:16px;height:16px;border-radius:50%;background:var(--accent5);border:2px solid var(--surface);box-shadow:0 1px 4px rgba(0,0,0,0.25);pointer-events:none;"></div>
+      </div>
+      <span id="rr-dur" style="font-size:0.8rem;color:var(--muted);min-width:36px;text-align:center;flex-shrink:0;">0:00</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:0.5rem;">
+      <span style="font-size:1rem;">🔊</span>
+      <input type="range" id="rr-vol" min="0" max="1" step="0.05" value="1" oninput="rrVol(this.value)" style="flex:1;max-width:180px;-webkit-appearance:none;appearance:none;height:6px;border-radius:99px;background:var(--divider);outline:none;cursor:pointer;">
+    </div>
+  </div>
+</div>
+<main>
+  <nav class="tabs-wrap" role="tablist" aria-label="Sections">
+    <button class="tab-btn active" onclick="switchTab('overview',this)" role="tab">📋 Overview</button>
+    <button class="tab-btn" onclick="switchTab('hument',this)" role="tab">🤝 HumEnt</button>
+    <button class="tab-btn" onclick="switchTab('method',this)" role="tab">🧪 Method</button>
+    <button class="tab-btn" onclick="switchTab('findings',this)" role="tab">📊 Findings</button>
+    <button class="tab-btn" onclick="switchTab('implications',this)" role="tab">💡 Implications</button>
+    <button class="tab-btn" onclick="switchTab('meta',this)" role="tab">📚 Paper Info</button>
+  </nav>
+
+  <div id="overview" class="section-panel active">
+    <div class="card">
+      <div class="card-title">🧭 What This Paper Is About</div>
+      <p>This paper asks a deceptively simple question: does an entrepreneur’s religion shape how humane their business orientation becomes? Instead of treating entrepreneurship only as innovation, competition, and risk-taking, the authors examine whether religion also influences whether entrepreneurs build businesses that care about people, fairness, sustainability, and wider social good.</p>
+      <p>The paper studies 16 entrepreneurs in India across four major religions — Hinduism, Islam, Jainism, and Sikhism. The central finding is that religion does matter, but not in a crude or uniform way. It shapes humane entrepreneurship across all groups, yet it affects different dimensions differently.</p>
+    </div>
+    <div class="pull-quote">💡 Main message: entrepreneurship is not only about creating value. It is also about how that value is created, for whom, and with what moral orientation.</div>
+    <div class="card">
+      <div class="card-title">🌍 Why This Matters</div>
+      <p>A lot of entrepreneurship research focuses on the founder’s mindset, opportunity recognition, and firm performance. This paper argues that such a narrow focus misses something important: businesses also affect employees, communities, suppliers, the environment, and the broader social fabric.</p>
+      <p>That is why the paper uses the idea of <strong>humane entrepreneurship</strong>, or <strong>HumEnt</strong>. It is a broader way of thinking about entrepreneurial success — one that includes innovation and growth, but also sustainability and humane treatment of people.</p>
+      <div class="highlight blue"><strong>Easy takeaway:</strong> a good entrepreneur is not just bold and smart. A good entrepreneur also builds a venture that is fair, responsible, and socially aware.</div>
+    </div>
+    <div class="insight-strip">
+      <div class="insight-box"><span class="insight-icon">🤝</span><span class="insight-val">HumEnt</span><span class="insight-label">A strategic orientation combining entrepreneurship, sustainability, and humane people practices</span></div>
+      <div class="insight-box"><span class="insight-icon">🙏</span><span class="insight-val">Religion Matters</span><span class="insight-label">All four religious groups showed religion influencing entrepreneurial orientation</span></div>
+      <div class="insight-box"><span class="insight-icon">🇮🇳</span><span class="insight-val">India Context</span><span class="insight-label">A rich multi-religious setting ideal for studying values and entrepreneurship together</span></div>
+      <div class="insight-box"><span class="insight-icon">⭐</span><span class="insight-val">ABDC-A</span><span class="insight-label">Published in Journal of Small Business Management</span></div>
+    </div>
+  </div>
+
+  <div id="hument" class="section-panel">
+    <div class="card">
+      <div class="card-title">🤝 What Is Humane Entrepreneurship?</div>
+      <p>Humane entrepreneurship is the paper’s core concept. It says a venture should not be judged only by profit, growth, or competitive aggression. It should also be judged by whether it creates value in a responsible, sustainable, and people-respecting way.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">🧱 The Three Dimensions</div>
+      <div class="three-col">
+        <div class="col-card amber"><h4>EO</h4><p><strong>Entrepreneurial Orientation</strong> means innovativeness, proactiveness, and risk-taking. This is the classic entrepreneurial side.</p></div>
+        <div class="col-card green"><h4>SO</h4><p><strong>Sustainability Orientation</strong> means caring about long-term impact, responsibility to society, and using business to create wider value.</p></div>
+        <div class="col-card purple"><h4>HRO</h4><p><strong>Humane Resource Orientation</strong> means empathy, equity, empowerment, and enablement of employees.</p></div>
+      </div>
+      <div class="highlight green"><strong>Simple formula:</strong> HumEnt = entrepreneurial drive + sustainability commitment + humane treatment of people.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">🆚 HumEnt Is Not CSR</div>
+      <p>One useful part of the paper is its clarification that humane entrepreneurship is not the same as corporate social responsibility. CSR usually refers to firm-level responsible actions, often in larger organizations. HumEnt is different because it is a broader entrepreneurial strategic orientation driven strongly by the entrepreneur’s own mindset and values.</p>
+      <p>In other words, CSR can be one department or initiative. HumEnt is more foundational. It shapes how the venture thinks, acts, hires, innovates, and grows from the inside out.</p>
+    </div>
+  </div>
+
+  <div id="method" class="section-panel">
+    <div class="card">
+      <div class="card-title">🧪 How the Study Was Done</div>
+      <p>The authors conducted a qualitative study using semistructured interviews with 16 entrepreneurs in India. They interviewed four entrepreneurs each from Hinduism, Islam, Jainism, and Sikhism, and used additional data from websites, LinkedIn profiles, and press reports to cross-check information.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">📍 Sample Design</div>
+      <ul class="def-list">
+        <li><span class="def-tag">16 cases</span><span>Four entrepreneurs each from Hindu, Muslim, Jain, and Sikh backgrounds.</span></li>
+        <li><span class="def-tag blue">Locations</span><span>Delhi NCR plus Gujarat, Haryana, Karnataka, and Maharashtra.</span></li>
+        <li><span class="def-tag green">Industries</span><span>A mix of manufacturing and service firms.</span></li>
+        <li><span class="def-tag purple">Firm types</span><span>Both family and non-family businesses; both small and medium-sized firms.</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">🔍 How They Analysed HumEnt</div>
+      <p>The researchers coded interview transcripts in NVivo using three parent dimensions — EO, SO, and HRO — and ten subdimensions like innovativeness, proactiveness, risk-taking, entrepreneurial intention, conviction, action, empathy, equity, empowerment, and enablement.</p>
+      <p>They measured coding density to see how much each theme appeared in the interview material. They also asked entrepreneurs directly to rate how much religion influenced each dimension, and then used nonparametric tests to compare differences across religious groups.</p>
+      <div class="highlight"><strong>Why this matters:</strong> the paper does not just offer anecdotes. It combines rich interviews with a structured, comparative way of analysing patterns.</div>
+    </div>
+  </div>
+
+  <div id="findings" class="section-panel">
+    <div class="card">
+      <div class="card-title">📊 The Big Findings</div>
+      <p>The strongest overall result is that humane entrepreneurship was present across all four religious groups. Across the interview data, the most prominent dimension was <strong>entrepreneurial orientation</strong>, followed by <strong>sustainability orientation</strong>, and then <strong>humane resource orientation</strong>.</p>
+      <p>But when the authors looked specifically at how much religion influenced each dimension, a different pattern appeared. Religion had the strongest effect on <strong>sustainability orientation</strong>, while its influence on entrepreneurial orientation and humane resource orientation was more mixed and nuanced.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">📈 Cross-Religion Pattern</div>
+      <div class="results-table-wrap">
+        <table>
+          <thead><tr><th>Religion</th><th>Overall Influence Pattern</th><th>Notable Result</th></tr></thead>
+          <tbody>
+            <tr><td>Sikh</td><td>Highest overall HumEnt influence</td><td>Higher mean EO and HRO influence than Hindus</td></tr>
+            <tr><td>Jain</td><td>Second highest overall influence</td><td>Strong religion-linked moral boundaries in business choices</td></tr>
+            <tr><td>Muslim</td><td>Third overall</td><td>SO highest, then EO, then HRO</td></tr>
+            <tr><td>Hindu</td><td>Lowest overall among the four groups in this sample</td><td>Still showed religion affecting all dimensions</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">🧠 How to Read These Findings</div>
+      <p>The paper does <em>not</em> say one religion is morally superior to another. It says that religion shapes entrepreneurs’ humane orientation in different ways, and those differences become visible when you examine actual business thinking, employee treatment, and sustainability commitments.</p>
+      <div class="two-col">
+        <div class="col-card green"><h4>What stayed common</h4><p>All groups showed that religion influenced entrepreneurial life. Religion was not irrelevant or private; it affected business reasoning.</p></div>
+        <div class="col-card red"><h4>What varied</h4><p>The extent and pattern of influence differed across groups, especially for entrepreneurial orientation and humane resource orientation.</p></div>
+      </div>
+      <div class="highlight purple"><strong>Especially important:</strong> sustainability was the dimension where religion showed the clearest and strongest impact.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">🏭 Practical Reading of the Results</div>
+      <p>For a general reader, the result is easy to grasp: people do not leave their moral world at the office door. For an entrepreneur, religion can shape what feels like a legitimate opportunity, how workers should be treated, and what kind of trade-offs are acceptable.</p>
+      <p>For industry, this means values are not just “soft culture.” They can structure hiring, product choices, supplier relationships, and the long-term direction of a venture.</p>
+    </div>
+  </div>
+
+  <div id="implications" class="section-panel">
+    <div class="card">
+      <div class="card-title">💡 For Academic Audience</div>
+      <ul class="def-list">
+        <li><span class="def-tag">Theory</span><span>The paper extends entrepreneurship research beyond performance and opportunity logic by placing humane outcomes at the centre.</span></li>
+        <li><span class="def-tag blue">Religion</span><span>It shows religion should be treated as an individual-level variable with real strategic consequences, not a background demographic detail.</span></li>
+        <li><span class="def-tag green">HumEnt</span><span>It helps consolidate humane entrepreneurship as a serious construct made of EO, SO, and HRO rather than a vague ethical aspiration.</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">🏢 For Industry Practitioners</div>
+      <ul class="def-list">
+        <li><span class="def-tag">Founders</span><span>If your venture is guided by faith-based values, that orientation can shape not just purpose statements but actual strategic choices.</span></li>
+        <li><span class="def-tag blue">People Management</span><span>Humane treatment of employees is not separate from entrepreneurship. It is part of building a resilient and trusted firm.</span></li>
+        <li><span class="def-tag green">Sustainability</span><span>Long-term responsibility to society and the environment may be driven by deep personal values, not only regulation or branding.</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">🌐 For General Public and Policy Thinkers</div>
+      <ul class="def-list">
+        <li><span class="def-tag">Public understanding</span><span>Entrepreneurship is often glamorized as hustle, disruption, and risk. This paper shows that care, fairness, and responsibility belong inside the story too.</span></li>
+        <li><span class="def-tag blue">Plural societies</span><span>In a country like India, religion remains a living force in economic life. Policymaking and ecosystem design cannot assume entrepreneurs are value-neutral actors.</span></li>
+        <li><span class="def-tag purple">Better ecosystems</span><span>If support systems understand the moral and religious foundations of entrepreneurs, they may build more relevant and humane entrepreneurial ecosystems.</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">⚠️ Limits of the Study</div>
+      <ul class="def-list">
+        <li><span class="def-tag red">Small sample</span><span>The study is based on 16 entrepreneurs, so the findings are insightful but not universally generalizable.</span></li>
+        <li><span class="def-tag orange">Single country</span><span>The context is India, which is especially religion-rich and culturally distinctive.</span></li>
+        <li><span class="def-tag green">Emerging construct</span><span>HumEnt still lacks a fully validated scale, so the paper is an important step in theory building rather than the last word.</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="meta" class="section-panel">
+    <div class="card">
+      <div class="card-title">📚 Paper Details</div>
+      <ul class="paper-meta-list">
+        <li><span class="pm-label">Title</span><span>The influence of religion on the humane orientation of entrepreneurs</span></li>
+        <li><span class="pm-label">Authors</span><span>Indu Khurana · Amarpreet Singh Ghura · Dev K. Dutta</span></li>
+        <li><span class="pm-label">Journal</span><span>Journal of Small Business Management</span></li>
+        <li><span class="pm-label">Journal Ranking</span><span>⭐ ABDC-A outlet</span></li>
+        <li><span class="pm-label">Year / Volume</span><span>2021 · Vol. 59, No. 3 · Pages 417–442</span></li>
+        <li><span class="pm-label">DOI</span><span><a href="https://doi.org/10.1080/00472778.2021.1890097" target="_blank" rel="noopener noreferrer">10.1080/00472778.2021.1890097</a></span></li>
+        <li><span class="pm-label">Method</span><span>Qualitative semistructured interviews with 16 entrepreneurs across four religions in India</span></li>
+        <li><span class="pm-label">Keywords</span><span>Humane entrepreneurship; religion; India; entrepreneurship</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">👩‍🏫 Why This Paper Fits the Series</div>
+      <p>This paper is a strong fit for the Religion and Entrepreneurship series because it moves from broad claims about values to grounded evidence from real entrepreneurs. It shows that religion is not only about personal identity; it can shape strategic orientation, employee relationships, and sustainability commitments inside ventures.</p>
+      <div class="highlight"><strong>Series fit:</strong> if some papers ask whether religion matters for entrepreneurship, this paper shows <em>how</em> it matters in the humane design of entrepreneurial activity.</div>
+    </div>
+  </div>
+</main>
+<footer>
+  <p>🎙️ This explainer is part of the <strong>Religion and Entrepreneurship</strong> series on <strong>VSSER-2026</strong></p>
+  <div class="footer-links">
+    🎧 <a href="https://open.spotify.com/show/1FSNMlJzYxvlPswFdyCZx1?si=f0ed71dfbbc94b8c" target="_blank" rel="noopener noreferrer">Spotify</a>
+    📺 <a href="https://www.youtube.com/@WeekendResearcher" target="_blank" rel="noopener noreferrer">YouTube: Weekend Researcher</a>
+    🎵 <a href="https://music.amazon.in/podcasts/f64c70fc-f70b-498e-87f3-669152e83730/revise-and-resubmit---the-mayukh-show" target="_blank" rel="noopener noreferrer">Amazon Prime Music</a>
+    &#127822; <a href="https://podcasts.apple.com/us/podcast/revise-and-resubmit-the-mayukh-show/id1770883122" target="_blank" rel="noopener noreferrer">Apple Podcast</a>
+  </div>
+  <p style="margin-top:0.5rem;font-size:0.82rem;">Heartfelt thanks to <strong>Indu Khurana, Amarpreet Singh Ghura,</strong> and <strong>Dev K. Dutta</strong> for this contribution, and to the <strong>Journal of Small Business Management</strong>, an <strong>ABDC-A</strong> outlet under <strong>Taylor &amp; Francis</strong>. 🙏</p>
+  <div class="vsser-note">
+    &#128204; This portal has been prepared by <strong><a href="https://mayukhmukhopadhyay.com/aboutme/" target="_blank" rel="noopener noreferrer">Mayukh Mukhopadhyay</a> </strong> in connection with <strong>VSSER-2026</strong>, spearheaded by <strong><a href="https://culverhouse.ua.edu/people/vishal-gupta/" target="_blank" rel="noopener noreferrer">Professor Vishal K. Gupta</a></strong> and <strong><a href="https://www.linkedin.com/in/athina-skiadopoulou-3931b3193/" target="_blank" rel="noopener noreferrer">Dr Athina Skiadopoulou</a></strong>. Series: <em>Seminar in Entrepreneurship Research</em>.<br>
+    &copy; 2026 <a href="https://mayukhmukhopadhyay.com/reviseandresubmit/" target="_blank" rel="noopener noreferrer">Revise and Resubmit &mdash; The Mayukh Show.</a> (CC BY-NC-ND).
+  </div>
+</footer>
+<script>
+(function(){var htmlEl=document.documentElement;var btn=document.getElementById('themeToggle');var icon=document.getElementById('themeIcon');var label=document.getElementById('themeLabel');var dark=window.matchMedia('(prefers-color-scheme: dark)').matches;function apply(){htmlEl.setAttribute('data-theme',dark?'dark':'light');icon.textContent=dark?'☀️':'🌙';label.textContent=dark?'Light Mode':'Dark Mode';}apply();btn.addEventListener('click',function(){dark=!dark;apply();});})();
+function switchTab(id,btn){document.querySelectorAll('.section-panel').forEach(function(p){p.classList.remove('active');});document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});document.getElementById(id).classList.add('active');btn.classList.add('active');btn.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});}
+(function(){
+  var au=document.getElementById('rr-audio');
+  var playBtn=document.getElementById('rr-play');
+  var loopBtn=document.getElementById('rr-loop');
+  var fill=document.getElementById('rr-fill');
+  var thumb=document.getElementById('rr-thumb');
+  var cur=document.getElementById('rr-cur');
+  var dur=document.getElementById('rr-dur');
+  function fmt(s){var m=Math.floor(s/60),sc=Math.floor(s%60);return m+':'+(sc<10?'0':'')+sc;}
+  au.addEventListener('loadedmetadata',function(){dur.textContent=fmt(au.duration||0);});
+  au.addEventListener('durationchange',function(){if(au.duration&&isFinite(au.duration))dur.textContent=fmt(au.duration);});
+  au.addEventListener('timeupdate',function(){var p=au.duration?(au.currentTime/au.duration)*100:0;fill.style.width=p+'%';thumb.style.left=p+'%';cur.textContent=fmt(au.currentTime);});
+  au.addEventListener('ended',function(){playBtn.textContent='▶';});
+  window.rrToggle=function(){if(au.paused){var pr=au.play();if(pr!==undefined){pr.then(function(){playBtn.textContent='⏸';}).catch(function(){playBtn.textContent='▶';});}else{playBtn.textContent='⏸';}}else{au.pause();playBtn.textContent='▶';}};
+  window.rrRewind=function(){au.currentTime=Math.max(0,au.currentTime-10);};
+  window.rrForward=function(){au.currentTime=Math.min(au.duration||0,au.currentTime+10);};
+  window.rrLoop=function(){au.loop=!au.loop;loopBtn.style.background=au.loop?'var(--accent3)':'var(--surface2)';loopBtn.style.color=au.loop?'#fff':'var(--muted)';loopBtn.style.borderColor=au.loop?'var(--accent3)':'var(--border)';};
+  window.rrSeek=function(e){var bar=document.getElementById('rr-bar');var rect=bar.getBoundingClientRect();var p=Math.min(Math.max((e.clientX-rect.left)/rect.width,0),1);if(au.duration&&isFinite(au.duration))au.currentTime=p*au.duration;};
+  window.rrVol=function(v){au.volume=v;};
+  var seeking=false;var bar=document.getElementById('rr-bar');bar.addEventListener('mousedown',function(e){seeking=true;rrSeek(e);});window.addEventListener('mousemove',function(e){if(seeking)rrSeek(e);});window.addEventListener('mouseup',function(){seeking=false;});bar.addEventListener('touchstart',function(e){seeking=true;var t=e.touches[0];rrSeek({clientX:t.clientX});},{passive:true});window.addEventListener('touchmove',function(e){if(seeking){var t=e.touches[0];rrSeek({clientX:t.clientX});}},{passive:true});window.addEventListener('touchend',function(){seeking=false;});
+})();
+</script>
+</body>
+</html>
