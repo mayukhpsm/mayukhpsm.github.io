@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rietveld & Hoogendoorn 2022 | VSSER-2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Patrick+Hand&family=Kalam&display=swap" rel="stylesheet">
+<style>
+:root,[data-theme="light"]{
+  --bg:#edf6f5;--surface:#f8fcfb;--surface2:#ffffff;--board:#f1f8f7;
+  --border:#bed8d5;--divider:#d8e8e5;--text:#183230;--muted:#557774;
+  --faint:#86a7a3;--ink:#0f2523;
+  --accent:#1f7a8c;--accent2:#2c8f6f;--accent3:#0e7490;
+  --accent4:#6b5ca5;--accent5:#cc7a00;
+  --shadow:0 2px 8px rgba(24,50,48,0.10);--shadow-lg:0 8px 32px rgba(24,50,48,0.13);
+  --font-hand:'Caveat','Kalam',cursive;--font-body:'Patrick Hand','Kalam',cursive;
+  --transition:200ms cubic-bezier(0.16,1,0.3,1);--radius:0.75rem;--radius-sm:0.4rem;
+}
+[data-theme="dark"]{
+  --bg:#081514;--surface:#102120;--surface2:#162b2a;--board:#0c1a19;
+  --border:#244846;--divider:#183533;--text:#e8f3f1;--muted:#a7c8c3;
+  --faint:#6f9892;--ink:#f7fffe;
+  --accent:#59b4c3;--accent2:#56c09a;--accent3:#45a7c7;
+  --accent4:#a897e0;--accent5:#f3a533;
+  --shadow:0 2px 8px rgba(0,0,0,0.45);--shadow-lg:0 8px 32px rgba(0,0,0,0.55);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--font-body);background:var(--bg);color:var(--text);font-size:clamp(1rem,0.9rem + 0.5vw,1.2rem);line-height:1.65;min-height:100dvh;transition:background var(--transition),color var(--transition);}
+.site-header{position:sticky;top:0;z-index:100;background:var(--surface);border-bottom:2px solid var(--border);box-shadow:var(--shadow);padding:0.75rem 1.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.5rem;}
+.logo-wrap{display:flex;align-items:center;gap:0.6rem;}
+.brand-name{font-family:var(--font-hand);font-size:clamp(1.1rem,1rem + 1vw,1.5rem);font-weight:700;color:var(--accent);letter-spacing:-0.02em;}
+.brand-sub{font-family:var(--font-hand);font-size:0.85rem;color:var(--muted);display:block;margin-top:-4px;}
+.toggle-btn{background:var(--surface2);border:2px solid var(--border);border-radius:2rem;padding:0.4rem 1rem;font-family:var(--font-hand);font-size:0.95rem;color:var(--text);cursor:pointer;display:flex;align-items:center;gap:0.4rem;transition:background var(--transition),border-color var(--transition);}
+.toggle-btn:hover{background:var(--divider);}
+.hero-board{background:linear-gradient(180deg,var(--board),var(--surface));border-bottom:2px solid var(--border);padding:3rem 1.5rem 2.5rem;text-align:center;}
+.hero-label{display:inline-block;background:var(--accent3);color:#fff;font-family:var(--font-hand);font-size:0.85rem;border-radius:2rem;padding:0.25rem 1rem;margin-bottom:1rem;letter-spacing:0.04em;}
+.hero-title{font-family:var(--font-hand);font-size:clamp(1.6rem,1.2rem + 2.5vw,2.8rem);font-weight:700;color:var(--ink);line-height:1.2;max-width:860px;margin:0 auto 1rem;}
+.hero-title span{color:var(--accent2);}
+.hero-meta{font-size:0.9rem;color:var(--muted);max-width:760px;margin:0 auto 1.5rem;}
+.hero-meta strong{color:var(--text);}
+.hero-badges{display:flex;flex-wrap:wrap;justify-content:center;gap:0.5rem;margin-top:1rem;}
+.badge{background:var(--surface2);border:1.5px solid var(--border);border-radius:2rem;padding:0.3rem 0.9rem;font-size:0.82rem;color:var(--muted);font-family:var(--font-hand);}
+.badge.abdc{background:var(--accent4);color:#fff;border-color:var(--accent4);font-weight:700;}
+.badge.green{background:var(--accent2);color:#fff;border-color:var(--accent2);}
+main{max-width:860px;margin:0 auto;padding:2rem 1rem 3rem;}
+.tabs-wrap{display:flex;gap:0.4rem;flex-wrap:wrap;margin-bottom:1.75rem;border-bottom:2px solid var(--border);padding-bottom:0.5rem;overflow-x:auto;}
+.tab-btn{background:transparent;border:1.5px solid transparent;border-radius:var(--radius-sm) var(--radius-sm) 0 0;padding:0.45rem 1.1rem;font-family:var(--font-hand);font-size:0.97rem;color:var(--muted);cursor:pointer;white-space:nowrap;transition:all var(--transition);}
+.tab-btn:hover{color:var(--text);background:var(--divider);}
+.tab-btn.active{color:var(--accent3);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface);font-weight:700;}
+.section-panel{display:none;}
+.section-panel.active{display:block;}
+.card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:1.4rem 1.6rem;margin-bottom:1.4rem;box-shadow:var(--shadow);}
+.card-title{font-family:var(--font-hand);font-size:1.15rem;font-weight:700;color:var(--accent3);margin-bottom:0.6rem;display:flex;align-items:center;gap:0.4rem;}
+.card p{margin-bottom:0.7rem;}
+.card p:last-child{margin-bottom:0;}
+.highlight{border-left:4px solid var(--accent3);background:var(--surface2);border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:0.9rem 1.2rem;margin:1rem 0;font-size:0.97rem;}
+.highlight.green{border-color:var(--accent2);}
+.highlight.orange{border-color:var(--accent5);}
+.highlight.purple{border-color:var(--accent4);}
+.pull-quote{border:2px dashed var(--border);border-radius:var(--radius);padding:1.2rem 1.5rem;margin:1.4rem 0;font-family:var(--font-hand);font-size:clamp(1rem,0.9rem + 0.4vw,1.2rem);color:var(--ink);text-align:center;background:var(--board);}
+.def-list{list-style:none;padding:0;}
+.def-list li{padding:0.7rem 0;border-bottom:1px solid var(--divider);display:grid;grid-template-columns:auto 1fr;gap:0.7rem;align-items:start;}
+.def-list li:last-child{border-bottom:none;}
+.def-tag{background:var(--accent3);color:#fff;border-radius:var(--radius-sm);padding:0.15rem 0.6rem;font-size:0.8rem;font-family:var(--font-hand);white-space:nowrap;margin-top:0.25rem;}
+.def-tag.green{background:var(--accent2);} .def-tag.purple{background:var(--accent4);} .def-tag.orange{background:var(--accent5);} .def-tag.blue{background:var(--accent);} .def-tag.gray{background:#6c8f8a;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1rem 0;}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;margin:1rem 0;}
+@media(max-width:700px){.three-col,.two-col{grid-template-columns:1fr;}}
+.col-card{background:var(--surface2);border:1.5px solid var(--border);border-radius:var(--radius);padding:1rem 1.1rem;}
+.col-card h4{font-family:var(--font-hand);font-size:1rem;margin-bottom:0.4rem;}
+.col-card.blue h4{color:var(--accent);} .col-card.green h4{color:var(--accent2);} .col-card.purple h4{color:var(--accent4);} .col-card.orange h4{color:var(--accent5);} .col-card.teal h4{color:var(--accent3);}
+.results-table-wrap{overflow-x:auto;margin:1rem 0;}
+table{width:100%;border-collapse:collapse;font-size:0.92rem;font-family:var(--font-body);} th{background:var(--accent3);color:#fff;padding:0.6rem 0.9rem;text-align:left;font-family:var(--font-hand);} td{padding:0.55rem 0.9rem;border-bottom:1px solid var(--divider);vertical-align:top;} tr:last-child td{border-bottom:none;} tr:nth-child(even) td{background:var(--surface2);}
+.insight-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin:1.2rem 0;}
+.insight-box{background:var(--surface2);border:1.5px solid var(--border);border-radius:var(--radius);padding:1rem;text-align:center;}
+.insight-icon{font-size:2rem;display:block;margin-bottom:0.4rem;}.insight-label{font-size:0.82rem;color:var(--muted);} .insight-val{font-family:var(--font-hand);font-size:1.1rem;font-weight:700;color:var(--accent3);display:block;margin:0.2rem 0 0.1rem;}
+.paper-meta-list{list-style:none;padding:0;} .paper-meta-list li{display:flex;gap:0.6rem;padding:0.5rem 0;border-bottom:1px solid var(--divider);font-size:0.92rem;} .paper-meta-list li:last-child{border-bottom:none;} .pm-label{font-weight:700;color:var(--muted);min-width:130px;flex-shrink:0;}
+.author-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem;} @media(max-width:700px){.author-grid{grid-template-columns:1fr;}}
+.author-card{background:var(--surface2);border:1.5px solid var(--border);border-radius:var(--radius);padding:1rem 1.1rem;}
+.author-card h4{font-family:var(--font-hand);font-size:1.05rem;color:var(--accent3);margin-bottom:0.4rem;}
+footer{background:var(--surface);border-top:2px solid var(--border);text-align:center;padding:1.8rem 1.5rem;font-size:0.9rem;color:var(--muted);margin-top:3rem;}
+.footer-links{display:flex;flex-wrap:wrap;justify-content:center;gap:0.75rem 1.5rem;margin:0.75rem 0;font-size:0.92rem;} .footer-links a,footer a{color:var(--accent);text-decoration:none;} .footer-links a:hover,footer a:hover{text-decoration:underline;}
+.vsser-note{margin-top:0.75rem;font-size:0.85rem;color:var(--faint);border-top:1px solid var(--divider);padding-top:0.75rem;}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="logo-wrap">
+  <a href="https://mayukhpsm.github.io/vsser26/" class="brand-link" aria-label="Return to home">
+    <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="36" height="36" rx="8" fill="var(--accent3)"/><text x="18" y="25" font-size="18" text-anchor="middle" fill="white" font-family="serif" font-weight="bold">PE</text></svg></a>
+    <div><span class="brand-name">VSSER-2026</span><span class="brand-sub">Paper Explainer</span></div>
+  </div>
+  <button class="toggle-btn" id="themeToggle"><span id="themeIcon">🌙</span><span id="themeLabel">Dark Mode</span></button>
+</header>
+<section class="hero-board">
+  <div class="hero-label">🙏 Religion &amp; Entrepreneurship · VSSER-2026</div>
+  <h1 class="hero-title">The mediating role of values in the relationship between religion and entrepreneurship <span><br>(How Values Link Religion and Entrepreneurship?)</span></h1>
+  <p class="hero-meta"><strong>Cornelius A. Rietveld &amp; Brigitte Hoogendoorn (2022)</strong> · Small Business Economics<br>DOI: 10.1007/s11187-021-00454-z</p>
+  <div class="hero-badges">
+    <span class="badge">📘 Large-scale survey study</span>
+    <span class="badge green">🌍 32 European countries</span>
+    <span class="badge">🧭 Schwartz values theory</span>
+    <span class="badge abdc">⭐ ABDC-A Journal</span>
+    <span class="badge">📅 Published 2022, Vol. 58, pages 1309–1335</span>
+  </div>
+</section>
+<div id="audio-player-wrap" style="max-width:860px;margin:2rem auto 0;padding:0 1rem;">
+  <div style="background:var(--surface);border:2px solid var(--border);border-radius:0.75rem;box-shadow:0 8px 32px rgba(24,50,48,0.13);padding:1.4rem 1.6rem 1.2rem;display:flex;flex-direction:column;gap:0.9rem;">
+    <div style="display:flex;align-items:center;gap:0.85rem;">
+      <span style="font-size:2rem;line-height:1;flex-shrink:0;">🎙️</span>
+      <div>
+        <div style="font-family:var(--font-hand);font-size:clamp(1rem,0.95rem + 0.4vw,1.25rem);font-weight:700;color:var(--accent3);line-height:1.25;">Listen to an AI-Assisted Podcast</div>
+        <div style="font-size:0.82rem;color:var(--muted);margin-top:0.15rem;">Religion, values, and entrepreneurship · Rietveld &amp; Hoogendoorn 2022 · VSSER-2026</div>
+      </div>
+    </div>
+    <audio id="rr-audio" preload="metadata">
+      <source src="rietveld-hoogendoorn-values-entrepreneurship.mp3" type="audio/mpeg">
+      <source src="rietveld-hoogendoorn-values-entrepreneurship.m4a" type="audio/mp4">
+      Your browser does not support the audio element.
+    </audio>
+    <div style="display:flex;align-items:center;justify-content:center;gap:0.65rem;flex-wrap:wrap;">
+      <button onclick="rrRewind()" style="background:var(--surface2);border:2px solid var(--border);border-radius:2rem;padding:0.42rem 1rem;font-family:var(--font-hand);font-size:0.92rem;color:var(--text);cursor:pointer;">⏮ 10s</button>
+      <button id="rr-play" onclick="rrToggle()" style="background:var(--accent3);color:#fff;border:none;border-radius:2rem;padding:0.5rem 1.6rem;font-family:var(--font-hand);font-size:1.1rem;font-weight:700;cursor:pointer;min-width:72px;">▶</button>
+      <button onclick="rrForward()" style="background:var(--surface2);border:2px solid var(--border);border-radius:2rem;padding:0.42rem 1rem;font-family:var(--font-hand);font-size:0.92rem;color:var(--text);cursor:pointer;">10s ⏭</button>
+      <button id="rr-loop" onclick="rrLoop()" title="Toggle loop" style="background:var(--surface2);border:2px solid var(--border);border-radius:2rem;padding:0.42rem 1rem;font-family:var(--font-hand);font-size:0.92rem;color:var(--muted);cursor:pointer;">🔁</button>
+    </div>
+    <div style="display:flex;align-items:center;gap:0.6rem;">
+      <span id="rr-cur" style="font-size:0.8rem;color:var(--muted);min-width:36px;text-align:center;flex-shrink:0;">0:00</span>
+      <div id="rr-bar" onclick="rrSeek(event)" style="flex:1;height:9px;background:var(--divider);border-radius:99px;position:relative;cursor:pointer;overflow:visible;">
+        <div id="rr-fill" style="height:100%;background:var(--accent3);border-radius:99px;width:0%;pointer-events:none;"></div>
+        <div id="rr-thumb" style="position:absolute;top:50%;left:0%;transform:translate(-50%,-50%);width:16px;height:16px;border-radius:50%;background:var(--accent3);border:2px solid var(--surface);box-shadow:0 1px 4px rgba(0,0,0,0.25);pointer-events:none;"></div>
+      </div>
+      <span id="rr-dur" style="font-size:0.8rem;color:var(--muted);min-width:36px;text-align:center;flex-shrink:0;">0:00</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:0.5rem;">
+      <span style="font-size:1rem;">🔊</span>
+      <input type="range" id="rr-vol" min="0" max="1" step="0.05" value="1" oninput="rrVol(this.value)" style="flex:1;max-width:180px;-webkit-appearance:none;appearance:none;height:6px;border-radius:99px;background:var(--divider);outline:none;cursor:pointer;">
+    </div>
+  </div>
+</div>
+<main>
+  <nav class="tabs-wrap" role="tablist" aria-label="Sections">
+    <button class="tab-btn active" onclick="switchTab('overview',this)">📋 Overview</button>
+    <button class="tab-btn" onclick="switchTab('theory',this)">🧭 Theory</button>
+    <button class="tab-btn" onclick="switchTab('method',this)">🧪 Method</button>
+    <button class="tab-btn" onclick="switchTab('findings',this)">📊 Findings</button>
+    <button class="tab-btn" onclick="switchTab('implications',this)">💡 Implications</button>
+    <button class="tab-btn" onclick="switchTab('meta',this)">📚 Paper Info</button>
+  </nav>
+
+  <div id="overview" class="section-panel active">
+    <div class="card">
+      <div class="card-title">🧭 What This Paper Asks</div>
+      <p>This paper asks a sharp and important question: if religion and entrepreneurship are related, what actually carries that relationship? The authors argue that the missing link is <strong>values</strong>.</p>
+      <p>Instead of assuming religion directly makes people more or less entrepreneurial, the paper says religion shapes what people value, and those value priorities in turn influence whether entrepreneurship feels natural, attractive, or uncomfortable.</p>
+    </div>
+    <div class="pull-quote">💡 Main idea: religion does not usually tell people “be an entrepreneur” or “do not be an entrepreneur.” It shapes the values through which occupational choices are interpreted.</div>
+    <div class="card">
+      <div class="card-title">🌍 Why This Paper Matters</div>
+      <p>This is one of the clearest papers in the religion-and-entrepreneurship literature because it moves beyond vague cultural claims and tests a specific mechanism. Using eight waves of the European Social Survey across 32 countries, the paper examines how religious belonging, human values, and self-employment fit together.</p>
+      <div class="highlight green"><strong>Easy takeaway:</strong> religion and entrepreneurship are partly in tension because they often reward different value priorities.</div>
+    </div>
+    <div class="insight-strip">
+      <div class="insight-box"><span class="insight-icon">🌍</span><span class="insight-val">32 countries</span><span class="insight-label">Large comparative European dataset</span></div>
+      <div class="insight-box"><span class="insight-icon">📈</span><span class="insight-val">2002–2016</span><span class="insight-label">Eight biennial ESS waves</span></div>
+      <div class="insight-box"><span class="insight-icon">🧠</span><span class="insight-val">Values mediate</span><span class="insight-label">The paper tests values as the channel linking religion and entrepreneurship</span></div>
+      <div class="insight-box"><span class="insight-icon">⭐</span><span class="insight-val">ABDC-A</span><span class="insight-label">Small Business Economics is an ABDC-A outlet</span></div>
+    </div>
+  </div>
+
+  <div id="theory" class="section-panel">
+    <div class="card">
+      <div class="card-title">🧭 The Core Theory</div>
+      <p>The paper uses <strong>Schwartz’s theory of basic human values</strong>. This framework groups values into four larger families arranged around two tensions: <strong>openness to change versus conservation</strong>, and <strong>self-transcendence versus self-enhancement</strong>.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">🧱 The Four Value Groups</div>
+      <div class="three-col">
+        <div class="col-card teal"><h4>Openness to change</h4><p>Novelty, exploration, independence, and trying new things.</p></div>
+        <div class="col-card green"><h4>Conservation</h4><p>Tradition, order, stability, duty, and preserving the social structure.</p></div>
+        <div class="col-card purple"><h4>Self-transcendence</h4><p>Concern for others, benevolence, tolerance, and welfare.</p></div>
+      </div>
+      <div class="two-col">
+        <div class="col-card orange"><h4>Self-enhancement</h4><p>Status, achievement, control, prestige, and personal advancement.</p></div>
+        <div class="col-card blue"><h4>Paper’s key contrast</h4><p>Religious belonging tends to align more with conservation, while entrepreneurship tends to align more with openness to change.</p></div>
+      </div>
+      <div class="highlight"><strong>Simple version:</strong> religion often pulls toward preserving order; entrepreneurship often pulls toward breaking routines and creating new paths.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">⚖️ The Main Tension</div>
+      <p>The authors argue that people who belong to a religion tend to prioritize conservation values more strongly than openness-to-change values. Entrepreneurs, by contrast, tend to prioritize openness to change more strongly than conservation.</p>
+      <p>At the same time, both religious individuals and entrepreneurs often value <strong>self-transcendence</strong> over <strong>self-enhancement</strong>. So the relationship is not pure conflict. It is mixed: one value dimension creates tension, another creates overlap.</p>
+      <div class="highlight purple"><strong>That is the paper’s elegant contribution:</strong> religion and entrepreneurship are neither fully opposed nor fully aligned. They overlap on care for others but diverge on attitudes toward change and tradition.</div>
+    </div>
+  </div>
+
+  <div id="method" class="section-panel">
+    <div class="card">
+      <div class="card-title">🧪 How the Study Was Done</div>
+      <p>The study uses eight biennial waves of the <strong>European Social Survey</strong> from 2002 to 2016, covering 32 countries. Entrepreneurship is measured through <strong>self-employment</strong>, the most common occupational proxy in empirical entrepreneurship research.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">📍 What They Measured</div>
+      <ul class="def-list">
+        <li><span class="def-tag">Religion</span><span>Whether respondents belong to a religion or denomination, and how actively they engage in religious life.</span></li>
+        <li><span class="def-tag green">Entrepreneurship</span><span>Self-employment as the core indicator.</span></li>
+        <li><span class="def-tag purple">Values</span><span>Schwartz’s value dimensions, especially conservation versus openness to change and self-transcendence versus self-enhancement.</span></li>
+        <li><span class="def-tag orange">Heterogeneity</span><span>Differences across major European religions, religious engagement, and type of entrepreneurship.</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">🔍 What Makes This Method Strong</div>
+      <p>Many earlier papers looked only for a direct relationship between religion and entrepreneurship and often produced conflicting results. This paper is stronger because it studies the <strong>mechanism</strong> in between — values — rather than stopping at the surface-level association.</p>
+      <div class="highlight orange"><strong>Method in one line:</strong> not just “are religion and entrepreneurship related?” but “through what value structure are they related?”</div>
+    </div>
+  </div>
+
+  <div id="findings" class="section-panel">
+    <div class="card">
+      <div class="card-title">📊 The Main Findings</div>
+      <p>The key result is that people who belong to a religion prioritize <strong>conservation</strong> more than <strong>openness to change</strong>, while entrepreneurs show the opposite pattern. That contrast in value priorities helps explain why the relationship between religion and entrepreneurship is weaker than some classical theories might suggest.</p>
+      <p>In the authors’ language, these contrasting value priorities <strong>cushion</strong> or <strong>suppress</strong> the relationship between religion and entrepreneurship.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">📈 What Aligns and What Conflicts</div>
+      <div class="results-table-wrap">
+        <table>
+          <thead><tr><th>Dimension</th><th>Religious Belonging</th><th>Entrepreneurship</th><th>Interpretation</th></tr></thead>
+          <tbody>
+            <tr><td>Conservation</td><td>Higher priority</td><td>Lower priority</td><td>Main source of tension</td></tr>
+            <tr><td>Openness to change</td><td>Lower priority</td><td>Higher priority</td><td>Main entrepreneurial driver</td></tr>
+            <tr><td>Self-transcendence</td><td>Higher than self-enhancement</td><td>Also higher than self-enhancement</td><td>Important overlap</td></tr>
+            <tr><td>Self-enhancement</td><td>Lower relative priority</td><td>Lower than self-transcendence</td><td>Entrepreneurs are not simply ego-driven in this model</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">🌍 Across Religions and Types</div>
+      <p>The broad pattern is fairly stable across the major religions in Europe, which is itself an important finding. But the relationships do vary depending on how actively people practice religion and on the type of entrepreneurship being examined.</p>
+      <div class="two-col">
+        <div class="col-card green"><h4>What stayed similar</h4><p>The overall value structure linking religion and entrepreneurship was broadly comparable across Europe’s major religions.</p></div>
+        <div class="col-card orange"><h4>What changed</h4><p>Intensity of religious engagement and entrepreneurial type altered the strength of the pattern.</p></div>
+      </div>
+      <div class="highlight green"><strong>Important correction to stereotypes:</strong> the paper does not support a simplistic “religion blocks entrepreneurship” claim. It shows a more careful story about competing and overlapping values.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">🧠 What This Means in Plain English</div>
+      <p>Religion often encourages duty, continuity, restraint, and respect for established norms. Entrepreneurship often requires novelty, independence, experimentation, and willingness to break routines. So one part of the value system can discourage entrepreneurial movement.</p>
+      <p>But religious and entrepreneurial people can still overlap strongly in caring for others, social contribution, and broader human welfare. That is why the relationship is complicated rather than one-directional.</p>
+    </div>
+  </div>
+
+  <div id="implications" class="section-panel">
+    <div class="card">
+      <div class="card-title">💡 For Academic Audience</div>
+      <ul class="def-list">
+        <li><span class="def-tag">Theory</span><span>The paper gives the literature a unifying framework by bringing Schwartz’s values theory into religion-and-entrepreneurship research.</span></li>
+        <li><span class="def-tag blue">Mechanism</span><span>It shifts the debate from direct religious effects to mediated pathways, especially values.</span></li>
+        <li><span class="def-tag purple">Nuance</span><span>It complicates Weber-style assumptions by showing suppression, not simple positive reinforcement.</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">🏢 For Industry Practitioners</div>
+      <ul class="def-list">
+        <li><span class="def-tag green">Founders</span><span>Your work preferences are shaped by deep value priorities, not only by market incentives.</span></li>
+        <li><span class="def-tag orange">Ecosystems</span><span>Entrepreneur support programs should recognize that not everyone reads uncertainty, independence, and novelty in the same moral way.</span></li>
+        <li><span class="def-tag blue">Teams</span><span>Understanding value differences may help in founder selection, leadership, and multicultural collaboration.</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">🌐 For General Public</div>
+      <ul class="def-list">
+        <li><span class="def-tag">Everyday meaning</span><span>People do not choose careers only for money. They choose them through what feels right, respectable, exciting, or responsible.</span></li>
+        <li><span class="def-tag blue">Religion</span><span>Religion matters economically even when it does not directly command economic action.</span></li>
+        <li><span class="def-tag purple">Social change</span><span>As societies secularize or diversify religiously, entrepreneurship patterns may also shift.</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">⚠️ Limits and Cautions</div>
+      <ul class="def-list">
+        <li><span class="def-tag orange">Measure</span><span>The paper uses self-employment as a proxy for entrepreneurship, which is standard but not identical to all forms of entrepreneurship.</span></li>
+        <li><span class="def-tag gray">Context</span><span>The study is European, so the findings may not travel identically to settings like India, Africa, or Latin America.</span></li>
+        <li><span class="def-tag green">Complexity</span><span>Religion influences entrepreneurship through several channels beyond values, including social capital, norms, and networks.</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="meta" class="section-panel">
+    <div class="card">
+      <div class="card-title">📚 Paper Details</div>
+      <ul class="paper-meta-list">
+        <li><span class="pm-label">Title</span><span>The mediating role of values in the relationship between religion and entrepreneurship</span></li>
+        <li><span class="pm-label">Authors</span><span>Cornelius A. Rietveld · Brigitte Hoogendoorn</span></li>
+        <li><span class="pm-label">Journal</span><span>Small Business Economics</span></li>
+        <li><span class="pm-label">Journal Ranking</span><span>⭐ ABDC-A outlet</span></li>
+        <li><span class="pm-label">Year / Volume</span><span>2022 · Vol. 58 · Pages 1309–1335</span></li>
+        <li><span class="pm-label">DOI</span><span><a href="https://doi.org/10.1007/s11187-021-00454-z" target="_blank" rel="noopener noreferrer">10.1007/s11187-021-00454-z</a></span></li>
+        <li><span class="pm-label">Data</span><span>European Social Survey, 8 waves, 2002–2016, 32 countries</span></li>
+        <li><span class="pm-label">Keywords</span><span>Religion; entrepreneurship; self-employment; values</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">👩‍🏫 About the Authors</div>
+      <div class="author-grid">
+        <div class="author-card">
+          <h4>Cornelius A. Rietveld</h4>
+          <p>Rietveld is affiliated with the Erasmus School of Economics, Erasmus University Rotterdam. In this paper he is listed with the Department of Applied Economics and serves as the corresponding author.</p>
+        </div>
+        <div class="author-card">
+          <h4>Brigitte Hoogendoorn</h4>
+          <p>Hoogendoorn is also affiliated with the Erasmus School of Economics, Erasmus University Rotterdam. Her work is widely associated with entrepreneurship, social impact, and the institutional context of enterprise.</p>
+        </div>
+      </div>
+      <div class="highlight"><strong>Why the authors matter:</strong> this paper reflects a strong European empirical tradition — theoretically careful, mechanism-driven, and grounded in large comparative datasets.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">🧾 Why This Paper Fits the Series</div>
+      <p>This paper is a strong fit for the Religion and Entrepreneurship series because it explains <em>how</em> religion works, not just <em>whether</em> it matters. It is especially useful for connecting abstract moral worlds with occupational choice through a clean theoretical mechanism.</p>
+    </div>
+  </div>
+</main>
+<footer>
+  <p>🎙️ This explainer is part of the <strong>Religion and Entrepreneurship</strong> series on <strong>VSSER-2026</strong></p>
+  <div class="footer-links">
+    🎧 <a href="https://open.spotify.com/show/1FSNMlJzYxvlPswFdyCZx1?si=f0ed71dfbbc94b8c" target="_blank" rel="noopener noreferrer">Spotify</a>
+    📺 <a href="https://www.youtube.com/@WeekendResearcher" target="_blank" rel="noopener noreferrer">YouTube: Weekend Researcher</a>
+    🎵 <a href="https://music.amazon.in/podcasts/f64c70fc-f70b-498e-87f3-669152e83730/revise-and-resubmit---the-mayukh-show" target="_blank" rel="noopener noreferrer">Amazon Prime Music</a>
+    &#127822; <a href="https://podcasts.apple.com/us/podcast/revise-and-resubmit-the-mayukh-show/id1770883122" target="_blank" rel="noopener noreferrer">Apple Podcast</a>
+  </div>
+  <p style="margin-top:0.5rem;font-size:0.82rem;">Heartfelt thanks to <strong>Cornelius A. Rietveld</strong> and <strong>Brigitte Hoogendoorn</strong> for this contribution, and to <strong>Small Business Economics</strong>, an <strong>ABDC-A</strong> outlet by Springer Nature. 🙏</p>
+  <div class="vsser-note">
+    &#128204; This portal has been prepared by <strong><a href="https://mayukhmukhopadhyay.com/aboutme/" target="_blank" rel="noopener noreferrer">Mayukh Mukhopadhyay</a> </strong> in connection with <strong>VSSER-2026</strong>, spearheaded by <strong><a href="https://culverhouse.ua.edu/people/vishal-gupta/" target="_blank" rel="noopener noreferrer">Professor Vishal K. Gupta</a></strong> and <strong><a href="https://www.linkedin.com/in/athina-skiadopoulou-3931b3193/" target="_blank" rel="noopener noreferrer">Dr Athina Skiadopoulou</a></strong>. Series: <em>Seminar in Entrepreneurship Research</em>.<br>
+    &copy; 2026 <a href="https://mayukhmukhopadhyay.com/reviseandresubmit/" target="_blank" rel="noopener noreferrer">Revise and Resubmit &mdash; The Mayukh Show.</a> (CC BY-NC-ND).
+  </div>
+</footer>
+<script>
+(function(){var htmlEl=document.documentElement;var btn=document.getElementById('themeToggle');var icon=document.getElementById('themeIcon');var label=document.getElementById('themeLabel');var dark=window.matchMedia('(prefers-color-scheme: dark)').matches;function apply(){htmlEl.setAttribute('data-theme',dark?'dark':'light');icon.textContent=dark?'☀️':'🌙';label.textContent=dark?'Light Mode':'Dark Mode';}apply();btn.addEventListener('click',function(){dark=!dark;apply();});})();
+function switchTab(id,btn){document.querySelectorAll('.section-panel').forEach(function(p){p.classList.remove('active');});document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});document.getElementById(id).classList.add('active');btn.classList.add('active');btn.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});}
+(function(){var au=document.getElementById('rr-audio');var playBtn=document.getElementById('rr-play');var loopBtn=document.getElementById('rr-loop');var fill=document.getElementById('rr-fill');var thumb=document.getElementById('rr-thumb');var cur=document.getElementById('rr-cur');var dur=document.getElementById('rr-dur');function fmt(s){var m=Math.floor(s/60),sc=Math.floor(s%60);return m+':'+(sc<10?'0':'')+sc;}au.addEventListener('loadedmetadata',function(){dur.textContent=fmt(au.duration||0);});au.addEventListener('durationchange',function(){if(au.duration&&isFinite(au.duration))dur.textContent=fmt(au.duration);});au.addEventListener('timeupdate',function(){var p=au.duration?(au.currentTime/au.duration)*100:0;fill.style.width=p+'%';thumb.style.left=p+'%';cur.textContent=fmt(au.currentTime);});au.addEventListener('ended',function(){playBtn.textContent='▶';});window.rrToggle=function(){if(au.paused){var pr=au.play();if(pr!==undefined){pr.then(function(){playBtn.textContent='⏸';}).catch(function(){playBtn.textContent='▶';});}else{playBtn.textContent='⏸';}}else{au.pause();playBtn.textContent='▶';}};window.rrRewind=function(){au.currentTime=Math.max(0,au.currentTime-10);};window.rrForward=function(){au.currentTime=Math.min(au.duration||0,au.currentTime+10);};window.rrLoop=function(){au.loop=!au.loop;loopBtn.style.background=au.loop?'var(--accent2)':'var(--surface2)';loopBtn.style.color=au.loop?'#fff':'var(--muted)';loopBtn.style.borderColor=au.loop?'var(--accent2)':'var(--border)';};window.rrSeek=function(e){var bar=document.getElementById('rr-bar');var rect=bar.getBoundingClientRect();var p=Math.min(Math.max((e.clientX-rect.left)/rect.width,0),1);if(au.duration&&isFinite(au.duration))au.currentTime=p*au.duration;};window.rrVol=function(v){au.volume=v;};var seeking=false;var bar=document.getElementById('rr-bar');bar.addEventListener('mousedown',function(e){seeking=true;rrSeek(e);});window.addEventListener('mousemove',function(e){if(seeking)rrSeek(e);});window.addEventListener('mouseup',function(){seeking=false;});bar.addEventListener('touchstart',function(e){seeking=true;var t=e.touches[0];rrSeek({clientX:t.clientX});},{passive:true});window.addEventListener('touchmove',function(e){if(seeking){var t=e.touches[0];rrSeek({clientX:t.clientX});}},{passive:true});window.addEventListener('touchend',function(){seeking=false;});})();
+</script>
+</body>
+</html>
