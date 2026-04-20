@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Balodi et al. 2026 | VSSER-2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Patrick+Hand&family=Kalam&display=swap" rel="stylesheet">
+<style>
+:root,[data-theme="light"]{
+  --bg:#eef6f7;--surface:#f9fcfc;--surface2:#ffffff;--board:#e3f0f2;
+  --border:#bfd9dc;--divider:#d7eaec;--text:#163238;--muted:#547279;
+  --faint:#7a9aa0;--ink:#0e2226;
+  --accent:#1f6f78;--accent2:#2f9c95;--accent3:#597d35;
+  --accent4:#3f6791;--accent5:#0f8aa6;
+  --shadow:0 2px 8px rgba(16,43,48,0.09);--shadow-lg:0 8px 32px rgba(16,43,48,0.12);
+  --font-hand:'Caveat','Kalam',cursive;--font-body:'Patrick Hand','Kalam',cursive;
+  --transition:200ms cubic-bezier(0.16,1,0.3,1);--radius:0.75rem;--radius-sm:0.4rem;
+}
+[data-theme="dark"]{
+  --bg:#081518;--surface:#0e2024;--surface2:#143038;--board:#0a1a1e;
+  --border:#29525a;--divider:#16343a;--text:#e8f6f7;--muted:#a6c9ce;
+  --faint:#7da6ab;--ink:#f5ffff;
+  --accent:#62c1c7;--accent2:#49d2c3;--accent3:#99c86a;
+  --accent4:#88aee0;--accent5:#52c8e4;
+  --shadow:0 2px 8px rgba(0,0,0,0.45);--shadow-lg:0 8px 32px rgba(0,0,0,0.55);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0} html{scroll-behavior:smooth}
+body{font-family:var(--font-body);background:var(--bg);color:var(--text);font-size:clamp(1rem,0.9rem + 0.5vw,1.2rem);line-height:1.65;min-height:100dvh;transition:background var(--transition),color var(--transition)}
+.site-header{position:sticky;top:0;z-index:100;background:var(--surface);border-bottom:2px solid var(--border);box-shadow:var(--shadow);padding:.75rem 1.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
+.logo-wrap{display:flex;align-items:center;gap:.6rem}.brand-name{font-family:var(--font-hand);font-size:clamp(1.1rem,1rem + 1vw,1.5rem);font-weight:700;color:var(--accent);letter-spacing:-.02em}.brand-sub{font-family:var(--font-hand);font-size:.85rem;color:var(--muted);display:block;margin-top:-4px}
+.toggle-btn{background:var(--surface2);border:2px solid var(--border);border-radius:2rem;padding:.4rem 1rem;font-family:var(--font-hand);font-size:.95rem;color:var(--text);cursor:pointer;display:flex;align-items:center;gap:.4rem;transition:background var(--transition),border-color var(--transition)} .toggle-btn:hover{background:var(--divider)}
+.hero-board{background:linear-gradient(180deg,var(--board),var(--surface));border-bottom:2px solid var(--border);padding:3rem 1.5rem 2.5rem;text-align:center}
+.hero-label{display:inline-block;background:var(--accent);color:#fff;font-family:var(--font-hand);font-size:.85rem;border-radius:2rem;padding:.25rem 1rem;margin-bottom:1rem;letter-spacing:.04em}
+.hero-title{font-family:var(--font-hand);font-size:clamp(1.6rem,1.2rem + 2.5vw,2.8rem);font-weight:700;color:var(--ink);line-height:1.2;max-width:900px;margin:0 auto 1rem}.hero-title span{color:var(--accent5)}
+.hero-meta{font-size:.9rem;color:var(--muted);max-width:760px;margin:0 auto 1.5rem}.hero-meta strong{color:var(--text)}
+.hero-badges{display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem;margin-top:1rem}.badge{background:var(--surface2);border:1.5px solid var(--border);border-radius:2rem;padding:.3rem .9rem;font-size:.82rem;color:var(--muted);font-family:var(--font-hand)} .badge.abdc{background:var(--accent4);color:#fff;border-color:var(--accent4);font-weight:700}.badge.tech{background:var(--accent2);color:#fff;border-color:var(--accent2)}
+main{max-width:860px;margin:0 auto;padding:2rem 1rem 3rem}.tabs-wrap{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:1.75rem;border-bottom:2px solid var(--border);padding-bottom:.5rem;overflow-x:auto}
+.tab-btn{background:transparent;border:1.5px solid transparent;border-radius:var(--radius-sm) var(--radius-sm) 0 0;padding:.45rem 1.1rem;font-family:var(--font-hand);font-size:.97rem;color:var(--muted);cursor:pointer;white-space:nowrap;transition:all var(--transition)} .tab-btn:hover{color:var(--text);background:var(--divider)} .tab-btn.active{color:var(--accent);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface);font-weight:700}
+.section-panel{display:none}.section-panel.active{display:block}
+.card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:1.4rem 1.6rem;margin-bottom:1.4rem;box-shadow:var(--shadow)} .card-title{font-family:var(--font-hand);font-size:1.15rem;font-weight:700;color:var(--accent);margin-bottom:.6rem;display:flex;align-items:center;gap:.4rem}.card p{margin-bottom:.7rem}.card p:last-child{margin-bottom:0}
+.highlight{border-left:4px solid var(--accent);background:var(--surface2);border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:.9rem 1.2rem;margin:1rem 0;font-size:.97rem}.highlight.green{border-color:var(--accent3)} .highlight.blue{border-color:var(--accent5)} .highlight.purple{border-color:var(--accent4)} .highlight.teal{border-color:var(--accent2)}
+.pull-quote{border:2px dashed var(--border);border-radius:var(--radius);padding:1.2rem 1.5rem;margin:1.4rem 0;font-family:var(--font-hand);font-size:clamp(1rem,.9rem + .4vw,1.2rem);color:var(--ink);text-align:center;background:var(--board)}
+.def-list{list-style:none;padding:0}.def-list li{padding:.7rem 0;border-bottom:1px solid var(--divider);display:grid;grid-template-columns:auto 1fr;gap:.7rem;align-items:start}.def-list li:last-child{border-bottom:none}
+.def-tag{background:var(--accent);color:#fff;border-radius:var(--radius-sm);padding:.15rem .6rem;font-size:.8rem;font-family:var(--font-hand);white-space:nowrap;margin-top:.25rem}.def-tag.green{background:var(--accent3)} .def-tag.purple{background:var(--accent4)} .def-tag.blue{background:var(--accent5)} .def-tag.teal{background:var(--accent2)} .def-tag.slate{background:#4b6770}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1rem 0}.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;margin:1rem 0}@media(max-width:700px){.two-col,.three-col{grid-template-columns:1fr}}
+.col-card{background:var(--surface2);border:1.5px solid var(--border);border-radius:var(--radius);padding:1rem 1.1rem}.col-card h4{font-family:var(--font-hand);font-size:1rem;margin-bottom:.4rem}.col-card.teal h4{color:var(--accent)} .col-card.blue h4{color:var(--accent5)} .col-card.green h4{color:var(--accent3)} .col-card.purple h4{color:var(--accent4)}
+.results-table-wrap{overflow-x:auto;margin:1rem 0} table{width:100%;border-collapse:collapse;font-size:.92rem;font-family:var(--font-body)} th{background:var(--accent);color:#fff;padding:.6rem .9rem;text-align:left;font-family:var(--font-hand)} td{padding:.55rem .9rem;border-bottom:1px solid var(--divider);vertical-align:top} tr:last-child td{border-bottom:none} tr:nth-child(even) td{background:var(--surface2)}
+.insight-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin:1.2rem 0}.insight-box{background:var(--surface2);border:1.5px solid var(--border);border-radius:var(--radius);padding:1rem;text-align:center}.insight-icon{font-size:2rem;display:block;margin-bottom:.4rem}.insight-label{font-size:.82rem;color:var(--muted)} .insight-val{font-family:var(--font-hand);font-size:1.1rem;font-weight:700;color:var(--accent);display:block;margin:.2rem 0 .1rem}
+.paper-meta-list{list-style:none;padding:0}.paper-meta-list li{display:flex;gap:.6rem;padding:.5rem 0;border-bottom:1px solid var(--divider);font-size:.92rem}.paper-meta-list li:last-child{border-bottom:none}.pm-label{font-weight:700;color:var(--muted);min-width:140px;flex-shrink:0}
+.author-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem}@media(max-width:700px){.author-grid{grid-template-columns:1fr}} .author-card{background:var(--surface2);border:1.5px solid var(--border);border-radius:var(--radius);padding:1rem 1.1rem}.author-card h4{font-family:var(--font-hand);font-size:1.05rem;color:var(--accent);margin-bottom:.4rem}
+footer{background:var(--surface);border-top:2px solid var(--border);text-align:center;padding:1.8rem 1.5rem;font-size:.9rem;color:var(--muted);margin-top:3rem}.footer-links{display:flex;flex-wrap:wrap;justify-content:center;gap:.75rem 1.5rem;margin:.75rem 0;font-size:.92rem}.footer-links a,footer a{color:var(--accent);text-decoration:none}.footer-links a:hover,footer a:hover{text-decoration:underline}.vsser-note{margin-top:.75rem;font-size:.85rem;color:var(--faint);border-top:1px solid var(--divider);padding-top:.75rem}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="logo-wrap">
+  <a href="https://mayukhpsm.github.io/vsser26/" class="brand-link" aria-label="Return to home">
+    <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="36" height="36" rx="8" fill="var(--accent)"/><text x="18" y="25" font-size="18" text-anchor="middle" fill="white" font-family="serif" font-weight="bold">PE</text></svg></a>
+    <div><span class="brand-name">VSSER-2026</span><span class="brand-sub">Paper Explainer</span></div>
+  </div>
+  <button class="toggle-btn" id="themeToggle"><span id="themeIcon">🌙</span><span id="themeLabel">Dark Mode</span></button>
+</header>
+<section class="hero-board">
+  <div class="hero-label">🏗️ Entrepreneurial Ecosystem · VSSER-2026</div>
+  <h1 class="hero-title">Entrepreneurial dynamism and entrepreneurial ecosystem in emerging economies: the role of infrastructure <span><br>(Entrepreneurial Dynamism  in Emerging Economies)</span></h1>
+  <p class="hero-meta"><strong>Krishna Chandra Balodi, Paul Kattuman, Christina Theodoraki &amp; Ravi Roshan (2026)</strong><br><em>The role of infrastructure</em> · <strong>Industrial and Corporate Change</strong><br>DOI: 10.1093/icc/dtag0147</p>
+  <div class="hero-badges">
+    <span class="badge abdc">📘 ABDC-A Journal</span>
+    <span class="badge tech">🇮🇳 India, 2000–2019</span>
+    <span class="badge">📊 State-level panel data</span>
+    <span class="badge">⚙️ Infrastructure quality</span>
+    <span class="badge">📅 Published 2026, Online-First, 28 pages</span>
+  </div>
+</section>
+<div id="audio-player-wrap" style="max-width:860px;margin:2rem auto 0;padding:0 1rem;">
+  <div style="background:var(--surface);border:2px solid var(--border);border-radius:0.75rem;box-shadow:0 8px 32px rgba(16,43,48,0.12);padding:1.4rem 1.6rem 1.2rem;display:flex;flex-direction:column;gap:0.9rem;">
+    <div style="display:flex;align-items:center;gap:0.85rem;">
+      <span style="font-size:2rem;line-height:1;flex-shrink:0;">🎙️</span>
+      <div>
+        <div style="font-family:var(--font-hand);font-size:clamp(1rem,0.95rem + 0.4vw,1.25rem);font-weight:700;color:var(--accent);line-height:1.25;">Listen to This Episode</div>
+        <div style="font-size:0.82rem;color:var(--muted);margin-top:0.15rem;">Infrastructure and entrepreneurial dynamism · Balodi et al. · Revise &amp; Resubmit</div>
+      </div>
+    </div>
+    <audio id="rr-audio" preload="metadata">
+      <source src="balodi-et-al-infrastructure-entrepreneurial-dynamism.mp3" type="audio/mpeg">
+      <source src="balodi-et-al-infrastructure-entrepreneurial-dynamism.m4a" type="audio/mp4">
+      Your browser does not support the audio element.
+    </audio>
+    <div style="display:flex;align-items:center;justify-content:center;gap:0.65rem;flex-wrap:wrap;">
+      <button onclick="rrRewind()" style="background:var(--surface2);border:2px solid var(--border);border-radius:2rem;padding:0.42rem 1rem;font-family:var(--font-hand);font-size:0.92rem;color:var(--text);cursor:pointer;">⏮ 10s</button>
+      <button id="rr-play" onclick="rrToggle()" style="background:var(--accent);color:#fff;border:none;border-radius:2rem;padding:0.5rem 1.6rem;font-family:var(--font-hand);font-size:1.1rem;font-weight:700;cursor:pointer;min-width:72px;">▶</button>
+      <button onclick="rrForward()" style="background:var(--surface2);border:2px solid var(--border);border-radius:2rem;padding:0.42rem 1rem;font-family:var(--font-hand);font-size:0.92rem;color:var(--text);cursor:pointer;">10s ⏭</button>
+      <button id="rr-loop" onclick="rrLoop()" title="Toggle loop" style="background:var(--surface2);border:2px solid var(--border);border-radius:2rem;padding:0.42rem 1rem;font-family:var(--font-hand);font-size:0.92rem;color:var(--muted);cursor:pointer;">🔁</button>
+    </div>
+    <div style="display:flex;align-items:center;gap:0.6rem;">
+      <span id="rr-cur" style="font-size:0.8rem;color:var(--muted);min-width:36px;text-align:center;flex-shrink:0;">0:00</span>
+      <div id="rr-bar" onclick="rrSeek(event)" style="flex:1;height:9px;background:var(--divider);border-radius:99px;position:relative;cursor:pointer;overflow:visible;">
+        <div id="rr-fill" style="height:100%;background:var(--accent);border-radius:99px;width:0%;pointer-events:none;"></div>
+        <div id="rr-thumb" style="position:absolute;top:50%;left:0%;transform:translate(-50%,-50%);width:16px;height:16px;border-radius:50%;background:var(--accent);border:2px solid var(--surface);box-shadow:0 1px 4px rgba(0,0,0,0.25);pointer-events:none;"></div>
+      </div>
+      <span id="rr-dur" style="font-size:0.8rem;color:var(--muted);min-width:36px;text-align:center;flex-shrink:0;">0:00</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:0.5rem;">
+      <span style="font-size:1rem;">🔊</span>
+      <input type="range" id="rr-vol" min="0" max="1" step="0.05" value="1" oninput="rrVol(this.value)" style="flex:1;max-width:180px;-webkit-appearance:none;appearance:none;height:6px;border-radius:99px;background:var(--divider);outline:none;cursor:pointer;">
+    </div>
+  </div>
+</div>
+<main>
+  <nav class="tabs-wrap" role="tablist" aria-label="Sections">
+    <button class="tab-btn active" onclick="switchTab('overview',this)">📋 Overview</button>
+    <button class="tab-btn" onclick="switchTab('argument',this)">🧭 Argument</button>
+    <button class="tab-btn" onclick="switchTab('method',this)">🧪 Method</button>
+    <button class="tab-btn" onclick="switchTab('findings',this)">📊 Findings</button>
+    <button class="tab-btn" onclick="switchTab('implications',this)">💡 Implications</button>
+    <button class="tab-btn" onclick="switchTab('meta',this)">📚 Paper Info</button>
+  </nav>
+
+  <div id="overview" class="section-panel active">
+    <div class="card">
+      <div class="card-title">🧭 What This Paper Studies</div>
+      <p>This paper asks a simple but important question: does infrastructure help create more dynamic entrepreneurship in emerging economies? Instead of treating infrastructure as background context, the authors make it central to how entrepreneurial ecosystems work.</p>
+      <p>The study focuses on India and looks at whether four kinds of infrastructure—transport, banking, education, and power—shape both the quantity and quality of new firm creation across states over time.</p>
+    </div>
+    <div class="pull-quote">💡 Main idea: infrastructure matters for entrepreneurship, but it matters much more when infrastructure quality is high.</div>
+    <div class="card">
+      <div class="card-title">🌍 Why This Matters</div>
+      <p>Many discussions of entrepreneurship celebrate founders, finance, and innovation but underplay roads, power, banks, and colleges. This paper shows that productive entrepreneurship depends on these foundational systems because they affect access, cost, coordination, reliability, and opportunity recognition.</p>
+      <div class="highlight blue"><strong>Easy takeaway:</strong> more infrastructure alone is not enough; the quality of infrastructure changes how strongly it supports entrepreneurship.</div>
+    </div>
+    <div class="insight-strip">
+      <div class="insight-box"><span class="insight-icon">🇮🇳</span><span class="insight-val">31 states</span><span class="insight-label">Indian state-level panel across 2000–2019</span></div>
+      <div class="insight-box"><span class="insight-icon">🏗️</span><span class="insight-val">4 dimensions</span><span class="insight-label">Transport, banking, education, and power</span></div>
+      <div class="insight-box"><span class="insight-icon">📈</span><span class="insight-val">2 outcomes</span><span class="insight-label">Entrepreneurship quantity and quality</span></div>
+      <div class="insight-box"><span class="insight-icon">📘</span><span class="insight-val">ABDC-A</span><span class="insight-label">Published in Industrial and Corporate Change</span></div>
+    </div>
+  </div>
+
+  <div id="argument" class="section-panel">
+    <div class="card">
+      <div class="card-title">🧭 The Core Argument</div>
+      <p>The authors work within the entrepreneurial ecosystem framework. Their argument is that infrastructure is not just a support variable but a foundational ecosystem component that shapes entrepreneurial opportunities directly and indirectly.</p>
+      <p>They also argue that emerging economies face a “dual infrastructural disadvantage”: they often have both lower infrastructure stocks and lower infrastructure quality. That means the same amount of infrastructure can produce very different entrepreneurial outcomes depending on how well it works.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">🔍 What They Mean by Entrepreneurial Dynamism</div>
+      <div class="two-col">
+        <div class="col-card teal"><h4>Entrepreneurship quantity</h4><p>The rate of new firm formation.</p></div>
+        <div class="col-card blue"><h4>Entrepreneurship quality</h4><p>The size of newly formed firms, used as a proxy for more productive entrepreneurship.</p></div>
+      </div>
+      <div class="highlight green"><strong>Important nuance:</strong> the paper is not only about how many firms are created, but also about whether new firms begin at a stronger scale.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">🏗️ Infrastructure Types in the Model</div>
+      <div class="three-col">
+        <div class="col-card teal"><h4>Transport</h4><p>Helps firms reach inputs, labor, and markets.</p></div>
+        <div class="col-card blue"><h4>Banking</h4><p>Improves access to formal finance and lowers funding frictions.</p></div>
+        <div class="col-card green"><h4>Education</h4><p>Builds human capital, absorptive capacity, and knowledge spillovers.</p></div>
+      </div>
+      <div class="three-col">
+        <div class="col-card purple"><h4>Power</h4><p>Improves reliability, lowers operational uncertainty, and supports scale.</p></div>
+        <div class="col-card teal"><h4>Quantity</h4><p>How much infrastructure exists.</p></div>
+        <div class="col-card blue"><h4>Quality threshold</h4><p>Whether the infrastructure works well enough to unlock stronger effects.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="method" class="section-panel">
+    <div class="card">
+      <div class="card-title">🧪 How the Study Was Done</div>
+      <p>The paper uses an unbalanced panel of 31 Indian states from 2000 to 2019. This state-level design fits the Indian policy context because many infrastructure decisions are made or strongly shaped at the state level.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">📐 Main Measures</div>
+      <ul class="def-list">
+        <li><span class="def-tag">NFF</span><span>Entrepreneurship quantity, measured as the rate of new non-government company formation.</span></li>
+        <li><span class="def-tag blue">NFS</span><span>Entrepreneurship quality, measured using the size of new firms through authorized capital.</span></li>
+        <li><span class="def-tag teal">Transport</span><span>Length of national highways per hundred square kilometers.</span></li>
+        <li><span class="def-tag green">Banking</span><span>Number of offices of scheduled commercial banks.</span></li>
+        <li><span class="def-tag purple">Education</span><span>Colleges per hundred square kilometers and higher education enrolment.</span></li>
+        <li><span class="def-tag slate">Power</span><span>Per capita availability of power.</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">⚙️ Econometric Approach</div>
+      <p>The authors use a dynamic-panel system generalized method of moments estimator. This is important because both infrastructure and entrepreneurship are dynamic over time and can affect each other, creating endogeneity problems in simpler models.</p>
+      <div class="highlight teal"><strong>Method in one line:</strong> the paper uses a strong panel approach to test whether infrastructure quantity matters, and whether it matters more when infrastructure quality is higher.</div>
+    </div>
+  </div>
+
+  <div id="findings" class="section-panel">
+    <div class="card">
+      <div class="card-title">📊 Main Finding</div>
+      <p>The headline result is clear: stronger infrastructure-entrepreneurial dynamism relationships appear when infrastructure quality is higher. In other words, infrastructure stock by itself does not tell the full story; the condition and effectiveness of infrastructure shape whether entrepreneurial gains actually materialize.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">📈 What the Paper Shows</div>
+      <div class="results-table-wrap">
+        <table>
+          <thead><tr><th>Dimension</th><th>What the paper examines</th><th>Main message</th></tr></thead>
+          <tbody>
+            <tr><td>Transport</td><td>Road connectivity and physical access</td><td>Supports entrepreneurship more strongly when infrastructure quality is higher</td></tr>
+            <tr><td>Banking</td><td>Formal financial access</td><td>Helps productive entrepreneurship when banking systems work better</td></tr>
+            <tr><td>Education</td><td>Human capital and knowledge access</td><td>Becomes more valuable when ecosystem quality conditions are stronger</td></tr>
+            <tr><td>Power</td><td>Energy availability and reliability</td><td>Reliable power improves the environment for firm creation and scale</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="highlight green"><strong>Bottom line:</strong> infrastructure does not operate as a simple checklist item; it works as an enabling system whose entrepreneurial payoff rises with quality.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">🧠 Why This Result Matters</div>
+      <p>This finding helps explain why infrastructure investments sometimes disappoint. A state may expand roads, colleges, or bank presence, but if congestion, unreliability, weak service quality, or institutional frictions persist, entrepreneurial dynamism may not rise much.</p>
+      <div class="two-col">
+        <div class="col-card green"><h4>What this paper rejects</h4><p>The idea that simply adding infrastructure quantity automatically boosts productive entrepreneurship.</p></div>
+        <div class="col-card purple"><h4>What this paper supports</h4><p>A threshold-style view where quality conditions unlock stronger entrepreneurial benefits.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="implications" class="section-panel">
+    <div class="card">
+      <div class="card-title">💡 For Academic Audience</div>
+      <ul class="def-list">
+        <li><span class="def-tag">Theory</span><span>The paper strengthens the entrepreneurial ecosystem view by showing that infrastructure is a core ecosystem mechanism, not just background context.</span></li>
+        <li><span class="def-tag blue">Measurement</span><span>It distinguishes entrepreneurship quantity from entrepreneurship quality, which is analytically important.</span></li>
+        <li><span class="def-tag green">Emerging economies</span><span>It extends infrastructure–entrepreneurship research beyond the usual developed-country settings.</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">🏛️ For Policy Makers</div>
+      <ul class="def-list">
+        <li><span class="def-tag teal">Focus on quality</span><span>Do not treat infrastructure spending and infrastructure performance as the same thing.</span></li>
+        <li><span class="def-tag purple">Coordinate sectors</span><span>Transport, finance, education, and power should be improved as a system, not in isolated silos.</span></li>
+        <li><span class="def-tag green">Subnational policy</span><span>State-level differences matter, so policy design should be place-sensitive.</span></li>
+      </ul>
+      <div class="highlight blue"><strong>Policy message:</strong> good infrastructure policy for entrepreneurship is not just about building more assets; it is about building dependable, usable, high-quality systems.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">🏢 For Industry Practitioners</div>
+      <ul class="def-list">
+        <li><span class="def-tag">Founders</span><span>Location strategy should account for infrastructure reliability, not only headline availability.</span></li>
+        <li><span class="def-tag blue">Investors</span><span>Regional ecosystem quality can affect startup scalability and operating risk.</span></li>
+        <li><span class="def-tag teal">Incubators and ecosystem builders</span><span>Support programs work better when combined with stronger local infrastructure conditions.</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">⚠️ What to Keep in Mind</div>
+      <ul class="def-list">
+        <li><span class="def-tag slate">Context</span><span>The evidence comes from Indian states, so interpretation should be sensitive to national and regional institutions.</span></li>
+        <li><span class="def-tag green">Proxy limits</span><span>Entrepreneurship quality is measured through new firm size, which captures one important aspect but not every dimension of venture quality.</span></li>
+        <li><span class="def-tag purple">Dynamic systems</span><span>Infrastructure and entrepreneurship likely influence each other over time, which is why the paper uses a dynamic method.</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="meta" class="section-panel">
+    <div class="card">
+      <div class="card-title">📚 Paper Details</div>
+      <ul class="paper-meta-list">
+        <li><span class="pm-label">Paper title</span><span>Entrepreneurial dynamism and entrepreneurial ecosystem in emerging economies: the role of infrastructure</span></li>
+        <li><span class="pm-label">Authors</span><span>Krishna Chandra Balodi · Paul Kattuman · Christina Theodoraki · Ravi Roshan</span></li>
+        <li><span class="pm-label">Journal</span><span>Industrial and Corporate Change</span></li>
+        <li><span class="pm-label">Outlet status</span><span>ABDC-A</span></li>
+        <li><span class="pm-label">Year</span><span>2026</span></li>
+        <li><span class="pm-label">DOI</span><span><a href="https://doi.org/10.1093/icc/dtag014" target="_blank" rel="noopener noreferrer">10.1093/icc/dtag014</a></span></li>
+        <li><span class="pm-label">Setting</span><span>31 Indian states, 2000–2019</span></li>
+        <li><span class="pm-label">Method</span><span>Dynamic-panel system generalized method of moments</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">👩‍🏫 About the Authors</div>
+      <div class="author-grid">
+        <div class="author-card"><h4>Krishna Chandra Balodi</h4><p>Balodi is based at the Indian Institute of Management Lucknow and leads the paper’s inquiry into infrastructure and entrepreneurial dynamism in emerging-economy settings.</p></div>
+        <div class="author-card"><h4>Paul Kattuman</h4><p>Kattuman is affiliated with Cambridge Judge Business School and brings expertise relevant to industrial dynamics, economics, and quantitative analysis.</p></div>
+        <div class="author-card"><h4>Christina Theodoraki</h4><p>Theodoraki is known for work on entrepreneurial ecosystems and contributes the ecosystem lens that helps frame infrastructure as a systemic enabler.</p></div>
+        <div class="author-card"><h4>Ravi Roshan</h4><p>Roshan brings insight into management and emerging-economy entrepreneurship, helping ground the paper in the Indian context.</p></div>
+      </div>
+      <div class="highlight"><strong>Why this author team matters:</strong> the paper combines ecosystem theory, strategy, economics, and India-focused empirical analysis.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">🧾 Why This Paper Fits the Series</div>
+      <p>This paper is especially valuable because it links entrepreneurship research to hard development foundations. It is useful for scholars of ecosystems, for policymakers thinking about state capability, and for practitioners deciding where productive entrepreneurship can realistically grow.</p>
+    </div>
+  </div>
+</main>
+<footer>
+  <p>🎙️ This explainer is part of the <strong>Entrepreneurial Ecosystem</strong> series on <strong>VSSER-2026</strong></p>
+  <div class="footer-links">
+    🎧 <a href="https://open.spotify.com/show/1FSNMlJzYxvlPswFdyCZx1?si=f0ed71dfbbc94b8c" target="_blank" rel="noopener noreferrer">Spotify</a>
+    📺 <a href="https://www.youtube.com/@WeekendResearcher" target="_blank" rel="noopener noreferrer">YouTube: Weekend Researcher</a>
+    🎵 <a href="https://music.amazon.in/podcasts/f64c70fc-f70b-498e-87f3-669152e83730/revise-and-resubmit---the-mayukh-show" target="_blank" rel="noopener noreferrer">Amazon Prime Music</a>
+    &#127822; <a href="https://podcasts.apple.com/us/podcast/revise-and-resubmit-the-mayukh-show/id1770883122" target="_blank" rel="noopener noreferrer">Apple Podcast</a>
+  </div>
+  <p style="margin-top:0.5rem;font-size:0.82rem;">Heartfelt thanks to <strong>Krishna Chandra Balodi, Paul Kattuman, Christina Theodoraki,</strong> and <strong>Ravi Roshan</strong> for this contribution. 🙏</p>
+  <div class="vsser-note">    
+  &#128204; This portal has been prepared by <strong><a href="https://mayukhmukhopadhyay.com/aboutme/" target="_blank" rel="noopener noreferrer">Mayukh Mukhopadhyay</a> </strong> in connection with <strong>VSSER-2026</strong>, spearheaded by <strong><a href="https://culverhouse.ua.edu/people/vishal-gupta/" target="_blank" rel="noopener noreferrer">Professor Vishal K. Gupta</a></strong> and <strong><a href="https://www.linkedin.com/in/athina-skiadopoulou-3931b3193/" target="_blank" rel="noopener noreferrer">Dr Athina Skiadopoulou</a></strong>. Series: <em>Seminar in Entrepreneurship Research</em>.<br>
+    &copy; 2026 <a href="https://mayukhmukhopadhyay.com/reviseandresubmit/" target="_blank" rel="noopener noreferrer">Revise and Resubmit &mdash; The Mayukh Show.</a> (CC BY-NC-ND).
+</footer>
+<script>
+(function(){var htmlEl=document.documentElement;var btn=document.getElementById('themeToggle');var icon=document.getElementById('themeIcon');var label=document.getElementById('themeLabel');var dark=window.matchMedia('(prefers-color-scheme: dark)').matches;function apply(){htmlEl.setAttribute('data-theme',dark?'dark':'light');icon.textContent=dark?'☀️':'🌙';label.textContent=dark?'Light Mode':'Dark Mode';}apply();btn.addEventListener('click',function(){dark=!dark;apply();});})();
+function switchTab(id,btn){document.querySelectorAll('.section-panel').forEach(function(p){p.classList.remove('active');});document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});document.getElementById(id).classList.add('active');btn.classList.add('active');btn.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});}
+(function(){var au=document.getElementById('rr-audio');var playBtn=document.getElementById('rr-play');var loopBtn=document.getElementById('rr-loop');var fill=document.getElementById('rr-fill');var thumb=document.getElementById('rr-thumb');var cur=document.getElementById('rr-cur');var dur=document.getElementById('rr-dur');function fmt(s){var m=Math.floor(s/60),sc=Math.floor(s%60);return m+':'+(sc<10?'0':'')+sc;}au.addEventListener('loadedmetadata',function(){dur.textContent=fmt(au.duration||0);});au.addEventListener('durationchange',function(){if(au.duration&&isFinite(au.duration))dur.textContent=fmt(au.duration);});au.addEventListener('timeupdate',function(){var p=au.duration?(au.currentTime/au.duration)*100:0;fill.style.width=p+'%';thumb.style.left=p+'%';cur.textContent=fmt(au.currentTime);});au.addEventListener('ended',function(){playBtn.textContent='▶';});window.rrToggle=function(){if(au.paused){var pr=au.play();if(pr!==undefined){pr.then(function(){playBtn.textContent='⏸';}).catch(function(){playBtn.textContent='▶';});}else{playBtn.textContent='⏸';}}else{au.pause();playBtn.textContent='▶';}};window.rrRewind=function(){au.currentTime=Math.max(0,au.currentTime-10);};window.rrForward=function(){au.currentTime=Math.min(au.duration||0,au.currentTime+10);};window.rrLoop=function(){au.loop=!au.loop;loopBtn.style.background=au.loop?'var(--accent3)':'var(--surface2)';loopBtn.style.color=au.loop?'#fff':'var(--muted)';loopBtn.style.borderColor=au.loop?'var(--accent3)':'var(--border)';};window.rrSeek=function(e){var bar=document.getElementById('rr-bar');var rect=bar.getBoundingClientRect();var p=Math.min(Math.max((e.clientX-rect.left)/rect.width,0),1);if(au.duration&&isFinite(au.duration))au.currentTime=p*au.duration;};window.rrVol=function(v){au.volume=v;};var seeking=false;var bar=document.getElementById('rr-bar');bar.addEventListener('mousedown',function(e){seeking=true;rrSeek(e);});window.addEventListener('mousemove',function(e){if(seeking)rrSeek(e);});window.addEventListener('mouseup',function(){seeking=false;});bar.addEventListener('touchstart',function(e){seeking=true;var t=e.touches[0];rrSeek({clientX:t.clientX});},{passive:true});window.addEventListener('touchmove',function(e){if(seeking){var t=e.touches[0];rrSeek({clientX:t.clientX});}},{passive:true});window.addEventListener('touchend',function(){seeking=false;});})();
+</script>
+</body>
+</html>
