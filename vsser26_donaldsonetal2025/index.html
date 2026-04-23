@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Donaldson et al. 2025 | VSSER-2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Patrick+Hand&family=Kalam&display=swap" rel="stylesheet">
+<style>
+/* ── DESIGN TOKENS ────────────────────────────────────────────────── */
+:root,[data-theme="light"]{
+  --bg:#f4f0eb;--surface:#f9f6f1;--surface2:#ffffff;--board:#ede8e0;
+  --border:#d6cfc4;--divider:#e3ddd5;--text:#1e1a14;--muted:#6b5f50;
+  --faint:#a08f7a;--ink:#120f0a;
+  --accent:#8b5e2a;--accent2:#b07d3d;--accent3:#5c7a3e;
+  --accent4:#4a6a8a;--accent5:#7a3e5c;--accent6:#3e7a6a;
+  --shadow:0 2px 10px rgba(30,20,10,0.08);--shadow-lg:0 8px 36px rgba(30,20,10,0.12);
+  --font-hand:"Caveat","Kalam",cursive;--font-body:"Patrick Hand","Kalam",cursive;
+  --tr:200ms cubic-bezier(0.16,1,0.3,1);--r:0.75rem;--rs:0.4rem;
+}
+[data-theme="dark"]{
+  --bg:#0d0b08;--surface:#14110d;--surface2:#1c1712;--board:#100e0a;
+  --border:#3a3025;--divider:#22201a;--text:#e8e0d4;--muted:#b0a08e;
+  --faint:#7a6a58;--ink:#f5f0e8;
+  --accent:#d4934a;--accent2:#e0aa60;--accent3:#89b85e;
+  --accent4:#7aaad0;--accent5:#c07098;--accent6:#60b8a0;
+  --shadow:0 2px 10px rgba(0,0,0,0.45);--shadow-lg:0 8px 36px rgba(0,0,0,0.55);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-body);background:var(--bg);color:var(--text);font-size:clamp(1rem,.9rem + .4vw,1.15rem);line-height:1.68;min-height:100dvh;transition:background var(--tr),color var(--tr)}
+
+/* ── HEADER ─────────────────────────────────────────────────────────── */
+.site-header{position:sticky;top:0;z-index:100;background:var(--surface);border-bottom:2px solid var(--border);box-shadow:var(--shadow);padding:.7rem 1.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
+.logo-wrap{display:flex;align-items:center;gap:.6rem}
+.brand-name{font-family:var(--font-hand);font-size:clamp(1.1rem,1rem + .8vw,1.45rem);font-weight:700;color:var(--accent)}
+.brand-sub{font-size:.82rem;color:var(--muted);display:block;margin-top:-3px}
+.toggle-btn{background:var(--surface2);border:2px solid var(--border);border-radius:2rem;padding:.38rem .95rem;font-family:var(--font-hand);font-size:.92rem;color:var(--text);cursor:pointer;display:flex;align-items:center;gap:.35rem;transition:background var(--tr)}
+.toggle-btn:hover{background:var(--divider)}
+
+/* ── HERO ────────────────────────────────────────────────────────────── */
+.hero{background:linear-gradient(170deg,var(--board) 0%,var(--surface) 100%);border-bottom:2px solid var(--border);padding:3.2rem 1.5rem 2.8rem;text-align:center}
+.hero-pill{display:inline-block;background:var(--accent);color:#fff;font-family:var(--font-hand);font-size:.82rem;border-radius:2rem;padding:.22rem .95rem;margin-bottom:1rem;letter-spacing:.04em}
+.hero-title{font-family:var(--font-hand);font-size:clamp(1.5rem,1.1rem + 2.5vw,2.8rem);font-weight:700;color:var(--ink);line-height:1.2;max-width:880px;margin:0 auto .9rem}
+.hero-title span{color:var(--accent2)}
+.hero-meta{font-size:.92rem;color:var(--muted);max-width:760px;margin:0 auto 1.4rem}
+.hero-meta strong{color:var(--text)}
+.badges{display:flex;flex-wrap:wrap;justify-content:center;gap:.45rem;margin-top:1rem}
+.badge{background:var(--surface2);border:1.5px solid var(--border);border-radius:2rem;padding:.28rem .88rem;font-size:.8rem;color:var(--muted);font-family:var(--font-hand)}
+.badge.abdc{background:var(--accent4);color:#fff;border-color:var(--accent4);font-weight:700}
+.badge.method{background:var(--accent6);color:#fff;border-color:var(--accent6)}
+.badge.journal{background:var(--accent5);color:#fff;border-color:var(--accent5)}
+
+/* ── AUDIO PLAYER ────────────────────────────────────────────────────── */
+.audio-wrap{max-width:860px;margin:2rem auto 0;padding:0 1rem}
+.audio-card{background:var(--surface);border:2px solid var(--border);border-radius:var(--r);box-shadow:var(--shadow-lg);padding:1.4rem 1.6rem 1.2rem;display:flex;flex-direction:column;gap:.9rem}
+.audio-header{display:flex;align-items:center;gap:.85rem}
+.audio-icon{font-size:2rem;flex-shrink:0}
+.audio-title{font-family:var(--font-hand);font-size:clamp(1rem,.95rem + .3vw,1.2rem);font-weight:700;color:var(--accent)}
+.audio-sub{font-size:.8rem;color:var(--muted);margin-top:.12rem}
+
+/* language tabs */
+.lang-tabs{display:flex;gap:.4rem;flex-wrap:wrap}
+.lang-btn{background:var(--surface2);border:1.5px solid var(--border);border-radius:2rem;padding:.3rem .85rem;font-family:var(--font-hand);font-size:.88rem;color:var(--muted);cursor:pointer;transition:background var(--tr),color var(--tr),border-color var(--tr)}
+.lang-btn:hover{background:var(--divider)}
+.lang-btn.active{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:700}
+
+.rr-controls{display:flex;align-items:center;justify-content:center;gap:.6rem;flex-wrap:wrap}
+.rr-btn{background:var(--surface2);border:2px solid var(--border);border-radius:2rem;padding:.4rem .95rem;font-family:var(--font-hand);font-size:.9rem;color:var(--text);cursor:pointer;transition:background var(--tr)}
+.rr-btn:hover{background:var(--divider)}
+.rr-play{background:var(--accent);color:#fff;border:none;border-radius:2rem;padding:.48rem 1.6rem;font-family:var(--font-hand);font-size:1.08rem;font-weight:700;cursor:pointer;min-width:70px;transition:background var(--tr)}
+.rr-play:hover{background:var(--accent2)}
+
+.progress-row{display:flex;align-items:center;gap:.55rem}
+.time-lbl{font-size:.78rem;color:var(--muted);min-width:34px;text-align:center;flex-shrink:0}
+.prog-bar{flex:1;height:9px;background:var(--divider);border-radius:99px;position:relative;cursor:pointer}
+.prog-fill{height:100%;background:var(--accent);border-radius:99px;width:0%;pointer-events:none}
+.prog-thumb{position:absolute;top:50%;left:0%;transform:translate(-50%,-50%);width:15px;height:15px;border-radius:50%;background:var(--accent);border:2px solid var(--surface);box-shadow:0 1px 4px rgba(0,0,0,.22);pointer-events:none}
+
+.vol-row{display:flex;align-items:center;gap:.5rem}
+input[type=range]{-webkit-appearance:none;appearance:none;height:6px;border-radius:99px;background:var(--divider);outline:none;cursor:pointer;flex:1;max-width:180px}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:14px;height:14px;border-radius:50%;background:var(--accent);border:2px solid var(--surface)}
+
+/* ── MAIN / TABS ─────────────────────────────────────────────────────── */
+main{max-width:860px;margin:0 auto;padding:2rem 1rem 3rem}
+.tabs-wrap{display:flex;gap:.35rem;flex-wrap:wrap;margin-bottom:1.7rem;border-bottom:2px solid var(--border);padding-bottom:.45rem;overflow-x:auto}
+.tab-btn{background:transparent;border:1.5px solid transparent;border-radius:var(--rs) var(--rs) 0 0;padding:.42rem 1.05rem;font-family:var(--font-hand);font-size:.95rem;color:var(--muted);cursor:pointer;white-space:nowrap;transition:all var(--tr)}
+.tab-btn:hover{color:var(--text);background:var(--divider)}
+.tab-btn.active{color:var(--accent);background:var(--surface);border-color:var(--border);border-bottom-color:var(--surface);font-weight:700}
+.panel{display:none}.panel.active{display:block}
+
+/* ── CARDS & COMPONENTS ───────────────────────────────────────────────── */
+.card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r);padding:1.35rem 1.55rem;margin-bottom:1.35rem;box-shadow:var(--shadow)}
+.card-title{font-family:var(--font-hand);font-size:1.12rem;font-weight:700;color:var(--accent);margin-bottom:.55rem;display:flex;align-items:center;gap:.38rem}
+.card p{margin-bottom:.65rem}.card p:last-child{margin-bottom:0}
+
+.hl{border-left:4px solid var(--accent);background:var(--surface2);border-radius:0 var(--rs) var(--rs) 0;padding:.85rem 1.15rem;margin:1rem 0;font-size:.96rem}
+.hl.green{border-color:var(--accent3)}.hl.blue{border-color:var(--accent4)}.hl.rose{border-color:var(--accent5)}.hl.teal{border-color:var(--accent6)}
+
+.pull{border:2px dashed var(--border);border-radius:var(--r);padding:1.1rem 1.45rem;margin:1.3rem 0;font-family:var(--font-hand);font-size:clamp(.95rem,.88rem + .35vw,1.15rem);color:var(--ink);text-align:center;background:var(--board)}
+
+.def-list{list-style:none;padding:0}
+.def-list li{padding:.65rem 0;border-bottom:1px solid var(--divider);display:grid;grid-template-columns:auto 1fr;gap:.65rem;align-items:start}
+.def-list li:last-child{border-bottom:none}
+.tag{background:var(--accent);color:#fff;border-radius:var(--rs);padding:.13rem .55rem;font-size:.78rem;font-family:var(--font-hand);white-space:nowrap;margin-top:.22rem}
+.tag.g{background:var(--accent3)}.tag.b{background:var(--accent4)}.tag.r{background:var(--accent5)}.tag.t{background:var(--accent6)}.tag.s{background:#6a6050}
+
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1rem 0}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.9rem;margin:1rem 0}
+@media(max-width:680px){.two-col,.three-col{grid-template-columns:1fr}}
+
+.col-c{background:var(--surface2);border:1.5px solid var(--border);border-radius:var(--r);padding:.95rem 1.05rem}
+.col-c h4{font-family:var(--font-hand);font-size:.98rem;margin-bottom:.35rem}
+.col-c.amber h4{color:var(--accent)}.col-c.green h4{color:var(--accent3)}.col-c.blue h4{color:var(--accent4)}.col-c.rose h4{color:var(--accent5)}.col-c.teal h4{color:var(--accent6)}
+
+.insight-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:.9rem;margin:1.1rem 0}
+.ins-box{background:var(--surface2);border:1.5px solid var(--border);border-radius:var(--r);padding:.95rem;text-align:center}
+.ins-icon{font-size:1.9rem;display:block;margin-bottom:.35rem}
+.ins-val{font-family:var(--font-hand);font-size:1.08rem;font-weight:700;color:var(--accent);display:block;margin:.18rem 0 .08rem}
+.ins-lbl{font-size:.78rem;color:var(--muted)}
+
+.tbl-wrap{overflow-x:auto;margin:1rem 0}
+table{width:100%;border-collapse:collapse;font-size:.9rem}
+th{background:var(--accent);color:#fff;padding:.55rem .85rem;text-align:left;font-family:var(--font-hand)}
+td{padding:.52rem .85rem;border-bottom:1px solid var(--divider);vertical-align:top}
+tr:last-child td{border-bottom:none}
+tr:nth-child(even) td{background:var(--surface2)}
+
+.pm-list{list-style:none;padding:0}
+.pm-list li{display:flex;gap:.6rem;padding:.48rem 0;border-bottom:1px solid var(--divider);font-size:.9rem}
+.pm-list li:last-child{border-bottom:none}
+.pm-label{font-weight:700;color:var(--muted);min-width:136px;flex-shrink:0}
+
+.author-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.9rem;margin-top:1rem}
+@media(max-width:680px){.author-grid{grid-template-columns:1fr}}
+.a-card{background:var(--surface2);border:1.5px solid var(--border);border-radius:var(--r);padding:.95rem 1.05rem}
+.a-card h4{font-family:var(--font-hand);font-size:1rem;color:var(--accent);margin-bottom:.35rem}
+
+/* ── FOOTER ─────────────────────────────────────────────────────────── */
+footer{background:var(--surface);border-top:2px solid var(--border);text-align:center;padding:1.8rem 1.5rem;font-size:.88rem;color:var(--muted);margin-top:3rem}
+.footer-links{display:flex;flex-wrap:wrap;justify-content:center;gap:.6rem 1.4rem;margin:.7rem 0;font-size:.9rem}
+.footer-links a,footer a{color:var(--accent);text-decoration:none}
+.footer-links a:hover,footer a:hover{text-decoration:underline}
+.vsser{margin-top:.7rem;font-size:.82rem;color:var(--faint);border-top:1px solid var(--divider);padding-top:.7rem}
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ─────────────────────────────────────────────────────────── -->
+<header class="site-header">
+  <div class="logo-wrap">
+  <a href="https://mayukhpsm.github.io/vsser26/" class="brand-link" aria-label="Return to home">
+    <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Revise and Resubmit logo">
+      <rect width="36" height="36" rx="8" fill="var(--accent)"/>
+      <text x="18" y="25" font-size="18" text-anchor="middle" fill="white" font-family="serif" font-weight="bold">PE</text></a>
+    </svg>
+    <div>
+      <span class="brand-name">VSSER-2026</span>
+      <span class="brand-sub">Paper Explainer</span>
+    </div>
+  </div>
+  <button class="toggle-btn" id="themeToggle" aria-label="Toggle dark mode">
+    <span id="themeIcon">🌙</span><span id="themeLabel">Dark Mode</span>
+  </button>
+</header>
+
+<!-- ── HERO ────────────────────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="hero-pill">📡 Entrepreneurial Ecosystem · VSSER-2026</div>
+  <h1 class="hero-title">Inside-Out and Outside-In:<br><span> How Entrepreneurial Ecosystems Can Build Legitimacy Through Signaling</span></h1>
+  <p class="hero-meta">
+    <strong>Colin Donaldson, Jorge Villagrasa &amp; Christina Theodoraki (2025)</strong><br>
+    <em>Journal of Small Business Management</em> · <br>DOI: 10.1080/00472778.2024.2394499
+  </p>
+  <div class="badges">
+    <span class="badge abdc">📘 ABDC-A Journal</span>
+    <span class="badge journal">🇪🇸 Valencia, Spain · MdE Case</span>
+    <span class="badge method">🔬 Qualitative · Embedded Case Study</span>
+    <span class="badge">📡 Signaling Theory</span>
+    <span class="badge">📅 Published 2025, Vol. 63, Issue 4</span>
+  </div>
+</section>
+
+<!-- ── AUDIO PLAYER ────────────────────────────────────────────────────── -->
+<div class="audio-wrap">
+  <div class="audio-card">
+    <div class="audio-header">
+      <span class="audio-icon">🎙️</span>
+      <div>
+        <div class="audio-title">Listen to an AI-Assisted Podcast</div>
+        <div class="audio-sub">Signaling &amp; Legitimacy in Entrepreneurial Ecosystems · Donaldson et al. 2025 · VSSER-2026</div>
+      </div>
+    </div>
+
+    <!-- Language selector -->
+    <div class="lang-tabs" role="group" aria-label="Language selection">
+      <button class="lang-btn active" data-lang="en" onclick="switchLang('en',this)">🇺🇸 English</button>
+      <button class="lang-btn" data-lang="bn" onclick="switchLang('bn',this)">🇮🇳 বাংলা</button>
+      <button class="lang-btn" data-lang="hi" onclick="switchLang('hi',this)">🇮🇳 हिंदी</button>
+    </div>
+
+    <!-- Audio element — swap src per language -->
+    <audio id="rrAudio" preload="metadata">
+      <source id="rrSrcMp3" src="vsser26-donaldson-et-al-2025-en.mp3" type="audio/mpeg">
+      <source id="rrSrcM4a" src="vsser26-donaldson-et-al-2025-en.m4a" type="audio/mp4">
+      Your browser does not support the audio element.
+    </audio>
+
+    <!-- Controls -->
+    <div class="rr-controls">
+      <button class="rr-btn" onclick="rrSkip(-10)">⏮ 10s</button>
+      <button class="rr-play" id="rrPlay" onclick="rrToggle()">▶</button>
+      <button class="rr-btn" onclick="rrSkip(10)">10s ⏭</button>
+      <button class="rr-btn" id="rrLoopBtn" onclick="rrLoop()" title="Toggle loop">🔁</button>
+    </div>
+
+    <!-- Progress bar -->
+    <div class="progress-row">
+      <span class="time-lbl" id="rrCur">0:00</span>
+      <div class="prog-bar" id="rrBar" onclick="rrSeek(event)">
+        <div class="prog-fill" id="rrFill"></div>
+        <div class="prog-thumb" id="rrThumb"></div>
+      </div>
+      <span class="time-lbl" id="rrDur">0:00</span>
+    </div>
+
+    <!-- Volume -->
+    <div class="vol-row">
+      <span>🔊</span>
+      <input type="range" id="rrVol" min="0" max="1" step="0.05" value="1" oninput="document.getElementById('rrAudio').volume=this.value" aria-label="Volume">
+    </div>
+  </div>
+</div>
+
+<!-- ── MAIN CONTENT ───────────────────────────────────────────────────── -->
+<main>
+  <!-- TABS -->
+  <nav class="tabs-wrap" role="tablist" aria-label="Paper sections">
+    <button class="tab-btn active" onclick="switchTab('overview',this)">📋 Overview</button>
+    <button class="tab-btn" onclick="switchTab('theory',this)">🧭 Theory</button>
+    <button class="tab-btn" onclick="switchTab('method',this)">🔬 Method</button>
+    <button class="tab-btn" onclick="switchTab('findings',this)">📊 Findings</button>
+    <button class="tab-btn" onclick="switchTab('implications',this)">💡 Implications</button>
+    <button class="tab-btn" onclick="switchTab('meta',this)">📚 Paper Info</button>
+  </nav>
+
+  <!-- ── OVERVIEW ───────────────────────────────────────────────────── -->
+  <div id="overview" class="panel active">
+    <div class="card">
+      <div class="card-title">📋 What This Paper Is About</div>
+      <p>When a new entrepreneurial ecosystem (EE) is trying to prove its worth, how does it convince the world — investors, talent, partners, media — that it is credible and worth joining? This paper argues that the answer lies in <strong>signaling</strong>: deliberate and sometimes unintentional acts that communicate quality, intention, and trustworthiness.</p>
+      <p>The authors study <strong>Marina de Empresas (MdE)</strong>, a privately governed entrepreneurial ecosystem in Valencia, Spain, created by entrepreneur Juan Roig. By analyzing 24 interviews, 1,000+ pages of documents, and direct field observations, they develop a multilevel model that explains how emerging EEs gain legitimacy through signaling — both from inside the ecosystem outward, and from outside inward.</p>
+    </div>
+
+    <div class="pull">💡 "How does an emerging entrepreneurial ecosystem gain legitimacy?" — the guiding research question.</div>
+
+    <div class="card">
+      <div class="card-title">🌍 Why This Gap Mattered</div>
+      <p>Signaling theory has been widely used to study individual entrepreneurs seeking funding, but almost no research had applied it to entire ecosystems. The authors show that ecosystems are not just passive environments — they actively <strong>send and receive signals</strong> to build trust and attract actors.</p>
+      <div class="hl blue"><strong>Easy takeaway:</strong> joining and supporting a nascent ecosystem is a leap of faith. Signaling is how that leap becomes a rational, informed decision for investors, entrepreneurs, and other stakeholders.</div>
+    </div>
+
+    <div class="insight-strip">
+      <div class="ins-box"><span class="ins-icon">🏛️</span><span class="ins-val">MdE, Valencia</span><span class="ins-lbl">Privately governed nascent ecosystem</span></div>
+      <div class="ins-box"><span class="ins-icon">🎤</span><span class="ins-val">24 interviews</span><span class="ins-lbl">With 21 internal &amp; external actors</span></div>
+      <div class="ins-box"><span class="ins-icon">📄</span><span class="ins-val">1,000+ pages</span><span class="ins-lbl">Of ecosystem documentation</span></div>
+      <div class="ins-box"><span class="ins-icon">📘</span><span class="ins-val">ABDC-A</span><span class="ins-lbl">Journal of Small Business Management</span></div>
+      <div class="ins-box"><span class="ins-icon">📡</span><span class="ins-val">3 levels</span><span class="ins-lbl">Macro · Meso · Micro signaling model</span></div>
+    </div>
+  </div>
+
+  <!-- ── THEORY ─────────────────────────────────────────────────────── -->
+  <div id="theory" class="panel">
+    <div class="card">
+      <div class="card-title">🧭 Core Theoretical Ideas</div>
+      <p>The paper sits at the intersection of two big ideas: <strong>signaling theory</strong> and <strong>entrepreneurial ecosystem (EE) theory</strong>. Bringing them together allows the authors to examine how trust and credibility are built in complex, multi-actor settings — not just between two parties like an entrepreneur and an investor.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📡 What Is Signaling Theory?</div>
+      <p>Signaling theory (originally from economics and biology) explains how parties with unequal information communicate quality. When one party knows more than the other, they send observable <strong>signals</strong> — cues that represent their underlying qualities — to reduce uncertainty.</p>
+      <div class="two-col">
+        <div class="col-c amber"><h4>Intentional signals</h4><p>Deliberate cues sent to persuade — pitch decks, press coverage, investor endorsements, accelerator rankings.</p></div>
+        <div class="col-c rose"><h4>Unintentional signals</h4><p>Observable cues that audiences interpret even if not designed to signal — physical location, culture, community behaviour.</p></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🌿 What Is an Entrepreneurial Ecosystem?</div>
+      <p>An EE is a regional community of interconnected actors — entrepreneurs, investors, universities, incubators, governments — that collectively produce the conditions for entrepreneurship to thrive. The paper treats MdE as a <strong>nascent, privately governed EE</strong> with three core institutions:</p>
+      <ul class="def-list">
+        <li><span class="tag amber">EDEM</span><span>A private nonprofit entrepreneurial university centre affiliated with two public universities in Valencia.</span></li>
+        <li><span class="tag g">Lanzadera</span><span>A startup incubator and accelerator housing 300 startups, ranked 19th in the FT list of Europe's leading startup hubs.</span></li>
+        <li><span class="tag b">Angels Capital</span><span>An entrepreneurial financing company with a portfolio of 50 ventures.</span></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🏗️ Two Types of Legitimacy</div>
+      <div class="two-col">
+        <div class="col-c green"><h4>Cognitive legitimacy</h4><p>The ecosystem is <em>understood</em> — people know what it does and why. Built through common knowledge, narratives, and recognisable success stories.</p></div>
+        <div class="col-c blue"><h4>Evaluative legitimacy</h4><p>The ecosystem is <em>valued</em> — people believe it is desirable, appropriate, and worthwhile. Built through shared social norms, visible values, and community endorsement.</p></div>
+      </div>
+      <div class="hl teal"><strong>Key boundary condition introduced:</strong> signals are interpreted differently depending on whether the audience is <em>inside</em> or <em>outside</em> the ecosystem. Proximity shapes meaning.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📐 The Inside-Out / Outside-In Frame</div>
+      <p>The paper's title captures the directional nature of signaling. <strong>Inside-out</strong> signals emerge from actors within the ecosystem (entrepreneurs, investors, institutions) and radiate outward to attract external resources and attention. <strong>Outside-in</strong> signals flow from external recognition — rankings, media coverage, policy endorsement — back into the ecosystem, reinforcing internal confidence and cohesion.</p>
+    </div>
+  </div>
+
+  <!-- ── METHOD ─────────────────────────────────────────────────────── -->
+  <div id="method" class="panel">
+    <div class="card">
+      <div class="card-title">🔬 Research Design</div>
+      <p>The study uses a qualitative, <strong>embedded case study</strong> design — the ideal approach when a phenomenon is complex, contextual, and not yet well understood. The authors had <em>unrestricted access</em> to MdE, including attendance at investment forums and ecosystem events.</p>
+      <div class="hl"><strong>Why embedded case study?</strong> Because signaling in EEs involves multiple levels and actors that cannot be captured through surveys or experiments alone.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🗂️ Three Data Sources</div>
+      <div class="three-col">
+        <div class="col-c amber"><h4>🎤 Interviews</h4><p>24 semi-structured interviews with 21 actors. Total: 22.1 hours. Internal (entrepreneurs, directors, investment managers) and external (CEOs, investors, bankers).</p></div>
+        <div class="col-c green"><h4>📄 Documents</h4><p>1,000+ pages of identity artifacts, strategic documents, image materials, operational records, and financial documentation from MdE.</p></div>
+        <div class="col-c blue"><h4>👁️ Observation</h4><p>Direct field observation of investment forums and ecosystem events, with detailed field notes and voice notes capturing real-time signaling interactions.</p></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🧩 Analysis Approach — Gioia Method</div>
+      <p>The authors used a three-stage grounded theory coding process inspired by the Gioia method:</p>
+      <ul class="def-list">
+        <li><span class="tag amber">Stage 1</span><span><strong>First-order codes:</strong> 243 codes generated from informant-centred statements using in vivo, narrative, open, process, and values coding.</span></li>
+        <li><span class="tag g">Stage 2</span><span><strong>Second-order themes:</strong> axial coding clustered the 243 codes into 10 coherent themes by searching for patterns and conceptual similarities.</span></li>
+        <li><span class="tag b">Stage 3</span><span><strong>Aggregate dimensions:</strong> the 10 themes were synthesised into 4 aggregate dimensions, forming the final conceptual model.</span></li>
+      </ul>
+      <div class="hl green">Member checks with key informants and ongoing dialogue with external scholars ensured validity and theoretical grounding.</div>
+    </div>
+  </div>
+
+  <!-- ── FINDINGS ───────────────────────────────────────────────────── -->
+  <div id="findings" class="panel">
+    <div class="card">
+      <div class="card-title">📊 The Multilevel Signaling Model</div>
+      <p>The study's main contribution is a <strong>three-level conceptual model</strong> of how signaling works within an EE. Each level has distinct actors, signal types, and legitimacy-building mechanisms. Signals also travel <em>across</em> levels, creating a dynamic, self-reinforcing system.</p>
+    </div>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Level</th><th>Who controls it</th><th>Cognitive legitimacy signals</th><th>Evaluative legitimacy signals</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Macro</strong> (Context &amp; Collective Action)</td><td>Founder + regional actors collectively</td><td>Startup counts, investment volume, success narratives, event hosting, media coverage</td><td>Business-friendly legislation, talent attraction, regional economic vibrancy</td></tr>
+          <tr><td><strong>Meso</strong> (Institutions)</td><td>Core EE organisations (EDEM, Lanzadera, Angels)</td><td>Accelerator rankings, university affiliations, portfolio size, innovation hubs</td><td>Shared mission alignment, values consistency, professional norms</td></tr>
+          <tr><td><strong>Micro</strong> (Individuals)</td><td>Individual entrepreneurs and investors</td><td>Investor track records, entrepreneur expertise, credentials, past performance</td><td>Impression management, social compliance, symbolic action, passion signals</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🔁 How Signals Travel Across Levels</div>
+      <p>One of the paper's most original findings is that signals do not stay at one level. Individual micro-level behaviors — an entrepreneur's passion, an investor's endorsement — accumulate upward to reinforce institutional reputation. Institutional signals then condition individual behavior. And macro-level context shapes what signals are even possible to send.</p>
+      <div class="pull">📡 "The interactions of signals within and across levels lead to the development of a socio-spatial environment driven from the bottom up, middle through, and top down."</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🧠 The Key Boundary Condition</div>
+      <p>The paper's second major contribution is identifying a <strong>boundary condition</strong> for signaling in EE contexts: <em>audience proximity</em>. Whether a signal produces cognitive or evaluative legitimacy depends heavily on how close (geographically and psychologically) the audience is to the ecosystem.</p>
+      <div class="two-col">
+        <div class="col-c teal"><h4>Insider audiences</h4><p>Interpret signals through community values, long-term relational logic, and shared culture. Respond to evaluative legitimacy cues about belonging and mission.</p></div>
+        <div class="col-c rose"><h4>Outsider audiences</h4><p>Interpret signals through market-based logic — financial metrics, returns, rankings, and performance. Respond to cognitive legitimacy cues about credibility and results.</p></div>
+      </div>
+      <div class="hl rose"><strong>Implication:</strong> the same signal can mean different things to insiders and outsiders. EEs must manage both simultaneously.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🏙️ MdE in Numbers (Signal Evidence)</div>
+      <div class="insight-strip">
+        <div class="ins-box"><span class="ins-icon">🚀</span><span class="ins-val">1,300+</span><span class="ins-lbl">Companies accelerated by Lanzadera</span></div>
+        <div class="ins-box"><span class="ins-icon">💼</span><span class="ins-val">50</span><span class="ins-lbl">Ventures in Angels Capital portfolio</span></div>
+        <div class="ins-box"><span class="ins-icon">👷</span><span class="ins-val">10,000+</span><span class="ins-lbl">Jobs generated by MdE</span></div>
+        <div class="ins-box"><span class="ins-icon">💶</span><span class="ins-val">€700M+</span><span class="ins-lbl">Raised from external stakeholders</span></div>
+        <div class="ins-box"><span class="ins-icon">🏆</span><span class="ins-val">#19</span><span class="ins-lbl">FT Europe's leading startup hubs</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── IMPLICATIONS ───────────────────────────────────────────────── -->
+  <div id="implications" class="panel">
+    <div class="card">
+      <div class="card-title">📚 For Academic Audiences</div>
+      <ul class="def-list">
+        <li><span class="tag amber">Theory extension</span><span>Applies signaling theory to the EE level — a largely unexplored intersection — introducing new concepts of multilevel and bidirectional signaling.</span></li>
+        <li><span class="tag g">Boundary conditions</span><span>Audience proximity (inside vs. outside the EE) is established as a key boundary condition governing how signals are decoded.</span></li>
+        <li><span class="tag b">Method</span><span>Demonstrates the power of embedded case study and Gioia-inspired coding for studying complex, situated social phenomena like ecosystem legitimacy.</span></li>
+        <li><span class="tag t">Collective action</span><span>Brings Ostrom's collective action framework into EE and signaling research, showing how shared governance shapes what signals are possible.</span></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🏛️ For Policy Makers</div>
+      <ul class="def-list">
+        <li><span class="tag amber">Ecosystem design</span><span>Policy cannot simply mandate legitimacy. Nascent EEs need deliberate spaces — events, co-location, narratives — that generate common knowledge and shared identity.</span></li>
+        <li><span class="tag g">Beyond metrics</span><span>Purely economic indicators (jobs, investment) are necessary but not sufficient. Evaluative legitimacy requires cultural, relational, and mission-based signals too.</span></li>
+        <li><span class="tag b">Regional strategy</span><span>Place-based EEs succeed when they build both cognitive comprehensibility (outsiders can understand them) and evaluative desirability (insiders believe in them).</span></li>
+      </ul>
+      <div class="hl blue"><strong>Policy message:</strong> invest in the infrastructure of meaning — events, narratives, co-location, community rituals — not just physical or financial infrastructure alone.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🏢 For Industry Practitioners</div>
+      <ul class="def-list">
+        <li><span class="tag amber">Founders</span><span>Your ecosystem affiliation is itself a signal. Choosing the right EE — one with both insider culture and outsider credibility — shapes how investors and partners perceive you before you even pitch.</span></li>
+        <li><span class="tag b">Investors</span><span>EE-level signals (rankings, event quality, founder density, co-location) provide reliable low-cost information about deal flow quality in nascent markets.</span></li>
+        <li><span class="tag t">Ecosystem builders</span><span>Manage both inside-out and outside-in signals deliberately. Do not rely solely on market performance metrics; cultivate community culture as a legitimacy mechanism.</span></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title">⚠️ Limitations to Keep in Mind</div>
+      <ul class="def-list">
+        <li><span class="tag s">Context specificity</span><span>MdE is a unique, privately governed ecosystem founded by a single high-profile entrepreneur. Findings may not transfer directly to publicly governed or less-resourced ecosystems.</span></li>
+        <li><span class="tag s">Single case</span><span>A single case study offers depth but not breadth. Future research should test the model comparatively across multiple EEs.</span></li>
+        <li><span class="tag s">Temporal scope</span><span>The study captures a snapshot of a maturing nascent ecosystem. Longitudinal work is needed to track how signaling strategies evolve as EEs develop.</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ── PAPER INFO ─────────────────────────────────────────────────── -->
+  <div id="meta" class="panel">
+    <div class="card">
+      <div class="card-title">📚 Paper Details</div>
+      <ul class="pm-list">
+        <li><span class="pm-label">Title</span><span>Inside-out and outside-in: How entrepreneurial ecosystems can build legitimacy through signaling</span></li>
+        <li><span class="pm-label">Authors</span><span>Colin Donaldson · Jorge Villagrasa · Christina Theodoraki</span></li>
+        <li><span class="pm-label">Journal</span><span>Journal of Small Business Management</span></li>
+        <li><span class="pm-label">Outlet status</span><span>ABDC-A</span></li>
+        <li><span class="pm-label">Year</span><span>2025</span></li>
+        <li><span class="pm-label">Volume / Pages</span><span>Vol. 63, No. 4, pp. 1552–1593</span></li>
+        <li><span class="pm-label">DOI</span><span><a href="https://doi.org/10.1080/00472778.2024.2394499" target="_blank" rel="noopener noreferrer">10.1080/00472778.2024.2394499</a></span></li>
+        <li><span class="pm-label">Setting</span><span>Marina de Empresas, Valencia, Spain</span></li>
+        <li><span class="pm-label">Method</span><span>Embedded qualitative case study · Gioia-inspired coding · Reflexive thematic analysis</span></li>
+        <li><span class="pm-label">Key theories</span><span>Signaling theory · Entrepreneurial ecosystem theory · Legitimacy theory · Collective action</span></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title">👩‍🏫 About the Authors</div>
+      <div class="author-grid">
+        <div class="a-card">
+          <h4>Colin Donaldson</h4>
+          <p>Based at EDEM Business School, Valencia, Spain. Donaldson's research sits at the intersection of entrepreneurial ecosystems, signaling, and relational exchange. He brings an embedded, practice-close perspective having conducted fieldwork within MdE itself.</p>
+        </div>
+        <div class="a-card">
+          <h4>Jorge Villagrasa</h4>
+          <p>Also affiliated with EDEM Business School, Spain. Villagrasa contributes expertise in entrepreneurship, ecosystem dynamics, and management to the empirical work on MdE's legitimacy-building journey.</p>
+        </div>
+        <div class="a-card">
+          <h4>Christina Theodoraki</h4>
+          <p>Professor at IAE Aix-Marseille Graduate School of Management, Aix-Marseille University, France. Theodoraki is a leading scholar of entrepreneurial ecosystems whose prior work provides the theoretical scaffolding for this paper's ecosystem-level analysis.</p>
+        </div>
+      </div>
+      <div class="hl" style="margin-top:1rem"><strong>Why this team?</strong> The authorship combines ecosystem theory expertise with on-the-ground access and observation inside MdE — a rare and powerful combination for qualitative ecosystem research.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🧾 Why This Paper Fits the Series</div>
+      <p>This paper brings a fresh and important lens to entrepreneurship: not just how individual founders signal quality, but how the <em>communities and ecosystems</em> around them send and receive signals to build collective credibility. It is essential reading for anyone thinking about how to build, join, or support an emerging entrepreneurial hub.</p>
+    </div>
+  </div>
+</main>
+
+<!-- ── FOOTER ─────────────────────────────────────────────────────────── -->
+<footer>
+  <p>🎙️ This explainer is part of the <strong>Entrepreneurial Ecosystem</strong> series on <strong>VSSER-2026</strong></p>
+  <div class="footer-links">
+    🎧 <a href="https://open.spotify.com/show/1FSNMlJzYxvlPswFdyCZx1?si=f0ed71dfbbc94b8c" target="_blank" rel="noopener noreferrer">Spotify</a>
+    📺 <a href="https://www.youtube.com/@WeekendResearcher" target="_blank" rel="noopener noreferrer">YouTube: Weekend Researcher</a>
+    🎵 <a href="https://music.amazon.in/podcasts/f64c70fc-f70b-498e-87f3-669152e83730/revise-and-resubmit---the-mayukh-show" target="_blank" rel="noopener noreferrer">Amazon Prime Music</a>
+    🍎 <a href="https://podcasts.apple.com/us/podcast/revise-and-resubmit-the-mayukh-show/id1770883122" target="_blank" rel="noopener noreferrer">Apple Podcasts</a>
+  </div>
+  <p style="margin-top:.5rem;font-size:.82rem;">Heartfelt thanks to <strong>Colin Donaldson, Jorge Villagrasa,</strong> and <strong>Christina Theodoraki</strong> for this remarkable contribution. 🙏</p>
+  <div class="vsser-note">    
+  &#128204; This portal has been prepared by <strong><a href="https://mayukhmukhopadhyay.com/aboutme/" target="_blank" rel="noopener noreferrer">Mayukh Mukhopadhyay</a> </strong> in connection with <strong>VSSER-2026</strong>, spearheaded by <strong><a href="https://culverhouse.ua.edu/people/vishal-gupta/" target="_blank" rel="noopener noreferrer">Professor Vishal K. Gupta</a></strong> and <strong><a href="https://www.linkedin.com/in/athina-skiadopoulou-3931b3193/" target="_blank" rel="noopener noreferrer">Dr Athina Skiadopoulou</a></strong>. Series: <em>Seminar in Entrepreneurship Research</em>.<br>
+    &copy; 2026 <a href="https://mayukhmukhopadhyay.com/reviseandresubmit/" target="_blank" rel="noopener noreferrer">Revise and Resubmit &mdash; The Mayukh Show.</a> (CC BY-NC-ND).</div>
+</footer>
+
+<!-- ── SCRIPTS ─────────────────────────────────────────────────────────── -->
+<script>
+/* ---------- DARK MODE TOGGLE ---------- */
+(function(){
+  var html=document.documentElement,btn=document.getElementById('themeToggle'),
+      icon=document.getElementById('themeIcon'),lbl=document.getElementById('themeLabel'),
+      dark=window.matchMedia('(prefers-color-scheme:dark)').matches;
+  function apply(){html.setAttribute('data-theme',dark?'dark':'light');icon.textContent=dark?'☀️':'🌙';lbl.textContent=dark?'Light Mode':'Dark Mode';}
+  apply();
+  btn.addEventListener('click',function(){dark=!dark;apply();});
+})();
+
+/* ---------- TAB SWITCHER ---------- */
+function switchTab(id,btn){
+  document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('active');});
+  document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  btn.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+}
+
+/* ---------- LANGUAGE AUDIO SWITCHER ---------- */
+var langMap={
+  en:{mp3:'donaldson-et-al-2025-signaling-legitimacy-ecosystem-en.mp3',m4a:'donaldson-et-al-2025-signaling-legitimacy-ecosystem-en.m4a'},
+  bn:{mp3:'donaldson-et-al-2025-signaling-legitimacy-ecosystem-bn.mp3',m4a:'donaldson-et-al-2025-signaling-legitimacy-ecosystem-bn.m4a'},
+  hi:{mp3:'donaldson-et-al-2025-signaling-legitimacy-ecosystem-hi.mp3',m4a:'donaldson-et-al-2025-signaling-legitimacy-ecosystem-hi.m4a'}
+};
+function switchLang(lang,btn){
+  document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.remove('active');});
+  btn.classList.add('active');
+  var au=document.getElementById('rrAudio');
+  var wasPlaying=!au.paused;
+  var ct=au.currentTime;
+  au.pause();
+  document.getElementById('rrSrcMp3').src=langMap[lang].mp3;
+  document.getElementById('rrSrcM4a').src=langMap[lang].m4a;
+  au.load();
+  au.addEventListener('loadedmetadata',function onMeta(){
+    au.currentTime=0;
+    if(wasPlaying){var pr=au.play();if(pr)pr.catch(function(){});}
+    au.removeEventListener('loadedmetadata',onMeta);
+  },{once:true});
+  document.getElementById('rrPlay').textContent='▶';
+}
+
+/* ---------- AUDIO PLAYER ---------- */
+(function(){
+  var au=document.getElementById('rrAudio');
+  var playBtn=document.getElementById('rrPlay');
+  var loopBtn=document.getElementById('rrLoopBtn');
+  var fill=document.getElementById('rrFill');
+  var thumb=document.getElementById('rrThumb');
+  var cur=document.getElementById('rrCur');
+  var durLbl=document.getElementById('rrDur');
+
+  function fmt(s){var m=Math.floor(s/60),sc=Math.floor(s%60);return m+':'+(sc<10?'0':'')+sc;}
+
+  au.addEventListener('loadedmetadata',function(){if(au.duration&&isFinite(au.duration))durLbl.textContent=fmt(au.duration);});
+  au.addEventListener('durationchange',function(){if(au.duration&&isFinite(au.duration))durLbl.textContent=fmt(au.duration);});
+  au.addEventListener('timeupdate',function(){
+    var p=au.duration?(au.currentTime/au.duration)*100:0;
+    fill.style.width=p+'%';
+    thumb.style.left=p+'%';
+    cur.textContent=fmt(au.currentTime);
+  });
+  au.addEventListener('ended',function(){playBtn.textContent='▶';});
+
+  window.rrToggle=function(){
+    if(au.paused){var pr=au.play();if(pr)pr.then(function(){playBtn.textContent='⏸';}).catch(function(){playBtn.textContent='▶';});else playBtn.textContent='⏸';}
+    else{au.pause();playBtn.textContent='▶';}
+  };
+  window.rrSkip=function(s){au.currentTime=Math.min(Math.max(0,au.currentTime+s),au.duration||0);};
+  window.rrLoop=function(){
+    au.loop=!au.loop;
+    loopBtn.style.background=au.loop?'var(--accent3)':'var(--surface2)';
+    loopBtn.style.color=au.loop?'#fff':'var(--muted)';
+    loopBtn.style.borderColor=au.loop?'var(--accent3)':'var(--border)';
+  };
+
+  var bar=document.getElementById('rrBar'),seeking=false;
+  function seek(e){
+    var rect=bar.getBoundingClientRect();
+    var p=Math.min(Math.max((e.clientX-rect.left)/rect.width,0),1);
+    if(au.duration&&isFinite(au.duration))au.currentTime=p*au.duration;
+  }
+  window.rrSeek=seek;
+  bar.addEventListener('mousedown',function(e){seeking=true;seek(e);});
+  window.addEventListener('mousemove',function(e){if(seeking)seek(e);});
+  window.addEventListener('mouseup',function(){seeking=false;});
+  bar.addEventListener('touchstart',function(e){seeking=true;seek({clientX:e.touches[0].clientX});},{passive:true});
+  window.addEventListener('touchmove',function(e){if(seeking)seek({clientX:e.touches[0].clientX});},{passive:true});
+  window.addEventListener('touchend',function(){seeking=false;});
+})();
+</script>
+</body>
+</html>
