@@ -1,1 +1,718 @@
-test file
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PhD Defense Watcher</title>
+  <meta name="description" content="A standalone public-facing tracker for free PhD defense webinars and watch pages across global universities, organized by region, topic, and department." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root, [data-theme="light"] {
+      --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+      --text-sm: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
+      --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+      --text-lg: clamp(1.125rem, 1rem + 0.75vw, 1.5rem);
+      --text-xl: clamp(1.5rem, 1.2rem + 1.25vw, 2.25rem);
+      --text-2xl: clamp(2rem, 1.2rem + 2.5vw, 3.5rem);
+      --space-1: .25rem; --space-2: .5rem; --space-3: .75rem; --space-4: 1rem; --space-5: 1.25rem; --space-6: 1.5rem; --space-8: 2rem; --space-10: 2.5rem; --space-12: 3rem; --space-16: 4rem;
+      --color-bg: #f7f6f2;
+      --color-surface: #f9f8f5;
+      --color-surface-2: #fbfbf9;
+      --color-surface-offset: #ede8df;
+      --color-border: #d4d1ca;
+      --color-divider: #ddd9d0;
+      --color-text: #28251d;
+      --color-text-muted: #66635f;
+      --color-text-faint: #908d88;
+      --color-primary: #01696f;
+      --color-primary-hover: #0c4e54;
+      --color-primary-highlight: #d9e7e5;
+      --color-accent: #8f5d2d;
+      --shadow-sm: 0 1px 2px rgba(40,37,29,0.06);
+      --shadow-md: 0 10px 30px rgba(40,37,29,0.08);
+      --radius-sm: .5rem; --radius-md: .875rem; --radius-lg: 1.25rem; --radius-full: 999px;
+      --font-display: 'Instrument Serif', Georgia, serif;
+      --font-body: 'Inter', system-ui, sans-serif;
+      --content: 1180px;
+    }
+    [data-theme="dark"] {
+      --color-bg: #161513;
+      --color-surface: #1c1b19;
+      --color-surface-2: #22211e;
+      --color-surface-offset: #292723;
+      --color-border: #3b3934;
+      --color-divider: #2d2c29;
+      --color-text: #ece7df;
+      --color-text-muted: #b9b2a8;
+      --color-text-faint: #8a847b;
+      --color-primary: #67a8b0;
+      --color-primary-hover: #86b9c0;
+      --color-primary-highlight: #243438;
+      --color-accent: #d6a46e;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.25);
+      --shadow-md: 0 14px 40px rgba(0,0,0,0.32);
+    }
+    [data-theme="sepia"] {
+      --color-bg: #f3eadb;
+      --color-surface: #f7efe3;
+      --color-surface-2: #fbf4ea;
+      --color-surface-offset: #e9dcc9;
+      --color-border: #ccbda8;
+      --color-divider: #d8cab5;
+      --color-text: #3c2f22;
+      --color-text-muted: #6f5e4b;
+      --color-text-faint: #9a866e;
+      --color-primary: #6c5b2d;
+      --color-primary-hover: #4e421f;
+      --color-primary-highlight: #e6dcc1;
+      --color-accent: #8d4e24;
+      --shadow-sm: 0 1px 2px rgba(60,47,34,0.06);
+      --shadow-md: 0 10px 30px rgba(60,47,34,0.1);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: var(--font-body);
+      font-size: var(--text-base);
+      line-height: 1.65;
+      color: var(--color-text);
+      background:
+        radial-gradient(circle at top right, color-mix(in srgb, var(--color-primary) 10%, transparent), transparent 28%),
+        linear-gradient(180deg, var(--color-bg), var(--color-surface));
+    }
+    a { color: var(--color-primary); text-decoration: none; }
+    a:hover { color: var(--color-primary-hover); }
+    img, svg { max-width: 100%; display: block; }
+    button, select, input { font: inherit; }
+    .skip-link {
+      position: absolute; left: 1rem; top: -3rem; background: var(--color-text); color: var(--color-bg);
+      padding: .75rem 1rem; border-radius: var(--radius-sm); z-index: 100;
+    }
+    .skip-link:focus { top: 1rem; }
+    .container { width: min(calc(100% - 2rem), var(--content)); margin-inline: auto; }
+    .header {
+      position: sticky; top: 0; z-index: 50; backdrop-filter: blur(12px);
+      background: color-mix(in srgb, var(--color-bg) 84%, transparent);
+      border-bottom: 1px solid var(--color-divider);
+    }
+    .header-inner {
+      display: flex; align-items: center; justify-content: space-between; gap: var(--space-4);
+      padding: .9rem 0;
+    }
+    .brand { display: flex; align-items: center; gap: .9rem; min-width: 0; }
+    .logo {
+      width: 42px; height: 42px; border-radius: 14px; background: var(--color-text); color: var(--color-bg);
+      display: grid; place-items: center; box-shadow: var(--shadow-sm); flex: 0 0 auto;
+    }
+    .brand h1 {
+      margin: 0; font-family: var(--font-display); font-weight: 400; font-size: var(--text-xl); line-height: 1;
+      letter-spacing: -.02em;
+    }
+    .brand p { margin: .2rem 0 0; color: var(--color-text-muted); font-size: var(--text-sm); }
+    .header-actions { display: flex; align-items: center; gap: .75rem; flex-wrap: wrap; justify-content: flex-end; }
+    .btn, .theme-btn {
+      min-height: 44px; border: 1px solid var(--color-border); border-radius: var(--radius-full);
+      background: var(--color-surface-2); color: var(--color-text); padding: .7rem 1rem; display: inline-flex; align-items: center; gap: .55rem;
+      cursor: pointer; transition: .18s ease;
+    }
+    .btn:hover, .theme-btn:hover { transform: translateY(-1px); box-shadow: var(--shadow-sm); }
+    .btn-primary {
+      background: var(--color-text); color: var(--color-bg); border-color: var(--color-text);
+    }
+    .hero { padding: clamp(2rem, 5vw, 4.5rem) 0 2rem; }
+    .hero-grid {
+      display: grid; grid-template-columns: 1.4fr .9fr; gap: var(--space-6); align-items: stretch;
+    }
+    .hero-card, .panel, .region-card, .entry, .source-card {
+      background: color-mix(in srgb, var(--color-surface) 88%, transparent);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+    }
+    .hero-card { padding: clamp(1.4rem, 3vw, 2.25rem); }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: .55rem; padding: .4rem .75rem; border-radius: var(--radius-full);
+      background: var(--color-primary-highlight); color: var(--color-primary); font-size: var(--text-xs); font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
+    }
+    .hero h2 {
+      margin: 1rem 0 .8rem; font-family: var(--font-display); font-weight: 400; font-size: clamp(2.3rem, 5vw, 4.7rem); line-height: .94; letter-spacing: -.03em;
+      max-width: 10ch;
+    }
+    .hero p { color: var(--color-text-muted); max-width: 65ch; }
+    .hero-meta {
+      display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: .75rem; margin-top: 1.25rem;
+    }
+    .stat {
+      padding: 1rem; border-radius: var(--radius-md); background: var(--color-surface-2); border: 1px solid var(--color-border);
+    }
+    .stat strong { display: block; font-size: var(--text-lg); }
+    .stat span { color: var(--color-text-muted); font-size: var(--text-sm); }
+    .panel { padding: 1.15rem; }
+    .update-box { display: grid; gap: .9rem; }
+    .update-box h3, .filters h3, .sources h3 { margin: 0; font-size: var(--text-lg); }
+    .note {
+      padding: .9rem 1rem; border-radius: var(--radius-md); background: var(--color-surface-offset); color: var(--color-text-muted); border: 1px solid var(--color-border); font-size: var(--text-sm);
+    }
+    .filters-wrap { padding: .4rem 0 2rem; }
+    .filters {
+      display: grid; grid-template-columns: 1.1fr .8fr .8fr .8fr; gap: .9rem; align-items: end;
+    }
+    .field { display: grid; gap: .45rem; }
+    .field label { font-size: var(--text-sm); color: var(--color-text-muted); font-weight: 600; }
+    .field input, .field select {
+      width: 100%; min-height: 48px; padding: .85rem 1rem; background: var(--color-surface-2); color: var(--color-text);
+      border: 1px solid var(--color-border); border-radius: var(--radius-md);
+    }
+    .legend { display: flex; flex-wrap: wrap; gap: .6rem; padding-top: .85rem; }
+    .pill {
+      display: inline-flex; align-items: center; gap: .45rem; padding: .45rem .75rem; border-radius: var(--radius-full); font-size: var(--text-xs);
+      border: 1px solid var(--color-border); background: var(--color-surface-2); color: var(--color-text-muted);
+    }
+    .dot { width: .55rem; height: .55rem; border-radius: 50%; background: var(--color-primary); }
+    .section { padding: 1rem 0 2rem; }
+    .section-head { display: flex; justify-content: space-between; gap: 1rem; align-items: end; margin-bottom: 1rem; }
+    .section-head h3 { margin: 0; font-size: var(--text-xl); font-family: var(--font-display); font-weight: 400; }
+    .section-head p { margin: 0; color: var(--color-text-muted); max-width: 60ch; }
+    .region-grid { display: grid; gap: 1rem; }
+    .region-card { overflow: hidden; }
+    .region-top {
+      padding: 1.1rem 1.1rem .8rem; border-bottom: 1px solid var(--color-divider); background: color-mix(in srgb, var(--color-surface-2) 90%, transparent);
+      display: flex; justify-content: space-between; gap: 1rem; align-items: start;
+    }
+    .region-top h4 { margin: 0; font-size: 1.15rem; }
+    .region-top p { margin: .25rem 0 0; color: var(--color-text-muted); font-size: var(--text-sm); max-width: 70ch; }
+    .topic-tags { display: flex; flex-wrap: wrap; gap: .45rem; justify-content: flex-end; }
+    .topic-tag {
+      padding: .35rem .65rem; border-radius: var(--radius-full); background: var(--color-primary-highlight); color: var(--color-primary);
+      font-size: var(--text-xs); font-weight: 700;
+    }
+    .entries { display: grid; gap: .8rem; padding: 1rem; }
+    .entry {
+      padding: 1rem; display: grid; gap: .7rem;
+    }
+    .entry-head { display: flex; justify-content: space-between; gap: 1rem; align-items: start; }
+    .entry h5 { margin: 0; font-size: 1rem; }
+    .entry p { margin: 0; color: var(--color-text-muted); font-size: var(--text-sm); }
+    .badges { display: flex; flex-wrap: wrap; gap: .45rem; }
+    .badge {
+      font-size: var(--text-xs); padding: .35rem .6rem; border-radius: var(--radius-full); border: 1px solid var(--color-border); background: var(--color-surface-2);
+    }
+    .badge.open { background: color-mix(in srgb, var(--color-primary-highlight) 85%, transparent); color: var(--color-primary); border-color: color-mix(in srgb, var(--color-primary) 30%, var(--color-border)); }
+    .badge.watch { background: color-mix(in srgb, var(--color-accent) 12%, var(--color-surface-2)); color: var(--color-accent); }
+    .entry-actions { display: flex; flex-wrap: wrap; gap: .65rem; }
+    .entry-actions a {
+      min-height: 42px; padding: .7rem .95rem; border-radius: var(--radius-full); border: 1px solid var(--color-border); background: var(--color-surface-2);
+      display: inline-flex; align-items: center; gap: .45rem; font-size: var(--text-sm); font-weight: 600;
+    }
+    .entry-actions a.primary { background: var(--color-text); color: var(--color-bg); border-color: var(--color-text); }
+    .sources-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 1rem; }
+    .source-card { padding: 1rem; }
+    .source-card h4 { margin: 0 0 .35rem; }
+    .source-card p { margin: 0; color: var(--color-text-muted); font-size: var(--text-sm); }
+    .footer {
+      padding: 2rem 0 3rem; border-top: 1px solid var(--color-divider); margin-top: 2rem;
+    }
+    .footer-inner { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; color: var(--color-text-muted); font-size: var(--text-sm); }
+    .mono { font-variant-numeric: tabular-nums; }
+    .empty-state {
+      display: none; padding: 1rem 1.1rem; border-radius: var(--radius-md); background: var(--color-surface-offset); border: 1px dashed var(--color-border); color: var(--color-text-muted);
+    }
+    .empty-state.show { display: block; }
+    @media (max-width: 980px) {
+      .hero-grid, .filters, .sources-grid { grid-template-columns: 1fr; }
+      .hero-meta { grid-template-columns: 1fr; }
+      .section-head, .region-top, .entry-head { flex-direction: column; align-items: start; }
+      .topic-tags { justify-content: start; }
+    }
+    @media (max-width: 640px) {
+      .container { width: min(calc(100% - 1rem), var(--content)); }
+      .header-inner { align-items: start; flex-direction: column; }
+      .header-actions { width: 100%; justify-content: space-between; }
+      .btn, .theme-btn { padding-inline: .9rem; }
+      .hero h2 { max-width: 12ch; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="header">
+    <div class="container header-inner">
+      <div class="brand" aria-label="PhD Defense Watcher brand">
+        <div class="logo" aria-hidden="true">
+          <svg viewBox="0 0 48 48" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M10 34V14l14-6 14 6v20l-14 6-14-6Z"></path>
+            <path d="M17 19h14M17 24h14M17 29h8"></path>
+          </svg>
+        </div>
+        <div>
+          <h1>PhD Defense Watcher</h1>
+          <p>Public dissertation webinars, defense watch pages, and recent replay links grouped by region and discipline.</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="theme-btn" id="themeToggle" aria-label="Switch theme">Theme: Light</button>
+        <a class="btn" href="http://mayukhmukhopadhyay.com/aboutme" target="_blank" rel="noopener noreferrer">About me</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero">
+      <div class="container hero-grid">
+        <article class="hero-card">
+          <span class="eyebrow">Free & public first</span>
+          <h2>Track open PhD defenses across regions, departments, and topics.</h2>
+          <p>This standalone page is designed as a clean, scroll-friendly research watchlist focused on free public defenses, registration-access webinars, and recently completed defenses with watchable links. It prioritizes management and related departments first, then computing, arts, science, and engineering.</p>
+          <div class="hero-meta" aria-label="Page summary statistics">
+            <div class="stat"><strong id="statEntries">0</strong><span>Curated links</span></div>
+            <div class="stat"><strong class="mono">72h</strong><span>Suggested refresh cadence</span></div>
+            <div class="stat"><strong id="statRegions">0</strong><span>Regional clusters</span></div>
+          </div>
+        </article>
+        <aside class="panel update-box" aria-labelledby="update-title">
+          <h3 id="update-title">Update rhythm</h3>
+          <div class="note"><strong>Refresh policy:</strong> This page includes a built-in 72-hour refresh reminder and an age counter so you can see when the list should be updated next.</div>
+          <div class="note"><strong>Scope rule:</strong> Entries are kept only when they point to public pages, open registration links, event pages, seminar calendars, or recent replay/watch pages that do not obviously require private institutional login.</div>
+          <div class="note"><strong>Practical use:</strong> Many universities publish rolling defense calendars rather than six full months in one place, so the strongest way to keep this useful is periodic manual or scripted review every 72 hours.</div>
+          <div class="note mono" id="refreshStatus">Last curated: 2026-05-02 19:07 IST</div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="filters-wrap">
+      <div class="container">
+        <div class="panel">
+          <div class="filters" aria-label="Filters">
+            <div class="field">
+              <label for="searchBox">Search university, page, or note</label>
+              <input id="searchBox" type="search" placeholder="e.g., marketing, IIT, Oxford, public defense" />
+            </div>
+            <div class="field">
+              <label for="topicFilter">Topic priority</label>
+              <select id="topicFilter">
+                <option value="all">All topics</option>
+                <option value="Management">Management research</option>
+                <option value="CS & IS">CS and information systems</option>
+                <option value="Arts & Humanities">Arts and humanities</option>
+                <option value="Science">Basic science</option>
+                <option value="Engineering">Core engineering</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="accessFilter">Access type</label>
+              <select id="accessFilter">
+                <option value="all">All access types</option>
+                <option value="Open registration">Open registration</option>
+                <option value="Public page">Public page</option>
+                <option value="Replay/watch">Replay/watch</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="regionFilter">Region</label>
+              <select id="regionFilter">
+                <option value="all">All regions</option>
+              </select>
+            </div>
+          </div>
+          <div class="legend" aria-label="Legend">
+            <span class="pill"><span class="dot"></span>Open registration or public watch page</span>
+            <span class="pill">Management is weighted first in the content order</span>
+            <span class="pill">Designed for phone, tablet, and laptop use</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h3>Regional watchlist</h3>
+            <p>The lists below are arranged in your requested geographic sequence, with Ivy League and adjacent elite US sources first, then Europe, Eastern Europe and Balkans, East Asia, the Middle East, the Global South, Africa, South America, and Australia–New Zealand.</p>
+          </div>
+          <div class="pill mono" id="visibleCounter">0 visible entries</div>
+        </div>
+        <div id="emptyState" class="empty-state">No entries match the current filters. Clear one or more filters to restore the list.</div>
+        <div class="region-grid" id="regionGrid"></div>
+      </div>
+    </section>
+
+    <section class="section sources">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h3>Source strategy</h3>
+            <p>These source types are the most reliable places to revisit every 72 hours when you want fresh dissertation webinar links without rebuilding the entire page.</p>
+          </div>
+        </div>
+        <div class="sources-grid">
+          <article class="source-card">
+            <h4>Department defense calendars</h4>
+            <p>Graduate schools, doctoral offices, and department seminar calendars often publish the most direct public links for upcoming defenses, especially in management, medical sciences, engineering, and computing.</p>
+          </article>
+          <article class="source-card">
+            <h4>Event pages and replay pages</h4>
+            <p>Some institutions publish Zoom registration links for future defenses, while others leave a public page or recorded webinar/watch page accessible after the event has ended.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>© Mayukh Mukhopadhyay — Licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="noopener noreferrer">CC BY-NC-ND 4.0</a></div>
+      <div class="mono">Standalone HTML page • 72-hour refresh reminder enabled</div>
+    </div>
+  </footer>
+
+  <script>
+    const data = [
+      {
+        region: 'Ivy League and leading US research schools',
+        summary: 'Priority list for Ivy League-style doctoral ecosystems and closely related elite US schools where public defense calendars or open seminar pages are most likely to surface useful links.',
+        topics: ['Management','CS & IS','Science'],
+        entries: [
+          {
+            university: 'Yale School of Management',
+            department: 'Marketing / Management',
+            topic: 'Management',
+            access: 'Public page',
+            kind: 'Upcoming seminar and doctoral research page',
+            note: 'Public seminar page that is useful for spotting doctoral research presentations and related academic events in management.',
+            link: 'https://som.yale.edu/programs/phd/overview/marketing/yale-marketing-seminar',
+            label: 'Open seminar page'
+          },
+          {
+            university: 'Harvard Medical School',
+            department: 'Graduate biomedical sciences',
+            topic: 'Science',
+            access: 'Public page',
+            kind: 'Upcoming dissertation defenses',
+            note: 'Public defense listing page for dissertation seminars; some entries may be hybrid or offer details for attending.',
+            link: 'https://www.hms.harvard.edu/md_phd/students/defenses.html',
+            label: 'Upcoming defenses'
+          },
+          {
+            university: 'Harvard Medical School OGE',
+            department: 'PhD programs',
+            topic: 'Science',
+            access: 'Public page',
+            kind: 'Student defense notices',
+            note: 'Supplementary public defense notices page from the graduate education office.',
+            link: 'https://ogephd.hms.harvard.edu/news-events/student-defenses',
+            label: 'Student defenses'
+          },
+          {
+            university: 'Chicago Booth',
+            department: 'Business / Management',
+            topic: 'Management',
+            access: 'Public page',
+            kind: 'PhD proposals and defenses',
+            note: 'Public PhD proposals and defenses page from a leading business school, useful for management-focused tracking.',
+            link: 'https://www.chicagobooth.edu/phd/proposals-defenses',
+            label: 'Proposals and defenses'
+          },
+          {
+            university: 'MIT Chemistry',
+            department: 'Chemistry / Graduate studies',
+            topic: 'Science',
+            access: 'Replay/watch',
+            kind: 'Context page on online dissertation defenses',
+            note: 'Background page showing MIT’s history with online dissertation defenses; useful as a watch-source lead rather than a live calendar.',
+            link: 'https://chemistry.mit.edu/chemistry-news/inside-the-new-world-of-online-dissertation-defenses/',
+            label: 'Read / source lead'
+          }
+        ]
+      },
+      {
+        region: 'Top EU and UK universities',
+        summary: 'Use these institutional and event-style pages first for UK and EU doctoral events, especially where formal defense pages are less centralized than in North America.',
+        topics: ['Management','Arts & Humanities','Science'],
+        entries: [
+          {
+            university: 'University of London and UK event ecosystem',
+            department: 'Research events',
+            topic: 'Arts & Humanities',
+            access: 'Open registration',
+            kind: 'Free research webinar event lead',
+            note: 'Public post indicating free research-oriented registration in a UK university setting; useful as a lead for public doctoral webinar discovery.',
+            link: 'https://www.facebook.com/groups/177779405596524/posts/34481308804816812/',
+            label: 'Event lead'
+          },
+          {
+            university: 'StudyIn UK event portal',
+            department: 'Doctoral information events',
+            topic: 'Management',
+            access: 'Open registration',
+            kind: 'PhD webinar registration page',
+            note: 'Not a defense page itself, but a public registration page for doctoral webinars and a useful UK watchpoint.',
+            link: 'https://gostudyin.com/uk/study-in-uk/events/phd-application-webinar-2025/',
+            label: 'Register / watchpoint'
+          }
+        ]
+      },
+      {
+        region: 'Balkans and East Europe',
+        summary: 'Public defense webinars are unevenly published in this region, so the page emphasizes discovery-ready public event habits and broad doctoral seminar watchpoints.',
+        topics: ['Management','Engineering','Arts & Humanities'],
+        entries: [
+          {
+            university: 'Regional doctoral schools and faculty event pages',
+            department: 'Mixed departments',
+            topic: 'Management',
+            access: 'Public page',
+            kind: 'Manual watchlist placeholder',
+            note: 'This section is intentionally structured for rolling additions as public dissertation webinars appear; Eastern European institutions often publish on faculty news pages rather than central graduate calendars.',
+            link: 'https://www.google.com/search?q=site%3Aedu+phd+defense+webinar+public+balkan+university',
+            label: 'Search watchpoint'
+          }
+        ]
+      },
+      {
+        region: 'China, Russia, and Japan',
+        summary: 'Public defenses are often harder to discover here, so use central doctoral event pages, faculty seminar pages, and public replay links where available.',
+        topics: ['Management','CS & IS','Engineering'],
+        entries: [
+          {
+            university: 'Regional doctoral event watchlist',
+            department: 'Business, information systems, and engineering',
+            topic: 'CS & IS',
+            access: 'Public page',
+            kind: 'Manual watchlist placeholder',
+            note: 'Use this section for periodic additions from public graduate school or faculty event pages in Japan, China, and Russia when open links are published.',
+            link: 'https://www.google.com/search?q=site%3Aac.jp+phd+defense+seminar+public+registration',
+            label: 'Search watchpoint'
+          }
+        ]
+      },
+      {
+        region: 'Middle Eastern universities',
+        summary: 'This cluster is suited to public event pages, research seminar calendars, and graduate offices that publish Zoom links or watch pages for thesis defenses.',
+        topics: ['Management','Science','Engineering'],
+        entries: [
+          {
+            university: 'Middle East doctoral webinar watchlist',
+            department: 'Business and interdisciplinary research',
+            topic: 'Management',
+            access: 'Public page',
+            kind: 'Manual watchlist placeholder',
+            note: 'This section is designed for rolling additions from public graduate school calendars and doctoral seminar pages as open defenses are announced.',
+            link: 'https://www.google.com/search?q=phd+defense+webinar+public+middle+east+university',
+            label: 'Search watchpoint'
+          }
+        ]
+      },
+      {
+        region: 'Global South: India, Singapore, Hong Kong, Vietnam',
+        summary: 'This block prioritizes IITs, IIMs, and top Asian universities where open seminars, doctoral colloquia, and public defense notices can appear on departmental pages.',
+        topics: ['Management','CS & IS','Engineering','Science'],
+        entries: [
+          {
+            university: 'Indian Institute of Management Bangalore',
+            department: 'PhD events / management',
+            topic: 'Management',
+            access: 'Public page',
+            kind: 'PhD events page',
+            note: 'Public PhD events page useful for doctoral research and defense-related discovery within management and allied areas.',
+            link: 'https://www.iimb.ac.in/node/12441',
+            label: 'PhD events'
+          },
+          {
+            university: 'IIT Kanpur',
+            department: 'Civil engineering / PhD seminar notice',
+            topic: 'Engineering',
+            access: 'Public page',
+            kind: 'Open seminar notice PDF',
+            note: 'Public seminar notice for PhD students; strong example of how IIT departments publish open seminar materials.',
+            link: 'https://www.iitk.ac.in/ce/data/Open_Seminar_for_PhD_Students.pdf',
+            label: 'Open seminar PDF'
+          },
+          {
+            university: 'DoctorateHub',
+            department: 'Cross-university doctoral webinars',
+            topic: 'Management',
+            access: 'Open registration',
+            kind: 'Doctoral webinar directory',
+            note: 'A broader doctoral webinar directory that can complement university-by-university scanning.',
+            link: 'https://www.doctoratehub.com/webinars',
+            label: 'Webinar directory'
+          }
+        ]
+      },
+      {
+        region: 'African universities',
+        summary: 'Public PhD defenses in Africa are often posted on school social pages and faculty event notices, so replay and announcement links matter.',
+        topics: ['Management','Arts & Humanities','Science'],
+        entries: [
+          {
+            university: 'Makerere University Business School',
+            department: 'Business / public defense',
+            topic: 'Management',
+            access: 'Open registration',
+            kind: 'Public defense announcement',
+            note: 'Public invitation post for a PhD public defense in business-related research; useful as an example of openly accessible regional defense promotion.',
+            link: 'https://www.facebook.com/mubsofficial/posts/you-are-invitedwhen-july-8-2025-0900-am-nairobitopic-phd-public-defense-by-kiggw/116',
+            label: 'Public defense post'
+          }
+        ]
+      },
+      {
+        region: 'South America',
+        summary: 'This section is arranged for periodic additions from public doctoral schools and university event portals, especially where defenses are announced near the date.',
+        topics: ['Management','Arts & Humanities','Engineering'],
+        entries: [
+          {
+            university: 'South American doctoral webinar watchlist',
+            department: 'Mixed departments',
+            topic: 'Arts & Humanities',
+            access: 'Public page',
+            kind: 'Manual watchlist placeholder',
+            note: 'Use this region card as a framework for adding public defense links from Brazil, Chile, Colombia, Argentina, and related university event systems.',
+            link: 'https://www.google.com/search?q=site%3Aedu.br+defesa+de+tese+webinar+publica',
+            label: 'Search watchpoint'
+          }
+        ]
+      },
+      {
+        region: 'Australia and New Zealand',
+        summary: 'Australian and New Zealand universities sometimes expose thesis examination seminars through faculty calendars or event pages rather than one global repository.',
+        topics: ['Management','CS & IS','Science'],
+        entries: [
+          {
+            university: 'Australia / New Zealand doctoral event watchlist',
+            department: 'Business, information systems, and science',
+            topic: 'Management',
+            access: 'Public page',
+            kind: 'Manual watchlist placeholder',
+            note: 'This region card is designed for continued curation of public defense pages and replay links from leading universities across Australia and New Zealand.',
+            link: 'https://www.google.com/search?q=phd+defense+seminar+public+australia+new+zealand+university',
+            label: 'Search watchpoint'
+          }
+        ]
+      }
+    ];
+
+    const regionGrid = document.getElementById('regionGrid');
+    const regionFilter = document.getElementById('regionFilter');
+    const topicFilter = document.getElementById('topicFilter');
+    const accessFilter = document.getElementById('accessFilter');
+    const searchBox = document.getElementById('searchBox');
+    const visibleCounter = document.getElementById('visibleCounter');
+    const emptyState = document.getElementById('emptyState');
+    const statEntries = document.getElementById('statEntries');
+    const statRegions = document.getElementById('statRegions');
+    const refreshStatus = document.getElementById('refreshStatus');
+    const themeToggle = document.getElementById('themeToggle');
+
+    const themes = ['light', 'sepia', 'dark'];
+    let activeTheme = 'light';
+    themeToggle.addEventListener('click', () => {
+      const idx = themes.indexOf(activeTheme);
+      activeTheme = themes[(idx + 1) % themes.length];
+      document.documentElement.setAttribute('data-theme', activeTheme);
+      themeToggle.textContent = 'Theme: ' + activeTheme.charAt(0).toUpperCase() + activeTheme.slice(1);
+    });
+
+    const totalEntries = data.reduce((sum, region) => sum + region.entries.length, 0);
+    statEntries.textContent = totalEntries;
+    statRegions.textContent = data.length;
+
+    data.forEach(region => {
+      const option = document.createElement('option');
+      option.value = region.region;
+      option.textContent = region.region;
+      regionFilter.appendChild(option);
+    });
+
+    function matchesEntry(entry, filters, regionName) {
+      const q = filters.query.toLowerCase();
+      const haystack = [regionName, entry.university, entry.department, entry.topic, entry.access, entry.kind, entry.note].join(' ').toLowerCase();
+      const queryOk = !q || haystack.includes(q);
+      const topicOk = filters.topic === 'all' || entry.topic === filters.topic;
+      const accessOk = filters.access === 'all' || entry.access === filters.access;
+      const regionOk = filters.region === 'all' || regionName === filters.region;
+      return queryOk && topicOk && accessOk && regionOk;
+    }
+
+    function render() {
+      const filters = {
+        query: searchBox.value.trim(),
+        topic: topicFilter.value,
+        access: accessFilter.value,
+        region: regionFilter.value
+      };
+
+      let visibleEntries = 0;
+      regionGrid.innerHTML = '';
+
+      data.forEach(region => {
+        const filtered = region.entries.filter(entry => matchesEntry(entry, filters, region.region));
+        if (!filtered.length) return;
+        visibleEntries += filtered.length;
+
+        const card = document.createElement('section');
+        card.className = 'region-card';
+        card.innerHTML = `
+          <div class="region-top">
+            <div>
+              <h4>${region.region}</h4>
+              <p>${region.summary}</p>
+            </div>
+            <div class="topic-tags">${region.topics.map(topic => `<span class="topic-tag">${topic}</span>`).join('')}</div>
+          </div>
+          <div class="entries">
+            ${filtered.map(entry => `
+              <article class="entry">
+                <div class="entry-head">
+                  <div>
+                    <h5>${entry.university}</h5>
+                    <p>${entry.department} · ${entry.kind}</p>
+                  </div>
+                  <div class="badges">
+                    <span class="badge">${entry.topic}</span>
+                    <span class="badge ${entry.access === 'Open registration' || entry.access === 'Public page' ? 'open' : 'watch'}">${entry.access}</span>
+                  </div>
+                </div>
+                <p>${entry.note}</p>
+                <div class="entry-actions">
+                  <a class="primary" href="${entry.link}" target="_blank" rel="noopener noreferrer">${entry.label}</a>
+                  <a href="${entry.link}" target="_blank" rel="noopener noreferrer">Open source link</a>
+                </div>
+              </article>
+            `).join('')}
+          </div>
+        `;
+        regionGrid.appendChild(card);
+      });
+
+      visibleCounter.textContent = `${visibleEntries} visible entr${visibleEntries === 1 ? 'y' : 'ies'}`;
+      emptyState.classList.toggle('show', visibleEntries === 0);
+    }
+
+    [searchBox, topicFilter, accessFilter, regionFilter].forEach(el => {
+      el.addEventListener('input', render);
+      el.addEventListener('change', render);
+    });
+
+    const curatedAt = new Date('2026-05-02T19:07:00+05:30');
+    function updateRefreshStatus() {
+      const now = new Date();
+      const diffMs = now - curatedAt;
+      const diffHours = Math.max(0, Math.floor(diffMs / 36e5));
+      const nextMs = curatedAt.getTime() + 72 * 36e5;
+      const remaining = Math.max(0, nextMs - now.getTime());
+      const remHours = Math.floor(remaining / 36e5);
+      refreshStatus.textContent = `Last curated: 2026-05-02 19:07 IST · Age: ${diffHours}h · Next recommended refresh in: ${remHours}h`;
+    }
+
+    updateRefreshStatus();
+    render();
+  </script>
+</body>
+</html>
