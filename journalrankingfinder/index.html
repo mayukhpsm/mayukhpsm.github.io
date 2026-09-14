@@ -682,7 +682,7 @@ html.jrk-dark-mode #jrk .jrk-theme-toggle .jrk-icon-sun {
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
     </svg>
-    <input type="text" id="jrk-search" placeholder="Search by journal title or ISSN…" autocomplete="off" spellcheck="false">
+    <input type="text" id="jrk-search" placeholder="Search by journal title, publisher, or ISSN…" autocomplete="off" spellcheck="false">
     <button id="jrk-search-clear" aria-label="Clear search">✕</button>
   </div>
 
@@ -812,7 +812,7 @@ function buildFieldDropdown(){
 function filter(){
   const qq = q.toLowerCase().trim();
   filtered = RAW.filter(j => {
-    if(qq && !j.t.toLowerCase().includes(qq) && !j.issn.includes(qq)) return false;
+    if(qq && !j.t.toLowerCase().includes(qq) && !j.pub.toLowerCase().includes(qq) && !j.issn.includes(qq)) return false;
     if(selAbdc.size && !selAbdc.has(j.abdc)) return false;
     if(selAbs.size  && !selAbs.has(j.abs))   return false;
     if(selSq.size   && !selSq.has(j.sq))     return false;
