@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pluralist Precision: How Joep Cornelissen Builds an Academic Argument</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans+Code:wght@400;500&family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/*
+  Balanced · Academic Stylistics & Rhetoric · Answer-first split hero with inline corpus numerals ·
+  Arc: Verdict & Corpus Metrics -> Epistemological Posture -> Macro-Architecture -> Sentence Mechanics -> Lexical Fingerprints -> Genre Register Band -> Calibration Guardrails ·
+  Fonts: Instrument Serif (headline, 400) + Newsreader italic (callouts/quotes) + Plus Jakarta Sans (body) + Google Sans Code (table headers, SVG ticks, inline values) ·
+  Palette: Crisp Gallery White (#FFFFFF) + Oxford Ink (#12151C) + Prussian Blue (#1B4D7E / #12365A) + Terracotta (#B85028 / #8A3718) ·
+  Image radius: 0px (no raster photos) · Emphasis moment: 3-metric hairline strip in hero ·
+  Signature element: Full-bleed dark register comparison band ·
+  Chart types: 3-stage architectural flow SVG, horizontal lollipop/bar sentence complexity SVG, horizontal bar discourse marker SVG
+*/
+
+:root {
+  --paper: #FFFFFF;
+  --ink: #12151C;
+  --ink2: #2E3440;
+  --mute: #525B6B;
+  --hair: #D8DDE6;
+  --accent: #1B4D7E;
+  --accent-text: #12365A;
+  --accent-2: #B85028;
+  --accent-2-text: #8A3718;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  overflow-x: hidden;
+}
+
+.page {
+  padding: 68px clamp(24px, 10.4vw, 112px) 92px;
+}
+
+.grid-12 {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 0 24px;
+}
+
+.sec {
+  margin-top: 96px;
+}
+
+.sec-tight {
+  margin-top: 64px;
+}
+
+.measure {
+  max-width: 66ch;
+}
+
+/* Typography */
+h1 {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-weight: 400;
+  font-size: clamp(54px, 6.2vw, 92px);
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+h2 {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-weight: 400;
+  font-size: clamp(36px, 3.6vw, 48px);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  text-wrap: balance;
+  margin-bottom: 20px;
+}
+
+h3 {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 1.35;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+
+p {
+  font-size: 16.5px;
+  line-height: 1.68;
+  color: var(--ink2);
+  margin-bottom: 18px;
+}
+
+p:last-child {
+  margin-bottom: 0;
+}
+
+.deck {
+  font-family: 'Newsreader', Georgia, serif;
+  font-size: clamp(20px, 1.8vw, 24px);
+  line-height: 1.48;
+  color: var(--ink2);
+  margin-top: 24px;
+  max-width: 58ch;
+  text-wrap: pretty;
+}
+
+.verdict-lead {
+  font-size: 17px;
+  line-height: 1.68;
+  color: var(--ink);
+  border-top: 2px solid var(--ink);
+  padding-top: 20px;
+  margin-top: 32px;
+}
+
+/* Hero Split */
+.hero-left {
+  grid-column: 1 / 9;
+}
+
+.hero-right {
+  grid-column: 9 / 13;
+  align-self: end;
+  padding-top: 24px;
+}
+
+.metric-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.metric-item {
+  border-top: 1px solid var(--hair);
+  padding-top: 14px;
+}
+
+.metric-num {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-weight: 400;
+  font-size: clamp(44px, 4.2vw, 60px);
+  line-height: 1;
+  color: var(--accent-text);
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
+.metric-desc {
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--mute);
+  margin-top: 6px;
+}
+
+/* Splits & Multi-column strips */
+.col-1-5 { grid-column: 1 / 5; }
+.col-5-13 { grid-column: 5 / 13; }
+.col-1-8 { grid-column: 1 / 8; }
+.col-8-13 { grid-column: 8 / 13; }
+.col-2-12 { grid-column: 2 / 12; }
+.col-1-13 { grid-column: 1 / 13; }
+
+.strip-3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 32px;
+  margin-top: 36px;
+}
+
+.strip-item {
+  border-top: 1px solid var(--hair);
+  padding-top: 18px;
+}
+
+.strip-item p {
+  font-size: 15.5px;
+  line-height: 1.6;
+}
+
+/* Pull Quote */
+.pull-quote {
+  margin: 48px 0;
+  padding: 28px 0;
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--hair);
+}
+
+.pull-quote blockquote {
+  font-family: 'Newsreader', Georgia, serif;
+  font-style: italic;
+  font-size: clamp(24px, 2.5vw, 34px);
+  line-height: 1.34;
+  color: var(--ink);
+  max-width: 44ch;
+  text-wrap: pretty;
+}
+
+.pull-quote cite {
+  display: block;
+  font-style: normal;
+  font-size: 14px;
+  color: var(--mute);
+  margin-top: 14px;
+}
+
+/* Figures & SVGs */
+figure {
+  margin: 40px 0 12px;
+}
+
+.fig-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700;
+  font-size: 19px;
+  line-height: 1.3;
+  color: var(--ink);
+  margin-bottom: 16px;
+  text-wrap: pretty;
+}
+
+figure svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+figcaption {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--mute);
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--hair);
+}
+
+/* Open Tables (max 3) */
+.table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  margin-top: 24px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+thead th {
+  font-family: 'Google Sans Code', monospace;
+  font-weight: 500;
+  font-size: 12.5px;
+  color: var(--mute);
+  border-bottom: 2px solid var(--ink);
+  padding: 10px 16px 12px 0;
+  vertical-align: bottom;
+}
+
+tbody td {
+  padding: 14px 16px 14px 0;
+  border-bottom: 1px solid var(--hair);
+  vertical-align: top;
+  color: var(--ink2);
+}
+
+tbody td:first-child {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.num-cell {
+  font-family: 'Google Sans Code', monospace;
+  font-size: 13.5px;
+  white-space: nowrap;
+  color: var(--accent-text);
+}
+
+.code-token {
+  font-family: 'Google Sans Code', monospace;
+  font-size: 13.5px;
+  color: var(--accent-text);
+}
+
+/* Full-Bleed Band (at most 1) */
+.band-dark {
+  background: #12161F;
+  color: #F4F6FA;
+  margin-top: 96px;
+  padding: 76px clamp(24px, 10.4vw, 112px) 84px;
+}
+
+.band-dark h2 {
+  color: #FFFFFF;
+}
+
+.band-dark h3 {
+  color: #FFFFFF;
+}
+
+.band-dark p {
+  color: #D2D8E4;
+}
+
+.band-dark .strip-item {
+  border-top-color: #2D3546;
+}
+
+.band-quote {
+  font-family: 'Newsreader', Georgia, serif;
+  font-style: italic;
+  font-size: 17px;
+  line-height: 1.55;
+  color: #FFFFFF;
+  margin: 14px 0 12px;
+  padding-left: 16px;
+  border-left: 2px solid #7EB4E2;
+}
+
+.band-meta {
+  font-family: 'Google Sans Code', monospace;
+  font-size: 12.5px;
+  color: #9BB4D0;
+  margin-bottom: 10px;
+}
+
+/* Lists */
+.clean-list {
+  list-style: none;
+  margin-top: 16px;
+}
+
+.clean-list li {
+  position: relative;
+  padding-left: 22px;
+  margin-bottom: 12px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--ink2);
+}
+
+.clean-list li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: var(--accent-text);
+  font-weight: 600;
+}
+
+/* Corpus reference list */
+.source-list {
+  list-style: none;
+  counter-reset: src;
+  margin-top: 20px;
+}
+
+.source-list li {
+  counter-increment: src;
+  position: relative;
+  padding-left: 34px;
+  margin-bottom: 12px;
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--ink2);
+}
+
+.source-list li::before {
+  content: counter(src, decimal-leading-zero);
+  position: absolute;
+  left: 0;
+  font-family: 'Google Sans Code', monospace;
+  font-size: 12.5px;
+  color: var(--mute);
+  top: 2px;
+}
+
+strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.band-dark strong {
+  color: #FFFFFF;
+}
+
+@media (max-width: 900px) {
+  .hero-left, .hero-right, .col-1-5, .col-5-13, .col-1-8, .col-8-13, .col-2-12 {
+    grid-column: 1 / 13;
+  }
+  .hero-right {
+    margin-top: 32px;
+  }
+  .strip-3 {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+</style>
+</head>
+<body>
+
+<main>
+  <div class="page">
+
+    <!-- HERO: Answer-First Split -->
+    <header class="grid-12">
+      <div class="hero-left">
+        <h1>Pluralist Precision: How Joep Cornelissen Builds an Academic Argument</h1>
+        <p class="deck">An empirical and rhetorical dissection of 103,817 body words across ten papers (2007–2026) spanning <em>Organization Science</em>, <em>AMJ</em>, <em>JMS</em>, <em>Organization Studies</em>, <em>JBV</em>, <em>ETP</em>, and <em>BJM</em>—treated here as a single authorial voice.</p>
+        <p class="verdict-lead"><strong>The core finding:</strong> Cornelissen’s voice is defined not by ornate vocabulary, but by disciplined <strong>dialectical scaffolding</strong>. Across empirical studies, conceptual models, reviews, and polemics, he builds authority through long, nested concessive-to-pivot sentences (averaging 35.6 words), relentless definitional signposting, an anti-reductionist commitment to theoretical pluralism, and a habit of anchoring abstract philosophy in vivid real-world cases.</p>
+      </div>
+
+      <aside class="hero-right">
+        <div class="metric-stack">
+          <div class="metric-item">
+            <div class="metric-num">103,817</div>
+            <div class="metric-desc">Clean body words analyzed across 10 papers (references and bios excluded)</div>
+          </div>
+          <div class="metric-item">
+            <div class="metric-num">35.6 w</div>
+            <div class="metric-desc">Weighted mean sentence length (rising to 38.3–43.9 words in solo pieces)</div>
+          </div>
+          <div class="metric-item">
+            <div class="metric-num">41.4%</div>
+            <div class="metric-desc">Share of sentences at 35+ words; only 10.0% are 15 words or fewer</div>
+          </div>
+        </div>
+      </aside>
+    </header>
+
+    <!-- SECTION 1: Epistemological Posture -->
+    <section class="sec grid-12">
+      <div class="col-1-5">
+        <h2>The Pluralist Dialectician: Epistemology Shapes the Prose</h2>
+      </div>
+      <div class="col-5-13 measure">
+        <p>Style in Cornelissen’s writing cannot be separated from his philosophy of science. Whether analyzing police radio transcripts from the Stockwell shooting (2014), experimental videos of startup pitches (2019), or AI-generated management manuscripts (2026), he writes from a consistent intellectual vantage point: <strong>critical-realist, linguistically attentive, and fiercely anti-reductionist</strong>.</p>
+        <p>He treats language, metaphor, and bodily expression not as decorative wrappers around pre-existing thoughts, but as <em>formative, performative instruments</em> that actively constitute organizational reality. That conviction produces a distinctive rhetorical temperament: he rarely dismisses a rival school outright. Instead, he diagnoses where a dominant paradigm—whether Gioia’s coding template, Eisenhardt’s hypothesis-testing case logic, resonant-only metaphor models, or LLM-assisted “vending machine” theorizing—has quietly narrowed the field’s imagination.</p>
+
+        <div class="pull-quote">
+          <blockquote>“Rather than aiming to reconcile theoretical perspectives, our synthesis instead demarcates the distinct assumptions, contents, and purposes of these different theoretical perspectives.”</blockquote>
+          <cite>Kier, Thompson, Chiles, &amp; Cornelissen (2026), <em>Journal of Business Venturing</em></cite>
+        </div>
+
+        <p>Four recurring intellectual commitments act as the hidden spine of his arguments:</p>
+        <div class="strip-3">
+          <div class="strip-item">
+            <h3>Methodological Pluralism</h3>
+            <p>Explicitly rejects “methodolatry” (2007), factor-analytic “restyling” of qualitative work (2017), and premature unification (2022, 2026). Value comes from preserving divergent explanatory programmes.</p>
+          </div>
+          <div class="strip-item">
+            <h3>Micro-to-Macro Bridging</h3>
+            <p>Connects local linguistic cues, hand gestures, or emotional states to institutional codes, systemic power, and collective enactment—treating individual cognition and social structure as recursive.</p>
+          </div>
+          <div class="strip-item">
+            <h3>Concrete Anchoring</h3>
+            <p>Never leaves an abstract mechanism floating. Every conceptual turn is grounded in a recognizable empirical touchstone: Mann Gulch, Bhopal, Flight 93, Balinese cockfights, or a pink ribbon.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: Macro-Architecture -->
+    <section class="sec grid-12">
+      <div class="col-1-13">
+        <h2>Every Paper Follows a Three-Move Dialectical Arc</h2>
+        <p class="measure">Across all ten manuscripts, Cornelissen organizes his argument into a recognizable progression that moves from generous synthesis of the field, through a precise diagnosis of conceptual slippage or blind spots, to a structured two-dimensional framework that reorganizes the terrain without flattening it.</p>
+
+        <figure>
+          <div class="fig-title">Cornelissen resolves fragmented literatures by moving from concession to tension to a two-dimensional framework</div>
+          <svg viewBox="0 0 720 260" width="100%" role="img" aria-label="Three-stage dialectical architecture of a Cornelissen paper">
+            <!-- Stage 1 -->
+            <rect x="12" y="28" width="206" height="196" fill="none" stroke="#1B4D7E" stroke-width="1.5"/>
+            <line x1="12" y1="68" x2="218" y2="68" stroke="#D8DDE6" stroke-width="1"/>
+            <text x="26" y="53" font-family="Google Sans Code, monospace" font-size="13" fill="#12365A" font-weight="500">01  CONCESSIVE GROUNDING</text>
+            <text x="26" y="96" font-family="Plus Jakarta Sans, sans-serif" font-size="14.5" font-weight="600" fill="#12151C">Acknowledge progress</text>
+            <text x="26" y="120" font-family="Plus Jakarta Sans, sans-serif" font-size="13.5" fill="#2E3440">Map foundational work</text>
+            <text x="26" y="140" font-family="Plus Jakarta Sans, sans-serif" font-size="13.5" fill="#2E3440">across disciplines and</text>
+            <text x="26" y="160" font-family="Plus Jakarta Sans, sans-serif" font-size="13.5" fill="#2E3440">credit its genuine gains.</text>
+            <text x="26" y="198" font-family="Newsreader, serif" font-style="italic" font-size="14" fill="#525B6B">“While scholars have...”</text>
+
+            <!-- Arrow 1 -->
+            <line x1="224" y1="126" x2="250" y2="126" stroke="#12151C" stroke-width="1.5"/>
+            <polygon points="256,126 247,121 247,131" fill="#12151C"/>
+
+            <!-- Stage 2 -->
+            <rect x="258" y="28" width="206" height="196" fill="none" stroke="#B85028" stroke-width="1.5"/>
+            <line x1="258" y1="68" x2="464" y2="68" stroke="#D8DDE6" stroke-width="1"/>
+            <text x="272" y="53" font-family="Google Sans Code, monospace" font-size="13" fill="#8A3718" font-weight="500">02  CONCEPTUAL TENSION</text>
+            <text x="272" y="96" font-family="Plus Jakarta Sans, sans-serif" font-size="14.5" font-weight="600" fill="#12151C">Expose blind spots</text>
+            <text x="272" y="120" font-family="Plus Jakarta Sans, sans-serif" font-size="13.5" fill="#2E3440">Pinpoint fragmentation,</text>
+            <text x="272" y="140" font-family="Plus Jakarta Sans, sans-serif" font-size="13.5" fill="#2E3440">silent assumptions, or</text>
+            <text x="272" y="160" font-family="Plus Jakarta Sans, sans-serif" font-size="13.5" fill="#2E3440">reductive templates.</text>
+            <text x="272" y="198" font-family="Newsreader, serif" font-style="italic" font-size="14" fill="#525B6B">“However, this comes at a price...”</text>
+
+            <!-- Arrow 2 -->
+            <line x1="470" y1="126" x2="496" y2="126" stroke="#12151C" stroke-width="1.5"/>
+            <polygon points="502,126 493,121 493,131" fill="#12151C"/>
+
+            <!-- Stage 3 -->
+            <rect x="504" y="28" width="206" height="196" fill="none" stroke="#12151C" stroke-width="2"/>
+            <line x1="504" y1="68" x2="710" y2="68" stroke="#D8DDE6" stroke-width="1"/>
+            <text x="518" y="53" font-family="Google Sans Code, monospace" font-size="13" fill="#12151C" font-weight="500">03  STRUCTURAL REFRAME</text>
+            <text x="518" y="96" font-family="Plus Jakarta Sans, sans-serif" font-size="14.5" font-weight="600" fill="#12151C">Build a 2×2 or process map</text>
+            <text x="518" y="120" font-family="Plus Jakarta Sans, sans-serif" font-size="13.5" fill="#2E3440">Elaborate a parsimonious</text>
+            <text x="518" y="140" font-family="Plus Jakarta Sans, sans-serif" font-size="13.5" fill="#2E3440">typology or model that</text>
+            <text x="518" y="160" font-family="Plus Jakarta Sans, sans-serif" font-size="13.5" fill="#2E3440">bridges prior silos.</text>
+            <text x="518" y="198" font-family="Newsreader, serif" font-style="italic" font-size="14" fill="#525B6B">“In doing so, we elaborate...”</text>
+          </svg>
+          <figcaption>Synthesized from macro-structural patterns across all 10 papers (2007–2026). Notice that 6 of the 10 papers explicitly culminate in a 2-dimensional typology or process matrix.</figcaption>
+        </figure>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Paper Genre</th>
+                <th>Corpus Examples</th>
+                <th>Opening Strategy</th>
+                <th>Signature Organizing Device</th>
+                <th>Closing Move</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Empirical Qualitative &amp; Case</td>
+                <td>Cornelissen (2012); Cornelissen et al. (2014)</td>
+                <td>Define core construct cleanly, map prior isolated streams, pose a specific process question</td>
+                <td>3-step analytical coding protocol + episodic timeline table + process/2D model (Figure 1 / Figure 3)</td>
+                <td>“Naturalistic generalization” (Stake, 1995) to canonical crises + invitation to future discursive work</td>
+              </tr>
+              <tr>
+                <td>Empirical Mixed-Methods</td>
+                <td>Clarke et al. (2019)</td>
+                <td>Frame a practical high-uncertainty challenge, contrast fragmented verbal vs. nonverbal streams</td>
+                <td>Inductive 2×2 pitching typology (Study 1) converted directly into causal hypotheses &amp; moderated mediation (Study 2)</td>
+                <td>Symmetric entrepreneur–investor view + explicit boundary conditions (actor gender, product complexity)</td>
+              </tr>
+              <tr>
+                <td>Conceptual &amp; Perspective</td>
+                <td>Schildt et al. (2020); Biscaro et al. (2025)</td>
+                <td>Identify two major but separated literatures, or challenge a dominant root assumption (“carrying over”)</td>
+                <td>2×2 quadrant framework (4 ideal-type processes; Resonance/Dissonance × Uni/Multimodal)</td>
+                <td>Aphoristic final punchline or normative call for paradigm-shifting imagination</td>
+              </tr>
+              <tr>
+                <td>Review &amp; Methods Editorial</td>
+                <td>Cornelissen et al. (2007); Van Burg et al. (2022); Kier et al. (2026)</td>
+                <td>Acknowledge surging interest alongside conceptual sprawl or rising publication hurdles</td>
+                <td>Taxonomic map of perspectives/characteristics (Table 1–2) + cross-pollination agenda without forced unification</td>
+                <td>Call for epistemic reflexivity, transparency, and constructive dialogue across sub-disciplines</td>
+              </tr>
+              <tr>
+                <td>Polemical Essay (Agora)</td>
+                <td>Cornelissen (2017, 2026)</td>
+                <td>Three crisp empirical vignettes (2026) or a counter-intuitive caveat (“Despite the evident rise...”, 2017)</td>
+                <td>Diagnostic critique of an underlying analogy (“vending machine view”; “factor-analytic restyling”)</td>
+                <td>Urgent collective warning (“we should avoid at all costs”; “start to reflect on this trend”)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: Sentence Mechanics -->
+    <section class="sec grid-12">
+      <div class="col-1-13">
+        <h2>Sentence Mechanics: Long, Nested, and Deliberately Paced</h2>
+        <p class="measure">Quantitative analysis of the corpus reveals a striking syntactic signature. While standard management prose typically averages 22–26 words per sentence, Cornelissen’s weighted corpus average is <strong>35.6 words</strong>—and in his three solo-authored papers, average sentence length climbs to <strong>38.3–43.9 words</strong>, with more than half of all sentences exceeding 35 words. Yet the prose rarely feels muddy, because he controls long sentences through predictable syntactic scaffolding: concessive openers, appositive em-dashes or parentheses that define terms in real time, and parallel clauses that carry the reader to a clear final predicate.</p>
+
+        <figure>
+          <div class="fig-title">Solo-authored Cornelissen papers average 38 to 44 words per sentence, with over half running 35+ words</div>
+          <svg viewBox="0 0 720 460" width="100%" role="img" aria-label="Mean sentence length and share of long sentences across all 10 papers">
+            <!-- Axes & Gridlines (chart area x: 200 to 630, width 430; scale 0 to 50 words -> 8.6 px per word) -->
+            <line x1="200" y1="36" x2="200" y2="412" stroke="#12151C" stroke-width="1"/>
+            <line x1="286" y1="36" x2="286" y2="412" stroke="#D8DDE6" stroke-width="1"/>
+            <line x1="372" y1="36" x2="372" y2="412" stroke="#D8DDE6" stroke-width="1"/>
+            <line x1="458" y1="36" x2="458" y2="412" stroke="#D8DDE6" stroke-width="1"/>
+            <line x1="544" y1="36" x2="544" y2="412" stroke="#D8DDE6" stroke-width="1"/>
+            <line x1="630" y1="36" x2="630" y2="412" stroke="#D8DDE6" stroke-width="1"/>
+
+            <!-- Corpus Mean Reference Line at 35.6w -> 200 + 35.6*8.6 = 506.2 -->
+            <line x1="506" y1="26" x2="506" y2="412" stroke="#B85028" stroke-width="1.5" stroke-dasharray="4 4"/>
+            <text x="512" y="22" font-family="Google Sans Code, monospace" font-size="13" fill="#8A3718">Corpus mean 35.6w</text>
+
+            <!-- X Axis Labels -->
+            <text x="200" y="432" text-anchor="middle" font-family="Google Sans Code, monospace" font-size="13" fill="#525B6B">0</text>
+            <text x="286" y="432" text-anchor="middle" font-family="Google Sans Code, monospace" font-size="13" fill="#525B6B">10</text>
+            <text x="372" y="432" text-anchor="middle" font-family="Google Sans Code, monospace" font-size="13" fill="#525B6B">20</text>
+            <text x="458" y="432" text-anchor="middle" font-family="Google Sans Code, monospace" font-size="13" fill="#525B6B">30</text>
+            <text x="544" y="432" text-anchor="middle" font-family="Google Sans Code, monospace" font-size="13" fill="#525B6B">40</text>
+            <text x="630" y="432" text-anchor="middle" font-family="Google Sans Code, monospace" font-size="13" fill="#525B6B">50</text>
+            <text x="415" y="454" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="13" fill="#525B6B">Mean sentence length (words) — solo-authored papers in terracotta</text>
+
+            <!-- Rows (36px step, y starting at 56) -->
+            <!-- 1. Cornelissen et al. (2007): 44.5w (Multi) -> 200 + 382.7 = 583 -->
+            <text x="190" y="60" text-anchor="end" font-family="Plus Jakarta Sans, sans-serif" font-size="14" fill="#12151C">Cornelissen et al. (2007)</text>
+            <rect x="200" y="46" width="383" height="18" fill="#1B4D7E"/>
+            <text x="591" y="60" font-family="Google Sans Code, monospace" font-size="13.5" fill="#12365A">44.5w (60%)</text>
+
+            <!-- 2. Cornelissen (2026) Solo: 43.9w -> 377.5 -->
+            <text x="190" y="96" text-anchor="end" font-family="Plus Jakarta Sans, sans-serif" font-size="14" font-weight="600" fill="#8A3718">Cornelissen (2026) · Solo</text>
+            <rect x="200" y="82" width="378" height="18" fill="#B85028"/>
+            <text x="586" y="96" font-family="Google Sans Code, monospace" font-size="13.5" fill="#8A3718">43.9w (68%)</text>
+
+            <!-- 3. Cornelissen (2012) Solo: 42.2w -> 362.9 -->
+            <text x="190" y="132" text-anchor="end" font-family="Plus Jakarta Sans, sans-serif" font-size="14" font-weight="600" fill="#8A3718">Cornelissen (2012) · Solo</text>
+            <rect x="200" y="118" width="363" height="18" fill="#B85028"/>
+            <text x="571" y="132" font-family="Google Sans Code, monospace" font-size="13.5" fill="#8A3718">42.2w (55%)</text>
+
+            <!-- 4. Cornelissen (2017) Solo: 38.3w -> 329.4 -->
+            <text x="190" y="168" text-anchor="end" font-family="Plus Jakarta Sans, sans-serif" font-size="14" font-weight="600" fill="#8A3718">Cornelissen (2017) · Solo</text>
+            <rect x="200" y="154" width="329" height="18" fill="#B85028"/>
+            <text x="537" y="168" font-family="Google Sans Code, monospace" font-size="13.5" fill="#8A3718">38.3w (55%)</text>
+
+            <!-- 5. Biscaro et al. (2025): 34.4w -> 295.8 -->
+            <text x="190" y="204" text-anchor="end" font-family="Plus Jakarta Sans, sans-serif" font-size="14" fill="#12151C">Biscaro et al. (2025)</text>
+            <rect x="200" y="190" width="296" height="18" fill="#1B4D7E"/>
+            <text x="504" y="204" font-family="Google Sans Code, monospace" font-size="13.5" fill="#12365A">34.4w (44%)</text>
+
+            <!-- 6. Van Burg et al. (2022): 34.3w -> 295.0 -->
+            <text x="190" y="240" text-anchor="end" font-family="Plus Jakarta Sans, sans-serif" font-size="14" fill="#12151C">Van Burg et al. (2022)</text>
+            <rect x="200" y="226" width="295" height="18" fill="#1B4D7E"/>
+            <text x="503" y="240" font-family="Google Sans Code, monospace" font-size="13.5" fill="#12365A">34.3w (45%)</text>
+
+            <!-- 7. Clarke et al. (2019): 34.1w -> 293.3 -->
+            <text x="190" y="276" text-anchor="end" font-family="Plus Jakarta Sans, sans-serif" font-size="14" fill="#12151C">Clarke et al. (2019)</text>
+            <rect x="200" y="262" width="293" height="18" fill="#1B4D7E"/>
+            <text x="501" y="276" font-family="Google Sans Code, monospace" font-size="13.5" fill="#12365A">34.1w (36%)</text>
+
+            <!-- 8. Cornelissen et al. (2014): 33.8w -> 290.7 -->
+            <text x="190" y="312" text-anchor="end" font-family="Plus Jakarta Sans, sans-serif" font-size="14" fill="#12151C">Cornelissen et al. (2014)</text>
+            <rect x="200" y="298" width="291" height="18" fill="#1B4D7E"/>
+            <text x="499" y="312" font-family="Google Sans Code, monospace" font-size="13.5" fill="#12365A">33.8w (34%)</text>
+
+            <!-- 9. Kier et al. (2026): 31.5w -> 270.9 -->
+            <text x="190" y="348" text-anchor="end" font-family="Plus Jakarta Sans, sans-serif" font-size="14" fill="#12151C">Kier et al. (2026)</text>
+            <rect x="200" y="334" width="271" height="18" fill="#1B4D7E"/>
+            <text x="479" y="348" font-family="Google Sans Code, monospace" font-size="13.5" fill="#12365A">31.5w (29%)</text>
+
+            <!-- 10. Schildt et al. (2020): 29.4w -> 252.8 -->
+            <text x="190" y="384" text-anchor="end" font-family="Plus Jakarta Sans, sans-serif" font-size="14" fill="#12151C">Schildt et al. (2020)</text>
+            <rect x="200" y="370" width="253" height="18" fill="#1B4D7E"/>
+            <text x="461" y="384" font-family="Google Sans Code, monospace" font-size="13.5" fill="#12365A">29.4w (28%)</text>
+          </svg>
+          <figcaption>Values show mean sentence length in words; parentheses show the percentage of sentences in that paper containing 35 or more words. Computed on clean body prose (references, acknowledgments, and author biographies removed).</figcaption>
+        </figure>
+
+        <div class="strip-3">
+          <div class="strip-item">
+            <h3>The Concessive–Pivot Sentence</h3>
+            <p>His workhorse clause opens with a concession (<em>While / Although / Despite</em>), embeds a qualifying parenthesis or dash, and lands on a sharp contrast (<em>however / rather / yet</em>). It signals fairness before critique.</p>
+          </div>
+          <div class="strip-item">
+            <h3>Inline Definitional Nesting</h3>
+            <p>Rather than relegating definitions to footnotes, he defines concepts mid-stride using parenthetical <span class="code-token">(i.e., ...)</span>, en/em-dash glosses (<span class="code-token">—that is, ...</span>), and <span class="code-token">in other words</span> translations.</p>
+          </div>
+          <div class="strip-item">
+            <h3>The Rare Short Punchline</h3>
+            <p>Because 41.4% of his sentences are long and periodic, his occasional 6-to-12-word sentences land with unusual force: <em>“The answer is a simple and resounding No.”</em> (2025); <em>“We are conned into believing that this is the case.”</em> (2026).</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: Lexical Fingerprints -->
+    <section class="sec grid-12">
+      <div class="col-1-13">
+        <h2>Lexical Fingerprints: The Connectors That Power the Voice</h2>
+        <p class="measure">A corpus-wide frequency count exposes the exact connective tissue that makes a paragraph sound unmistakably like Cornelissen. Notice how heavily the top markers skew toward <strong>contrastive qualification</strong> (<em>while, however, rather, not only, rather than</em>), <strong>illustrative grounding</strong> (<em>for example, for instance</em>), and <strong>recursive elaboration</strong> (<em>that is, thus, in turn, as such, in other words</em>). Equally telling is his European-academic idiom—phrases like <em>whilst</em>, <em>in turn</em>, <em>as such</em>, <em>in this respect</em>, <em>put into better relief</em>, and <em>over and beyond</em>—which persists even when he adapts spelling to American journals.</p>
+
+        <figure>
+          <div class="fig-title">Contrastive pivots and illustrative signposts dominate Cornelissen’s connective vocabulary</div>
+          <svg viewBox="0 0 720 430" width="100%" role="img" aria-label="Top 12 discourse markers per 10,000 words in the 10-paper corpus">
+            <!-- Chart area x: 185 to 625 (width 440), scale 0 to 12 per 10k -> 36.67 px per unit -->
+            <line x1="185" y1="24" x2="185" y2="380" stroke="#12151C" stroke-width="1"/>
+            <line x1="258" y1="24" x2="258" y2="380" stroke="#D8DDE6" stroke-width="1"/>
+            <line x1="332" y1="24" x2="332" y2="380" stroke="#D8DDE6" stroke-width="1"/>
+            <line x1="405" y1="24" x2="405" y2="380" stroke="#D8DDE6" stroke-width="1"/>
+            <line x1="478" y1="24" x2="478" y2="380" stroke="#D8DDE6" stroke-width="1"/>
+            <line x1="552" y1="24" x2="552" y2="380" stroke="#D8DDE6" stroke-width="1"/>
+            <line x1="625" y1="24" x2="625" y2="380" stroke="#D8DDE6" stroke-width="1"/>
+
+            <!-- X axis ticks -->
+            <text x="185" y="400" text-anchor="middle" font-family="Google Sans Code, monospace" font-size="13" fill="#525B6B">0</text>
+            <text x="258" y="400" text-anchor="middle" font-family="Google Sans Code, monospace" font-size="13" fill="#525B6B">2</text>
+            <text x="332" y="400" text-anchor="middle" font-family="Google Sans Code, monospace" font-size="13" fill="#525B6B">4</text>
+            <text x="405" y="400" text-anchor="middle" font-family="Google Sans Code, monospace" font-size="13" fill="#525B6B">6</text>
+            <text x="478" y="400" text-anchor="middle" font-family="Google Sans Code, monospace" font-size="13" fill="#525B6B">8</text>
+            <text x="552" y="400" text-anchor="middle" font-family="Google Sans Code, monospace" font-size="13" fill="#525B6B">10</text>
+            <text x="625" y="400" text-anchor="middle" font-family="Google Sans Code, monospace" font-size="13" fill="#525B6B">12</text>
+            <text x="405" y="422" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="13" fill="#525B6B">Occurrences per 10,000 body words (terracotta = contrastive/dialectical; blue = elaborative/illustrative)</text>
+
+            <!-- 12 bars, 29px step, starting y=42 -->
+            <!-- while / whilst: 10.4 -> 381px -->
+            <text x="175" y="46" text-anchor="end" font-family="Plus Jakarta Sans, sans-serif" font-size="14" fill="#12151C">while / whilst</text>
+            <rect x="185" y="33" width="381" height="17" fill="#B85028"/>
+            <text x="574" y="46" font-family="Google Sans Code, monospace" font-size="13.5" fill="#8A3718">10.4 (108)</text>
+
+            <!-- however: 8.7 -> 319px -->
+            <text x="175" y="75" text-anchor="end" font-family="Plus Jakarta Sans, sans-serif" font-size="14" fill="#12151C">however</text>
+            <rect x="185" y="62" width="319" height="17" fill="#B85028"/>
+            <text x="512" y="75" font-family="Google Sans Code, monospace" font-size="13.5" fill="#8A3718">8.7 (90)</text>
+
+            <!-- for example: 8.6 -> 315px -->
+            <text x="175" y="104" text-anchor="end" font-family="Plus Jakarta Sans, sans-serif" font-size="14" fill="#12151C">for example</text>
+            <rect x="185" y="91" width="315" height="17" fill="#1B4D7E"/>
+            <text x="508" y="104" font-family="Google Sans Code, monospace" font-size="13.5" fill="#12365A">8.6 (89)</text>
+
+            <!-- rather (incl. rather than): 8.2 -> 301px -->
+            <text x="175" y="133" text-anchor="end" font-family="Plus Jakarta Sans, sans-serif" font-size="14" fill="#12151C">rather (than)</text>
+            <rect x="185" y="120" width="301" height="17" fill="#B85028"/>
+            <text x="494" y="133" font-family="Google Sans Code, monospace" font-size="13.5" fill="#8A3718">8.2 (85)</text>
+
+            <!-- that is: 7.5 -> 275px -->
+            <text x="175" y="162" text-anchor="end" font-family="Plus Jakarta Sans, sans-serif" font-size="14" fill="#12151C">that is</text>
+            <rect x="185" y="149" width="275" height="17" fill="#1B4D7E"/>
+            <text x="468" y="162" font-family="Google Sans Code, monospace" font-size="13.5" fill="#12365A">7.5 (78)</text>
+
+            <!-- thus: 7.2 -> 264px -->
+            <text x="175" y="191" text-anchor="end" font-family="Plus Jakarta Sans, sans-serif" font-size="14" fill="#12151C">thus</text>
+            <rect x="185" y="178" width="264" height="17" fill="#1B4D7E"/>
+            <text x="457" y="191" font-family="Google Sans Code, monospace" font-size="13.5" fill="#12365A">7.2 (75)</text>
+
+            <!-- not only (... but also): 5.3 -> 194px -->
+            <text x="175" y="220" text-anchor="end" font-family="Plus Jakarta Sans, sans-serif" font-size="14" fill="#12151C">not only (...but)</text>
+            <rect x="185" y="207" width="194" height="17" fill="#B85028"/>
+            <text x="387" y="220" font-family="Google Sans Code, monospace" font-size="13.5" fill="#8A3718">5.3 (55)</text>
+
+            <!-- as part of: 5.1 -> 187px -->
+            <text x="175" y="249" text-anchor="end" font-family="Plus Jakarta Sans, sans-serif" font-size="14" fill="#12151C">as part of</text>
+            <rect x="185" y="236" width="187" height="17" fill="#1B4D7E"/>
+            <text x="380" y="249" font-family="Google Sans Code, monospace" font-size="13.5" fill="#12365A">5.1 (53)</text>
+
+            <!-- indeed: 3.3 -> 121px -->
+            <text x="175" y="278" text-anchor="end" font-family="Plus Jakarta Sans, sans-serif" font-size="14" fill="#12151C">indeed</text>
+            <rect x="185" y="265" width="121" height="17" fill="#1B4D7E"/>
+            <text x="314" y="278" font-family="Google Sans Code, monospace" font-size="13.5" fill="#12365A">3.3 (34)</text>
+
+            <!-- in turn: 3.2 -> 117px -->
+            <text x="175" y="307" text-anchor="end" font-family="Plus Jakarta Sans, sans-serif" font-size="14" fill="#12151C">in turn</text>
+            <rect x="185" y="294" width="117" height="17" fill="#1B4D7E"/>
+            <text x="310" y="307" font-family="Google Sans Code, monospace" font-size="13.5" fill="#12365A">3.2 (33)</text>
+
+            <!-- as such: 2.5 -> 92px -->
+            <text x="175" y="336" text-anchor="end" font-family="Plus Jakarta Sans, sans-serif" font-size="14" fill="#12151C">as such</text>
+            <rect x="185" y="323" width="92" height="17" fill="#1B4D7E"/>
+            <text x="285" y="336" font-family="Google Sans Code, monospace" font-size="13.5" fill="#12365A">2.5 (26)</text>
+
+            <!-- in other words: 2.2 -> 81px -->
+            <text x="175" y="365" text-anchor="end" font-family="Plus Jakarta Sans, sans-serif" font-size="14" fill="#12151C">in other words</text>
+            <rect x="185" y="352" width="81" height="17" fill="#1B4D7E"/>
+            <text x="274" y="365" font-family="Google Sans Code, monospace" font-size="13.5" fill="#12365A">2.2 (23)</text>
+          </svg>
+          <figcaption>Frequency per 10,000 clean body words (raw counts across 103,817 words in parentheses). Note: <em>for instance</em> adds another 2.7/10k (28 occurrences), bringing explicit exemplification markers to 11.3 per 10k words.</figcaption>
+        </figure>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Rhetorical Function</th>
+                <th>Signature Cornelissen Expressions</th>
+                <th>How It Operates in the Prose</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Concessive Setup &amp; Pivot</td>
+                <td><em>While / Whilst…; Notwithstanding such scepticism…; At the same time…; However…; Rather than…</em></td>
+                <td>Signals scholarly generosity toward existing literature before pivoting to the paper’s core theoretical intervention.</td>
+              </tr>
+              <tr>
+                <td>Definitional Compression</td>
+                <td><em>That is…; In other words…; Specifically…; In effect…; Put simply…; What we label as…</em></td>
+                <td>Translates dense conceptual claims into crisp mid-sentence restatements so readers never lose the thread of a 40-word sentence.</td>
+              </tr>
+              <tr>
+                <td>Recursive Causality</td>
+                <td><em>In turn…; As such…; By doing so…; In this way…; Accordingly…; Hence…; Thereby…</em></td>
+                <td>Chains mechanisms into ongoing processual loops rather than static X → Y variance arrows.</td>
+              </tr>
+              <tr>
+                <td>Theoretical Verbs</td>
+                <td><em>elaborate, elucidate, conceptualize, demarcate, unpack, foreground, harness, anchor, tether, inflect</em></td>
+                <td>Prefers craft- and reasoning-oriented verbs over generic corporate verbs (<em>utilize, leverage</em> appears rarely outside ETP’s editorial title).</td>
+              </tr>
+              <tr>
+                <td>Citation Weaving</td>
+                <td><em>Following X…; Building on Y…; Consistent with Z…; In X’s words…; (see also…; cf. …)</em></td>
+                <td>Integrates citations inside conceptual claims (18–37 year-citations per 1,000 words in conceptual/review work) rather than writing “Author X (Year) found…” paragraphs.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- FULL-BLEED SIGNATURE BAND: Register Shift Across Genres -->
+  <section class="band-dark">
+    <div class="grid-12">
+      <div class="col-1-13">
+        <h2>One Mind, Three Registers: How the Voice Adapts by Genre</h2>
+        <p class="measure">Treating all ten papers as a unified Cornelissen corpus reveals a crucial nuance: his core syntax stays remarkably stable, but his <strong>pronoun stance, citation density, and rhetorical heat</strong> shift deliberately depending on whether he is building inductive theory, mapping a field, or intervening in a disciplinary debate.</p>
+
+        <div class="strip-3">
+          <div class="strip-item">
+            <div class="band-meta">EMPIRICAL / INDUCTIVE · 12–19 cites/1k</div>
+            <h3>Measured &amp; Accountable</h3>
+            <p>Uses first-person <strong>I</strong> (solo) or <strong>we</strong> (team) to narrate analytical choices transparently—cycled between data and emergent theory—while hedging generalization via Stake’s “naturalistic generalization.”</p>
+            <div class="band-quote">“I therefore decided to record patterns in the use of metaphorical words and expressions within sensemaking accounts and set out to document why they are used…”</div>
+            <p>Cornelissen (2012), <em>Organization Science</em></p>
+          </div>
+
+          <div class="strip-item">
+            <div class="band-meta">CONCEPTUAL / REVIEW · 21–37 cites/1k</div>
+            <h3>Taxonomic &amp; Reflexive</h3>
+            <p>Deploys high citation density, formal definitions, and balanced 2×2 or multi-perspective typologies. Tone is authoritative yet hospitable, treating theoretical divergence as a resource rather than a problem to fix.</p>
+            <div class="band-quote">“It led us to see theoretical divergence not as a problem to fix, but as a resource to expand and enrich our review.”</div>
+            <p>Kier et al. (2026), <em>Journal of Business Venturing</em></p>
+          </div>
+
+          <div class="strip-item">
+            <div class="band-meta">AGORA / POINT–COUNTERPOINT · 7–19 cites/1k</div>
+            <h3>Wry, Direct &amp; Normative</h3>
+            <p>Drops neutral distance for sharp, ironic metaphors (“vending machine view,” “hall of mirrors,” “sea of sameness”), rhetorical questions, and an inclusive disciplinary <strong>we</strong> (16.4/1k in 2026) that calls the field to account.</p>
+            <div class="band-quote">“And to be fair, I am astounded—astounded at what I see as a shallow, backward view of theory building underneath these efforts…”</div>
+            <p>Cornelissen (2026), <em>Organization Studies</em></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="page">
+
+    <!-- SECTION 5: Calibration Guardrails -->
+    <section class="sec-tight grid-12">
+      <div class="col-1-13">
+        <h2>Practical Guardrails for Drafting in Cornelissen’s Voice</h2>
+        <p class="measure">To reproduce this voice authentically in a new paper—without sliding into generic AI-academic prose or impenetrable jargon—apply the following operational rules alongside the companion reusable persona prompt (<span class="code-token">joep-cornelissen-style-persona-prompt.md</span>).</p>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Dimension</th>
+                <th>Do This (Authentic Cornelissen)</th>
+                <th>Avoid This (Breaks the Voice)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Opening a Paper</td>
+                <td>Begin with a clear conceptual definition or high-stakes organizational tension, then immediately map the two or three isolated research streams that need bridging.</td>
+                <td>Avoid generic throat-clearing (“In today’s rapidly changing business landscape…”) or breathless claims of a “paradigm shift.”</td>
+              </tr>
+              <tr>
+                <td>Handling Prior Literature</td>
+                <td>Synthesize literatures by their <em>underlying assumptions and explanatory programmes</em>; credit their strengths before surfacing their blind spots.</td>
+                <td>Avoid “he-said/she-said” chronological summaries (“Smith 2010 found A. Jones 2012 found B.”) or straw-manning rival traditions.</td>
+              </tr>
+              <tr>
+                <td>Sentence Rhythm</td>
+                <td>Aim for 28–38 word complex sentences built on concessive-pivot logic, punctuated by occasional crisp 8–14 word declarative sentences for emphasis.</td>
+                <td>Avoid choppy bullet-point prose, repetitive 15-word staccato sentences, or bloated passive voice that hides the author’s reasoning.</td>
+              </tr>
+              <tr>
+                <td>Metaphor &amp; Illustration</td>
+                <td>Use vivid, exact metaphors analytically (interrogating what they reveal and conceal) and pair every abstract mechanism with a concrete empirical example.</td>
+                <td>Avoid decorative clichés (“double-edged sword” appears sparingly only when unpacked; never use buzzwords like “synergy,” “holistic,” or “game-changer”).</td>
+              </tr>
+              <tr>
+                <td>Framing Contributions</td>
+                <td>Number contributions cleanly (<em>First… Second… Third…</em>) and articulate how they <em>elaborate, qualify, or integrate</em> theory rather than claiming to “solve” the field.</td>
+                <td>Avoid grandiose overclaiming or forcing qualitative findings into a linear, factor-analytic “boxes and arrows” variance frame unless warranted.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- CORPUS SOURCES -->
+    <section class="sec-tight grid-12">
+      <div class="col-1-13">
+        <h2>Corpus Analyzed</h2>
+        <ol class="source-list">
+          <li>Cornelissen, J. P., Haslam, S. A., &amp; Balmer, J. M. T. (2007). Social identity, organizational identity and corporate identity: Towards an integrated understanding of processes, patternings and products. <em>British Journal of Management</em>, 18, S1–S16.</li>
+          <li>Cornelissen, J. P. (2012). Sensemaking under pressure: The influence of professional roles and social accountability on the creation of sense. <em>Organization Science</em>, 23(1), 118–137.</li>
+          <li>Cornelissen, J. P., Mantere, S., &amp; Vaara, E. (2014). The contraction of meaning: The combined effect of communication, emotions, and materiality on sensemaking in the Stockwell shooting. <em>Journal of Management Studies</em>, 51(5), 699–736.</li>
+          <li>Cornelissen, J. P. (2017). Preserving theoretical divergence in management research: Why the explanatory potential of qualitative research should be harnessed rather than suppressed. <em>Journal of Management Studies</em>, 54(3), 368–383.</li>
+          <li>Clarke, J. S., Cornelissen, J. P., &amp; Healey, M. P. (2019). Actions speak louder than words: How figurative language and gesturing in entrepreneurial pitches influences investment judgments. <em>Academy of Management Journal</em>, 62(2), 335–360.</li>
+          <li>Schildt, H., Mantere, S., &amp; Cornelissen, J. P. (2020). Power in sensemaking processes. <em>Organization Studies</em>, 41(2), 241–265.</li>
+          <li>Van Burg, E., Cornelissen, J. P., Stam, W., &amp; Jack, S. (2022). Advancing qualitative entrepreneurship research: Leveraging methodological plurality for achieving scholarly impact. <em>Entrepreneurship Theory and Practice</em>, 46(1), 3–20.</li>
+          <li>Biscaro, C., Bruni, E., Cornelissen, J. P., &amp; Oswick, C. (2025). Metaphor and organization studies: Going beyond resonance to further theory and practice. <em>Organization Studies</em>, 46(5), 745–766.</li>
+          <li>Kier, A. S., Thompson, N. A., Chiles, T. H., &amp; Cornelissen, J. P. (2026). Entrepreneurial imagination: A pluralistic scoping review of a sprawling literature. <em>Journal of Business Venturing</em>, 41, 106555.</li>
+          <li>Cornelissen, J. P. (2026). The artificial intelligence con: The commodification of theory and the new and improved credibility crisis. <em>Organization Studies</em>, 47(10), 1633–1636.</li>
+        </ol>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+</body>
+</html>
